@@ -1,0 +1,54 @@
+package com.sigolf.juegos.session;
+
+import java.io.Serializable;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import com.sigolf.juegos.rubik.controlador.ConfiguracionManagedBean;
+
+/**
+ *
+ * @author Nelson
+ */
+@ManagedBean
+@ViewScoped
+public class IdiomaManagedBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value = "#{sesionManagedBean}")
+    private SesionManagedBean sesionManagedBean;
+
+    public IdiomaManagedBean() {
+    }
+    
+    @PostConstruct
+    public void init() {
+        FacesContext.getCurrentInstance().getViewRoot().setLocale(sesionManagedBean.getLocale());
+        sesionManagedBean.recursos = ResourceBundle.getBundle("texto",sesionManagedBean.getLocale());
+        System.out.println(sesionManagedBean.getLocale());
+    }
+    
+    public void foo(){
+    	
+    }
+
+    public SesionManagedBean getSesionManagedBean() {
+        if (this.sesionManagedBean != null) {
+            return this.sesionManagedBean;
+        } else {
+            return new SesionManagedBean();
+        }
+    }
+
+    public void setSesionManagedBean(SesionManagedBean sesionManagedBean) {
+        this.sesionManagedBean = sesionManagedBean;
+    }
+
+}

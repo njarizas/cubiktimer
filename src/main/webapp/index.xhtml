@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Juego de Ahorcado</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style>
+.text-center {
+	text-align: center;
+}
+
+#formulario_de_inicio_de_sesion{
+background-color: rgba(0,0,0,0.2);
+margin-top: 50px;
+border-radius: 10px;
+padding: 30px;
+}
+</style>
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="resources/css/sweetalert.css" rel="stylesheet"
+		type="text/css" />
+	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+	<ui:include src="/WEB-INF/banners/menu.xhtml" />
+	<div class="text-center">
+		<h:form id="formulario_de_inicio_de_sesion" styleClass="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" pt:autocomplete="off">
+			<div class="col-xs-12">
+				                    <h:graphicImage library="images" name="usuario.png" styleClass="centrado" width="100px"
+				                                    height="100px" /> 
+				<span class="help-block"></span>
+				<h:outputLabel value="#{texto.CorreoElectronico}:" for="email"></h:outputLabel>
+				<div class="col-xs-12 input-group">
+					<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+					<h:inputText styleClass="form-control" id="email" required="true"
+						requiredMessage="este campo es requerido"
+						pt:placeholder="#{texto.CorreoElectronico}"
+						value="#{iniciarSesionManagedBean.login}">
+					</h:inputText>
+				</div>
+				<h:message id="m1" for="email" styleClass="text-danger text-left"></h:message>
+				<span class="help-block"></span>
+				<h:outputLabel value="#{texto.Contraseña}:" for="clave"></h:outputLabel>
+				<div class="col-xs-12 input-group">
+					<span class="input-group-addon glyphicon glyphicon-lock"></span>
+					<h:inputSecret styleClass="form-control" id="clave" required="true"
+						requiredMessage="este campo es requerido"
+						pt:placeholder="#{texto.Contraseña}"
+						value="#{iniciarSesionManagedBean.pass}">
+					</h:inputSecret>
+				</div>
+				<h:message id="m2" for="clave" styleClass="text-danger"></h:message>
+				<h:commandButton value="#{texto.IniciarSesion}" id="iniciarSesion"
+					styleClass="btn btn-success col-xs-8 col-xs-offset-2"
+					style="margin-top: 20px;"
+					action="#{iniciarSesionManagedBean.iniciarSesion}">
+				</h:commandButton>
+				<div class="col-xs-12 input-group">
+					<h:link outcome="recuperar-clave" styleClass="centrado"
+						style="font-size: 0.8em;" value="#{texto.OlvidoSuContraseña}"></h:link>
+				</div>
+				<h:link styleClass="btn btn-primary col-xs-8 col-xs-offset-2"
+					outcome="registro" style="margin-top: 10px;"
+					value="#{texto.Registrarse}">
+				</h:link>
+			</div>
+		</h:form>
+	</div>
+	<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
+		<script>
+                swal("#{sesionManagedBean.mensaje.title}", "#{sesionManagedBean.mensaje.text}", "#{sesionManagedBean.mensaje.type}");
+                #{sesionManagedBean.mensaje.setMensajePendiente(false)}
+            </script>
+	</c:if>
+	<script src="resources/js/jquery.min.js" type="text/javascript"></script>
+	<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+</h:body>
+</html>

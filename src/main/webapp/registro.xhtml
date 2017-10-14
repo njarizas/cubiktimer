@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Juego de Ahorcado</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style>
+#formulario_de_registro {
+	background-color: rgba(0, 0, 0, 0.2);
+	margin-top: 50px;
+	border-radius: 10px;
+	padding: 30px;
+}
+</style>
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="resources/css/sweetalert.css" rel="stylesheet"
+		type="text/css" />
+	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
+	<link href="resources/css/formValidation.min.css" rel="stylesheet"
+		type="text/css" />
+</h:head>
+<h:body>
+	<ui:include src="/WEB-INF/banners/menu.xhtml" />
+	<div>
+		<h:form
+			styleClass="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+			id="formulario_de_registro">
+			<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+				<div class="col-xs-12 input-group">
+					<h4 class="text-center">#{texto.FormularioDeRegistroDeUsuario}</h4>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+						<div class="validacion">
+							<h:inputText styleClass="form-control input-sm" id="email"
+								maxlength="96" required="true" title="#{texto.CorreoElectronico}*"
+								pt:placeholder="#{texto.CorreoElectronico}*"
+								value="#{registroManagedBean.usuario.correo}">
+							</h:inputText>
+						</div>
+					</div>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-lock"></span>
+						<div class="validacion">
+							<h:inputSecret styleClass="form-control input-sm" id="clave"
+								maxlength="32" required="true" title="#{texto.Contraseña}*"
+								pt:placeholder="#{texto.Contraseña}*"
+								value="#{registroManagedBean.clave}">
+							</h:inputSecret>
+						</div>
+					</div>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-lock"></span>
+						<div class="validacion">
+							<h:inputSecret styleClass="form-control input-sm" id="confirmarClave"
+								maxlength="32" required="true" title="#{texto.ConfirmarContraseña}*"
+								pt:placeholder="#{texto.ConfirmarContraseña}*"
+								value="#{registroManagedBean.confirmarClave}">
+							</h:inputSecret>
+						</div>
+					</div>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-user"></span>
+						<div class="validacion">
+							<h:inputText styleClass="form-control input-sm" id="nombres"
+								maxlength="28" required="true" title="#{texto.Nombres}"
+								pt:placeholder="#{texto.Nombres}"
+								value="#{registroManagedBean.usuario.nombres}">
+							</h:inputText>
+						</div>
+					</div>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-user"></span>
+						<div class="validacion">
+							<h:inputText styleClass="form-control input-sm" id="apellidos"
+								maxlength="28" required="true" title="#{texto.Apellidos}"
+								pt:placeholder="#{texto.Apellidos}"
+								value="#{registroManagedBean.usuario.apellidos}">
+							</h:inputText>
+						</div>
+					</div>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-info-sign"></span>
+						<div class="validacion">
+							<h:selectOneMenu styleClass="form-control input-sm" id="sexo" title="#{texto.Sexo}"
+								required="true" value="#{registroManagedBean.usuario.sexo}">
+								<f:selectItem itemLabel="#{texto.Sexo}" itemValue=''
+									noSelectionOption="true"></f:selectItem>
+								<f:selectItem itemLabel="#{texto.Masculino}" itemValue='M'></f:selectItem>
+								<f:selectItem itemLabel="#{texto.Femenino}" itemValue='F'></f:selectItem>
+							</h:selectOneMenu>
+						</div>
+					</div>
+					<span class="help-block"></span>
+					<div class="col-xs-12 input-group">
+						<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+						<div class="validacion">
+							<p:calendar id="fechaNacimiento" title=""
+								value="#{registroManagedBean.usuario.fechaNacimiento}"
+								navigator="true" yearRange="c-70:c+70"
+								locale="#{sesionManagedBean.locale.toString()}"
+								maxdate="#{utilSigolf.hoyFormatoFechaCorta}"
+								pattern="dd/MM/yyyy">
+								<p:ajax event="dateSelect"
+									oncomplete="$('#formulario_de_registro')
+                                            .formValidation('revalidateField', 'formulario_de_registro:fechaNacimiento_input');" />
+							</p:calendar>
+						</div>
+					</div>
+					<div class="help-block"></div>
+					<h:commandButton
+						styleClass="btn btn-success col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4"
+						id="registrar_usuario" value="#{texto.RegistrarUsuario}"
+						action="#{registroManagedBean.registrarUsuario}">
+					</h:commandButton>
+				</div>
+			</div>
+			<p:dialog modal="true" resizable="false" header="Values"
+				widgetVar="dlg" showEffect="fold">
+				<h:outputText value="#{registroManagedBean.usuario.fechaNacimiento}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:dialog>
+		</h:form>
+	</div>
+	<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
+		<script>
+                swal("#{sesionManagedBean.mensaje.title}", "#{sesionManagedBean.mensaje.text}", "#{sesionManagedBean.mensaje.type}");
+                #{sesionManagedBean.mensaje.setMensajePendiente(false)}
+            </script>
+	</c:if>
+	<script src="resources/js/formValidation/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation.min.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation/bootstrap.js" type="text/javascript"></script>
+	<script type="text/javascript">
+                $(document).ready(function () {
+                    document.getElementById('formulario_de_registro:fechaNacimiento_input').className = 'form-control input-sm';
+                    document.getElementById('formulario_de_registro:fechaNacimiento_input').placeholder='#{texto.FechaDeNacimiento}';
+                    document.getElementById('formulario_de_registro:fechaNacimiento_input').title='#{texto.FechaDeNacimiento}';
+                    $('#formulario_de_registro').formValidation({
+                        message: '#{texto.EsteValorNoEsValido}',
+                        icon: {
+                            valid: 'glyphicon glyphicon-ok',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        },
+                        fields: {
+                            'formulario_de_registro:nombres': {
+                                row: '.validacion',
+                                validators: {
+                                    notEmpty: {
+                                        message: '#{texto.ElCampo} \'#{texto.Nombres}\' #{texto.EsRequerido}'
+                                                                },
+                                                                stringLength: {
+                                                                    min: 3,
+                                                                    message: '#{texto.ElCampo} \'#{texto.Nombres}\' #{texto.DebeTenerAlMenos} 3 #{texto.Caracteres}'
+                                                                                            },
+                                                                                            regexp: {
+                                                                                                regexp: /^([a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{3,12}[ ]*){1}([a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{1,12}[ ]+){0,6}[a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{0,12}[ ]*$/,
+                                                                                                message: '#{texto.ParaElCampo} \'#{texto.Nombres}\' #{texto.SoloSeReconocenLasLetrasDelEspañol}'
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                'formulario_de_registro:apellidos': {
+                                                                                                                    row: '.validacion',
+                                                                                                                    validators: {
+                                                                                                                        notEmpty: {
+                                                                                                                            message: '#{texto.ElCampo} \'#{texto.Apellidos}\' #{texto.EsRequerido}'
+                                                                                                                                                    },
+                                                                                                                                                    stringLength: {
+                                                                                                                                                        min: 3,
+                                                                                                                                                        message: '#{texto.ElCampo} \'#{texto.Apellidos}\' #{texto.DebeTenerAlMenos} 3 #{texto.Caracteres}'
+                                                                                                                                                                                },
+                                                                                                                                                                                regexp: {
+                                                                                                                                                                                    regexp: /^([a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{3,12}[ ]*){1}([a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{1,12}[ ]+){0,6}[a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{0,12}[ ]*$/,
+                                                                                                                                                                                    message: '#{texto.ParaElCampo} \'#{texto.Apellidos}\' #{texto.SoloSeReconocenLasLetrasDelEspañol}'
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    },
+                                                                                                                                                                                                    'formulario_de_registro:codigoProfesional': {
+                                                                                                                                                                                                        row: '.validacion',
+                                                                                                                                                                                                        validators: {
+                                                                                                                                                                                                            regexp: {
+                                                                                                                                                                                                                regexp: /^[0-9]{0,6}$/,
+                                                                                                                                                                                                                message: '#{texto.ElCampo} \'#{texto.CodigoProfesional}\' #{texto.DebeTenerEntre} 1 #{texto.Y} 6 #{texto.Digitos}'
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                },
+                                                                                                                                                                                                                                'formulario_de_registro:email': {
+                                                                                                                                                                                                                                    row: '.validacion',
+                                                                                                                                                                                                                                    validators: {
+                                                                                                                                                                                                                                        notEmpty: {
+                                                                                                                                                                                                                                            message: '#{texto.ElCampo} \'#{texto.CorreoElectronico}\' #{texto.EsRequerido}'
+                                                                                                                                                                                                                                                                    },
+                                                                                                                                                                                                                                                                    regexp: {
+                                                                                                                                                                                                                                                                        regexp: /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/,
+                                                                                                                                                                                                                                                                        message: '#{texto.IngreseUnCorreoElectronicoValido} (#{texto.Ejemplo}: correo.usuario_1@ejemplomail.com)'
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            },
+                                                                                                                                                                                                                                                            'formulario_de_registro:clave': {
+                                                                                                                                                                                                                                                                row: '.validacion',
+                                                                                                                                                                                                                                                                validators: {
+                                                                                                                                                                                                                                                                    notEmpty: {
+                                                                                                                                                                                                                                                                        message: '#{texto.ElCampo} \'#{texto.Contraseña}\' #{texto.EsRequerido}'
+                                                                                                                                                                                                                                                                                                },
+                                                                                                                                                                                                                                                                                                stringLength: {
+                                                                                                                                                                                                                                                                                                    min: 6,
+                                                                                                                                                                                                                                                                                                    message: '#{texto.ElCampo} \'#{texto.Contraseña}\' #{texto.DebeTenerAlMenos} 6 #{texto.Caracteres}'
+                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                    },
+                                                                                                                                                                                                                                                                                                                    'formulario_de_registro:confirmarClave': {
+                                                                                                                                                                                                                                                                                                                        row: '.validacion',
+                                                                                                                                                                                                                                                                                                                        validators: {
+                                                                                                                                                                                                                                                                                                                            notEmpty: {
+                                                                                                                                                                                                                                                                                                                                message: '#{texto.ElCampo} \'#{texto.ConfirmarContraseña}\' #{texto.EsRequerido}'
+                                                                                                                                                                                                                                                                                                                                                        },
+                                                                                                                                                                                                                                                                                                                                                        identical: {
+                                                                                                                                                                                                                                                                                                                                                            field: 'formulario_de_registro:clave',
+                                                                                                                                                                                                                                                                                                                                                            message: '#{texto.LasContraseñasNoSonIguales}'
+                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                },
+                                                                                                                                                                                                                                                                                                                                                'formulario_de_registro:sexo': {
+                                                                                                                                                                                                                                                                                                                                                    row: '.validacion',
+                                                                                                                                                                                                                                                                                                                                                    validators: {
+                                                                                                                                                                                                                                                                                                                                                        notEmpty: {
+                                                                                                                                                                                                                                                                                                                                                            message: '#{texto.PorFavorSeleccioneSuSexo}'
+                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                },
+                                                                                                                                                                                                                                                                                                                                                'formulario_de_registro:fechaNacimiento_input': {
+                                                                                                                                                                                                                                                                                                                                                    row: '.validacion',
+                                                                                                                                                                                                                                                                                                                                                    validators: {
+                                                                                                                                                                                                                                                                                                                                                        notEmpty: {
+                                                                                                                                                                                                                                                                                                                                                            message: '#{texto.ElCampo} \'#{texto.FechaDeNacimiento}\' #{texto.EsRequerido}'
+                                                                                                                                                                                                                                                                                                                                                                                    },
+//                                                                                                                                                                                                                                                                                                                                                                                    regexp: {
+//                                                                                                                                                                                                                                                                                                                                                                                        regexp: /^([0][1-9]|[12][0-9]|3[01])(\/)([0][1-9]|[1][0-2])(\/)(19|20)\d{2}$/,
+//                                                                                                                                                                                                                                                                                                                                                                                        message: '#{texto.PorFavorIngreseSuFechaDeNacimientoConFormato} #{texto.FormatoFechaCorta}'
+//                                                                                                                                                                                                                                                                                                                                                                                                                },
+                                                                                                                                                                                                                                                                                                                                                                                    date: {
+                                                                                                                                                                                                                                                                                                                                                                                        format: 'DD/MM/YYYY',
+                                                                                                                                                                                                                                                                                                                                                                                        max: '#{utilSigolf.hoyFormatoFechaCorta}',
+                                                                                                                                                                                                                                                                                                                                                                                        message: '#{texto.PorFavorIngreseSuFechaDeNacimientoConFormato} #{texto.FormatoFechaCorta}'
+                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                                                                                                                                                                            });
+            </script>
+</h:body>
+</html>

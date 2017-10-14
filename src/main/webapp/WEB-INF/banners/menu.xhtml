@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="col-xs-12">
+		#{idiomaManagedBean.foo()}
+		<h:form>
+			<nav class="navbar navbar-default menu" style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<div class="navbar-brand" style="padding: 9px !important;">
+					<h:selectOneMenu class="form-control input-sm"
+						style="max-width: 100px;" value="#{sesionManagedBean.idioma}"
+						onchange="submit()"
+						valueChangeListener="#{sesionManagedBean.localeChange}">
+						<f:selectItems value="#{sesionManagedBean.listaIdiomas}"></f:selectItems>
+					</h:selectOneMenu>
+				</div>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><h:link outcome="/ahorcado"
+							value="#{texto.JuegoDeAhorcado}"></h:link></li>
+					<li><h:link outcome="/rubik" value="#{texto.CronometroRubik}"></h:link></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
+						<li><h:link outcome="/index" value="#{texto.IniciarSesion} ">
+								<span class="glyphicon glyphicon-log-in"></span>
+							</h:link></li>
+						<li><h:link outcome="/registro"
+								value="#{texto.RegistrarUsuario} ">
+								<span class="glyphicon glyphicon-user"></span>
+							</h:link></li>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
+						<li><a href="#">#{sesionManagedBean.usuarioLogueado.correo}</a>
+						</li>
+						<li><h:commandLink id="cerrarSesion"
+								styleClass="btn btn-default navbar-brand"
+								action="#{sesionManagedBean.cerrarSesion()}"
+								title="#{texto.CerrarSesion}">
+								<span class="glyphicon glyphicon-log-out"></span>
+							</h:commandLink></li>
+					</h:panelGroup>
+				</ul>
+			</div>
+			</nav>
+		</h:form>
+	</div>
+</ui:composition>

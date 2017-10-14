@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <base target="_blank">
+  <title>MediaStream Recording</title>
+</head>
+<body>
+  <div id="container">
+    <video id="gum" autoplay></video>
+    <video id="recorded" autoplay loop></video>
+    <div>
+      <button id="record" disabled>Start Recording</button>
+      <button id="play" disabled>Play</button>
+      <button id="download" disabled>Download</button>
+    </div>
+  </div>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="resources/js/record.js"></script>
+  <script src="resources/js/ga.js"></script>
+</body>
+</html>
