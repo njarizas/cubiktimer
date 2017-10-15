@@ -253,7 +253,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `juegos`.`configuracion` ;
 
 CREATE TABLE IF NOT EXISTS `juegos`.`configuracion` (
-  `id_configuracion` INT NOT NULL,
+  `id_configuracion` INT NOT NULL AUTO_INCREMENT,
   `id_usuario` INT NOT NULL,
   `id_tipo` INT NOT NULL,
   `valor_texto` VARCHAR(100) NULL,
