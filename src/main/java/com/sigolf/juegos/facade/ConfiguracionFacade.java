@@ -59,6 +59,17 @@ public class ConfiguracionFacade {
 		}
 		return lista.get(0);
 	}
+	
+	public void guardar(List<ConfiguracionDTO> listaConfiguraciones){
+		for (ConfiguracionDTO configuracionDTO : listaConfiguraciones) {
+			guardar(configuracionDTO);
+		}
+	}
+	
+	public void guardar(ConfiguracionDTO configuracionDTO){
+		int idConfiguracion=configuracionDAO.merge(configuracionDTO);
+		configuracionDTO.setIdConfiguracion(idConfiguracion);
+	}
 
 	public ConfiguracionDAO getConfiguracionDAO() {
 		return configuracionDAO;

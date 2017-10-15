@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
 import com.sigolf.juegos.dto.ConfiguracionDTO;
 import com.sigolf.juegos.util.UtilSigolf;
 
@@ -18,16 +19,24 @@ public class ConfiguracionDAO extends DAO<Integer,ConfiguracionDTO>{
 		conectar();
 		String sql="INSERT INTO configuracion VALUES (?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement ps=conn.prepareStatement(sql);
+			PreparedStatement ps=conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdTipo());
 			ps.setString(4, dto.getValorTexto());
 			ps.setObject(5, dto.getValorEntero());
 			ps.setObject(6, dto.getValorDecimal());
-			ps.setString(7, UtilSigolf.fechaHoraMySql.format(dto.getValorFecha()));
+			if (dto.getValorFecha()!=null){
+				ps.setString(7, UtilSigolf.fechaHoraMySql.format(dto.getValorFecha()));
+			} else{
+				ps.setNull(7, java.sql.Types.DATE);
+			}
 			ps.setObject(8, 1);
 			retorno=ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+				retorno = rs.getInt(1);
+			}
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
@@ -68,6 +77,46 @@ public class ConfiguracionDAO extends DAO<Integer,ConfiguracionDTO>{
 			sqle.printStackTrace();
 		}
 		return lista;
+	}
+
+	public int update(ConfiguracionDTO dto) {
+		int retorno=0;
+		conectar();
+		String sql="UPDATE configuracion"
+				+ " SET id_usuario=?,id_tipo=?,valor_texto=?,valor_entero=?,"
+				+ " valor_decimal=?,valor_fecha=?,estado=?"
+				+ " WHERE id_configuracion=?";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setObject(1, dto.getIdUsuario());
+			ps.setObject(2, dto.getIdTipo());
+			ps.setString(3, dto.getValorTexto());
+			ps.setObject(4, dto.getValorEntero());
+			ps.setObject(5, dto.getValorDecimal());
+			if (dto.getValorFecha()!=null) {
+				ps.setString(6, UtilSigolf.fechaHoraMySql.format(dto.getValorFecha()));
+			} else {
+				ps.setNull(6, java.sql.Types.DATE);
+			}
+			ps.setObject(7, dto.getEstado());
+			ps.setObject(8, dto.getIdConfiguracion());
+			ps.executeUpdate();
+			retorno=dto.getIdConfiguracion();
+			desconectar();
+			return retorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			desconectar();
+		} 
+		return 0;
+	}
+
+	public int merge(ConfiguracionDTO dto) {
+		if (dto.getIdConfiguracion()==null){
+			return create(dto);
+		} else{
+			return update(dto);
+		}
 	}
 
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioIdTipoYEstado(Integer idUsuario,Integer idTipo, Integer estado){

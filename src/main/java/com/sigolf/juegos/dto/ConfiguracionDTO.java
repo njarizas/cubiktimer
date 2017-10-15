@@ -15,6 +15,7 @@ public class ConfiguracionDTO {
 	
 	public ConfiguracionDTO() {
 		super();
+		this.estado=1;
 	}
 	public Integer getIdConfiguracion() {
 		return idConfiguracion;

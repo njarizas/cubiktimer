@@ -42,7 +42,7 @@ public class SesionManagedBean implements Serializable {
 
     static {
         listaIdiomas = new LinkedHashMap();
-        Locale spanish = new Locale("ES");
+        Locale spanish = new Locale("es");
         listaIdiomas.put("Español", spanish);
         listaIdiomas.put("English", Locale.ENGLISH);
     }

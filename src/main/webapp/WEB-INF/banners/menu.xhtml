@@ -46,6 +46,13 @@
 						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
 						<li><a href="#">#{sesionManagedBean.usuarioLogueado.correo}</a>
 						</li>
+						<li>
+							<button id="configuracion" class="btn btn-default navbar-brand"
+								type="button" data-toggle="modal" data-target="#configuraciones"
+								title="#{texto.Configuraciones}">
+								<span class="glyphicon glyphicon-cog"></span>
+							</button>
+						</li>
 						<li><h:commandLink id="cerrarSesion"
 								styleClass="btn btn-default navbar-brand"
 								action="#{sesionManagedBean.cerrarSesion()}"

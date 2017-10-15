@@ -1,7 +1,6 @@
 package com.sigolf.juegos.rubik.controlador;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -85,22 +84,29 @@ public class RubikManagedBean implements Serializable {
 		} else{
 			this.sesionRubikActual= new SesionRubik(new Date(),sesionManagedBean.getUsuarioLogueado().getIdUsuario());
 		}
-		this.tipoCubo = configuracionManagedBean.getTipoCubo();
+		this.tipoCubo = configuracionManagedBean.getTipoCubo().getValorEntero();
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
 		mezclaAleatoria();
 	}
 
 	public void cambioCubo(ValueChangeEvent event) {
 		this.tipoCubo = Integer.parseInt(event.getNewValue().toString());
-		this.configuracionManagedBean.setTipoCubo(this.tipoCubo);
+		this.configuracionManagedBean.getTipoCubo().setValorEntero(this.tipoCubo);
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
 		mezclaAleatoria();
 	}
 	
 	public List<TipoDTO> listarCubos(){
 		List<TipoDTO> lista = tipoDAO.listarTiposDeCubo();
-		
 		return lista;
+	}
+	
+	public String guardarConfiguracion(){
+		if (sesionManagedBean.getUsuarioLogueado()!=null){
+			this.configuracionManagedBean.guardarConfiguracion();
+		}
+		mezclaPersonalizada();
+		return "";
 	}
 
 	public String[] generarMezcla() {
