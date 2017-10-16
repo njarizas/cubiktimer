@@ -8,7 +8,12 @@ import java.io.Serializable;
  */
 public class Celda implements Serializable{
 
-    private String codigoColor;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String codigoColor;
     private String sigla;
 
     public Celda(String color) {
