@@ -41,7 +41,7 @@ padding: 30px;
 				<div class="col-xs-12 input-group">
 					<span class="input-group-addon glyphicon glyphicon-envelope"></span>
 					<h:inputText styleClass="form-control" id="email" required="true"
-						requiredMessage="este campo es requerido"
+						requiredMessage="#{texto.ElCampo} '#{texto.CorreoElectronico}' #{texto.EsRequerido}"
 						pt:placeholder="#{texto.CorreoElectronico}"
 						value="#{iniciarSesionManagedBean.login}">
 					</h:inputText>
@@ -52,7 +52,7 @@ padding: 30px;
 				<div class="col-xs-12 input-group">
 					<span class="input-group-addon glyphicon glyphicon-lock"></span>
 					<h:inputSecret styleClass="form-control" id="clave" required="true"
-						requiredMessage="este campo es requerido"
+						requiredMessage="#{texto.ElCampo} '#{texto.Contraseña}' #{texto.EsRequerido}"
 						pt:placeholder="#{texto.Contraseña}"
 						value="#{iniciarSesionManagedBean.pass}">
 					</h:inputSecret>
