@@ -12,9 +12,9 @@ import com.sigolf.juegos.dao.CredencialDAO;
 import com.sigolf.juegos.dao.UsuarioDAO;
 import com.sigolf.juegos.dto.CredencialDTO;
 import com.sigolf.juegos.dto.UsuarioDTO;
+import com.sigolf.juegos.util.EmailSenderInterface;
+import com.sigolf.juegos.util.EmailSenderService;
 import com.sigolf.juegos.util.EncryptService;
-import com.sigolf.juegos.util.implementaciones.EmailSenderService;
-import com.sigolf.juegos.util.interfaces.EmailSenderInterface;
 
 @ManagedBean
 @ViewScoped

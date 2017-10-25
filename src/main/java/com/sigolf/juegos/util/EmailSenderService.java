@@ -1,4 +1,4 @@
-package com.sigolf.juegos.util.implementaciones;
+package com.sigolf.juegos.util;
 
 import java.util.Properties;
 import java.util.logging.Level;
@@ -12,7 +12,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.sigolf.juegos.dto.UsuarioDTO;
-import com.sigolf.juegos.util.interfaces.EmailSenderInterface;
 
 /**
  *

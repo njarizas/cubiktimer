@@ -72,7 +72,7 @@ public class ConfiguracionManagedBean {
 		}
 	}
 	
-	public void guardarConfiguracion(){
+	public String guardarConfiguracion(){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		idUsuario=(Integer)fc.getExternalContext().getSessionMap().get("idUsuario");
 		if (idUsuario != null){
@@ -90,6 +90,7 @@ public class ConfiguracionManagedBean {
 		} else{
 			System.out.println("No se guarda configuracion ya que es un usuario no logueado");
 		}
+		return "";
 	}
 
 	public void cambioCubo(ValueChangeEvent event) {

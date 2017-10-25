@@ -100,14 +100,6 @@ public class RubikManagedBean implements Serializable {
 		List<TipoDTO> lista = tipoDAO.listarTiposDeCubo();
 		return lista;
 	}
-	
-	public String guardarConfiguracion(){
-		if (sesionManagedBean.getUsuarioLogueado()!=null){
-			this.configuracionManagedBean.guardarConfiguracion();
-		}
-		mezclaPersonalizada();
-		return "";
-	}
 
 	public String[] generarMezcla() {
 		return cubo.generarMezcla();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sigolf.juegos.util.interfaces;
+package com.sigolf.juegos.util;
 
 import com.sigolf.juegos.dto.UsuarioDTO;
 
