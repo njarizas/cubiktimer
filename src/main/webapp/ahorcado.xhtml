@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -6,119 +5,107 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<title>#{texto.JuegoDeAhorcado}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<style>
+<ui:composition template="/WEB-INF/templates/template-interno.xhtml">
+	<ui:define name="title">#{texto.JuegoDeAhorcado}</ui:define>
+	<ui:define name="head">
+		<style>
 .text-center {
 	text-align: center;
 }
 </style>
-	<script src="resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"></link>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script> -->
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
-		type="text/css" />
-		<link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
-	<script type="text/javascript" src="resources/js/bootstrap.js">
-	</script>
-	<link href="resources/css/sweetalert.css" rel="stylesheet"
-		type="text/css" />
-	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
-</h:head>
-<h:body>
-	<ui:include src="/WEB-INF/banners/menu.xhtml" />
-	<div class="text-center">
-		<h:form id="forma">
-			<div class="col-xs-12">
-				<img
-					src="resources/images/ahorcado/#{ahorcadoManagedBean.intentosRestantes}.png"
-					alt="Imagen ahorcado" style="width: 70%; max-width: 300px;" />
-			</div>
-			<h2 style="margin-top: 0;">#{ahorcadoManagedBean.obtenerPalabra()}</h2>
-			<h:panelGroup rendered="#{!ahorcadoManagedBean.juegoEstaFinalizado}">
-			<h:inputText styleClass="hidden-xs" id="letra" value="#{ahorcadoManagedBean.letra}"
-				autocomplete="off" style="margin-bottom:10px;">
-			</h:inputText>
-			<div class="row" style="margin-bottom: 3px;">
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("Q")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="Q" onclick="accion(this);">Q</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("W")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="W" onclick="accion(this);">W</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("E")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="E" onclick="accion(this);">E</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("R")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="R" onclick="accion(this);">R</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("T")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="T" onclick="accion(this);">T</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("Y")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="Y" onclick="accion(this);">Y</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("U")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="U" onclick="accion(this);">U</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("I")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="I" onclick="accion(this);">I</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("O")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="O" onclick="accion(this);">O</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("P")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="P" onclick="accion(this);">P</label>
-			</div>
-			<div class="row" style="margin-bottom: 3px;">
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("A")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="A" onclick="accion(this);">A</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("S")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="S" onclick="accion(this);">S</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("D")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="D" onclick="accion(this);">D</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("F")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="F" onclick="accion(this);">F</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("G")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="G" onclick="accion(this);">G</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("H")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="H" onclick="accion(this);">H</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("J")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="J" onclick="accion(this);">J</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("K")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="K" onclick="accion(this);">K</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("L")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="L" onclick="accion(this);">L</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("Ñ")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="Ñ" onclick="accion(this);">Ñ</label>
-			</div>
-			<div class="row">
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("Z")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="Z" onclick="accion(this);">Z</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("X")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="X" onclick="accion(this);">X</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("C")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="C" onclick="accion(this);">C</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("V")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="V" onclick="accion(this);">V</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("B")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="B" onclick="accion(this);">B</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("N")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="N" onclick="accion(this);">N</label>
-				<label class='#{ahorcadoManagedBean.seHaUsadoLetra("M")?"btn btn-sm btn-default":"btn btn-sm btn-info"}' id="M" onclick="accion(this);">M</label>
-			</div>
-			<h:commandButton styleClass="hidden" id="comprobar" value="Comprobar"
-				actionListener="#{ahorcadoManagedBean.comprobarLetra()}">
-			</h:commandButton>
-			<h:outputLabel> #{texto.IntentosRestantes}: #{ahorcadoManagedBean.intentosRestantes}</h:outputLabel>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{ahorcadoManagedBean.juegoEstaFinalizado}">
-			<h:commandButton styleClass="btn btn-info btn-lg" action="#{ahorcadoManagedBean.reiniciar()}" value="Reintentar" />
-			</h:panelGroup>
-		</h:form>
-	</div>
-	<h:form id="formConfiguracion">
-		<div class="modal fade" id="configuraciones" tabindex="-1" role="dialog"
-			aria-labelledby="labelConfiguraciones"
-			style="background-color: rgba(0, 0, 0, 0.5);">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="labelConfiguraciones">#{texto.Configuraciones}</h4>
-					</div>
-					<div class="modal-body">
-						<h:outputLabel value="#{texto.TiempoDeInspeccion} (#{texto.Segundos}):"></h:outputLabel>
-						<h:inputText id="txtTiempoInspeccion" styleClass="form-control"
-							pt:type="number" pt:min="0" pt:max="15"
-							value="#{configuracionManagedBean.tiempoInspeccion.valorEntero}"
-							autocomplete="off"></h:inputText>
-					</div>
-					<div class="modal-footer">
-						<h:commandButton styleClass="btn btn-success"
-							action="#{rubikManagedBean.guardarConfiguracion()}"
-							value="#{texto.Guardar}"></h:commandButton>
-					</div>
+	</ui:define>
+	<ui:define name="body">
+		<div class="text-center">
+			<h:form id="forma">
+				<div class="col-xs-12">
+					<img
+						src="resources/images/ahorcado/#{ahorcadoManagedBean.intentosRestantes}.png"
+						alt="Imagen ahorcado" style="width: 70%; max-width: 300px;" />
 				</div>
-			</div>
+				<h2 style="margin-top: 0;">#{ahorcadoManagedBean.obtenerPalabra()}</h2>
+				<h:panelGroup rendered="#{!ahorcadoManagedBean.juegoEstaFinalizado}">
+					<h:inputText styleClass="hidden-xs" id="letra"
+						value="#{ahorcadoManagedBean.letra}" autocomplete="off"
+						style="margin-bottom:10px;">
+					</h:inputText>
+					<div class="row" style="margin-bottom: 3px;">
+						<label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("Q")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="Q" onclick="accion(this);">Q</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("W")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="W" onclick="accion(this);">W</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("E")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="E" onclick="accion(this);">E</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("R")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="R" onclick="accion(this);">R</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("T")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="T" onclick="accion(this);">T</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("Y")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="Y" onclick="accion(this);">Y</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("U")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="U" onclick="accion(this);">U</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("I")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="I" onclick="accion(this);">I</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("O")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="O" onclick="accion(this);">O</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("P")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="P" onclick="accion(this);">P</label>
+					</div>
+					<div class="row" style="margin-bottom: 3px;">
+						<label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("A")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="A" onclick="accion(this);">A</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("S")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="S" onclick="accion(this);">S</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("D")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="D" onclick="accion(this);">D</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("F")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="F" onclick="accion(this);">F</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("G")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="G" onclick="accion(this);">G</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("H")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="H" onclick="accion(this);">H</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("J")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="J" onclick="accion(this);">J</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("K")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="K" onclick="accion(this);">K</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("L")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="L" onclick="accion(this);">L</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("Ñ")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="Ñ" onclick="accion(this);">Ñ</label>
+					</div>
+					<div class="row">
+						<label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("Z")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="Z" onclick="accion(this);">Z</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("X")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="X" onclick="accion(this);">X</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("C")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="C" onclick="accion(this);">C</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("V")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="V" onclick="accion(this);">V</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("B")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="B" onclick="accion(this);">B</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("N")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="N" onclick="accion(this);">N</label> <label
+							class='#{ahorcadoManagedBean.seHaUsadoLetra("M")?"btn btn-sm btn-default":"btn btn-sm btn-info"}'
+							id="M" onclick="accion(this);">M</label>
+					</div>
+					<h:commandButton styleClass="hidden" id="comprobar"
+						value="Comprobar"
+						actionListener="#{ahorcadoManagedBean.comprobarLetra()}">
+					</h:commandButton>
+					<h:outputLabel> #{texto.IntentosRestantes}: #{ahorcadoManagedBean.intentosRestantes}</h:outputLabel>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{ahorcadoManagedBean.juegoEstaFinalizado}">
+					<h:commandButton styleClass="btn btn-info btn-lg"
+						action="#{ahorcadoManagedBean.reiniciar()}" value="Reintentar" />
+				</h:panelGroup>
+			</h:form>
 		</div>
-	</h:form>
-	<c:if
-		test="#{sesionManagedBean.mensaje.mensajePendiente}">
-		<script>
-                swal("#{sesionManagedBean.mensaje.title}", "#{sesionManagedBean.mensaje.text}", "#{sesionManagedBean.mensaje.type}");
-                #{sesionManagedBean.mensaje.setMensajePendiente(false)}
-            </script>
-	</c:if>
-	<script src="resources/js/ahorcado.js" type="text/javascript"></script>
-</h:body>
+	</ui:define>
+	<ui:define name="foot">
+		<script src="#{sesionManagedBean.contextPath}/resources/js/ahorcado.js" type="text/javascript"></script>
+	</ui:define>
+</ui:composition>
 </html>
