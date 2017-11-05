@@ -97,18 +97,20 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
     
     @Override
     public String[] generarMezcla() {
-        String[] movimientos = {"F", "F'", "F2", "B", "B'", "B2", "U", "U'", "U2", "D", "D'", "D2", "R", "R'", "R2", "L", "L'", "L2",};
+        String[] movimientos = {"F", "F'", "F2", "B", "B'", "B2", "U", "U'", "U2", "D", "D'", "D2", "R", "R'", "R2", "L", "L'", "L2"};
         int num;
         int[] mezclaInt = new int[21];
         String[] mezcla = new String[mezclaInt.length];
         Random random = new Random();
         for (int i = 0; i < mezcla.length; i++) {
             num = random.nextInt(movimientos.length);
+            //Para que no se gire dos veces seguidas la misma cara
             if (i != 0) {
                 while (mezclaInt[i - 1] / 3 == num / 3) {
                     num = random.nextInt(movimientos.length);
                 }
             }
+            //para que no se hagan tres movimientos que se pueden expresar con solo dos
             if (i > 1) {
                 while ((mezclaInt[i - 2] / 6 == mezclaInt[i - 1] / 6) && (mezclaInt[i - 1] / 6 == num / 6)) {
                     num = random.nextInt(movimientos.length);
@@ -415,6 +417,7 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 
     @Override
     public void x() {
+    	//TODO implementar rotacion del cubo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -427,6 +430,7 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 
     @Override
     public void y() {
+    	//TODO implementar rotacion del cubo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -439,6 +443,7 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 
     @Override
     public void z() {
+    	//TODO implementar rotacion del cubo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

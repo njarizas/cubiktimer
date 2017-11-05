@@ -1,4 +1,4 @@
-package com.sigolf.juegos.session;
+package com.sigolf.juegos.controlador.session;
 
 import java.io.Serializable;
 import java.util.Date;

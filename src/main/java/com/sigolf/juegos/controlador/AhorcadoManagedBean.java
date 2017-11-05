@@ -1,4 +1,4 @@
-package com.sigolf.juegos.ahorcado;
+package com.sigolf.juegos.controlador;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,9 +17,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import com.sigolf.juegos.controlador.session.SesionManagedBean;
 import com.sigolf.juegos.dao.AhorcadoDAO;
 import com.sigolf.juegos.dto.AhorcadoDTO;
-import com.sigolf.juegos.session.SesionManagedBean;
 
 /**
  *

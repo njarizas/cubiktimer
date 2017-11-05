@@ -35,8 +35,6 @@ public class Mensaje implements Serializable{
 	private String inputValue;
 	private Boolean showLoaderOnConfirm;
 	
-	
-	
 	public Mensaje() {
 		super();
 		this.mensajePendiente = false;
@@ -253,7 +251,5 @@ public class Mensaje implements Serializable{
 	public void setShowLoaderOnConfirm(Boolean showLoaderOnConfirm) {
 		this.showLoaderOnConfirm = showLoaderOnConfirm;
 	}
-	
-	
 
 }

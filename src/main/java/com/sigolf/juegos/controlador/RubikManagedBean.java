@@ -1,4 +1,4 @@
-package com.sigolf.juegos.rubik.controlador;
+package com.sigolf.juegos.controlador;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 
+import com.sigolf.juegos.controlador.session.ConfiguracionManagedBean;
+import com.sigolf.juegos.controlador.session.SesionManagedBean;
 import com.sigolf.juegos.dao.TipoDAO;
 import com.sigolf.juegos.dto.TiempoRubikDTO;
 import com.sigolf.juegos.dto.TipoDTO;
@@ -18,7 +20,6 @@ import com.sigolf.juegos.rubik.modelo.CuboRubik;
 import com.sigolf.juegos.rubik.modelo.SesionRubik;
 import com.sigolf.juegos.rubik.modelo.Tiempo;
 import com.sigolf.juegos.rubik.util.RubikFactory;
-import com.sigolf.juegos.session.SesionManagedBean;
 import com.sigolf.juegos.util.UtilSigolf;
 
 /**

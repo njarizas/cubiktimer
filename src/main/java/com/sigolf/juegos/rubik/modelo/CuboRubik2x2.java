@@ -65,6 +65,7 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
         Random random = new Random();
         for (int i = 0; i < mezcla.length; i++) {
             num = random.nextInt(movimientos.length);
+            //para que no se gire dos veces seguidas la misma cara
             if (i != 0) {
                 while (mezclaInt[i - 1] / 3 == num / 3) {
                     num = random.nextInt(movimientos.length);

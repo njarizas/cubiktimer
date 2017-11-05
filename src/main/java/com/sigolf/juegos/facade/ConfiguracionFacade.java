@@ -8,8 +8,6 @@ import com.sigolf.juegos.dto.ConfiguracionDTO;
 public class ConfiguracionFacade {
 
 	private ConfiguracionDAO configuracionDAO;
-	
-	
 
 	public ConfiguracionFacade() {
 		super();
@@ -26,7 +24,7 @@ public class ConfiguracionFacade {
 		}
 		return lista.get(0);
 	}
-	
+
 	public ConfiguracionDTO obtenerTipoCuboPreferidoPorIdUsuario(Integer idUsuario){
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 22, 1);
 		if (lista.isEmpty()){
@@ -37,7 +35,7 @@ public class ConfiguracionFacade {
 		}
 		return lista.get(0);
 	}
-	
+
 	public ConfiguracionDTO obtenerIdiomaPreferidoPorIdUsuario(Integer idUsuario){
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 19, 1);
 		if (lista.isEmpty()){
@@ -48,7 +46,7 @@ public class ConfiguracionFacade {
 		}
 		return lista.get(0);
 	}
-	
+
 	public ConfiguracionDTO obtenerPaginaInicialPorIdUsuario(Integer idUsuario){
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 23, 1);
 		if (lista.isEmpty()){
@@ -59,13 +57,13 @@ public class ConfiguracionFacade {
 		}
 		return lista.get(0);
 	}
-	
+
 	public void guardar(List<ConfiguracionDTO> listaConfiguraciones){
 		for (ConfiguracionDTO configuracionDTO : listaConfiguraciones) {
 			guardar(configuracionDTO);
 		}
 	}
-	
+
 	public void guardar(ConfiguracionDTO configuracionDTO){
 		int idConfiguracion=configuracionDAO.merge(configuracionDTO);
 		configuracionDTO.setIdConfiguracion(idConfiguracion);

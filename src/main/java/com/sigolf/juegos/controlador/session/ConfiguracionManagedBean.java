@@ -1,4 +1,4 @@
-package com.sigolf.juegos.rubik.controlador;
+package com.sigolf.juegos.controlador.session;
 
 import java.util.ArrayList;
 import java.util.List;
