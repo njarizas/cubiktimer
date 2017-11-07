@@ -1,13 +1,13 @@
 package com.sigolf.juegos.rubik.util;
 
-import com.sigolf.juegos.rubik.modelo.CuboRubik;
 import com.sigolf.juegos.rubik.modelo.CuboRubik2x2;
 import com.sigolf.juegos.rubik.modelo.CuboRubik3x3;
 import com.sigolf.juegos.rubik.modelo.CuboRubik4x4;
+import com.sigolf.juegos.rubik.modelo.Puzzle;
 
 public class RubikFactory {
 	
-	public static CuboRubik crearCubo(Integer tipoCubo){
+	public static Puzzle crearCubo(Integer tipoCubo){
 		switch (tipoCubo) {
 		case 5:
 			return new CuboRubik2x2(tipoCubo, "2X2X2");

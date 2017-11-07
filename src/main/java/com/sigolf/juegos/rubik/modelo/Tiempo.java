@@ -15,20 +15,20 @@ public class Tiempo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private CuboRubik cubo;
+	private Puzzle cubo;
     private TiempoRubikDTO tiempoRubikDTO;
     
 
-    public Tiempo(CuboRubik cubo, TiempoRubikDTO tiempoRubikDTO) {
+    public Tiempo(Puzzle cubo, TiempoRubikDTO tiempoRubikDTO) {
         this.cubo = cubo;
         this.tiempoRubikDTO = tiempoRubikDTO;
     }
 
-    public CuboRubik getCubo() {
+    public Puzzle getCubo() {
         return cubo;
     }
 
-    public void setCubo(CuboRubik cubo) {
+    public void setCubo(Puzzle cubo) {
         this.cubo = cubo;
     }
 

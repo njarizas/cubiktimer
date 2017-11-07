@@ -4,15 +4,10 @@ package com.sigolf.juegos.rubik.modelo;
  *
  * @author Nelson
  */
-public abstract class CuboRubik {
-	
-	private Integer idTipoCubo;
-	private String nombre;
+public abstract class CuboRubik extends Puzzle {
 
     public CuboRubik(Integer idTipoCubo, String nombre) {
-		super();
-		this.idTipoCubo = idTipoCubo;
-		this.nombre = nombre;
+		super(idTipoCubo, nombre);
 	}
 
 	/**
@@ -57,14 +52,6 @@ public abstract class CuboRubik {
     public abstract void f();
 
     /**
-     * Método que gira el cubo de acuerdo al parámetro recibido
-     *
-     * @param giro
-     * @return <code>boolean</code> valor que indica si el giro fue válido o no
-     */
-    public abstract boolean girar(String giro);
-
-    /**
      * Metodo que gira la cara izquierda en sentido de las manecillas del reloj
      * la cantidad de veces que reciba por parámetro
      *
@@ -77,21 +64,6 @@ public abstract class CuboRubik {
      * del reloj
      */
     public abstract void l();
-
-    /**
-     * Método que mezcla el cubo recibiendo por parámetro un array de String con
-     * los movimientos a realizar
-     * @param mezcla Array de String con los movimientos a realizar
-     * @return <code>String</code> Secuencia de mezcla eliminando los giros no
-     * válidos
-     */
-    public abstract String mezclar(String[] mezcla);
-    
-    /**
-     * Metdodo que genera un array con movimientos válidos para mezclar el cubo
-     * @return
-     */
-    public abstract String[] generarMezcla();
 
     /**
      * Metodo que gira la cara derecha en sentido de las manecillas del reloj la
@@ -162,21 +134,5 @@ public abstract class CuboRubik {
      * sobre el plano de la cara frontal
      */
     public abstract void z();
-
-	public Integer getIdTipoCubo() {
-		return idTipoCubo;
-	}
-
-	public void setIdTipoCubo(Integer idTipoCubo) {
-		this.idTipoCubo = idTipoCubo;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
     
 }

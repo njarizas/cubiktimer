@@ -16,7 +16,7 @@ import com.sigolf.juegos.dao.TipoDAO;
 import com.sigolf.juegos.dto.TiempoRubikDTO;
 import com.sigolf.juegos.dto.TipoDTO;
 import com.sigolf.juegos.facade.RubikFacade;
-import com.sigolf.juegos.rubik.modelo.CuboRubik;
+import com.sigolf.juegos.rubik.modelo.Puzzle;
 import com.sigolf.juegos.rubik.modelo.SesionRubik;
 import com.sigolf.juegos.rubik.modelo.Tiempo;
 import com.sigolf.juegos.rubik.util.RubikFactory;
@@ -49,7 +49,7 @@ public class RubikManagedBean implements Serializable {
 	private SesionRubik sesionRubikActual;
 
 	private int tipoCubo;
-	private CuboRubik cubo;
+	private Puzzle cubo;
 
 	private String[] mezcla;
 	private String secuenciaMezcla;
@@ -223,11 +223,11 @@ public class RubikManagedBean implements Serializable {
 		return "";
 	}
 
-	public CuboRubik getCubo() {
+	public Puzzle getCubo() {
 		return cubo;
 	}
 
-	public void setCubo(CuboRubik cubo) {
+	public void setCubo(Puzzle cubo) {
 		this.cubo = cubo;
 	}
 
