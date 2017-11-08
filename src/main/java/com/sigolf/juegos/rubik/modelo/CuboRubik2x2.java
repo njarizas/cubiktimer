@@ -9,15 +9,11 @@ import java.util.Random;
  */
 public class CuboRubik2x2 extends CuboRubik implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Celda[][] cubo = new Celda[8][6];
 
 	public CuboRubik2x2(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre);
-		this.setIdTipoCubo(5);
 		for (int i = 0; i < cubo.length; i++) {
 			for (int j = 0; j < cubo[i].length; j++) {
 				cubo[i][j] = null;

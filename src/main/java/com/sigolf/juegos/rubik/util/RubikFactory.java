@@ -4,6 +4,7 @@ import com.sigolf.juegos.rubik.modelo.CuboRubik2x2;
 import com.sigolf.juegos.rubik.modelo.CuboRubik3x3;
 import com.sigolf.juegos.rubik.modelo.CuboRubik4x4;
 import com.sigolf.juegos.rubik.modelo.Puzzle;
+import com.sigolf.juegos.rubik.modelo.Skewb;
 
 public class RubikFactory {
 	
@@ -21,6 +22,10 @@ public class RubikFactory {
 			return new CuboRubik3x3(tipoCubo, "3X3X3 With Feet");
 		case 13:
 			return new CuboRubik3x3(tipoCubo, "3X3X3 OH");
+		case 14:
+			return new CuboRubik4x4(tipoCubo, "4X4X4 BLD");
+		case 24:
+			return new Skewb(tipoCubo, "Skewb");
 		default:
 			return null;
 		}

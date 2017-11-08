@@ -58,7 +58,7 @@ public class AhorcadoManagedBean implements Serializable{
 	}
 
 	public void reset(){
-		letrasUsadas = new ArrayList();
+		letrasUsadas = new ArrayList<String>();
 		juegoEstaFinalizado=false;
 		palabra = "dinosaurio";
 		try {

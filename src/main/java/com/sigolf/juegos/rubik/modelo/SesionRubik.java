@@ -14,7 +14,7 @@ public class SesionRubik {
 	public SesionRubik(Date fecha) {
 		super();
 		this.sesionRubikDTO = new SesionRubikDTO(fecha);
-		tiempos = new ArrayList();
+		tiempos = new ArrayList<Tiempo>();
 	}
 	
 	public SesionRubik(Date fecha,Integer idUsuario) {

@@ -59,7 +59,7 @@ public class IniciarSesionManagedBean {
 			if (login.equals(u.getCorreo()) && pass.equals(u.getClave())) {//se comprueba que la clave y el correo correspondan
 				/* TODO Traer lista de roles del usuario
 				 * */
-				List<RolDTO> listaRoles = new ArrayList();
+				List<RolDTO> listaRoles = new ArrayList<RolDTO>();
 				listaRoles.add(new RolDTO(1, "Superusuario", "Superusuario", 1));
 				if (listaRoles.isEmpty()) {
 					sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
