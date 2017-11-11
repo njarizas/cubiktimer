@@ -6,10 +6,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sigolf.juegos.config.ConexionDatabase;
-import com.sigolf.juegos.util.EncryptService;
-
 import junit.framework.TestCase;
+import xyz.njas.config.ConexionDatabase;
+import xyz.njas.util.EncryptService;
 
 public class Test1 extends TestCase{
 
