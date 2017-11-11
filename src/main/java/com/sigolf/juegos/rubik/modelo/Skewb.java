@@ -67,7 +67,31 @@ public class Skewb extends Puzzle implements Serializable{
 	}
 
 	public void b() {
-		//TODO implementar giro
+		Celda celdaTempo;
+		celdaTempo = back.getCeldaNoroccidente();
+		back.setCeldaNoroccidente(bottom.getCeldaSuroccidente());
+		bottom.setCeldaSuroccidente(left.getCeldaSuroccidente());
+		left.setCeldaSuroccidente(celdaTempo);
+		
+		celdaTempo = back.getCeldaCentro();
+		back.setCeldaCentro(bottom.getCeldaCentro());
+		bottom.setCeldaCentro(left.getCeldaCentro());
+		left.setCeldaCentro(celdaTempo);
+		
+		celdaTempo = top.getCeldaNoroccidente();
+		top.setCeldaNoroccidente(right.getCeldaSuroriente());
+		right.setCeldaSuroriente(front.getCeldaSuroccidente());
+		front.setCeldaSuroccidente(celdaTempo);
+		
+		celdaTempo = back.getCeldaSuroccidente();
+		back.setCeldaSuroccidente(bottom.getCeldaSuroriente());
+		bottom.setCeldaSuroriente(left.getCeldaSuroriente());
+		left.setCeldaSuroriente(celdaTempo);
+		
+		celdaTempo = left.getCeldaNoroccidente();
+		left.setCeldaNoroccidente(back.getCeldaNororiente());
+		back.setCeldaNororiente(bottom.getCeldaNororiente());
+		bottom.setCeldaNororiente(celdaTempo);
 	}
 
 	public void r(int cant) {
