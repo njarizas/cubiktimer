@@ -41,18 +41,18 @@
 							pt:type="number" pt:min="0" pt:max="15"
 							value="#{configuracionManagedBean.tiempoInspeccion.valorEntero}"
 							autocomplete="off"></h:inputText>
-						<h:outputLabel value="Cubo Favorito:"></h:outputLabel>
+						<h:outputLabel value="#{texto.CuboFavorito}:"></h:outputLabel>
 						<h:selectOneMenu id="cuboFavorito" styleClass="form-control"
 							value="#{configuracionManagedBean.tipoCubo.valorEntero}">
 							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l"
 								itemValue="#{l.idTipo}" itemLabel="#{l.nombreTipo}"></f:selectItems>
 						</h:selectOneMenu>
-						<h:outputLabel value="Idioma Preferido:"></h:outputLabel>
+						<h:outputLabel value="#{texto.IdiomaPreferido}:"></h:outputLabel>
 						<h:selectOneMenu class="form-control"
 							value="#{configuracionManagedBean.idioma.valorTexto}">
 							<f:selectItems value="#{sesionManagedBean.listaIdiomas}"></f:selectItems>
 						</h:selectOneMenu>
-						<h:outputLabel value="Pagina Inicial:"></h:outputLabel>
+						<h:outputLabel value="#{texto.PaginaInicial}:"></h:outputLabel>
 						<h:selectOneMenu class="form-control"
 							value="#{configuracionManagedBean.paginaInicial.valorTexto}">
 							<f:selectItem itemValue="ahorcado" itemLabel="ahorcado" />

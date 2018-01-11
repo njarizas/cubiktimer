@@ -16,11 +16,14 @@ $(document).ready(function () {
 	var inspeccionando = 0;
 	var transcurrido = 0; 
 	var actual = 0;
+	
+	var estado = 0;
 
 	//(Cuando se oprime la tecla) Esta función detiene el cronometro
 	$(document).keydown(function (tecla) {
 		if (tecla.keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden') && $('#configuraciones').is(':hidden')) {
-			if ($('#lbl-comenzar').text() === 'Detener') {//si el cronometro esta corriendo
+			if ($('#lbl-comenzar').text() === 'Detener' && estado===2) {//si el cronometro esta corriendo
+				estado = 3;
 				mostrarTiempo();
 				if (tiempo.dnf){
 					document.getElementById('form:txtTiempo').value = "DNF("+$('#lblTiempo').text()+")";
@@ -50,7 +53,7 @@ $(document).ready(function () {
 	//(Cuando se levanta la tecla) Esta función pone el conteo regresivo o el cronometro según sea el caso
 	$(document).keyup(function (tecla) {
 		if (tecla.keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden') && $('#configuraciones').is(':hidden')) {
-			if ($('#lbl-comenzar').text() === 'Detener')//Entra aca si acaba de detener el cronometro
+			if ($('#lbl-comenzar').text() === 'Detener' && estado===3)//Entra aca si acaba de detener el cronometro
 			{
 				$('#lbl-comenzar').text('Comenzar');
 				document.getElementById('form:guardarTiempo').click();
@@ -62,14 +65,17 @@ $(document).ready(function () {
 						tiempo.penalizacion = false;
 						tiempo.dnf = false;
 						$('#lbl-comenzar').text('Inspeccionando');
+						estado = 1;
 					}
-					if ($('#lbl-comenzar').text() === 'Comenzar'){ //Si hasta ahora va a inspeccionar
+					if ($('#lbl-comenzar').text() === 'Comenzar' && estado===0){ //Si hasta ahora va a inspeccionar
+						estado = 1;
 						inspeccion = new Date().getTime();
 						$('#lbl-comenzar').text('Inspeccionando');
 						if($('#lblTiempoInspeccion').text()!=='0'){
 							tiempo.segundo = ($('#lblTiempoInspeccion').text());	
 						}
-					} else if ($('#lbl-comenzar').text() === 'Inspeccionando') { //Si ya estaba inspeccionando se pone a andar el cronometro
+					} else if ($('#lbl-comenzar').text() === 'Inspeccionando' && estado===1) { //Si ya estaba inspeccionando se pone a andar el cronometro
+						estado = 2;
 						if ($('#lblTiempoInspeccion').text()!=='0'){
 						inicio = new Date().getTime();
 						}
