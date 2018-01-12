@@ -668,8 +668,29 @@ public class CuboRubik4x4 extends CuboRubik implements Serializable {
 
     @Override
     public void x() {
-    	//TODO implementar rotacion del cubo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	l();
+    	rw(3);
+    	Celda celdaTempo;
+    	celdaTempo = cubo[12][5];
+        cubo[12][5] = cubo[8][5];
+        cubo[8][5] = cubo[4][5];
+        cubo[4][5] = cubo[0][5];
+        cubo[0][5] = celdaTempo;
+        celdaTempo = cubo[13][5];
+        cubo[13][5] = cubo[9][5];
+        cubo[9][5] = cubo[5][5];
+        cubo[5][5] = cubo[1][5];
+        cubo[1][5] = celdaTempo;
+        celdaTempo = cubo[14][5];
+        cubo[14][5] = cubo[10][5];
+        cubo[10][5] = cubo[6][5];
+        cubo[6][5] = cubo[2][5];
+        cubo[2][5] = celdaTempo;
+        celdaTempo = cubo[15][5];
+        cubo[15][5] = cubo[11][5];
+        cubo[11][5] = cubo[7][5];
+        cubo[7][5] = cubo[3][5];
+        cubo[3][5] = celdaTempo;
     }
 
     @Override
@@ -681,8 +702,29 @@ public class CuboRubik4x4 extends CuboRubik implements Serializable {
 
     @Override
     public void y() {
-    	//TODO implementar rotacion del cubo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	uw();
+		d(3);
+		Celda celdaTempo;
+		celdaTempo = cubo[6][0];
+        cubo[6][0] = cubo[6][4];
+        cubo[6][4] = cubo[6][8];
+        cubo[6][8] = cubo[13][7];
+        cubo[13][7] = celdaTempo;
+        celdaTempo = cubo[6][1];
+        cubo[6][1] = cubo[6][5];
+        cubo[6][5] = cubo[6][9];
+        cubo[6][9] = cubo[13][6];
+        cubo[13][6] = celdaTempo;
+        celdaTempo = cubo[6][2];
+        cubo[6][2] = cubo[6][6];
+        cubo[6][6] = cubo[6][10];
+        cubo[6][10] = cubo[13][5];
+        cubo[13][5] = celdaTempo;
+        celdaTempo = cubo[6][3];
+        cubo[6][3] = cubo[6][7];
+        cubo[6][7] = cubo[6][11];
+        cubo[6][11] = cubo[13][4];
+        cubo[13][4] = celdaTempo;
     }
 
     @Override
@@ -694,8 +736,29 @@ public class CuboRubik4x4 extends CuboRubik implements Serializable {
 
     @Override
     public void z() {
-    	//TODO implementar rotacion del cubo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	fw();
+		b(3);
+		Celda celdaTempo;
+		celdaTempo = cubo[1][7];
+        cubo[1][7] = cubo[4][1];
+        cubo[4][1] = cubo[10][4];
+        cubo[10][4] = cubo[7][10];
+        cubo[7][10] = celdaTempo;
+        celdaTempo = cubo[1][6];
+        cubo[1][6] = cubo[5][1];
+        cubo[5][1] = cubo[10][5];
+        cubo[10][5] = cubo[6][10];
+        cubo[6][10] = celdaTempo;
+        celdaTempo = cubo[1][5];
+        cubo[1][5] = cubo[6][1];
+        cubo[6][1] = cubo[10][6];
+        cubo[10][6] = cubo[5][10];
+        cubo[5][10] = celdaTempo;
+        celdaTempo = cubo[1][4];
+        cubo[1][4] = cubo[7][1];
+        cubo[7][1] = cubo[10][7];
+        cubo[10][7] = cubo[4][10];
+        cubo[4][10] = celdaTempo;
     }
 
     public Celda[][] getCubo() {

@@ -325,49 +325,66 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void b() {
-		//TODO corregir metodo
-//		Celda celdaTempo;
-//		celdaTempo = cubo[12][4];
-//		cubo[12][4] = cubo[15][4];
-//		cubo[15][4] = cubo[15][7];
-//		cubo[15][7] = cubo[12][7];
-//		cubo[12][7] = celdaTempo;
-//		celdaTempo = cubo[12][5];
-//		cubo[12][5] = cubo[14][4];
-//		cubo[14][4] = cubo[15][6];
-//		cubo[15][6] = cubo[13][7];
-//		cubo[13][7] = celdaTempo;
-//		celdaTempo = cubo[12][6];
-//		cubo[12][6] = cubo[13][4];
-//		cubo[13][4] = cubo[15][5];
-//		cubo[15][5] = cubo[14][7];
-//		cubo[14][7] = celdaTempo;
-//		celdaTempo = cubo[13][5];
-//		cubo[13][5] = cubo[14][5];
-//		cubo[14][5] = cubo[14][6];
-//		cubo[14][6] = cubo[13][6];
-//		cubo[13][6] = celdaTempo;
-//
-//		celdaTempo = cubo[11][7];
-//		cubo[11][7] = cubo[7][0];
-//		cubo[7][0] = cubo[0][4];
-//		cubo[0][4] = cubo[4][11];
-//		cubo[4][11] = celdaTempo;
-//		celdaTempo = cubo[11][6];
-//		cubo[11][6] = cubo[6][0];
-//		cubo[6][0] = cubo[0][5];
-//		cubo[0][5] = cubo[5][11];
-//		cubo[5][11] = celdaTempo;
-//		celdaTempo = cubo[11][5];
-//		cubo[11][5] = cubo[5][0];
-//		cubo[5][0] = cubo[0][6];
-//		cubo[0][6] = cubo[6][11];
-//		cubo[6][11] = celdaTempo;
-//		celdaTempo = cubo[11][4];
-//		cubo[11][4] = cubo[4][0];
-//		cubo[4][0] = cubo[0][7];
-//		cubo[0][7] = cubo[7][11];
-//		cubo[7][11] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[15][5];
+		cubo[15][5] = cubo[19][5];
+		cubo[19][5] = cubo[19][9];
+		cubo[19][9] = cubo[15][9];
+		cubo[15][9] = celdaTempo;
+		celdaTempo = cubo[16][5];
+		cubo[16][5] = cubo[19][6];
+		cubo[19][6] = cubo[18][9];
+		cubo[18][9] = cubo[15][8];
+		cubo[15][8] = celdaTempo;
+		celdaTempo = cubo[17][5];
+		cubo[17][5] = cubo[19][7];
+		cubo[19][7] = cubo[17][9];
+		cubo[17][9] = cubo[15][7];
+		cubo[15][7] = celdaTempo;
+		celdaTempo = cubo[18][5];
+		cubo[18][5] = cubo[19][8];
+		cubo[19][8] = cubo[16][9];
+		cubo[16][9] = cubo[15][6];
+		cubo[15][6] = celdaTempo;
+		
+		celdaTempo = cubo[16][6];
+		cubo[16][6] = cubo[18][6];
+		cubo[18][6] = cubo[18][8];
+		cubo[18][8] = cubo[16][8];
+		cubo[16][8] = celdaTempo;
+		celdaTempo = cubo[17][6];
+		cubo[17][6] = cubo[18][7];
+		cubo[18][7] = cubo[17][8];
+		cubo[17][8] = cubo[16][7];
+		cubo[16][7] = celdaTempo;
+		
+		celdaTempo = cubo[14][5];
+		cubo[14][5] = cubo[5][0];
+		cubo[5][0] = cubo[0][9];
+		cubo[0][9] = cubo[9][14];
+		cubo[9][14] = celdaTempo;
+		celdaTempo = cubo[14][6];
+		cubo[14][6] = cubo[6][0];
+		cubo[6][0] = cubo[0][8];
+		cubo[0][8] = cubo[8][14];
+		cubo[8][14] = celdaTempo;
+		celdaTempo = cubo[14][7];
+		cubo[14][7] = cubo[7][0];
+		cubo[7][0] = cubo[0][7];
+		cubo[0][7] = cubo[7][14];
+		cubo[7][14] = celdaTempo;
+		celdaTempo = cubo[14][8];
+		cubo[14][8] = cubo[8][0];
+		cubo[8][0] = cubo[0][6];
+		cubo[0][6] = cubo[6][14];
+		cubo[6][14] = celdaTempo;
+		celdaTempo = cubo[14][9];
+		cubo[14][9] = cubo[9][0];
+		cubo[9][0] = cubo[0][5];
+		cubo[0][5] = cubo[5][14];
+		cubo[5][14] = celdaTempo;
+		
+
 	}
 	
 	public void bw(int cant) {
@@ -378,7 +395,32 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	public void bw() {
 		b();
-		//TODO implementar giro
+		Celda celdaTempo;
+		celdaTempo = cubo[13][5];
+		cubo[13][5] = cubo[5][1];
+		cubo[5][1] = cubo[1][9];
+		cubo[1][9] = cubo[9][13];
+		cubo[9][13] = celdaTempo;
+		celdaTempo = cubo[13][6];
+		cubo[13][6] = cubo[6][1];
+		cubo[6][1] = cubo[1][8];
+		cubo[1][8] = cubo[8][13];
+		cubo[8][13] = celdaTempo;
+		celdaTempo = cubo[13][7];
+		cubo[13][7] = cubo[7][1];
+		cubo[7][1] = cubo[1][7];
+		cubo[1][7] = cubo[7][13];
+		cubo[7][13] = celdaTempo;
+		celdaTempo = cubo[13][8];
+		cubo[13][8] = cubo[8][1];
+		cubo[8][1] = cubo[1][6];
+		cubo[1][6] = cubo[6][13];
+		cubo[6][13] = celdaTempo;
+		celdaTempo = cubo[13][9];
+		cubo[13][9] = cubo[9][1];
+		cubo[9][1] = cubo[1][5];
+		cubo[1][5] = cubo[5][13];
+		cubo[5][13] = celdaTempo;
 
 	}
 
@@ -391,49 +433,64 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void d() {
-		//TODO corregir metodo
-//		Celda celdaTempo;
-//		celdaTempo = cubo[8][4];
-//		cubo[8][4] = cubo[11][4];
-//		cubo[11][4] = cubo[11][7];
-//		cubo[11][7] = cubo[8][7];
-//		cubo[8][7] = celdaTempo;
-//		celdaTempo = cubo[8][5];
-//		cubo[8][5] = cubo[10][4];
-//		cubo[10][4] = cubo[11][6];
-//		cubo[11][6] = cubo[9][7];
-//		cubo[9][7] = celdaTempo;
-//		celdaTempo = cubo[8][6];
-//		cubo[8][6] = cubo[9][4];
-//		cubo[9][4] = cubo[11][5];
-//		cubo[11][5] = cubo[10][7];
-//		cubo[10][7] = celdaTempo;
-//		celdaTempo = cubo[9][5];
-//		cubo[9][5] = cubo[10][5];
-//		cubo[10][5] = cubo[10][6];
-//		cubo[10][6] = cubo[9][6];
-//		cubo[9][6] = celdaTempo;
-//
-//		celdaTempo = cubo[12][4];
-//		cubo[12][4] = cubo[7][11];
-//		cubo[7][11] = cubo[7][7];
-//		cubo[7][7] = cubo[7][3];
-//		cubo[7][3] = celdaTempo;
-//		celdaTempo = cubo[12][5];
-//		cubo[12][5] = cubo[7][10];
-//		cubo[7][10] = cubo[7][6];
-//		cubo[7][6] = cubo[7][2];
-//		cubo[7][2] = celdaTempo;
-//		celdaTempo = cubo[12][6];
-//		cubo[12][6] = cubo[7][9];
-//		cubo[7][9] = cubo[7][5];
-//		cubo[7][5] = cubo[7][1];
-//		cubo[7][1] = celdaTempo;
-//		celdaTempo = cubo[12][7];
-//		cubo[12][7] = cubo[7][8];
-//		cubo[7][8] = cubo[7][4];
-//		cubo[7][4] = cubo[7][0];
-//		cubo[7][0] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[10][5];
+		cubo[10][5] = cubo[14][5];
+		cubo[14][5] = cubo[14][9];
+		cubo[14][9] = cubo[10][9];
+		cubo[10][9] = celdaTempo;
+		celdaTempo = cubo[11][5];
+		cubo[11][5] = cubo[14][6];
+		cubo[14][6] = cubo[13][9];
+		cubo[13][9] = cubo[10][8];
+		cubo[10][8] = celdaTempo;
+		celdaTempo = cubo[12][5];
+		cubo[12][5] = cubo[14][7];
+		cubo[14][7] = cubo[12][9];
+		cubo[12][9] = cubo[10][7];
+		cubo[10][7] = celdaTempo;
+		celdaTempo = cubo[13][5];
+		cubo[13][5] = cubo[14][8];
+		cubo[14][8] = cubo[11][9];
+		cubo[11][9] = cubo[10][6];
+		cubo[10][6] = celdaTempo;
+		
+		celdaTempo = cubo[11][6];
+		cubo[11][6] = cubo[13][6];
+		cubo[13][6] = cubo[13][8];
+		cubo[13][8] = cubo[11][8];
+		cubo[11][8] = celdaTempo;
+		celdaTempo = cubo[12][6];
+		cubo[12][6] = cubo[13][7];
+		cubo[13][7] = cubo[12][8];
+		cubo[12][8] = cubo[11][7];
+		cubo[11][7] = celdaTempo;
+		
+		celdaTempo = cubo[9][14];
+		cubo[9][14] = cubo[9][9];
+		cubo[9][9] = cubo[9][4];
+		cubo[9][4] = cubo[15][5];
+		cubo[15][5] = celdaTempo;
+		celdaTempo = cubo[9][13];
+		cubo[9][13] = cubo[9][8];
+		cubo[9][8] = cubo[9][3];
+		cubo[9][3] = cubo[15][6];
+		cubo[15][6] = celdaTempo;
+		celdaTempo = cubo[9][12];
+		cubo[9][12] = cubo[9][7];
+		cubo[9][7] = cubo[9][2];
+		cubo[9][2] = cubo[15][7];
+		cubo[15][7] = celdaTempo;
+		celdaTempo = cubo[9][11];
+		cubo[9][11] = cubo[9][6];
+		cubo[9][6] = cubo[9][1];
+		cubo[9][1] = cubo[15][8];
+		cubo[15][8] = celdaTempo;
+		celdaTempo = cubo[9][10];
+		cubo[9][10] = cubo[9][5];
+		cubo[9][5] = cubo[9][0];
+		cubo[9][0] = cubo[15][9];
+		cubo[15][9] = celdaTempo;
 	}
 	
 	public void dw(int cant) {
@@ -444,7 +501,32 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	public void dw() {
 		d();
-		//TODO implementar giro dw
+		Celda celdaTempo;
+		celdaTempo = cubo[8][14];
+		cubo[8][14] = cubo[8][9];
+		cubo[8][9] = cubo[8][4];
+		cubo[8][4] = cubo[16][5];
+		cubo[16][5] = celdaTempo;
+		celdaTempo = cubo[8][13];
+		cubo[8][13] = cubo[8][8];
+		cubo[8][8] = cubo[8][3];
+		cubo[8][3] = cubo[16][6];
+		cubo[16][6] = celdaTempo;
+		celdaTempo = cubo[8][12];
+		cubo[8][12] = cubo[8][7];
+		cubo[8][7] = cubo[8][2];
+		cubo[8][2] = cubo[16][7];
+		cubo[16][7] = celdaTempo;
+		celdaTempo = cubo[8][11];
+		cubo[8][11] = cubo[8][6];
+		cubo[8][6] = cubo[8][1];
+		cubo[8][1] = cubo[16][8];
+		cubo[16][8] = celdaTempo;
+		celdaTempo = cubo[8][10];
+		cubo[8][10] = cubo[8][5];
+		cubo[8][5] = cubo[8][0];
+		cubo[8][0] = cubo[16][9];
+		cubo[16][9] = celdaTempo;
 	}
 
 	@Override
@@ -456,49 +538,64 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void f() {
-		//TODO corregir metodo
-//		Celda celdaTempo;
-//		celdaTempo = cubo[4][4];
-//		cubo[4][4] = cubo[7][4];
-//		cubo[7][4] = cubo[7][7];
-//		cubo[7][7] = cubo[4][7];
-//		cubo[4][7] = celdaTempo;
-//		celdaTempo = cubo[4][5];
-//		cubo[4][5] = cubo[6][4];
-//		cubo[6][4] = cubo[7][6];
-//		cubo[7][6] = cubo[5][7];
-//		cubo[5][7] = celdaTempo;
-//		celdaTempo = cubo[4][6];
-//		cubo[4][6] = cubo[5][4];
-//		cubo[5][4] = cubo[7][5];
-//		cubo[7][5] = cubo[6][7];
-//		cubo[6][7] = celdaTempo;
-//		celdaTempo = cubo[5][5];
-//		cubo[5][5] = cubo[6][5];
-//		cubo[6][5] = cubo[6][6];
-//		cubo[6][6] = cubo[5][6];
-//		cubo[5][6] = celdaTempo;
-//
-//		celdaTempo = cubo[3][7];
-//		cubo[3][7] = cubo[4][3];
-//		cubo[4][3] = cubo[8][4];
-//		cubo[8][4] = cubo[7][8];
-//		cubo[7][8] = celdaTempo;
-//		celdaTempo = cubo[3][6];
-//		cubo[3][6] = cubo[5][3];
-//		cubo[5][3] = cubo[8][5];
-//		cubo[8][5] = cubo[6][8];
-//		cubo[6][8] = celdaTempo;
-//		celdaTempo = cubo[3][5];
-//		cubo[3][5] = cubo[6][3];
-//		cubo[6][3] = cubo[8][6];
-//		cubo[8][6] = cubo[5][8];
-//		cubo[5][8] = celdaTempo;
-//		celdaTempo = cubo[3][4];
-//		cubo[3][4] = cubo[7][3];
-//		cubo[7][3] = cubo[8][7];
-//		cubo[8][7] = cubo[4][8];
-//		cubo[4][8] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[5][5];
+		cubo[5][5] = cubo[9][5];
+		cubo[9][5] = cubo[9][9];
+		cubo[9][9] = cubo[5][9];
+		cubo[5][9] = celdaTempo;
+		celdaTempo = cubo[6][5];
+		cubo[6][5] = cubo[9][6];
+		cubo[9][6] = cubo[8][9];
+		cubo[8][9] = cubo[5][8];
+		cubo[5][8] = celdaTempo;
+		celdaTempo = cubo[7][5];
+		cubo[7][5] = cubo[9][7];
+		cubo[9][7] = cubo[7][9];
+		cubo[7][9] = cubo[5][7];
+		cubo[5][7] = celdaTempo;
+		celdaTempo = cubo[8][5];
+		cubo[8][5] = cubo[9][8];
+		cubo[9][8] = cubo[6][9];
+		cubo[6][9] = cubo[5][6];
+		cubo[5][6] = celdaTempo;
+		
+		celdaTempo = cubo[6][6];
+		cubo[6][6] = cubo[8][6];
+		cubo[8][6] = cubo[8][8];
+		cubo[8][8] = cubo[6][8];
+		cubo[6][8] = celdaTempo;
+		celdaTempo = cubo[7][6];
+		cubo[7][6] = cubo[8][7];
+		cubo[8][7] = cubo[7][8];
+		cubo[7][8] = cubo[6][7];
+		cubo[6][7] = celdaTempo;
+		
+		celdaTempo = cubo[4][9];
+		cubo[4][9] = cubo[5][4];
+		cubo[5][4] = cubo[10][5];
+		cubo[10][5] = cubo[9][10];
+		cubo[9][10] = celdaTempo;
+		celdaTempo = cubo[4][8];
+		cubo[4][8] = cubo[6][4];
+		cubo[6][4] = cubo[10][6];
+		cubo[10][6] = cubo[8][10];
+		cubo[8][10] = celdaTempo;
+		celdaTempo = cubo[4][7];
+		cubo[4][7] = cubo[7][4];
+		cubo[7][4] = cubo[10][7];
+		cubo[10][7] = cubo[7][10];
+		cubo[7][10] = celdaTempo;
+		celdaTempo = cubo[4][6];
+		cubo[4][6] = cubo[8][4];
+		cubo[8][4] = cubo[10][8];
+		cubo[10][8] = cubo[6][10];
+		cubo[6][10] = celdaTempo;
+		celdaTempo = cubo[4][5];
+		cubo[4][5] = cubo[9][4];
+		cubo[9][4] = cubo[10][9];
+		cubo[10][9] = cubo[5][10];
+		cubo[5][10] = celdaTempo;
 	}
 
 	public void fw(int cant) {
@@ -508,29 +605,33 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 	}
 
 	public void fw() {
-		//TODO corregir metodo
 		f();
-//		Celda celdaTempo;
-//		celdaTempo = cubo[2][7];
-//		cubo[2][7] = cubo[4][2];
-//		cubo[4][2] = cubo[9][4];
-//		cubo[9][4] = cubo[7][9];
-//		cubo[7][9] = celdaTempo;
-//		celdaTempo = cubo[2][6];
-//		cubo[2][6] = cubo[5][2];
-//		cubo[5][2] = cubo[9][5];
-//		cubo[9][5] = cubo[6][9];
-//		cubo[6][9] = celdaTempo;
-//		celdaTempo = cubo[2][5];
-//		cubo[2][5] = cubo[6][2];
-//		cubo[6][2] = cubo[9][6];
-//		cubo[9][6] = cubo[5][9];
-//		cubo[5][9] = celdaTempo;
-//		celdaTempo = cubo[2][4];
-//		cubo[2][4] = cubo[7][2];
-//		cubo[7][2] = cubo[9][7];
-//		cubo[9][7] = cubo[4][9];
-//		cubo[4][9] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[3][9];
+		cubo[3][9] = cubo[5][3];
+		cubo[5][3] = cubo[11][5];
+		cubo[11][5] = cubo[9][11];
+		cubo[9][11] = celdaTempo;
+		celdaTempo = cubo[3][8];
+		cubo[3][8] = cubo[6][3];
+		cubo[6][3] = cubo[11][6];
+		cubo[11][6] = cubo[8][11];
+		cubo[8][11] = celdaTempo;
+		celdaTempo = cubo[3][7];
+		cubo[3][7] = cubo[7][3];
+		cubo[7][3] = cubo[11][7];
+		cubo[11][7] = cubo[7][11];
+		cubo[7][11] = celdaTempo;
+		celdaTempo = cubo[3][6];
+		cubo[3][6] = cubo[8][3];
+		cubo[8][3] = cubo[11][8];
+		cubo[11][8] = cubo[6][11];
+		cubo[6][11] = celdaTempo;
+		celdaTempo = cubo[3][5];
+		cubo[3][5] = cubo[9][3];
+		cubo[9][3] = cubo[11][9];
+		cubo[11][9] = cubo[5][11];
+		cubo[5][11] = celdaTempo;
 	}
 
 	@Override
@@ -542,49 +643,64 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void l() {
-		//TODO corregir metodo
-//		Celda celdaTempo;
-//		celdaTempo = cubo[4][0];
-//		cubo[4][0] = cubo[7][0];
-//		cubo[7][0] = cubo[7][3];
-//		cubo[7][3] = cubo[4][3];
-//		cubo[4][3] = celdaTempo;
-//		celdaTempo = cubo[4][1];
-//		cubo[4][1] = cubo[6][0];
-//		cubo[6][0] = cubo[7][2];
-//		cubo[7][2] = cubo[5][3];
-//		cubo[5][3] = celdaTempo;
-//		celdaTempo = cubo[4][2];
-//		cubo[4][2] = cubo[5][0];
-//		cubo[5][0] = cubo[7][1];
-//		cubo[7][1] = cubo[6][3];
-//		cubo[6][3] = celdaTempo;
-//		celdaTempo = cubo[5][1];
-//		cubo[5][1] = cubo[6][1];
-//		cubo[6][1] = cubo[6][2];
-//		cubo[6][2] = cubo[5][2];
-//		cubo[5][2] = celdaTempo;
-//
-//		celdaTempo = cubo[12][4];
-//		cubo[12][4] = cubo[8][4];
-//		cubo[8][4] = cubo[4][4];
-//		cubo[4][4] = cubo[0][4];
-//		cubo[0][4] = celdaTempo;
-//		celdaTempo = cubo[13][4];
-//		cubo[13][4] = cubo[9][4];
-//		cubo[9][4] = cubo[5][4];
-//		cubo[5][4] = cubo[1][4];
-//		cubo[1][4] = celdaTempo;
-//		celdaTempo = cubo[14][4];
-//		cubo[14][4] = cubo[10][4];
-//		cubo[10][4] = cubo[6][4];
-//		cubo[6][4] = cubo[2][4];
-//		cubo[2][4] = celdaTempo;
-//		celdaTempo = cubo[15][4];
-//		cubo[15][4] = cubo[11][4];
-//		cubo[11][4] = cubo[7][4];
-//		cubo[7][4] = cubo[3][4];
-//		cubo[3][4] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[5][0];
+		cubo[5][0] = cubo[9][0];
+		cubo[9][0] = cubo[9][4];
+		cubo[9][4] = cubo[5][4];
+		cubo[5][4] = celdaTempo;
+		celdaTempo = cubo[6][0];
+		cubo[6][0] = cubo[9][1];
+		cubo[9][1] = cubo[8][4];
+		cubo[8][4] = cubo[5][3];
+		cubo[5][3] = celdaTempo;
+		celdaTempo = cubo[7][0];
+		cubo[7][0] = cubo[9][2];
+		cubo[9][2] = cubo[7][4];
+		cubo[7][4] = cubo[5][2];
+		cubo[5][2] = celdaTempo;
+		celdaTempo = cubo[8][0];
+		cubo[8][0] = cubo[9][3];
+		cubo[9][3] = cubo[6][4];
+		cubo[6][4] = cubo[5][1];
+		cubo[5][1] = celdaTempo;
+		
+		celdaTempo = cubo[6][1];
+		cubo[6][1] = cubo[8][1];
+		cubo[8][1] = cubo[8][3];
+		cubo[8][3] = cubo[6][3];
+		cubo[6][3] = celdaTempo;
+		celdaTempo = cubo[7][1];
+		cubo[7][1] = cubo[8][2];
+		cubo[8][2] = cubo[7][3];
+		cubo[7][3] = cubo[6][2];
+		cubo[6][2] = celdaTempo;
+		
+		celdaTempo = cubo[19][5];
+		cubo[19][5] = cubo[14][5];
+		cubo[14][5] = cubo[9][5];
+		cubo[9][5] = cubo[4][5];
+		cubo[4][5] = celdaTempo;
+		celdaTempo = cubo[18][5];
+		cubo[18][5] = cubo[13][5];
+		cubo[13][5] = cubo[8][5];
+		cubo[8][5] = cubo[3][5];
+		cubo[3][5] = celdaTempo;
+		celdaTempo = cubo[17][5];
+		cubo[17][5] = cubo[12][5];
+		cubo[12][5] = cubo[7][5];
+		cubo[7][5] = cubo[2][5];
+		cubo[2][5] = celdaTempo;
+		celdaTempo = cubo[16][5];
+		cubo[16][5] = cubo[11][5];
+		cubo[11][5] = cubo[6][5];
+		cubo[6][5] = cubo[1][5];
+		cubo[1][5] = celdaTempo;
+		celdaTempo = cubo[15][5];
+		cubo[15][5] = cubo[10][5];
+		cubo[10][5] = cubo[5][5];
+		cubo[5][5] = cubo[0][5];
+		cubo[0][5] = celdaTempo;
 	}
 	
 	public void lw(int cant) {
@@ -595,7 +711,32 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	public void lw() {
 		l();
-		//TODO implementar giro lw
+		Celda celdaTempo;
+		celdaTempo = cubo[19][6];
+		cubo[19][6] = cubo[14][6];
+		cubo[14][6] = cubo[9][6];
+		cubo[9][6] = cubo[4][6];
+		cubo[4][6] = celdaTempo;
+		celdaTempo = cubo[18][6];
+		cubo[18][6] = cubo[13][6];
+		cubo[13][6] = cubo[8][6];
+		cubo[8][6] = cubo[3][6];
+		cubo[3][6] = celdaTempo;
+		celdaTempo = cubo[17][6];
+		cubo[17][6] = cubo[12][6];
+		cubo[12][6] = cubo[7][6];
+		cubo[7][6] = cubo[2][6];
+		cubo[2][6] = celdaTempo;
+		celdaTempo = cubo[16][6];
+		cubo[16][6] = cubo[11][6];
+		cubo[11][6] = cubo[6][6];
+		cubo[6][6] = cubo[1][6];
+		cubo[1][6] = celdaTempo;
+		celdaTempo = cubo[15][6];
+		cubo[15][6] = cubo[10][6];
+		cubo[10][6] = cubo[5][6];
+		cubo[5][6] = cubo[0][6];
+		cubo[0][6] = celdaTempo;
 	}
 
 	@Override
@@ -607,49 +748,64 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void r() {
-		//TODO corregir metodo
-//		Celda celdaTempo;
-//		celdaTempo = cubo[4][8];
-//		cubo[4][8] = cubo[7][8];
-//		cubo[7][8] = cubo[7][11];
-//		cubo[7][11] = cubo[4][11];
-//		cubo[4][11] = celdaTempo;
-//		celdaTempo = cubo[4][9];
-//		cubo[4][9] = cubo[6][8];
-//		cubo[6][8] = cubo[7][10];
-//		cubo[7][10] = cubo[5][11];
-//		cubo[5][11] = celdaTempo;
-//		celdaTempo = cubo[4][10];
-//		cubo[4][10] = cubo[5][8];
-//		cubo[5][8] = cubo[7][9];
-//		cubo[7][9] = cubo[6][11];
-//		cubo[6][11] = celdaTempo;
-//		celdaTempo = cubo[5][9];
-//		cubo[5][9] = cubo[6][9];
-//		cubo[6][9] = cubo[6][10];
-//		cubo[6][10] = cubo[5][10];
-//		cubo[5][10] = celdaTempo;
-//
-//		celdaTempo = cubo[0][7];
-//		cubo[0][7] = cubo[4][7];
-//		cubo[4][7] = cubo[8][7];
-//		cubo[8][7] = cubo[12][7];
-//		cubo[12][7] = celdaTempo;
-//		celdaTempo = cubo[1][7];
-//		cubo[1][7] = cubo[5][7];
-//		cubo[5][7] = cubo[9][7];
-//		cubo[9][7] = cubo[13][7];
-//		cubo[13][7] = celdaTempo;
-//		celdaTempo = cubo[2][7];
-//		cubo[2][7] = cubo[6][7];
-//		cubo[6][7] = cubo[10][7];
-//		cubo[10][7] = cubo[14][7];
-//		cubo[14][7] = celdaTempo;
-//		celdaTempo = cubo[3][7];
-//		cubo[3][7] = cubo[7][7];
-//		cubo[7][7] = cubo[11][7];
-//		cubo[11][7] = cubo[15][7];
-//		cubo[15][7] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[5][10];
+		cubo[5][10] = cubo[9][10];
+		cubo[9][10] = cubo[9][14];
+		cubo[9][14] = cubo[5][14];
+		cubo[5][14] = celdaTempo;
+		celdaTempo = cubo[6][10];
+		cubo[6][10] = cubo[9][11];
+		cubo[9][11] = cubo[8][14];
+		cubo[8][14] = cubo[5][13];
+		cubo[5][13] = celdaTempo;
+		celdaTempo = cubo[7][10];
+		cubo[7][10] = cubo[9][12];
+		cubo[9][12] = cubo[7][14];
+		cubo[7][14] = cubo[5][12];
+		cubo[5][12] = celdaTempo;
+		celdaTempo = cubo[8][10];
+		cubo[8][10] = cubo[9][13];
+		cubo[9][13] = cubo[6][14];
+		cubo[6][14] = cubo[5][11];
+		cubo[5][11] = celdaTempo;
+		
+		celdaTempo = cubo[6][11];
+		cubo[6][11] = cubo[8][11];
+		cubo[8][11] = cubo[8][13];
+		cubo[8][13] = cubo[6][13];
+		cubo[6][13] = celdaTempo;
+		celdaTempo = cubo[7][11];
+		cubo[7][11] = cubo[8][12];
+		cubo[8][12] = cubo[7][13];
+		cubo[7][13] = cubo[6][12];
+		cubo[6][12] = celdaTempo;
+		
+		celdaTempo = cubo[0][9];
+		cubo[0][9] = cubo[5][9];
+		cubo[5][9] = cubo[10][9];
+		cubo[10][9] = cubo[15][9];
+		cubo[15][9] = celdaTempo;
+		celdaTempo = cubo[1][9];
+		cubo[1][9] = cubo[6][9];
+		cubo[6][9] = cubo[11][9];
+		cubo[11][9] = cubo[16][9];
+		cubo[16][9] = celdaTempo;
+		celdaTempo = cubo[2][9];
+		cubo[2][9] = cubo[7][9];
+		cubo[7][9] = cubo[12][9];
+		cubo[12][9] = cubo[17][9];
+		cubo[17][9] = celdaTempo;
+		celdaTempo = cubo[3][9];
+		cubo[3][9] = cubo[8][9];
+		cubo[8][9] = cubo[13][9];
+		cubo[13][9] = cubo[18][9];
+		cubo[18][9] = celdaTempo;
+		celdaTempo = cubo[4][9];
+		cubo[4][9] = cubo[9][9];
+		cubo[9][9] = cubo[14][9];
+		cubo[14][9] = cubo[19][9];
+		cubo[19][9] = celdaTempo;
 	}
 	
 	public void rw(int cant) {
@@ -659,29 +815,33 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 	}
 
 	public void rw() {
-		//TODO corregir metodo
 		r();
-//		Celda celdaTempo;
-//		celdaTempo = cubo[0][6];
-//		cubo[0][6] = cubo[4][6];
-//		cubo[4][6] = cubo[8][6];
-//		cubo[8][6] = cubo[12][6];
-//		cubo[12][6] = celdaTempo;
-//		celdaTempo = cubo[1][6];
-//		cubo[1][6] = cubo[5][6];
-//		cubo[5][6] = cubo[9][6];
-//		cubo[9][6] = cubo[13][6];
-//		cubo[13][6] = celdaTempo;
-//		celdaTempo = cubo[2][6];
-//		cubo[2][6] = cubo[6][6];
-//		cubo[6][6] = cubo[10][6];
-//		cubo[10][6] = cubo[14][6];
-//		cubo[14][6] = celdaTempo;
-//		celdaTempo = cubo[3][6];
-//		cubo[3][6] = cubo[7][6];
-//		cubo[7][6] = cubo[11][6];
-//		cubo[11][6] = cubo[15][6];
-//		cubo[15][6] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[0][8];
+		cubo[0][8] = cubo[5][8];
+		cubo[5][8] = cubo[10][8];
+		cubo[10][8] = cubo[15][8];
+		cubo[15][8] = celdaTempo;
+		celdaTempo = cubo[1][8];
+		cubo[1][8] = cubo[6][8];
+		cubo[6][8] = cubo[11][8];
+		cubo[11][8] = cubo[16][8];
+		cubo[16][8] = celdaTempo;
+		celdaTempo = cubo[2][8];
+		cubo[2][8] = cubo[7][8];
+		cubo[7][8] = cubo[12][8];
+		cubo[12][8] = cubo[17][8];
+		cubo[17][8] = celdaTempo;
+		celdaTempo = cubo[3][8];
+		cubo[3][8] = cubo[8][8];
+		cubo[8][8] = cubo[13][8];
+		cubo[13][8] = cubo[18][8];
+		cubo[18][8] = celdaTempo;
+		celdaTempo = cubo[4][8];
+		cubo[4][8] = cubo[9][8];
+		cubo[9][8] = cubo[14][8];
+		cubo[14][8] = cubo[19][8];
+		cubo[19][8] = celdaTempo;
 	}
 
 	@Override
@@ -693,49 +853,64 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void u() {
-		//TODO corregir metodo
-//		Celda celdaTempo;
-//		celdaTempo = cubo[0][4];
-//		cubo[0][4] = cubo[3][4];
-//		cubo[3][4] = cubo[3][7];
-//		cubo[3][7] = cubo[0][7];
-//		cubo[0][7] = celdaTempo;
-//		celdaTempo = cubo[0][5];
-//		cubo[0][5] = cubo[2][4];
-//		cubo[2][4] = cubo[3][6];
-//		cubo[3][6] = cubo[1][7];
-//		cubo[1][7] = celdaTempo;
-//		celdaTempo = cubo[0][6];
-//		cubo[0][6] = cubo[1][4];
-//		cubo[1][4] = cubo[3][5];
-//		cubo[3][5] = cubo[2][7];
-//		cubo[2][7] = celdaTempo;
-//		celdaTempo = cubo[1][5];
-//		cubo[1][5] = cubo[2][5];
-//		cubo[2][5] = cubo[2][6];
-//		cubo[2][6] = cubo[1][6];
-//		cubo[1][6] = celdaTempo;
-//
-//		celdaTempo = cubo[4][0];
-//		cubo[4][0] = cubo[4][4];
-//		cubo[4][4] = cubo[4][8];
-//		cubo[4][8] = cubo[15][7];
-//		cubo[15][7] = celdaTempo;
-//		celdaTempo = cubo[4][1];
-//		cubo[4][1] = cubo[4][5];
-//		cubo[4][5] = cubo[4][9];
-//		cubo[4][9] = cubo[15][6];
-//		cubo[15][6] = celdaTempo;
-//		celdaTempo = cubo[4][2];
-//		cubo[4][2] = cubo[4][6];
-//		cubo[4][6] = cubo[4][10];
-//		cubo[4][10] = cubo[15][5];
-//		cubo[15][5] = celdaTempo;
-//		celdaTempo = cubo[4][3];
-//		cubo[4][3] = cubo[4][7];
-//		cubo[4][7] = cubo[4][11];
-//		cubo[4][11] = cubo[15][4];
-//		cubo[15][4] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[0][5];
+		cubo[0][5] = cubo[4][5];
+		cubo[4][5] = cubo[4][9];
+		cubo[4][9] = cubo[0][9];
+		cubo[0][9] = celdaTempo;
+		celdaTempo = cubo[1][5];
+		cubo[1][5] = cubo[4][6];
+		cubo[4][6] = cubo[3][9];
+		cubo[3][9] = cubo[0][8];
+		cubo[0][8] = celdaTempo;
+		celdaTempo = cubo[2][5];
+		cubo[2][5] = cubo[4][7];
+		cubo[4][7] = cubo[2][9];
+		cubo[2][9] = cubo[0][7];
+		cubo[0][7] = celdaTempo;
+		celdaTempo = cubo[3][5];
+		cubo[3][5] = cubo[4][8];
+		cubo[4][8] = cubo[1][9];
+		cubo[1][9] = cubo[0][6];
+		cubo[0][6] = celdaTempo;
+		
+		celdaTempo = cubo[1][6];
+		cubo[1][6] = cubo[3][6];
+		cubo[3][6] = cubo[3][8];
+		cubo[3][8] = cubo[1][8];
+		cubo[1][8] = celdaTempo;
+		celdaTempo = cubo[2][6];
+		cubo[2][6] = cubo[3][7];
+		cubo[3][7] = cubo[2][8];
+		cubo[2][8] = cubo[1][7];
+		cubo[1][7] = celdaTempo;
+
+		celdaTempo = cubo[5][0];
+		cubo[5][0] = cubo[5][5];
+		cubo[5][5] = cubo[5][10];
+		cubo[5][10] = cubo[19][9];
+		cubo[19][9] = celdaTempo;
+		celdaTempo = cubo[5][1];
+		cubo[5][1] = cubo[5][6];
+		cubo[5][6] = cubo[5][11];
+		cubo[5][11] = cubo[19][8];
+		cubo[19][8] = celdaTempo;
+		celdaTempo = cubo[5][2];
+		cubo[5][2] = cubo[5][7];
+		cubo[5][7] = cubo[5][12];
+		cubo[5][12] = cubo[19][7];
+		cubo[19][7] = celdaTempo;
+		celdaTempo = cubo[5][3];
+		cubo[5][3] = cubo[5][8];
+		cubo[5][8] = cubo[5][13];
+		cubo[5][13] = cubo[19][6];
+		cubo[19][6] = celdaTempo;
+		celdaTempo = cubo[5][4];
+		cubo[5][4] = cubo[5][9];
+		cubo[5][9] = cubo[5][14];
+		cubo[5][14] = cubo[19][5];
+		cubo[19][5] = celdaTempo;
 	}
 
 	public void uw(int cant) {
@@ -745,29 +920,33 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 	}
 
 	public void uw() {
-		//TODO corregir metodo
 		u();
-//		Celda celdaTempo;
-//		celdaTempo = cubo[5][0];
-//		cubo[5][0] = cubo[5][4];
-//		cubo[5][4] = cubo[5][8];
-//		cubo[5][8] = cubo[14][7];
-//		cubo[14][7] = celdaTempo;
-//		celdaTempo = cubo[5][1];
-//		cubo[5][1] = cubo[5][5];
-//		cubo[5][5] = cubo[5][9];
-//		cubo[5][9] = cubo[14][6];
-//		cubo[14][6] = celdaTempo;
-//		celdaTempo = cubo[5][2];
-//		cubo[5][2] = cubo[5][6];
-//		cubo[5][6] = cubo[5][10];
-//		cubo[5][10] = cubo[14][5];
-//		cubo[14][5] = celdaTempo;
-//		celdaTempo = cubo[5][3];
-//		cubo[5][3] = cubo[5][7];
-//		cubo[5][7] = cubo[5][11];
-//		cubo[5][11] = cubo[14][4];
-//		cubo[14][4] = celdaTempo;
+		Celda celdaTempo;
+		celdaTempo = cubo[6][0];
+		cubo[6][0] = cubo[6][5];
+		cubo[6][5] = cubo[6][10];
+		cubo[6][10] = cubo[18][9];
+		cubo[18][9] = celdaTempo;
+		celdaTempo = cubo[6][1];
+		cubo[6][1] = cubo[6][6];
+		cubo[6][6] = cubo[6][11];
+		cubo[6][11] = cubo[18][8];
+		cubo[18][8] = celdaTempo;
+		celdaTempo = cubo[6][2];
+		cubo[6][2] = cubo[6][7];
+		cubo[6][7] = cubo[6][12];
+		cubo[6][12] = cubo[18][7];
+		cubo[18][7] = celdaTempo;
+		celdaTempo = cubo[6][3];
+		cubo[6][3] = cubo[6][8];
+		cubo[6][8] = cubo[6][13];
+		cubo[6][13] = cubo[18][6];
+		cubo[18][6] = celdaTempo;
+		celdaTempo = cubo[6][4];
+		cubo[6][4] = cubo[6][9];
+		cubo[6][9] = cubo[6][14];
+		cubo[6][14] = cubo[18][5];
+		cubo[18][5] = celdaTempo;
 	}
 
 	@Override
@@ -779,8 +958,34 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void x() {
-		//TODO implementar rotacion del cubo
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		lw();
+		rw(3);
+		Celda celdaTempo;
+		celdaTempo = cubo[19][7];
+		cubo[19][7] = cubo[14][7];
+		cubo[14][7] = cubo[9][7];
+		cubo[9][7] = cubo[4][7];
+		cubo[4][7] = celdaTempo;
+		celdaTempo = cubo[18][7];
+		cubo[18][7] = cubo[13][7];
+		cubo[13][7] = cubo[8][7];
+		cubo[8][7] = cubo[3][7];
+		cubo[3][7] = celdaTempo;
+		celdaTempo = cubo[17][7];
+		cubo[17][7] = cubo[12][7];
+		cubo[12][7] = cubo[7][7];
+		cubo[7][7] = cubo[2][7];
+		cubo[2][7] = celdaTempo;
+		celdaTempo = cubo[16][7];
+		cubo[16][7] = cubo[11][7];
+		cubo[11][7] = cubo[6][7];
+		cubo[6][7] = cubo[1][7];
+		cubo[1][7] = celdaTempo;
+		celdaTempo = cubo[15][7];
+		cubo[15][7] = cubo[10][7];
+		cubo[10][7] = cubo[5][7];
+		cubo[5][7] = cubo[0][7];
+		cubo[0][7] = celdaTempo;
 	}
 
 	@Override
@@ -792,8 +997,34 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void y() {
-		//TODO implementar rotacion del cubo
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		uw();
+		dw(3);
+		Celda celdaTempo;
+		celdaTempo = cubo[7][0];
+		cubo[7][0] = cubo[7][5];
+		cubo[7][5] = cubo[7][10];
+		cubo[7][10] = cubo[17][9];
+		cubo[17][9] = celdaTempo;
+		celdaTempo = cubo[7][1];
+		cubo[7][1] = cubo[7][6];
+		cubo[7][6] = cubo[7][11];
+		cubo[7][11] = cubo[17][8];
+		cubo[17][8] = celdaTempo;
+		celdaTempo = cubo[7][2];
+		cubo[7][2] = cubo[7][7];
+		cubo[7][7] = cubo[7][12];
+		cubo[7][12] = cubo[17][7];
+		cubo[17][7] = celdaTempo;
+		celdaTempo = cubo[7][3];
+		cubo[7][3] = cubo[7][8];
+		cubo[7][8] = cubo[7][13];
+		cubo[7][13] = cubo[17][6];
+		cubo[17][6] = celdaTempo;
+		celdaTempo = cubo[7][4];
+		cubo[7][4] = cubo[7][9];
+		cubo[7][9] = cubo[7][14];
+		cubo[7][14] = cubo[17][5];
+		cubo[17][5] = celdaTempo;
 	}
 
 	@Override
@@ -805,8 +1036,34 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 
 	@Override
 	public void z() {
-		//TODO implementar rotacion del cubo
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		fw();
+		bw(3);
+		Celda celdaTempo;
+		celdaTempo = cubo[2][9];
+		cubo[2][9] = cubo[5][2];
+		cubo[5][2] = cubo[12][5];
+		cubo[12][5] = cubo[9][12];
+		cubo[9][12] = celdaTempo;
+		celdaTempo = cubo[2][8];
+		cubo[2][8] = cubo[6][2];
+		cubo[6][2] = cubo[12][6];
+		cubo[12][6] = cubo[8][12];
+		cubo[8][12] = celdaTempo;
+		celdaTempo = cubo[2][7];
+		cubo[2][7] = cubo[7][2];
+		cubo[7][2] = cubo[12][7];
+		cubo[12][7] = cubo[7][12];
+		cubo[7][12] = celdaTempo;
+		celdaTempo = cubo[2][6];
+		cubo[2][6] = cubo[8][2];
+		cubo[8][2] = cubo[12][8];
+		cubo[12][8] = cubo[6][12];
+		cubo[6][12] = celdaTempo;
+		celdaTempo = cubo[2][5];
+		cubo[2][5] = cubo[9][2];
+		cubo[9][2] = cubo[12][9];
+		cubo[12][9] = cubo[5][12];
+		cubo[5][12] = celdaTempo;
 	}
 
 	public Celda[][] getCubo() {

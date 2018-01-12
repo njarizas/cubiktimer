@@ -311,19 +311,6 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
 	}
 
 	@Override
-	public void z(int cant) {
-		for (int i = 0; i < cant; i++) {
-			z();
-		}
-	}
-
-	@Override
-	public void z() {
-		girar("f");
-		girar("b'");
-	}
-
-	@Override
 	public void x(int cant) {
 		for (int i = 0; i < cant; i++) {
 			x();
@@ -332,8 +319,8 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
 
 	@Override
 	public void x() {
-		girar("l");
-		girar("r'");
+		l();
+		r(3);
 	}
 
 	@Override
@@ -345,8 +332,21 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
 
 	@Override
 	public void y() {
-		girar("u");
-		girar("d'");
+		u();
+		d(3);
+	}
+	
+	@Override
+	public void z(int cant) {
+		for (int i = 0; i < cant; i++) {
+			z();
+		}
+	}
+
+	@Override
+	public void z() {
+		f();
+		b(3);
 	}
 
 	public Celda[][] getCubo() {

@@ -417,8 +417,24 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 
     @Override
     public void x() {
-    	//TODO implementar rotacion del cubo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	l();
+    	r(3);
+    	Celda celdaTempo;
+        celdaTempo = cubo[11][4];
+        cubo[11][4] = cubo[8][4];
+        cubo[8][4] = cubo[5][4];
+        cubo[5][4] = cubo[2][4];
+        cubo[2][4] = celdaTempo;
+        celdaTempo = cubo[10][4];
+        cubo[10][4] = cubo[7][4];
+        cubo[7][4] = cubo[4][4];
+        cubo[4][4] = cubo[1][4];
+        cubo[1][4] = celdaTempo;
+        celdaTempo = cubo[9][4];
+        cubo[9][4] = cubo[6][4];
+        cubo[6][4] = cubo[3][4];
+        cubo[3][4] = cubo[0][4];
+        cubo[0][4] = celdaTempo;
     }
 
     @Override
@@ -430,8 +446,24 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 
     @Override
     public void y() {
-    	//TODO implementar rotacion del cubo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	u();
+		d(3);
+		Celda celdaTempo;
+	    celdaTempo = cubo[4][0];
+        cubo[4][0] = cubo[4][3];
+        cubo[4][3] = cubo[4][6];
+        cubo[4][6] = cubo[10][5];
+        cubo[10][5] = celdaTempo;
+        celdaTempo = cubo[4][1];
+        cubo[4][1] = cubo[4][4];
+        cubo[4][4] = cubo[4][7];
+        cubo[4][7] = cubo[10][4];
+        cubo[10][4] = celdaTempo;
+        celdaTempo = cubo[4][2];
+        cubo[4][2] = cubo[4][5];
+        cubo[4][5] = cubo[4][8];
+        cubo[4][8] = cubo[10][3];
+        cubo[10][3] = celdaTempo;
     }
 
     @Override
@@ -443,8 +475,24 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 
     @Override
     public void z() {
-    	//TODO implementar rotacion del cubo
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	f();
+		b(3);
+		Celda celdaTempo;
+        celdaTempo = cubo[1][3];
+        cubo[1][3] = cubo[5][1];
+        cubo[5][1] = cubo[7][5];
+        cubo[7][5] = cubo[3][7];
+        cubo[3][7] = celdaTempo;
+        celdaTempo = cubo[1][4];
+        cubo[1][4] = cubo[4][1];
+        cubo[4][1] = cubo[7][4];
+        cubo[7][4] = cubo[4][7];
+        cubo[4][7] = celdaTempo;
+        celdaTempo = cubo[1][5];
+        cubo[1][5] = cubo[3][1];
+        cubo[3][1] = cubo[7][3];
+        cubo[7][3] = cubo[5][7];
+        cubo[5][7] = celdaTempo;
     }
 
     public Celda[][] getCubo() {
