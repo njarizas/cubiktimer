@@ -5,7 +5,7 @@
  */
 package xyz.njas.util;
 
-import xyz.njas.dto.UsuarioDTO;
+import xyz.njas.modelo.dto.UsuarioDTO;
 
 /**
  *

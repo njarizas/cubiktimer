@@ -11,7 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import xyz.njas.dto.UsuarioDTO;
+import xyz.njas.modelo.dto.UsuarioDTO;
 
 /**
  *
