@@ -15,6 +15,73 @@ ${
 }
             </style>
             <script type="text/javascript">
+            $(function () {
+                $('#container').highcharts(
+                        {
+                        	chart: {
+                                type: 'line'
+                            },
+                            title: {
+                                text: 'Historial de promedios'
+                            },
+                            subtitle: {
+                                text: 'Historial de promedios'
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                dateTimeLabelFormats: {
+                                	day: '%d/%b',
+                                    week: '%d/%b',
+                                    month: '%d/%b/%Y',
+                                    year: '%Y'
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: 'promedio'
+                                },
+                                min: 0,
+                                labels: {
+                                    formatter: function () {
+                                 	   var ms = this.value;
+                                        var m=Math.floor(ms/60000);
+                                        ms-=(m*60000);
+                                        var s=Math.floor(ms/1000);
+                                        ms-=(s*1000);
+                                        ms=Math.floor(ms/10);
+                                        return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                    }
+                                }
+                            },
+                            legend: {
+                                enabled: true
+                            },
+                            tooltip: {
+                            	headerFormat: '&lt;b&gt;{series.name}&lt;/b&gt;&lt;br&gt;',
+                            	formatter: function () {
+                              	   var ms = this.y;
+                                     var m=Math.floor(ms/60000);
+                                     ms-=(m*60000);
+                                     var s=Math.floor(ms/1000);
+                                     ms-=(s*1000);
+                                     ms=Math.floor(ms/10);
+                                     return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
+                                     +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
+                                     +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
+                                     +'AVG = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                 }
+                            },
+                            plotOptions: {
+                                spline: {
+                                    marker: {
+                                        enabled: true
+                                    }
+                                }
+                            },
+                            series: [#{estadisticasManagedBean.listaPromedios.obtenerDatos()}]
+                        });
+            });
+            
                $(function () {
                    $('#container2').highcharts(
                            {
@@ -22,30 +89,50 @@ ${
                                    type: 'line'
                                },
                                title: {
-                                   text: 'Historial de Hándicap'
+                                   text: 'Historial de Promedios'
                                },
                                subtitle: {
-                                   text: 'Histórico de hándicap 2015'
+                                   text: 'Histórico de promedios #{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}'
                                },
                                xAxis: {
-                                   categories: [#{estadisticasManagedBean.listaPromedios.obtenerFechas()}]
+                                   categories: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerFechas()}]
                                },
                                yAxis: {
                                    title: {
-                                       text: 'Hándicap'
+                                       text: 'Promedio'
+                                   },
+                                   labels: {
+                                       formatter: function () {
+                                    	   var ms = this.value;
+                                           var m=Math.floor(ms/60000);
+                                           ms-=(m*60000);
+                                           var s=Math.floor(ms/1000);
+                                           ms-=(s*1000);
+                                           ms=Math.floor(ms/10);
+                                           return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                       }
                                    }
                                },
                                plotOptions: {
                                    line: {
                                        dataLabels: {
-                                           enabled: true
+                                           enabled: true,
+                                           formatter: function () {
+                                               var ms = this.y;
+                                               var m=Math.floor(ms/60000);
+                                               ms-=(m*60000);
+                                               var s=Math.floor(ms/1000);
+                                               ms-=(s*1000);
+                                               ms=Math.floor(ms/10);
+                                               return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                               }
                                        },
                                        enableMouseTracking: false
                                    }
                                },
                                series: [{
-                                       name: '#{estadisticasManagedBean.listaPromedios.obtenerTipoCubo()}',
-                                       data: [#{estadisticasManagedBean.listaPromedios.obtenerPromedios()}]
+                                       name: '#{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}',
+                                       data: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerPromedios()}]
                                    }]
                            });
                });
@@ -78,6 +165,7 @@ ${
                                    }]
                            });
                });
+
             </script>
         </ui:define>
         <ui:define name="title">
@@ -89,7 +177,7 @@ ${
                 <script src="#{sesionManagedBean.contextPath}/resources/js/highcharts.js" type="text/javascript"></script>
                 <script src="#{sesionManagedBean.contextPath}/resources/js/highcharts-3d.js" type="text/javascript"></script>
                 <script src="#{sesionManagedBean.contextPath}/resources/js/modules/exporting.js"></script>
-<!--                 <div id="container" class="col-xs-12 col-md-5" style="height: 400px; margin-bottom: 10px;"></div> -->
+                <div id="container" class="col-xs-12 col-md-5" style="height: 400px; margin-bottom: 10px;"></div>
 <!--                 <div id="container_1" class="col-xs-12 col-md-7" style="height: 400px; margin-bottom: 10px;"></div> -->
 <!--                 <div id="container1" class="col-xs-12" style="height: 400px; margin-bottom: 10px;"></div> -->
                 <div id="container2" class="col-xs-12 col-md-6" style="height: 400px; margin-bottom: 10px;"></div>

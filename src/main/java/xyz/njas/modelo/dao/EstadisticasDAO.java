@@ -2,15 +2,21 @@ package xyz.njas.modelo.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.njas.modelo.dto.UsuarioDTO;
 import xyz.njas.modelo.rubik.estadisticas.CuentaPuzzle;
+import xyz.njas.modelo.rubik.estadisticas.ListaPromedioCategoria;
+import xyz.njas.modelo.rubik.estadisticas.ListaPromedios;
 import xyz.njas.modelo.rubik.estadisticas.Promedio;
+import xyz.njas.util.Util;
 
 public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	
-	public List<CuentaPuzzle> getListaConteoPuzzles(Integer idUsuario) {
+	public List<CuentaPuzzle> obtenerListaConteoPuzzles(Integer idUsuario) {
 		conectar();
         List<CuentaPuzzle> lista = new ArrayList();
         String sql = "SELECT sr.id_usuario,t.nombre_tipo nombre_puzzle, count(*) conteo_puzzle"
@@ -40,7 +46,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
         return lista;
     }
 	
-	public List<Promedio> getListaPromedios(Integer idUsuario, Integer idTipoCubo){
+	public List<Promedio> obtenerListaPromediosCategoria(Integer idUsuario, Integer idTipoCubo){
 		conectar();
         List<Promedio> lista = new ArrayList();
         String sql = "SELECT FLOOR(avg(tr.tiempo_milisegundos)) promedio, t.nombre_tipo tipo_cubo,"
@@ -52,7 +58,10 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
         		+ " ON tr.id_tipo_cubo=t.id_tipo"
         		+ " WHERE sr.id_usuario=?"
         		+ " AND tr.id_tipo_cubo=?"
-        		+ " GROUP BY sr.id_sesion,t.nombre_tipo,sr.fecha;";
+        		+ " AND tr.estado=1"
+				+ " AND sr.estado=1"
+        		+ " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")"
+        		+ " ORDER BY sr.fecha;";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idUsuario);
@@ -71,6 +80,68 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
             desconectar();
         }
         return lista;
+	}
+	
+	public List<Integer> obtenerIdCategoriasRegistradas(Integer idUsuario){
+		conectar();
+        List<Integer> lista = new ArrayList();
+        String sql = "SELECT DISTINCT(tr.id_tipo_cubo)"
+        		+ " FROM tiempos_rubik tr"
+        		+ " INNER JOIN sesiones_rubik sr"
+        		+ " ON tr.id_sesion=sr.id_sesion"
+        		+ " WHERE sr.id_usuario=?"
+        		+ " AND tr.estado=1"
+				+ " AND sr.estado=1;";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getInt("id_tipo_cubo"));
+            }
+            desconectar();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            desconectar();
+        }
+        return lista;
+	}
+	
+	public List<ListaPromedioCategoria> obtenerListaPromediosTotales(Integer idUsuario){
+		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList();
+		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
+		for (Integer idTipoCubo : listaCategorias) {
+			List<Promedio> listaPromedio = obtenerListaPromediosCategoria(idUsuario, idTipoCubo);
+			ListaPromedioCategoria listaPromedioCategoria = new ListaPromedioCategoria();
+			listaPromedioCategoria.setLista(listaPromedio);
+			listaPromediosTotales.add(listaPromedioCategoria);
+		}
+		return listaPromediosTotales;
+	}
+	
+	public Integer consultarIdPuzzleMasPracticado(Integer idUsuario){
+		Integer idTipoCubo=null;
+		conectar();
+		String sql="SELECT tr.id_tipo_cubo,COUNT(*) cantidad"
+				+ " FROM tiempos_rubik tr"
+				+ " INNER JOIN sesiones_rubik sr"
+				+ " ON tr.id_sesion = sr.id_sesion"
+				+ " WHERE sr.id_usuario=?"
+				+ " AND tr.estado=1"
+				+ " AND sr.estado=1"
+				+ " GROUP BY (tr.id_tipo_cubo)"
+				+ " ORDER BY COUNT(*);";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				idTipoCubo = rs.getInt("id_tipo_cubo");
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return idTipoCubo;
 	}
 
 	@Override

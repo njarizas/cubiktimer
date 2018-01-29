@@ -13,6 +13,7 @@ import xyz.njas.controlador.managedbeans.session.ConfiguracionManagedBean;
 import xyz.njas.controlador.managedbeans.session.SesionManagedBean;
 import xyz.njas.modelo.dao.EstadisticasDAO;
 import xyz.njas.modelo.rubik.estadisticas.ListaCuentaPuzzle;
+import xyz.njas.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import xyz.njas.modelo.rubik.estadisticas.ListaPromedios;
 
 @ManagedBean
@@ -31,11 +32,13 @@ public class EstadisticasManagedBean implements Serializable {
 	private Integer idUsuario;
 	private EstadisticasDAO estadisticasDAO;
 	private ListaCuentaPuzzle listaCuentaPuzzle;
+	private ListaPromedioCategoria listaPromedioCategoria;
 	private ListaPromedios listaPromedios;
 
     public EstadisticasManagedBean() {
         estadisticasDAO = new EstadisticasDAO();
         listaCuentaPuzzle = new ListaCuentaPuzzle();
+        listaPromedioCategoria = new ListaPromedioCategoria();
         listaPromedios = new ListaPromedios();
         session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -46,8 +49,9 @@ public class EstadisticasManagedBean implements Serializable {
 
     @PostConstruct
     public void init() {
-    	listaCuentaPuzzle.setLista(estadisticasDAO.getListaConteoPuzzles(idUsuario));
-    	listaPromedios.setLista(estadisticasDAO.getListaPromedios(idUsuario, 6));
+    	listaCuentaPuzzle.setLista(estadisticasDAO.obtenerListaConteoPuzzles(idUsuario));
+    	listaPromedioCategoria.setLista(estadisticasDAO.obtenerListaPromediosCategoria(idUsuario, estadisticasDAO.consultarIdPuzzleMasPracticado(idUsuario)));
+    	listaPromedios.setLista(estadisticasDAO.obtenerListaPromediosTotales(idUsuario));
     }
     
 	public Integer getIdUsuario() {
@@ -72,6 +76,14 @@ public class EstadisticasManagedBean implements Serializable {
 
 	public void setListaCuentaPuzzle(ListaCuentaPuzzle listaCuentaPuzzle) {
 		this.listaCuentaPuzzle = listaCuentaPuzzle;
+	}
+
+	public ListaPromedioCategoria getListaPromedioCategoria() {
+		return listaPromedioCategoria;
+	}
+
+	public void setListaPromedioCategoria(ListaPromedioCategoria listaPromedioCategoria) {
+		this.listaPromedioCategoria = listaPromedioCategoria;
 	}
 
 	public ListaPromedios getListaPromedios() {
