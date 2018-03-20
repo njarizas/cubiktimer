@@ -20,9 +20,6 @@ import xyz.njas.util.EncryptService;
 @ViewScoped
 public class RegistroManagedBean implements Serializable {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String clave;
     private String confirmarClave;
@@ -31,12 +28,10 @@ public class RegistroManagedBean implements Serializable {
     private UsuarioDAO usuarioDAO;
     private CredencialDAO credencialDAO;
 
-    
     private EmailSenderInterface email;
 
     @ManagedProperty(value = "#{sesionManagedBean}")
     private SesionManagedBean sesionManagedBean;
-
 
     public RegistroManagedBean() {
     	usuario = new UsuarioDTO();

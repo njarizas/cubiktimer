@@ -74,7 +74,6 @@ public class ConfiguracionDAO extends DAO<Integer,ConfiguracionDTO>{
 				lista.add(c);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		return lista;
@@ -113,13 +112,18 @@ public class ConfiguracionDAO extends DAO<Integer,ConfiguracionDTO>{
 	}
 
 	public int merge(ConfiguracionDTO dto) {
-		if (dto.getIdConfiguracion()==null){
+		if (!existeConfiguracion(dto.getIdUsuario(), dto.getIdTipo())){
 			return create(dto);
 		} else{
 			return update(dto);
 		}
 	}
 
+	public boolean existeConfiguracion(Integer idUsuario,Integer idTipo) {
+		boolean existeConfiguracion=!consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, idTipo, 1).isEmpty();
+		return existeConfiguracion;
+	}
+	
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioIdTipoYEstado(Integer idUsuario,Integer idTipo, Integer estado){
 		List<ConfiguracionDTO> lista=new ArrayList<ConfiguracionDTO>();
 		conectar();
@@ -153,7 +157,6 @@ public class ConfiguracionDAO extends DAO<Integer,ConfiguracionDTO>{
 				lista.add(c);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		return lista;

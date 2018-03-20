@@ -74,11 +74,40 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 				lista.add(u);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		catch (ParseException pe) {
-			// TODO Auto-generated catch block
+			pe.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public List<UsuarioDTO> consultarUsuarioPorIdUsuario(int idUsuario){
+		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
+		conectar();
+		String sql="SELECT * FROM usuarios WHERE id_usuario = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				UsuarioDTO u = new UsuarioDTO();
+				u.setIdUsuario(rs.getInt("id_usuario"));
+				u.setCorreo(rs.getString("correo"));
+				u.setClave(rs.getString("clave"));
+				u.setNombres(rs.getString("nombres"));
+				u.setApellidos(rs.getString("apellidos"));
+				u.setSexo(rs.getString("sexo").charAt(0));
+				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
+				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
+				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
+				u.setEstado(rs.getInt("estado"));
+				lista.add(u);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		catch (ParseException pe) {
 			pe.printStackTrace();
 		}
 		return lista;
@@ -107,11 +136,9 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 				lista.add(u);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		catch (ParseException pe) {
-			// TODO Auto-generated catch block
 			pe.printStackTrace();
 		}
 		return lista;

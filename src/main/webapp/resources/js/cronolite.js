@@ -125,6 +125,7 @@ $(document).ready(function () {
 				$('#lblTiempo').text("+2");
 			} else{
 				inicio = new Date().getTime();
+				estado = 2;
 				$('#lbl-comenzar').text('Detener');
 			}
 		}

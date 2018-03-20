@@ -7,72 +7,61 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>#{texto.IniciarSesion}</title>
+	<title>Recuperar Usuario</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<style>
 .text-center {
 	text-align: center;
 }
 
-#formulario_de_inicio_de_sesion {
+#formulario_recuperar_clave {
 	background-color: rgba(0, 0, 0, 0.2);
 	margin-top: 50px;
 	border-radius: 10px;
 	padding: 30px;
 }
 </style>
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+		<link href="resources/css/bootstrap.min.css" rel="stylesheet"
 		type="text/css" />
 	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
 		type="text/css" />
 	<link href="resources/css/sweetalert.css" rel="stylesheet"
 		type="text/css" />
 	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
+	<link href="resources/css/formValidation.min.css" rel="stylesheet"
+		type="text/css" />
 </h:head>
 <h:body>
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
 	<div class="text-center">
-		<h:form id="formulario_de_inicio_de_sesion"
-			styleClass="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"
-			pt:autocomplete="off">
+		<h:form id="formulario_recuperar_clave"
+			class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="col-xs-12">
-				<h3>#{texto.IniciarSesion}</h3>
-				<h:graphicImage library="images" name="usuario.png"
-					styleClass="centrado" width="100px" height="100px" />
+			<h3>Recuperar Usuario</h3>
 				<span class="help-block"></span>
 				<h:outputLabel value="#{texto.CorreoElectronico}:" for="email"></h:outputLabel>
 				<div class="col-xs-12 input-group">
 					<span class="input-group-addon glyphicon glyphicon-envelope"></span>
+					<div class="validacion">
 					<h:inputText styleClass="form-control" id="email" required="true"
-						requiredMessage="#{texto.ElCampo} '#{texto.CorreoElectronico}' #{texto.EsRequerido}"
+						requiredMessage="este campo es requerido"
 						pt:placeholder="#{texto.CorreoElectronico}"
-						value="#{iniciarSesionManagedBean.login}">
+						value="#{recuperarUsuarioManagedBean.email}">
 					</h:inputText>
+					</div>
 				</div>
 				<h:message id="m1" for="email" styleClass="text-danger text-left"></h:message>
-				<span class="help-block"></span>
-				<h:outputLabel value="#{texto.Contraseña}:" for="clave"></h:outputLabel>
-				<div class="col-xs-12 input-group">
-					<span class="input-group-addon glyphicon glyphicon-lock"></span>
-					<h:inputSecret styleClass="form-control" id="clave" required="true"
-						requiredMessage="#{texto.ElCampo} '#{texto.Contraseña}' #{texto.EsRequerido}"
-						pt:placeholder="#{texto.Contraseña}"
-						value="#{iniciarSesionManagedBean.pass}">
-					</h:inputSecret>
-				</div>
-				<h:message id="m2" for="clave" styleClass="text-danger"></h:message>
-				<h:commandButton value="#{texto.IniciarSesion}" id="iniciarSesion"
+				<h:commandButton value="#{texto.Buscar}" id="buscar"
 					styleClass="btn btn-success col-xs-8 col-xs-offset-2"
 					style="margin-top: 20px;"
-					action="#{iniciarSesionManagedBean.iniciarSesion}">
+					action="#{recuperarUsuarioManagedBean.recuperarUsuario}">
 				</h:commandButton>
 				<div class="col-xs-12 input-group">
 					<h:link outcome="recuperar-clave" styleClass="centrado"
 						style="font-size: 0.8em;" value="#{texto.OlvidoSuContraseña}"></h:link>
 				</div>
 				<h:link styleClass="btn btn-primary col-xs-8 col-xs-offset-2"
-					outcome="registro" style="margin-top: 10px;"
-					value="#{texto.Registrarse}">
+					outcome="index" style="margin-top: 10px;" value="#{texto.Cancelar}">
 				</h:link>
 			</div>
 		</h:form>
@@ -84,6 +73,34 @@
             </script>
 	</c:if>
 	<script src="resources/js/jquery.min.js" type="text/javascript"></script>
-	<script src="resources/js/bootstrap.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation.min.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation/bootstrap.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#formulario_recuperar_clave').formValidation({
+	        message: '#{texto.EsteValorNoEsValido}',
+	        icon: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+	        fields: {
+	            'formulario_recuperar_clave:email': {
+	                row: '.validacion',
+	                validators: {
+	                    notEmpty: {
+	                        message: '#{texto.ElCampo} \'#{texto.CorreoElectronico}\' #{texto.EsRequerido}'
+	                    },
+	                    regexp: {
+	                        regexp: /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/,
+	                        message: '#{texto.IngreseUnCorreoElectronicoValido} (#{texto.Ejemplo}: correo.usuario_1@ejemplomail.com)'
+	                    }
+	                }
+	            }
+	        }
+	    });
+	});  
+	</script>
 </h:body>
 </html>
