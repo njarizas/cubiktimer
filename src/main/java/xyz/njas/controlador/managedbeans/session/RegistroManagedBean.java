@@ -54,7 +54,7 @@ public class RegistroManagedBean implements Serializable {
                 sesionManagedBean.getMensaje().setType("success");
                 sesionManagedBean.getMensaje().setMensajePendiente(true);
                 email = new EmailSenderService();
-                email.enviarMensajeDeActivacionDeCuenta(usuario);
+                email.enviarMensajeActivacionCuenta(usuario);
                 usuario = new UsuarioDTO();
                 clave = "";
                 confirmarClave = "";
@@ -96,7 +96,6 @@ public class RegistroManagedBean implements Serializable {
     /**
      * Método que se encarga de realizar la persistencia del usuario en la base
      * de datos
-     *
      * @return <code>true</code> si se pudo guardar<br>
      * <code>false</code> si no se pudo guardar
      */

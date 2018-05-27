@@ -107,7 +107,6 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String resetearCubo() {
-		//TODO usar factory
 		cubo = RubikFactory.crearCubo(this.tipoCubo);
 		return "";
 	}
@@ -155,6 +154,9 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String guardarSesionRubik() {
+		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()==null && sesionManagedBean.getUsuarioLogueado().getIdUsuario()!=null) {
+			sesionRubikActual.getSesionRubikDTO().setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
+		}
 		if(rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos())>0){
 			sesionManagedBean.getMensaje().setTitle("¡Información!");
 			sesionManagedBean.getMensaje().setText("Se han guardado los tiempos actuales");

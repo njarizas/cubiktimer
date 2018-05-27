@@ -11,6 +11,9 @@ import xyz.njas.modelo.dao.CredencialDAO;
 import xyz.njas.modelo.dao.UsuarioDAO;
 import xyz.njas.modelo.dto.CredencialDTO;
 import xyz.njas.modelo.dto.UsuarioDTO;
+import xyz.njas.util.EmailSenderInterface;
+import xyz.njas.util.EmailSenderService;
+import xyz.njas.util.EncryptService;
 
 /**
  * Bean que se utiliza para recuperar clave o correo electronico, notese que es de vista puesto que las variables las inyecta a #{sesionManagedBean}
@@ -52,6 +55,9 @@ public class RecuperarUsuarioManagedBean {
 			sesionManagedBean.getMensaje().setText("Hemos enviado un correo electrónico a la dirección: "+email.trim()+" con tu nueva contraseña.");
 			sesionManagedBean.getMensaje().setType("info");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
+			EmailSenderInterface emailSender = new EmailSenderService();
+			//TODO generar clave aleatoria
+            emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), EncryptService.encriptarClave("123456"));
 		}
 		return retorno;
 	}
