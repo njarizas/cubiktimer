@@ -14,12 +14,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 
 import xyz.njas.controlador.managedbeans.session.SesionManagedBean;
 import xyz.njas.modelo.dao.AhorcadoDAO;
 import xyz.njas.modelo.dto.AhorcadoDTO;
+import xyz.njas.util.Util;
 
 /**
  *
@@ -161,8 +160,7 @@ public class AhorcadoManagedBean implements Serializable{
 	}
 
 	public void inicializarPalabra() throws FileNotFoundException, IOException {
-		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-		realPath=(String) servletContext.getRealPath("/");
+		realPath=Util.getRealPath();
 		System.out.println("Real Path"+realPath);
 		String cadena;
 		Random random = new Random();

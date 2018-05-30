@@ -1,4 +1,9 @@
 $(document).ready(function () {
+	
+	var ocho = new Audio("resources/audio/ocho.mp3");
+	var doce = new Audio("resources/audio/doce.mp3");
+	var ochoSegundos = true;
+	var doceSegundos = true; 
 
 	var tiempo = {
 			minuto: 0,
@@ -119,6 +124,18 @@ $(document).ready(function () {
 			tiempo.segundo = Math.floor(inspeccionando/1000);
 			inspeccionando -= (tiempo.segundo*1000);
 			tiempo.centisegundo = Math.floor(inspeccionando/10);
+			if(parseInt(actual - inspeccion)>=12000){
+				if (doceSegundos){
+					doce.play();
+					doceSegundos = false;
+				}
+			}
+			else if(parseInt(actual - inspeccion)>=8000){
+				if (ochoSegundos){
+					ocho.play();
+					ochoSegundos = false;
+				}
+			}
 			if (parseInt(actual - inspeccion)<parseInt($('#lblTiempoInspeccion').text()*1000)){
 				$('#lblTiempo').text($('#lblTiempoInspeccion').text()-tiempo.segundo);
 			} else if (parseInt(actual - inspeccion) < parseInt(($('#lblTiempoInspeccion').text()*1000)+2000)) {

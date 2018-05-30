@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+
 public class Util {
 
 	public static SimpleDateFormat fechaHoraMySql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -59,6 +62,18 @@ public class Util {
 		}
 		retorno+=df.format(seg);
 		return retorno.replace(",", ".");
+	}
+	
+	public static String getRealPath() {
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String realPath = (String) servletContext.getRealPath("/");
+		return realPath;
+	}
+	
+	public static String getContextPath() {
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String contextPath = (String) servletContext.getContextPath();
+		return contextPath;
 	}
 
 }

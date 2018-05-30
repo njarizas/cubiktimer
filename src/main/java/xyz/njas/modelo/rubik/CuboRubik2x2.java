@@ -1,7 +1,8 @@
 package xyz.njas.modelo.rubik;
 
 import java.io.Serializable;
-import java.util.Random;
+
+import xyz.njas.util.ScrambleGenerator;
 
 /**
  *
@@ -51,27 +52,32 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
 		cubo[7][3] = new Celda("blue");
 
 	}
-	
+
+	//	@Override
+	//    public String[] generarMezcla() {
+	//        String[] movimientos = {"F", "F'", "F2", "U", "U'", "U2", "R", "R'", "R2"};
+	//        int num;
+	//        int[] mezclaInt = new int[9];
+	//        String[] mezcla = new String[mezclaInt.length];
+	//        Random random = new Random();
+	//        for (int i = 0; i < mezcla.length; i++) {
+	//            num = random.nextInt(movimientos.length);
+	//            //para que no se gire dos veces seguidas la misma cara
+	//            if (i != 0) {
+	//                while (mezclaInt[i - 1] / 3 == num / 3) {
+	//                    num = random.nextInt(movimientos.length);
+	//                }
+	//            }
+	//            mezclaInt[i] = num;
+	//            mezcla[i] = movimientos[mezclaInt[i]];
+	//        }
+	//        return mezcla;
+	//    }
+
 	@Override
-    public String[] generarMezcla() {
-        String[] movimientos = {"F", "F'", "F2", "U", "U'", "U2", "R", "R'", "R2"};
-        int num;
-        int[] mezclaInt = new int[9];
-        String[] mezcla = new String[mezclaInt.length];
-        Random random = new Random();
-        for (int i = 0; i < mezcla.length; i++) {
-            num = random.nextInt(movimientos.length);
-            //para que no se gire dos veces seguidas la misma cara
-            if (i != 0) {
-                while (mezclaInt[i - 1] / 3 == num / 3) {
-                    num = random.nextInt(movimientos.length);
-                }
-            }
-            mezclaInt[i] = num;
-            mezcla[i] = movimientos[mezclaInt[i]];
-        }
-        return mezcla;
-    }
+	public String[] generarMezcla() {
+		return ScrambleGenerator.generarMezcla("222");
+	}
 
 	@Override
 	public String mezclar(String[] mezcla) {
@@ -335,7 +341,7 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
 		u();
 		d(3);
 	}
-	
+
 	@Override
 	public void z(int cant) {
 		for (int i = 0; i < cant; i++) {

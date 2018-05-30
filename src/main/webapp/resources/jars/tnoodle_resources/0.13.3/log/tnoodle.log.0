@@ -1,0 +1,44 @@
+INFO 1 1527647641056 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 7 
+INFO 1 1527647641056 net.gnehzr.tnoodle.utils.Launcher:wrapMain Successfully copied C:\Program Files\Java\jre1.8.0_144\bin\java.exe -> C:\Program Files\Java\jre1.8.0_144\temp-launcher\TNoodle-WCA-0.13.3.exe 
+INFO 1 1527647641056 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1527647641056 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with ["C:\Program Files\Java\jre1.8.0_144\temp-launcher\TNoodle-WCA-0.13.3.exe", -Xmx3568m, -classpath, C:\Disco\NELSON\docsJava\juegos\src\main\webapp\resources\jars\TNoodle-WCA-0.13.3.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec, parametros1, parametro2] 
+INFO 1 1527647993824 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 7 
+INFO 1 1527647993824 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
+INFO 1 1527647993933 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
+INFO 1 1527647994167 winstone.Logger:logInternal org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok) 
+INFO 1 1527647994167 winstone.Logger:logInternal Deployed web application found at ROOT 
+INFO 26 1527647994167 winstone.Logger:logInternal HTTP Listener started: port=2014 
+INFO 27 1527647994182 winstone.Logger:logInternal Winstone Servlet Engine v0.9.10 running: controlPort=disabled 
+INFO 1 1527647994182 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 
+INFO 1 1527648428106 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 7 
+INFO 1 1527648428106 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
+INFO 1 1527648428246 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
+INFO 1 1527648429511 winstone.Logger:logInternal org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok) 
+INFO 1 1527648429511 winstone.Logger:logInternal Deployed web application found at ROOT 
+INFO 27 1527648429511 winstone.Logger:logInternal HTTP Listener started: port=2014 
+INFO 28 1527648429511 winstone.Logger:logInternal Winstone Servlet Engine v0.9.10 running: controlPort=disabled 
+INFO 1 1527648429511 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 
+INFO 1 1527649951903 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 7 
+INFO 1 1527649951903 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
+INFO 1 1527649952013 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
+INFO 1 1527649952231 winstone.Logger:logInternal org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok) 
+INFO 1 1527649952231 winstone.Logger:logInternal Deployed web application found at ROOT 
+INFO 26 1527649952231 winstone.Logger:logInternal HTTP Listener started: port=2014 
+INFO 27 1527649952247 winstone.Logger:logInternal Winstone Servlet Engine v0.9.10 running: controlPort=disabled 
+INFO 1 1527649952247 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 
+INFO 1 1527651795073 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 7 
+INFO 1 1527651795083 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
+INFO 1 1527651795183 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
+INFO 1 1527651795413 winstone.Logger:logInternal org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok) 
+INFO 1 1527651795423 winstone.Logger:logInternal Deployed web application found at ROOT 
+INFO 26 1527651795423 winstone.Logger:logInternal HTTP Listener started: port=2014 
+INFO 27 1527651795423 winstone.Logger:logInternal Winstone Servlet Engine v0.9.10 running: controlPort=disabled 
+INFO 1 1527651795423 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 
+INFO 1 1527651864215 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 7 
+INFO 1 1527651864215 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
+INFO 1 1527651864324 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
+INFO 1 1527651864542 winstone.Logger:logInternal org.tuckey.web.filters.urlrewrite.UrlRewriteFilter INFO: loaded (conf ok) 
+INFO 1 1527651864542 winstone.Logger:logInternal Deployed web application found at ROOT 
+INFO 26 1527651864542 winstone.Logger:logInternal HTTP Listener started: port=2014 
+INFO 27 1527651864542 winstone.Logger:logInternal Winstone Servlet Engine v0.9.10 running: controlPort=disabled 
+INFO 1 1527651864542 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 

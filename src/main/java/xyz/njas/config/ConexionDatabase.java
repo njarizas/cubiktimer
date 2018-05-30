@@ -29,7 +29,7 @@ public class ConexionDatabase {
 		//Version de desarrollo
 		url="jdbc:mysql://localhost:3306/";
 		user="root";
-		password="";
+		password="1234";
 		database="juegos";
 		
 		

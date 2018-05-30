@@ -11,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.servlet.ServletContext;
 
 import xyz.njas.modelo.dto.RolDTO;
 import xyz.njas.modelo.dto.UsuarioDTO;
@@ -72,13 +71,7 @@ public class SesionManagedBean implements Serializable {
     }
 
     public String getContextPath() {
-        try {
-            ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-            return (String) servletContext.getContextPath();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+        return xyz.njas.util.Util.getContextPath();
     }
 
     public void localeChange(ValueChangeEvent event) {

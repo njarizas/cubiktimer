@@ -1,7 +1,8 @@
 package xyz.njas.modelo.rubik;
 
 import java.io.Serializable;
-import java.util.Random;
+
+import xyz.njas.util.ScrambleGenerator;
 
 /**
  *
@@ -188,32 +189,37 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		return secuenciaMezclada;
 	}
 
+	//	@Override
+	//	public String[] generarMezcla() {
+	//		String[] movimientos = {"F", "F'", "F2", "Fw", "Fw'", "Fw2", "B", "B'", "B2", "Bw", "Bw'", "Bw2", "U", "U'", "U2", "Uw", "Uw'", "Uw2", "D", "D'", "D2", "Dw", "Dw'", "Dw2", "R", "R'", "R2", "Rw", "Rw'", "Rw2", "L", "L'", "L2", "Lw", "Lw'", "Lw2"};
+	//		int num;
+	//		int[] mezclaInt = new int[60];
+	//		String[] mezcla = new String[mezclaInt.length];
+	//		Random random = new Random();
+	//		for (int i = 0; i < mezcla.length; i++) {
+	//			num = random.nextInt(movimientos.length);
+	//			//para que no se gire dos veces seguidas la misma cara
+	//			if (i != 0) {
+	//				while (mezclaInt[i - 1] / 3 == num / 3) {
+	//					num = random.nextInt(movimientos.length);
+	//				}
+	//			}
+	//			//para que no se hagan tres movimientos que se pueden expresar con solo dos
+	//			if (i > 1) {
+	//				while ((mezclaInt[i - 2] / 9 == mezclaInt[i - 1] / 9) && (mezclaInt[i - 1] / 9 == num / 9)) {
+	//					num = random.nextInt(movimientos.length);
+	//				}
+	//			}
+	//			//TODO implementar lógica para que las mezclas de 5x5 cumplan con los requisitos de WCA
+	//			mezclaInt[i] = num;
+	//			mezcla[i] = movimientos[mezclaInt[i]];
+	//		}
+	//		return mezcla;
+	//	}
+
 	@Override
 	public String[] generarMezcla() {
-		String[] movimientos = {"F", "F'", "F2", "Fw", "Fw'", "Fw2", "B", "B'", "B2", "Bw", "Bw'", "Bw2", "U", "U'", "U2", "Uw", "Uw'", "Uw2", "D", "D'", "D2", "Dw", "Dw'", "Dw2", "R", "R'", "R2", "Rw", "Rw'", "Rw2", "L", "L'", "L2", "Lw", "Lw'", "Lw2"};
-		int num;
-		int[] mezclaInt = new int[60];
-		String[] mezcla = new String[mezclaInt.length];
-		Random random = new Random();
-		for (int i = 0; i < mezcla.length; i++) {
-			num = random.nextInt(movimientos.length);
-			//para que no se gire dos veces seguidas la misma cara
-			if (i != 0) {
-				while (mezclaInt[i - 1] / 3 == num / 3) {
-					num = random.nextInt(movimientos.length);
-				}
-			}
-			//para que no se hagan tres movimientos que se pueden expresar con solo dos
-			if (i > 1) {
-				while ((mezclaInt[i - 2] / 9 == mezclaInt[i - 1] / 9) && (mezclaInt[i - 1] / 9 == num / 9)) {
-					num = random.nextInt(movimientos.length);
-				}
-			}
-			//TODO implementar lógica para que las mezclas de 5x5 cumplan con los requisitos de WCA
-			mezclaInt[i] = num;
-			mezcla[i] = movimientos[mezclaInt[i]];
-		}
-		return mezcla;
+		return ScrambleGenerator.generarMezcla("555");
 	}
 
 	@Override
@@ -346,7 +352,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[19][8] = cubo[16][9];
 		cubo[16][9] = cubo[15][6];
 		cubo[15][6] = celdaTempo;
-		
+
 		celdaTempo = cubo[16][6];
 		cubo[16][6] = cubo[18][6];
 		cubo[18][6] = cubo[18][8];
@@ -357,7 +363,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[18][7] = cubo[17][8];
 		cubo[17][8] = cubo[16][7];
 		cubo[16][7] = celdaTempo;
-		
+
 		celdaTempo = cubo[14][5];
 		cubo[14][5] = cubo[5][0];
 		cubo[5][0] = cubo[0][9];
@@ -383,10 +389,10 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[9][0] = cubo[0][5];
 		cubo[0][5] = cubo[5][14];
 		cubo[5][14] = celdaTempo;
-		
+
 
 	}
-	
+
 	public void bw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			bw();
@@ -454,7 +460,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[14][8] = cubo[11][9];
 		cubo[11][9] = cubo[10][6];
 		cubo[10][6] = celdaTempo;
-		
+
 		celdaTempo = cubo[11][6];
 		cubo[11][6] = cubo[13][6];
 		cubo[13][6] = cubo[13][8];
@@ -465,7 +471,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[13][7] = cubo[12][8];
 		cubo[12][8] = cubo[11][7];
 		cubo[11][7] = celdaTempo;
-		
+
 		celdaTempo = cubo[9][14];
 		cubo[9][14] = cubo[9][9];
 		cubo[9][9] = cubo[9][4];
@@ -492,7 +498,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[9][0] = cubo[15][9];
 		cubo[15][9] = celdaTempo;
 	}
-	
+
 	public void dw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			dw();
@@ -559,7 +565,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[9][8] = cubo[6][9];
 		cubo[6][9] = cubo[5][6];
 		cubo[5][6] = celdaTempo;
-		
+
 		celdaTempo = cubo[6][6];
 		cubo[6][6] = cubo[8][6];
 		cubo[8][6] = cubo[8][8];
@@ -570,7 +576,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[8][7] = cubo[7][8];
 		cubo[7][8] = cubo[6][7];
 		cubo[6][7] = celdaTempo;
-		
+
 		celdaTempo = cubo[4][9];
 		cubo[4][9] = cubo[5][4];
 		cubo[5][4] = cubo[10][5];
@@ -664,7 +670,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[9][3] = cubo[6][4];
 		cubo[6][4] = cubo[5][1];
 		cubo[5][1] = celdaTempo;
-		
+
 		celdaTempo = cubo[6][1];
 		cubo[6][1] = cubo[8][1];
 		cubo[8][1] = cubo[8][3];
@@ -675,7 +681,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[8][2] = cubo[7][3];
 		cubo[7][3] = cubo[6][2];
 		cubo[6][2] = celdaTempo;
-		
+
 		celdaTempo = cubo[19][5];
 		cubo[19][5] = cubo[14][5];
 		cubo[14][5] = cubo[9][5];
@@ -702,7 +708,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[5][5] = cubo[0][5];
 		cubo[0][5] = celdaTempo;
 	}
-	
+
 	public void lw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			lw();
@@ -769,7 +775,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[9][13] = cubo[6][14];
 		cubo[6][14] = cubo[5][11];
 		cubo[5][11] = celdaTempo;
-		
+
 		celdaTempo = cubo[6][11];
 		cubo[6][11] = cubo[8][11];
 		cubo[8][11] = cubo[8][13];
@@ -780,7 +786,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[8][12] = cubo[7][13];
 		cubo[7][13] = cubo[6][12];
 		cubo[6][12] = celdaTempo;
-		
+
 		celdaTempo = cubo[0][9];
 		cubo[0][9] = cubo[5][9];
 		cubo[5][9] = cubo[10][9];
@@ -807,7 +813,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[14][9] = cubo[19][9];
 		cubo[19][9] = celdaTempo;
 	}
-	
+
 	public void rw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			rw();
@@ -874,7 +880,7 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 		cubo[4][8] = cubo[1][9];
 		cubo[1][9] = cubo[0][6];
 		cubo[0][6] = celdaTempo;
-		
+
 		celdaTempo = cubo[1][6];
 		cubo[1][6] = cubo[3][6];
 		cubo[3][6] = cubo[3][8];

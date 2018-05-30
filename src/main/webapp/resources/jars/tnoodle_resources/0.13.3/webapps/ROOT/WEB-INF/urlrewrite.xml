@@ -1,0 +1,67 @@
+<urlrewrite>
+
+    <rule>
+        <from>^/$</from>
+        <to last="true" qsappend="true" type="redirect">/scramble/</to>
+    </rule>
+
+    <rule>
+        <from>^/favicon.ico$</from>
+        <to last="true" type="redirect">/wca/favicon.ico</to>
+    </rule>
+
+    <rule>
+        <from>^/scramble$</from>
+        <to last="true" qsappend="true" type="redirect">/scramble/</to>
+    </rule>
+    <rule>
+        <from>^/scramble/static</from>
+        <to type="forward">/wca/new-ui/static</to>
+    </rule>
+    <rule>
+        <from>^/scramble/[^.]*$</from>
+        <to type="forward">/wca/new-ui/index.html</to>
+    </rule>
+
+    <rule>
+        <from>^/scramble-legacy$</from>
+        <to last="true" qsappend="true" type="redirect">/scramble-legacy/</to>
+    </rule>
+    <rule>
+        <from>^/scramble-legacy/$</from>
+        <to type="forward">/wca/scramblegen.html</to>
+    </rule>
+
+    <rule>
+        <from>^/readme$</from>
+        <to type="forward">/wca/readme-tnoodle.md</to>
+    </rule>
+    <rule>
+        <from>^/readme.md$</from>
+        <to type="forward">/wca/readme-tnoodle.md</to>
+    </rule>
+
+<rule>
+        <note>
+            The rule means that requests to /test/status/ will be redirected to /rewrite-status
+            the url will be rewritten.
+        </note>
+        <from>/test/status/</from>
+        <to type="redirect">%{context-path}/rewrite-status</to>
+    </rule>
+
+
+    <outbound-rule>
+        <note>
+            The outbound-rule specifies that when response.encodeURL is called (if you are using JSTL c:url)
+            the url /rewrite-status will be rewritten to /test/status/.
+
+            The above rule and this outbound-rule means that end users should never see the
+            url /rewrite-status only /test/status/ both in their location bar and in hyperlinks
+            in your pages.
+        </note>
+        <from>/rewrite-status</from>
+        <to>/test/status/</to>
+    </outbound-rule>
+
+</urlrewrite>

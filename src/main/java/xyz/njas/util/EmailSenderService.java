@@ -9,14 +9,12 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.context.FacesContext;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletContext;
 
 import xyz.njas.modelo.dto.UsuarioDTO;
 
@@ -98,8 +96,7 @@ public class EmailSenderService implements EmailSenderInterface {
 	}
 
 	private String obtenerRutaPlantillasHTML() {
-		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-		String realPath=(String) servletContext.getRealPath("/");
+		String realPath = Util.getRealPath();
 		String ruta = realPath+"WEB-INF/plantillasHTML/";
 		return ruta;
 	}
