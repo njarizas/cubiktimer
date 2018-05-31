@@ -2,10 +2,12 @@ package xyz.njas.modelo.dto;
 
 import java.io.Serializable;
 
-public class TiempoRubikDTO implements Serializable {
+import xyz.njas.util.Constantes;
+
+public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer idTiempo;
 	private Integer idSesion;
 	private Integer idTipoCubo;
@@ -40,6 +42,46 @@ public class TiempoRubikDTO implements Serializable {
 		this.tiempoTexto = tiempoTexto;
 		this.dnf = dnf;
 		this.penalizacion = penalizacion;
+	}
+
+	@Override
+	public int compareTo(TiempoRubikDTO otherTiempo) {
+		if (this.getDnf().equals(otherTiempo.getDnf())) {
+			//Cuando los dos son dnf entonces son iguales
+			if (this.getDnf()) {
+				return 0;
+			} else {
+				Integer este = this.getTiempoMilisegundos();
+				Integer otro = otherTiempo.getTiempoMilisegundos();
+				//se aplican penalizaciones si las tienen
+				if (this.getPenalizacion()) {
+					este += 2000;
+				}
+				if (otherTiempo.getPenalizacion()) {
+					otro += 2000;
+				}
+				if (este<otro) {
+					return -1;
+				} else if (este<otro) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		} else { //uno es DNF y el otro no
+			if (this.getDnf()) {
+				return 1;
+			} else {
+				return -11;
+			}
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "TiempoRubikDTO [mezcla=" + mezcla + ", tiempoMilisegundos="
+				+ tiempoMilisegundos + ", tiempoTexto=" + tiempoTexto + ", dnf=" + dnf + ", penalizacion="
+				+ penalizacion + "]";
 	}
 
 	public Integer getIdTiempo() {
@@ -91,6 +133,17 @@ public class TiempoRubikDTO implements Serializable {
 	}
 
 	public Integer getTiempoMilisegundos() {
+		return tiempoMilisegundos;
+	}
+	
+	/**
+	 * Metodo que retorna los milisegundos gastados sumandole 2000 en caso de que tenga penalización
+	 * @return
+	 */
+	public Integer getTiempoRealMilisegundos() {
+		if (this.getPenalizacion()) {
+			return tiempoMilisegundos + Constantes.milisegundosPenalizacion;
+		}
 		return tiempoMilisegundos;
 	}
 

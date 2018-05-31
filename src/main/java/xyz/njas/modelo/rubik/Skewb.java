@@ -3,6 +3,8 @@ package xyz.njas.modelo.rubik;
 import java.io.Serializable;
 import java.util.Random;
 
+import xyz.njas.util.Constantes;
+
 public class Skewb extends Puzzle implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -16,12 +18,12 @@ public class Skewb extends Puzzle implements Serializable{
 
 	public Skewb(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre);
-		top = new CaraSkewb("white");
-		left = new CaraSkewb("#ff6702");
-		front = new CaraSkewb("green");
-		right = new CaraSkewb("red");
-		bottom = new CaraSkewb("yellow");
-		back = new CaraSkewb("blue");
+		top = new CaraSkewb(Constantes.colorBlanco);
+		left = new CaraSkewb(Constantes.colorNaranja);
+		front = new CaraSkewb(Constantes.colorVerde);
+		right = new CaraSkewb(Constantes.colorRojo);
+		bottom = new CaraSkewb(Constantes.colorAmarillo);
+		back = new CaraSkewb(Constantes.colorAzul);
 	}
 
 	@Override
@@ -125,6 +127,7 @@ public class Skewb extends Puzzle implements Serializable{
 		return secuenciaMezclada;
 	}
 
+	//TODO generar mezcla con el software de WCA
 	@Override
 	public String[] generarMezcla() {
 		String[] movimientos = {"U", "U'", "B", "B'", "R", "R'", "L", "L'"};

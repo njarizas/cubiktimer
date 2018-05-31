@@ -2,6 +2,7 @@ package xyz.njas.modelo.rubik;
 
 import java.io.Serializable;
 
+import xyz.njas.util.Constantes;
 import xyz.njas.util.ScrambleGenerator;
 
 /**
@@ -21,35 +22,35 @@ public class CuboRubik2x2 extends CuboRubik implements Serializable {
 			}
 		}
 		//TOP
-		cubo[0][2] = new Celda("white");
-		cubo[0][3] = new Celda("white");
-		cubo[1][2] = new Celda("white");
-		cubo[1][3] = new Celda("white");
+		cubo[0][2] = new Celda(Constantes.colorBlanco);
+		cubo[0][3] = new Celda(Constantes.colorBlanco);
+		cubo[1][2] = new Celda(Constantes.colorBlanco);
+		cubo[1][3] = new Celda(Constantes.colorBlanco);
 		//LEFT
-		cubo[2][0] = new Celda("#ff6702");
-		cubo[2][1] = new Celda("#ff6702");
-		cubo[3][0] = new Celda("#ff6702");
-		cubo[3][1] = new Celda("#ff6702");
+		cubo[2][0] = new Celda(Constantes.colorNaranja);
+		cubo[2][1] = new Celda(Constantes.colorNaranja);
+		cubo[3][0] = new Celda(Constantes.colorNaranja);
+		cubo[3][1] = new Celda(Constantes.colorNaranja);
 		//FRONT
-		cubo[2][2] = new Celda("green");
-		cubo[2][3] = new Celda("green");
-		cubo[3][2] = new Celda("green");
-		cubo[3][3] = new Celda("green");
+		cubo[2][2] = new Celda(Constantes.colorVerde);
+		cubo[2][3] = new Celda(Constantes.colorVerde);
+		cubo[3][2] = new Celda(Constantes.colorVerde);
+		cubo[3][3] = new Celda(Constantes.colorVerde);
 		//RIGHT
-		cubo[2][4] = new Celda("red");
-		cubo[2][5] = new Celda("red");
-		cubo[3][4] = new Celda("red");
-		cubo[3][5] = new Celda("red");
+		cubo[2][4] = new Celda(Constantes.colorRojo);
+		cubo[2][5] = new Celda(Constantes.colorRojo);
+		cubo[3][4] = new Celda(Constantes.colorRojo);
+		cubo[3][5] = new Celda(Constantes.colorRojo);
 		//DOWN
-		cubo[4][2] = new Celda("yellow");
-		cubo[4][3] = new Celda("yellow");
-		cubo[5][2] = new Celda("yellow");
-		cubo[5][3] = new Celda("yellow");
+		cubo[4][2] = new Celda(Constantes.colorAmarillo);
+		cubo[4][3] = new Celda(Constantes.colorAmarillo);
+		cubo[5][2] = new Celda(Constantes.colorAmarillo);
+		cubo[5][3] = new Celda(Constantes.colorAmarillo);
 		//BACK
-		cubo[6][2] = new Celda("blue");
-		cubo[6][3] = new Celda("blue");
-		cubo[7][2] = new Celda("blue");
-		cubo[7][3] = new Celda("blue");
+		cubo[6][2] = new Celda(Constantes.colorAzul);
+		cubo[6][3] = new Celda(Constantes.colorAzul);
+		cubo[7][2] = new Celda(Constantes.colorAzul);
+		cubo[7][3] = new Celda(Constantes.colorAzul);
 
 	}
 

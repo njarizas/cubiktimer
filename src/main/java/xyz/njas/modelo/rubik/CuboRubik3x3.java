@@ -1,14 +1,8 @@
 package xyz.njas.modelo.rubik;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.ConnectException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
+import xyz.njas.util.Constantes;
 import xyz.njas.util.ScrambleGenerator;
 
 /**
@@ -31,65 +25,65 @@ public class CuboRubik3x3 extends CuboRubik implements Serializable {
 			}
 		}
 		//TOP
-		cubo[0][3] = new Celda("white");
-		cubo[0][4] = new Celda("white");
-		cubo[0][5] = new Celda("white");
-		cubo[1][3] = new Celda("white");
-		cubo[1][4] = new Celda("white");
-		cubo[1][5] = new Celda("white");
-		cubo[2][3] = new Celda("white");
-		cubo[2][4] = new Celda("white");
-		cubo[2][5] = new Celda("white");
+		cubo[0][3] = new Celda(Constantes.colorBlanco);
+		cubo[0][4] = new Celda(Constantes.colorBlanco);
+		cubo[0][5] = new Celda(Constantes.colorBlanco);
+		cubo[1][3] = new Celda(Constantes.colorBlanco);
+		cubo[1][4] = new Celda(Constantes.colorBlanco);
+		cubo[1][5] = new Celda(Constantes.colorBlanco);
+		cubo[2][3] = new Celda(Constantes.colorBlanco);
+		cubo[2][4] = new Celda(Constantes.colorBlanco);
+		cubo[2][5] = new Celda(Constantes.colorBlanco);
 		//LEFT
-		cubo[3][0] = new Celda("#ff6702");
-		cubo[3][1] = new Celda("#ff6702");
-		cubo[3][2] = new Celda("#ff6702");
-		cubo[4][0] = new Celda("#ff6702");
-		cubo[4][1] = new Celda("#ff6702");
-		cubo[4][2] = new Celda("#ff6702");
-		cubo[5][0] = new Celda("#ff6702");
-		cubo[5][1] = new Celda("#ff6702");
-		cubo[5][2] = new Celda("#ff6702");
+		cubo[3][0] = new Celda(Constantes.colorNaranja);
+		cubo[3][1] = new Celda(Constantes.colorNaranja);
+		cubo[3][2] = new Celda(Constantes.colorNaranja);
+		cubo[4][0] = new Celda(Constantes.colorNaranja);
+		cubo[4][1] = new Celda(Constantes.colorNaranja);
+		cubo[4][2] = new Celda(Constantes.colorNaranja);
+		cubo[5][0] = new Celda(Constantes.colorNaranja);
+		cubo[5][1] = new Celda(Constantes.colorNaranja);
+		cubo[5][2] = new Celda(Constantes.colorNaranja);
 		//FRONT
-		cubo[3][3] = new Celda("green");
-		cubo[3][4] = new Celda("green");
-		cubo[3][5] = new Celda("green");
-		cubo[4][3] = new Celda("green");
-		cubo[4][4] = new Celda("green");
-		cubo[4][5] = new Celda("green");
-		cubo[5][3] = new Celda("green");
-		cubo[5][4] = new Celda("green");
-		cubo[5][5] = new Celda("green");
+		cubo[3][3] = new Celda(Constantes.colorVerde);
+		cubo[3][4] = new Celda(Constantes.colorVerde);
+		cubo[3][5] = new Celda(Constantes.colorVerde);
+		cubo[4][3] = new Celda(Constantes.colorVerde);
+		cubo[4][4] = new Celda(Constantes.colorVerde);
+		cubo[4][5] = new Celda(Constantes.colorVerde);
+		cubo[5][3] = new Celda(Constantes.colorVerde);
+		cubo[5][4] = new Celda(Constantes.colorVerde);
+		cubo[5][5] = new Celda(Constantes.colorVerde);
 		//RIGHT
-		cubo[3][6] = new Celda("red");
-		cubo[3][7] = new Celda("red");
-		cubo[3][8] = new Celda("red");
-		cubo[4][6] = new Celda("red");
-		cubo[4][7] = new Celda("red");
-		cubo[4][8] = new Celda("red");
-		cubo[5][6] = new Celda("red");
-		cubo[5][7] = new Celda("red");
-		cubo[5][8] = new Celda("red");
+		cubo[3][6] = new Celda(Constantes.colorRojo);
+		cubo[3][7] = new Celda(Constantes.colorRojo);
+		cubo[3][8] = new Celda(Constantes.colorRojo);
+		cubo[4][6] = new Celda(Constantes.colorRojo);
+		cubo[4][7] = new Celda(Constantes.colorRojo);
+		cubo[4][8] = new Celda(Constantes.colorRojo);
+		cubo[5][6] = new Celda(Constantes.colorRojo);
+		cubo[5][7] = new Celda(Constantes.colorRojo);
+		cubo[5][8] = new Celda(Constantes.colorRojo);
 		//DOWN
-		cubo[6][3] = new Celda("yellow");
-		cubo[6][4] = new Celda("yellow");
-		cubo[6][5] = new Celda("yellow");
-		cubo[7][3] = new Celda("yellow");
-		cubo[7][4] = new Celda("yellow");
-		cubo[7][5] = new Celda("yellow");
-		cubo[8][3] = new Celda("yellow");
-		cubo[8][4] = new Celda("yellow");
-		cubo[8][5] = new Celda("yellow");
+		cubo[6][3] = new Celda(Constantes.colorAmarillo);
+		cubo[6][4] = new Celda(Constantes.colorAmarillo);
+		cubo[6][5] = new Celda(Constantes.colorAmarillo);
+		cubo[7][3] = new Celda(Constantes.colorAmarillo);
+		cubo[7][4] = new Celda(Constantes.colorAmarillo);
+		cubo[7][5] = new Celda(Constantes.colorAmarillo);
+		cubo[8][3] = new Celda(Constantes.colorAmarillo);
+		cubo[8][4] = new Celda(Constantes.colorAmarillo);
+		cubo[8][5] = new Celda(Constantes.colorAmarillo);
 		//BACK
-		cubo[9][3] = new Celda("blue");
-		cubo[9][4] = new Celda("blue");
-		cubo[9][5] = new Celda("blue");
-		cubo[10][3] = new Celda("blue");
-		cubo[10][4] = new Celda("blue");
-		cubo[10][5] = new Celda("blue");
-		cubo[11][3] = new Celda("blue");
-		cubo[11][4] = new Celda("blue");
-		cubo[11][5] = new Celda("blue");
+		cubo[9][3] = new Celda(Constantes.colorAzul);
+		cubo[9][4] = new Celda(Constantes.colorAzul);
+		cubo[9][5] = new Celda(Constantes.colorAzul);
+		cubo[10][3] = new Celda(Constantes.colorAzul);
+		cubo[10][4] = new Celda(Constantes.colorAzul);
+		cubo[10][5] = new Celda(Constantes.colorAzul);
+		cubo[11][3] = new Celda(Constantes.colorAzul);
+		cubo[11][4] = new Celda(Constantes.colorAzul);
+		cubo[11][5] = new Celda(Constantes.colorAzul);
 	}
 
 	@Override

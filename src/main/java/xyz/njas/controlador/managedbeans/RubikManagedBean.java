@@ -154,7 +154,7 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String guardarSesionRubik() {
-		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()==null && sesionManagedBean.getUsuarioLogueado().getIdUsuario()!=null) {
+		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()==null && sesionManagedBean.getUsuarioLogueado()!=null && sesionManagedBean.getUsuarioLogueado().getIdUsuario()!=null) {
 			sesionRubikActual.getSesionRubikDTO().setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
 		}
 		if(rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos())>0){

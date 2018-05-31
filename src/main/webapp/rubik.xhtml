@@ -160,10 +160,9 @@ body {
 					<div class="col-xs-12">
 						<table id="table"
 							class="table table-hover table-condensed table-bordered table-striped"
-							data-toggle="table" data-pagination="true"
-							data-sort-name="#" data-sort-order="desc"
-							data-show-toggle="true" data-show-columns="true"
-							data-search="false" data-page-size="5"
+							data-toggle="table" data-pagination="true" data-sort-name="#"
+							data-sort-order="desc" data-show-toggle="true"
+							data-show-columns="true" data-search="false" data-page-size="5"
 							data-page-list="[5,10,15,20,Todos]">
 							<thead>
 								<tr>
@@ -631,8 +630,12 @@ body {
 					</div>
 				</h:panelGroup>
 				<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
-					<div id="lblTiempo">AVG:
-						#{rubikManagedBean.sesionRubikActual.Promedio()}</div>
+					<div id="lblavgTiempo">AVG:
+						#{rubikManagedBean.sesionRubikActual.promedio()}</div>
+					<div id="lblao5Tiempo">Ao5:
+						#{rubikManagedBean.sesionRubikActual.ao5actual()}</div>
+					<div id="lblao12Tiempo">Ao12:
+						#{rubikManagedBean.sesionRubikActual.ao12actual()}</div>
 				</div>
 				<span class="help-block"></span>
 				<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">

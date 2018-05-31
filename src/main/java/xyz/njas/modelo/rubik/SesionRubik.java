@@ -1,6 +1,7 @@
 package xyz.njas.modelo.rubik;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +13,48 @@ public class SesionRubik {
 	private List<Tiempo> tiempos;
 	private SesionRubikDTO sesionRubikDTO;
 	
-	public String Promedio(){
+	public String promedio(){
 		Integer acumulado=0;
 		for (Tiempo tiempo : tiempos) {
-			acumulado += tiempo.getTiempoRubikDTO().getTiempoMilisegundos();
+			acumulado += tiempo.getTiempoRubikDTO().getTiempoRealMilisegundos();
 		}
 		return (String) ((tiempos.size()!=0)?Util.darFormatoTiempo(acumulado/tiempos.size()):"-:--.--");
+	}
+	
+	public String ao5actual() {
+		Integer acumulado=0;
+		if (tiempos.size()<5) {
+			return "-:--.--";
+		} else {
+		List<Tiempo> ultimosCincoTiempos = new ArrayList<Tiempo>(tiempos.subList(tiempos.size()-5,tiempos.size()));
+		Collections.sort(ultimosCincoTiempos);
+		for (int i=1;i<=3;i++) {
+			if (ultimosCincoTiempos.get(i).getTiempoRubikDTO().getDnf()) {
+				return "DNF";
+			}
+			Integer esteTiempo = ultimosCincoTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
+			acumulado += esteTiempo;
+		}
+		return (String) ((ultimosCincoTiempos.size()!=0)?Util.darFormatoTiempo(acumulado/3):"-:--.--");
+		}
+	}
+	
+	public String ao12actual() {
+		Integer acumulado=0;
+		if (tiempos.size()<12) {
+			return "-:--.--";
+		} else {
+		List<Tiempo> ultimosDoceTiempos = new ArrayList<Tiempo>(tiempos.subList(tiempos.size()-12,tiempos.size()));
+		Collections.sort(ultimosDoceTiempos);
+		for (int i=1;i<=10;i++) {
+			if (ultimosDoceTiempos.get(i).getTiempoRubikDTO().getDnf()) {
+				return "DNF";
+			}
+			Integer esteTiempo = ultimosDoceTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
+			acumulado += esteTiempo;
+		}
+		return (String) ((ultimosDoceTiempos.size()!=0)?Util.darFormatoTiempo(acumulado/10):"-:--.--");
+		}
 	}
 	
 	public SesionRubik(Date fecha) {
