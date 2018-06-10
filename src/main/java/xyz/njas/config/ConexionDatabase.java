@@ -12,11 +12,14 @@ public class ConexionDatabase {
 	private static Connection conn;
 	
 //    private String host;
+    private String url;
+    private String database;
+    private String properties;
     private String user;
     private String password;
-    private String database;
-    private String url;
-	
+   
+
+    
 	private ConexionDatabase(){
 		
 		//Version de produccion
@@ -28,14 +31,16 @@ public class ConexionDatabase {
 		
 		//Version de desarrollo
 		url="jdbc:mysql://localhost:3306/";
+		database="juegos";
+		properties = "?autoReconnect=true&useUnicode=yes";
 		user="root";
 		password="1234";
-		database="juegos";
+		
 		
 		
 		try{
 		Class.forName(DRIVER).newInstance();
-		conn = DriverManager.getConnection(url+database, user, password);
+		conn = DriverManager.getConnection(url+database+properties, user, password);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

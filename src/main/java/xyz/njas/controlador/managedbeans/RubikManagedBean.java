@@ -178,7 +178,7 @@ public class RubikManagedBean implements Serializable {
 		return "";
 	}
 
-	public String dnf(Tiempo t) {
+	public String mostrarDNF(Tiempo t) {
 		if (sesionRubikActual.getTiempos().contains(t)) {
 			if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getDnf()) {
 				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setTiempoTexto("DNF("+Util.darFormatoTiempo(sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
@@ -200,7 +200,7 @@ public class RubikManagedBean implements Serializable {
 		return "";
 	}
 
-	public String penalizacion(Tiempo t) {
+	public String mostrarPenalizacion(Tiempo t) {
 		if (sesionRubikActual.getTiempos().contains(t)) {
 			if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getDnf()) {
 				if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getPenalizacion()) {

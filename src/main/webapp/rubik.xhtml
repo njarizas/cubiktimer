@@ -186,10 +186,10 @@ body {
 									<td>#{tiempo.tiempoRubikDTO.mezcla}</td>
 									<td>#{tiempo.tiempoRubikDTO.tiempoTexto}</td>
 									<td><h:commandButton
-											action="#{rubikManagedBean.dnf(tiempo)}"
+											action="#{rubikManagedBean.mostrarDNF(tiempo)}"
 											styleClass="btn btn-sm #{(tiempo.tiempoRubikDTO.dnf)?'btn-info':'btn-default'}"
 											value="DNF"></h:commandButton> <h:commandButton
-											action="#{rubikManagedBean.penalizacion(tiempo)}"
+											action="#{rubikManagedBean.mostrarPenalizacion(tiempo)}"
 											styleClass="btn btn-sm #{(tiempo.tiempoRubikDTO.penalizacion)?'btn-info':'btn-default'}"
 											style="margin-left: 4px;" value="+2"></h:commandButton> <h:commandButton
 											action="#{rubikManagedBean.eliminarTiempo(tiempo)}"
