@@ -35,6 +35,7 @@ public class RegistroManagedBean implements Serializable {
 
     public RegistroManagedBean() {
     	usuario = new UsuarioDTO();
+    	usuario.setEstado(2);
     	usuarioDAO = new UsuarioDAO();
     	credencialDAO = new CredencialDAO();
     }

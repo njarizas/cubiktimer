@@ -3,19 +3,21 @@ package xyz.njas.modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.njas.modelo.dto.UsuarioDTO;
 import xyz.njas.modelo.rubik.estadisticas.CuentaPuzzle;
 import xyz.njas.modelo.rubik.estadisticas.ListaPromedioCategoria;
-import xyz.njas.modelo.rubik.estadisticas.ListaPromedios;
 import xyz.njas.modelo.rubik.estadisticas.Promedio;
-import xyz.njas.util.Util;
 
 public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	
+	/**
+	 * Método que retorna las categorías que se han registrado y la cantidad de tiempos que se han registrado en cada categoría,
+	 * se usa para generar la gráfica de pastel en el front
+	 * @param idUsuario
+	 * @return
+	 */
 	public List<CuentaPuzzle> obtenerListaConteoPuzzles(Integer idUsuario) {
 		conectar();
         List<CuentaPuzzle> lista = new ArrayList();
@@ -46,6 +48,12 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
         return lista;
     }
 	
+	/**
+	 * Método que retorna la lista de promedios de un tipo de cubo agrupando por fecha, se usa para hacer una gráfica de línea
+	 * @param idUsuario
+	 * @param idTipoCubo
+	 * @return
+	 */
 	public List<Promedio> obtenerListaPromediosCategoria(Integer idUsuario, Integer idTipoCubo){
 		conectar();
         List<Promedio> lista = new ArrayList();
@@ -82,6 +90,11 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
         return lista;
 	}
 	
+	/**
+	 * Metodo que retorna una lista con los id de las categorias que el usuario ha registrado
+	 * @param idUsuario
+	 * @return
+	 */
 	public List<Integer> obtenerIdCategoriasRegistradas(Integer idUsuario){
 		conectar();
         List<Integer> lista = new ArrayList();

@@ -40,7 +40,7 @@ public class ConfiguracionManagedBean {
 		this.idioma.setValorTexto("ES");
 		this.paginaInicial = new ConfiguracionDTO();
 		this.paginaInicial.setIdTipo(23);
-		this.paginaInicial.setValorTexto("ahorcado");
+		this.paginaInicial.setValorTexto("rubik");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		idUsuario=(Integer)fc.getExternalContext().getSessionMap().get("idUsuario");
 		configuracionFacade = new ConfiguracionFacade();

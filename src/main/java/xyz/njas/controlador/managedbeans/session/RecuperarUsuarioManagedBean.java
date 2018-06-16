@@ -1,6 +1,7 @@
 package xyz.njas.controlador.managedbeans.session;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -41,6 +42,7 @@ public class RecuperarUsuarioManagedBean {
 
 	public String recuperarClave() {
 		List<UsuarioDTO> lu=usuarioDAO.consultarUsuarioPorCorreo(email.trim());
+		
 		String retorno = "";
 		if (lu.isEmpty()){
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
@@ -50,6 +52,7 @@ public class RecuperarUsuarioManagedBean {
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else {
+			UsuarioDTO u = lu.get(0);
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
 			//TODO internacionalizar mensaje
 			sesionManagedBean.getMensaje().setText("Hemos enviado un correo electrónico a la dirección: "+email.trim()+" con tu nueva contraseña.");
@@ -57,7 +60,10 @@ public class RecuperarUsuarioManagedBean {
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			EmailSenderInterface emailSender = new EmailSenderService();
 			//TODO generar clave aleatoria
-            emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), EncryptService.encriptarClave("123456"));
+			String nuevaClave = generarClaveAleatoria();
+            emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave);
+            u.setClave(EncryptService.encriptarClave(nuevaClave));
+            usuarioDAO.update(u);
 		}
 		return retorno;
 	}
@@ -89,6 +95,16 @@ public class RecuperarUsuarioManagedBean {
 		}
 		return retorno;
 	}
+	
+    public String generarClaveAleatoria() {
+        char[] caracteres;
+        caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#', '$', '%', '&', '+', '-', '*', '~', '^', '<', '>', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        String pass = "";
+        for (int i = 0; i < 12; i++) {
+            pass += caracteres[new Random().nextInt(75)];
+        }
+        return pass;
+    }
 
 	public String getEmail() {
 		return email;

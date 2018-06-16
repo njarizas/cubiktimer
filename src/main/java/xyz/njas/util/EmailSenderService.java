@@ -34,8 +34,8 @@ public class EmailSenderService implements EmailSenderInterface {
 	private MimeMessage mimeMessage;
 
 	public EmailSenderService() {
-		this.emailRemitente = "es.sigolf@gmail.com";
-		this.passRemitente = "Sigolf954738";
+		this.emailRemitente = "cubiktimer@gmail.com";
+		this.passRemitente = "CubikTimer2018";
 	}
 
 	private void init() {

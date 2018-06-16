@@ -88,7 +88,7 @@ public class IniciarSesionManagedBean {
 						String paginaInicio = cDto2.getValorTexto();
 						return "/"+paginaInicio+"?faces-redirect=true";
 					}
-					return "/ahorcado?faces-redirect=true";
+					return "/rubik?faces-redirect=true";
 				}
 				if (u.getEstado() == 2) {
 					sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));

@@ -32,7 +32,7 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 			ps.setString(7, Util.fechaHoraMySql.format(dto.getFechaNacimiento()));
 			ps.setString(8, Util.fechaHoraMySql.format(dto.getFechaCreacion()));
 			ps.setString(9, Util.fechaHoraMySql.format(dto.getFechaModificacion()));
-			ps.setObject(10, 1);
+			ps.setObject(10, dto.getEstado());
 			retorno=ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs != null && rs.next()) {
@@ -49,6 +49,41 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 			desconectar();
 		} 
 		return 0;
+	}
+	
+	public int update(UsuarioDTO dto) {
+		int retorno=0;
+		conectar();
+		String sql="UPDATE usuarios SET correo = ?, clave = ?, nombres = ?, apellidos = ?, sexo = ?, fecha_nacimiento = ?, fecha_creacion = ?, fecha_modificacion = ?, estado = ? WHERE id_usuario = ?;";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getCorreo());
+			ps.setString(2, dto.getClave());
+			ps.setString(3, dto.getNombres());
+			ps.setString(4, dto.getApellidos());
+			ps.setString(5, String.valueOf(dto.getSexo()));
+			ps.setString(6, Util.fechaHoraMySql.format(dto.getFechaNacimiento()));
+			ps.setString(7, Util.fechaHoraMySql.format(dto.getFechaCreacion()));
+			ps.setString(8, Util.fechaHoraMySql.format(dto.getFechaModificacion()));
+			ps.setObject(9, dto.getEstado());
+			ps.setObject(10, dto.getIdUsuario());
+			ps.executeUpdate();
+			retorno=dto.getIdUsuario();
+			desconectar();
+			return retorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			desconectar();
+		} 
+		return 0;
+	}
+	
+	public int merge(UsuarioDTO dto) {
+		if (dto.getIdUsuario()==null){
+			return create(dto);
+		} else{
+			return update(dto);
+		}
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreo(String correo){
@@ -89,6 +124,38 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				UsuarioDTO u = new UsuarioDTO();
+				u.setIdUsuario(rs.getInt("id_usuario"));
+				u.setCorreo(rs.getString("correo"));
+				u.setClave(rs.getString("clave"));
+				u.setNombres(rs.getString("nombres"));
+				u.setApellidos(rs.getString("apellidos"));
+				u.setSexo(rs.getString("sexo").charAt(0));
+				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
+				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
+				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
+				u.setEstado(rs.getInt("estado"));
+				lista.add(u);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public List<UsuarioDTO> consultarUsuarioPorIdUsuarioYClave(int idUsuario, String clave){
+		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
+		conectar();
+		String sql="SELECT * FROM usuarios WHERE id_usuario = ? AND clave = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idUsuario);
+			ps.setString(2, clave);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				UsuarioDTO u = new UsuarioDTO();
