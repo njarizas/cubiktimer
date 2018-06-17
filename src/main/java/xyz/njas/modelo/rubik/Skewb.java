@@ -1,9 +1,9 @@
 package xyz.njas.modelo.rubik;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import xyz.njas.util.Constantes;
+import xyz.njas.util.ScrambleGenerator;
 
 public class Skewb extends Puzzle implements Serializable{
 
@@ -59,7 +59,31 @@ public class Skewb extends Puzzle implements Serializable{
 	}
 
 	public void u() {
-		//TODO implementar giro
+		Celda celdaTempo;
+		celdaTempo = top.getCeldaCentro();
+		top.setCeldaCentro(back.getCeldaCentro());
+		back.setCeldaCentro(left.getCeldaCentro());
+		left.setCeldaCentro(celdaTempo);
+
+		celdaTempo = top.getCeldaNororiente();
+		top.setCeldaNororiente(back.getCeldaNoroccidente());
+		back.setCeldaNoroccidente(left.getCeldaNororiente());
+		left.setCeldaNororiente(celdaTempo);
+
+		celdaTempo = back.getCeldaSuroriente();
+		back.setCeldaSuroriente(left.getCeldaSuroccidente());
+		left.setCeldaSuroccidente(top.getCeldaSuroccidente());
+		top.setCeldaSuroccidente(celdaTempo);
+
+		celdaTempo = right.getCeldaNororiente();
+		right.setCeldaNororiente(bottom.getCeldaSuroccidente());
+		bottom.setCeldaSuroccidente(front.getCeldaNoroccidente());
+		front.setCeldaNoroccidente(celdaTempo);
+
+		celdaTempo = top.getCeldaNoroccidente();
+		top.setCeldaNoroccidente(back.getCeldaSuroccidente());
+		back.setCeldaSuroccidente(left.getCeldaNoroccidente());
+		left.setCeldaNoroccidente(celdaTempo);
 	}
 
 	public void b(int cant) {
@@ -70,30 +94,30 @@ public class Skewb extends Puzzle implements Serializable{
 
 	public void b() {
 		Celda celdaTempo;
-		celdaTempo = back.getCeldaNoroccidente();
-		back.setCeldaNoroccidente(bottom.getCeldaSuroccidente());
-		bottom.setCeldaSuroccidente(left.getCeldaSuroccidente());
-		left.setCeldaSuroccidente(celdaTempo);
-		
 		celdaTempo = back.getCeldaCentro();
 		back.setCeldaCentro(bottom.getCeldaCentro());
 		bottom.setCeldaCentro(left.getCeldaCentro());
 		left.setCeldaCentro(celdaTempo);
-		
+
+		celdaTempo = back.getCeldaNoroccidente();
+		back.setCeldaNoroccidente(bottom.getCeldaSuroccidente());
+		bottom.setCeldaSuroccidente(left.getCeldaSuroccidente());
+		left.setCeldaSuroccidente(celdaTempo);
+
 		celdaTempo = top.getCeldaNoroccidente();
 		top.setCeldaNoroccidente(right.getCeldaSuroriente());
 		right.setCeldaSuroriente(front.getCeldaSuroccidente());
 		front.setCeldaSuroccidente(celdaTempo);
-		
+
 		celdaTempo = back.getCeldaSuroccidente();
 		back.setCeldaSuroccidente(bottom.getCeldaSuroriente());
 		bottom.setCeldaSuroriente(left.getCeldaSuroriente());
 		left.setCeldaSuroriente(celdaTempo);
-		
+
 		celdaTempo = left.getCeldaNoroccidente();
 		left.setCeldaNoroccidente(back.getCeldaNororiente());
-		back.setCeldaNororiente(bottom.getCeldaNororiente());
-		bottom.setCeldaNororiente(celdaTempo);
+		back.setCeldaNororiente(bottom.getCeldaNoroccidente());
+		bottom.setCeldaNoroccidente(celdaTempo);
 	}
 
 	public void r(int cant) {
@@ -103,7 +127,31 @@ public class Skewb extends Puzzle implements Serializable{
 	}
 
 	public void r() {
-		//TODO implementar giro
+		Celda celdaTempo;
+		celdaTempo = right.getCeldaCentro();
+		right.setCeldaCentro(bottom.getCeldaCentro());
+		bottom.setCeldaCentro(back.getCeldaCentro());
+		back.setCeldaCentro(celdaTempo);
+
+		celdaTempo = right.getCeldaSuroccidente();
+		right.setCeldaSuroccidente(bottom.getCeldaSuroccidente());
+		bottom.setCeldaSuroccidente(back.getCeldaSuroriente());
+		back.setCeldaSuroriente(celdaTempo);
+
+		celdaTempo = front.getCeldaSuroriente();
+		front.setCeldaSuroriente(left.getCeldaSuroccidente());
+		left.setCeldaSuroccidente(top.getCeldaNororiente());
+		top.setCeldaNororiente(celdaTempo);
+
+		celdaTempo = bottom.getCeldaNororiente();
+		bottom.setCeldaNororiente(back.getCeldaNoroccidente());
+		back.setCeldaNoroccidente(right.getCeldaNororiente());
+		right.setCeldaNororiente(celdaTempo);
+
+		celdaTempo = right.getCeldaSuroriente();
+		right.setCeldaSuroriente(bottom.getCeldaSuroriente());
+		bottom.setCeldaSuroriente(back.getCeldaNororiente());
+		back.setCeldaNororiente(celdaTempo);
 	}
 
 	public void l(int cant) {
@@ -113,7 +161,31 @@ public class Skewb extends Puzzle implements Serializable{
 	}
 
 	public void l() {
-		//TODO implementar giro
+		Celda celdaTempo;
+		celdaTempo = front.getCeldaCentro();
+		front.setCeldaCentro(left.getCeldaCentro());
+		left.setCeldaCentro(bottom.getCeldaCentro());
+		bottom.setCeldaCentro(celdaTempo);
+
+		celdaTempo = front.getCeldaNoroccidente();
+		front.setCeldaNoroccidente(left.getCeldaSuroccidente());
+		left.setCeldaSuroccidente(bottom.getCeldaNororiente());
+		bottom.setCeldaNororiente(celdaTempo);
+
+		celdaTempo = top.getCeldaSuroccidente();
+		top.setCeldaSuroccidente(back.getCeldaNoroccidente());
+		back.setCeldaNoroccidente(right.getCeldaSuroccidente());
+		right.setCeldaSuroccidente(celdaTempo);
+
+		celdaTempo = left.getCeldaNororiente();
+		left.setCeldaNororiente(bottom.getCeldaSuroccidente());
+		bottom.setCeldaSuroccidente(front.getCeldaSuroriente());
+		front.setCeldaSuroriente(celdaTempo);
+
+		celdaTempo = front.getCeldaSuroccidente();
+		front.setCeldaSuroccidente(left.getCeldaSuroriente());
+		left.setCeldaSuroriente(bottom.getCeldaNoroccidente());
+		bottom.setCeldaNoroccidente(celdaTempo);
 	}
 
 	@Override
@@ -127,29 +199,31 @@ public class Skewb extends Puzzle implements Serializable{
 		return secuenciaMezclada;
 	}
 
-	//TODO generar mezcla con el software de WCA
+	//	@Override
+	//	public String[] generarMezcla() {
+	//		String[] movimientos = {"U", "U'", "B", "B'", "R", "R'", "L", "L'"};
+	//		int num;
+	//		int[] mezclaInt = new int[15];
+	//		String[] mezcla = new String[mezclaInt.length];
+	//		Random random = new Random();
+	//		for (int i = 0; i < mezcla.length; i++) {
+	//			num = random.nextInt(movimientos.length);
+	//			//para que no se gire dos veces seguidas la misma cara
+	//			if (i != 0) {
+	//				while (mezclaInt[i - 1] / 2 == num / 2) {
+	//					num = random.nextInt(movimientos.length);
+	//				}
+	//			}
+	//			mezclaInt[i] = num;
+	//			mezcla[i] = movimientos[mezclaInt[i]];
+	//		}
+	//		return mezcla;
+	//	}
+
 	@Override
 	public String[] generarMezcla() {
-		String[] movimientos = {"U", "U'", "B", "B'", "R", "R'", "L", "L'"};
-		int num;
-		int[] mezclaInt = new int[15];
-		String[] mezcla = new String[mezclaInt.length];
-		Random random = new Random();
-		for (int i = 0; i < mezcla.length; i++) {
-			num = random.nextInt(movimientos.length);
-			//para que no se gire dos veces seguidas la misma cara
-			if (i != 0) {
-				while (mezclaInt[i - 1] / 2 == num / 2) {
-					num = random.nextInt(movimientos.length);
-				}
-			}
-			mezclaInt[i] = num;
-			mezcla[i] = movimientos[mezclaInt[i]];
-		}
-		return mezcla;
+		return ScrambleGenerator.generarMezcla("skewb");
 	}
-	
-	
 
 	@Override
 	public String toString() {
