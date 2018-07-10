@@ -40,11 +40,6 @@ public class RegistroManagedBean implements Serializable {
     	credencialDAO = new CredencialDAO();
     }
 
-//    @PostConstruct
-//    public void init() {
-//        listaRoles = listarRoles();
-//    }
-
     public String registrarUsuario() {
         if (validarusuario()) {
             usuario.setFechaCreacion(new Date());
@@ -130,38 +125,6 @@ public class RegistroManagedBean implements Serializable {
         }
         return false;
     }
-
-//    public UsuarioEntity buscarUsuario(String correo) {
-//        List<UsuarioEntity> l = usFacade.findByCorreo(correo);
-//        if (l.size() == 1) {
-//            return l.get(0);
-//        }
-//        return null;
-//    }
-//
-//    public List<UsuarioEntity> listarUsuarios() {
-//        return usFacade.findAll();
-//    }
-//
-//    public List<InfoRolEntity> listarRoles() {
-//        return iRFacade.findAll();
-//    }
-//    
-//     public List<InfoRolEntity> listarRolesMenosAdmin() {
-//        List<InfoRolEntity> lr;
-//        lr = listarRoles();
-//        InfoRolEntity ireAdmin = new InfoRolEntity(3);
-//        lr.remove(ireAdmin);
-//        return lr;
-//    }
-//
-//    public List<InfoRolEntity> getListaRoles() {
-//        return listaRoles;
-//    }
-//
-//    public void setListaRoles(List<InfoRolEntity> listaRoles) {
-//        this.listaRoles = listaRoles;
-//    }
 
     public String getClave() {
         return clave;

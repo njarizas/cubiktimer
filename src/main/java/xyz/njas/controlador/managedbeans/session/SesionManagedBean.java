@@ -52,7 +52,7 @@ public class SesionManagedBean implements Serializable {
         recursos = ResourceBundle.getBundle("texto", locale);
         mensaje = new Mensaje();
         FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) locale);
-        System.out.println(locale.toString());
+//        System.out.println(locale.toString());
     }
 
     public void goToIndex() {
@@ -81,7 +81,7 @@ public class SesionManagedBean implements Serializable {
                 idioma = event.getNewValue().toString();
                 locale = (Locale) entry.getValue();
                 FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
-                System.out.println(locale.toString());
+//                System.out.println(locale.toString());
             }
         }
     }

@@ -38,10 +38,15 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 			if (rs != null && rs.next()) {
 			  retorno = rs.getInt(1);
 			}
+			List<Integer> listaRoles = new ArrayList<Integer>();
+			listaRoles.add(1);
+			listaRoles.add(2);
 			ps2.setInt(1, retorno);
-			ps2.setInt(2, 1);
 			ps2.setInt(3, 1);
-			ps2.executeUpdate();
+			for (Integer integer : listaRoles) {
+				ps2.setObject(2, integer);
+				ps2.executeUpdate();
+			}
 			desconectar();
 			return retorno;
 		} catch (Exception e) {

@@ -29,7 +29,6 @@ public class IdiomaManagedBean implements Serializable {
     public void init() {
         FacesContext.getCurrentInstance().getViewRoot().setLocale(sesionManagedBean.getLocale());
         sesionManagedBean.recursos = ResourceBundle.getBundle("texto",sesionManagedBean.getLocale());
-        System.out.println(sesionManagedBean.getLocale());
     }
     
     public void foo(){

@@ -44,7 +44,7 @@ public class RubikManagedBean implements Serializable {
 	private RubikFacade rubikFacade;
 
 	private TipoDAO tipoDAO;
-	
+
 	private List<SesionRubik> listaSesiones;
 	private SesionRubik sesionRubikActual;
 
@@ -96,7 +96,7 @@ public class RubikManagedBean implements Serializable {
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
 		mezclaAleatoria();
 	}
-	
+
 	public List<TipoDTO> listarCubos(){
 		List<TipoDTO> lista = tipoDAO.listarTiposDeCubo();
 		return lista;
@@ -153,19 +153,33 @@ public class RubikManagedBean implements Serializable {
 		return "";
 	}
 
+	/**
+	 * Método que se encarga de guardar los tiempos empleados para solucionar el cubo de rubik en la sesión actual
+	 * @return
+	 */
 	public String guardarSesionRubik() {
+		//TODO dejar mensajes parametrizables i18n
+		//Si tiene sesion iniciada se verifica que el id de usuario se encuentre asignado correctamente
 		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()==null && sesionManagedBean.getUsuarioLogueado()!=null && sesionManagedBean.getUsuarioLogueado().getIdUsuario()!=null) {
 			sesionRubikActual.getSesionRubikDTO().setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
 		}
-		if(rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos())>0){
-			sesionManagedBean.getMensaje().setTitle("¡Información!");
-			sesionManagedBean.getMensaje().setText("Se han guardado los tiempos actuales");
-			sesionManagedBean.getMensaje().setType("success");
-			sesionManagedBean.getMensaje().setMensajePendiente(true);
+		//si el usuario se encuentra logueado tiene sentido guardar los tiempos, de lo contrario no
+		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()!=null) {
+			if(rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos())>0){
+				sesionManagedBean.getMensaje().setTitle("¡Información!");
+				sesionManagedBean.getMensaje().setText("Se han guardado los tiempos actuales");
+				sesionManagedBean.getMensaje().setType("success");
+				sesionManagedBean.getMensaje().setMensajePendiente(true);
+			} else {
+				sesionManagedBean.getMensaje().setTitle("¡Atención!");
+				sesionManagedBean.getMensaje().setText("Se presentó un error al tratar de guardar");
+				sesionManagedBean.getMensaje().setType("error");
+				sesionManagedBean.getMensaje().setMensajePendiente(true);
+			}
 		} else {
 			sesionManagedBean.getMensaje().setTitle("¡Atención!");
-			sesionManagedBean.getMensaje().setText("Se presentó un error al tratar de guardar");
-			sesionManagedBean.getMensaje().setType("error");
+			sesionManagedBean.getMensaje().setText("No se puede guardar tiempos de un usuario que no ha iniciado sesion, por favor inicie sesión e intente nuevamente");
+			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return "";
