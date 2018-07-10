@@ -58,7 +58,6 @@ public class ConexionDatabase {
 			conn.close();
 			conn=null;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

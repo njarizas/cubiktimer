@@ -14,7 +14,7 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 
 	@Override
 	public int create(CredencialDTO dto) {
-		// TODO Auto-generated method stub
+		// TODO implementar metodo
 		return 0;
 	}
 
@@ -38,11 +38,9 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 				lista.add(c);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		catch (ParseException pe) {
-			// TODO Auto-generated catch block
 			pe.printStackTrace();
 		}
 		return lista;
@@ -69,11 +67,9 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 				lista.add(c);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		catch (ParseException pe) {
-			// TODO Auto-generated catch block
 			pe.printStackTrace();
 		}
 		return lista;
@@ -101,11 +97,9 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 				lista.add(c);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		catch (ParseException pe) {
-			// TODO Auto-generated catch block
 			pe.printStackTrace();
 		}
 		return lista;

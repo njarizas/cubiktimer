@@ -12,7 +12,7 @@ public class TipoDAO extends DAO<Integer,TipoDTO> {
 
 	@Override
 	public int create(TipoDTO dto) {
-		// TODO Auto-generated method stub
+		// TODO implementar metodo
 		return 0;
 	}
 	
@@ -33,7 +33,6 @@ public class TipoDAO extends DAO<Integer,TipoDTO> {
 				lista.add(t);
 			}
 		} catch (SQLException sqle) {
-			// TODO Auto-generated catch block
 			sqle.printStackTrace();
 		}
 		return lista;

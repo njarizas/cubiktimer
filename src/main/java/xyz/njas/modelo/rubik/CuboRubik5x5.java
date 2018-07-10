@@ -211,7 +211,6 @@ public class CuboRubik5x5 extends CuboRubik implements Serializable {
 	//					num = random.nextInt(movimientos.length);
 	//				}
 	//			}
-	//			//TODO implementar lógica para que las mezclas de 5x5 cumplan con los requisitos de WCA
 	//			mezclaInt[i] = num;
 	//			mezcla[i] = movimientos[mezclaInt[i]];
 	//		}

@@ -160,7 +160,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 
 	@Override
 	public int create(Integer dto) {
-		// TODO Auto-generated method stub
+		// TODO implementar metodo
 		return 0;
 	}
 

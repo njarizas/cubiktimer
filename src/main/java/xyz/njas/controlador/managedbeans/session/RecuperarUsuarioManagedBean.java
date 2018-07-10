@@ -59,7 +59,7 @@ public class RecuperarUsuarioManagedBean {
 			sesionManagedBean.getMensaje().setType("info");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			EmailSenderInterface emailSender = new EmailSenderService();
-			//TODO generar clave aleatoria
+			//TODO validar que el correo se haya enviado correctamente
 			String nuevaClave = generarClaveAleatoria();
             emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave);
             u.setClave(EncryptService.encriptarClave(nuevaClave));

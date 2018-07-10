@@ -160,7 +160,6 @@ public class CuboRubik4x4 extends CuboRubik implements Serializable {
 	//                    num = random.nextInt(movimientos.length);
 	//                }
 	//            }
-	//            //TODO implementar lógica para que las mezclas de 4x4 cumplan con los requisitos de WCA
 	//            mezclaInt[i] = num;
 	//            mezcla[i] = movimientos[mezclaInt[i]];
 	//        }
