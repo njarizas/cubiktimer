@@ -15,6 +15,13 @@ public class PermisoDTO implements Serializable{
 	private String descriptionPermiso;
 	private Integer estado;
 	
+	@Override
+	public String toString() {
+		return "PermisoDTO [idPermiso=" + idPermiso + ", url=" + url + ", idPadre=" + idPadre + ", nombrePermiso="
+				+ nombrePermiso + ", descripcionPermiso=" + descripcionPermiso + ", namePermiso=" + namePermiso
+				+ ", descriptionPermiso=" + descriptionPermiso + ", estado=" + estado + "]";
+	}
+
 	public Integer getIdPermiso() {
 		return idPermiso;
 	}

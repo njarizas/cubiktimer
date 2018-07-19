@@ -12,9 +12,11 @@ import javax.faces.context.FacesContext;
 
 import xyz.njas.controlador.facade.ConfiguracionFacade;
 import xyz.njas.modelo.dao.CredencialDAO;
+import xyz.njas.modelo.dao.PermisosDAO;
 import xyz.njas.modelo.dao.UsuarioDAO;
 import xyz.njas.modelo.dto.ConfiguracionDTO;
 import xyz.njas.modelo.dto.CredencialDTO;
+import xyz.njas.modelo.dto.PermisoDTO;
 import xyz.njas.modelo.dto.RolDTO;
 import xyz.njas.modelo.dto.UsuarioDTO;
 import xyz.njas.util.EncryptService;
@@ -33,6 +35,7 @@ public class IniciarSesionManagedBean {
 
 	private UsuarioDAO usuarioDAO;
 	private CredencialDAO credencialDAO;
+	private PermisosDAO PermisosDAO;
 
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
@@ -43,6 +46,7 @@ public class IniciarSesionManagedBean {
 		super();
 		usuarioDAO = new UsuarioDAO();
 		credencialDAO = new CredencialDAO();
+		PermisosDAO = new PermisosDAO();
 		configuracionFacade = new ConfiguracionFacade();
 	}
 
@@ -52,15 +56,15 @@ public class IniciarSesionManagedBean {
 	 * @return
 	 */
 	public String iniciarSesion() {
-		//	        System.out.println("entro a usuariosManagedBean.iniciarSesion");
-		//UsuarioEntity u = buscarUsuario(login);//se busca un usuario con el correo ingresado y se asigna en la variable u
 		UsuarioDTO u = buscarUsuario(login);
 		if (u != null) { // si existe un usuario con el correo proporcionado
 			if (login.equals(u.getCorreo()) && pass.equals(u.getClave())) {//se comprueba que la clave y el correo correspondan
-				/* TODO Traer lista de roles del usuario
-				 * */
+				// TODO Traer lista de roles del usuario
 				List<RolDTO> listaRoles = new ArrayList<RolDTO>();
-				listaRoles.add(new RolDTO(1, "Superusuario", "Superusuario", 1));
+				RolDTO rolActual = new RolDTO(1, "Superusuario", "Superusuario", 1);
+				listaRoles.add(rolActual);
+				List<PermisoDTO> listaPermisos = PermisosDAO.consultarPermisosPorIdUsuario(u.getIdUsuario());
+				
 				if (listaRoles.isEmpty()) {
 					sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
 					sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("UsuarioNoTieneNingunRol"));
@@ -72,6 +76,7 @@ public class IniciarSesionManagedBean {
 					sesionManagedBean.setUsuarioLogueado(u);
 					sesionManagedBean.setListaRoles(listaRoles);
 					sesionManagedBean.setRolActual(sesionManagedBean.getListaRoles().get(0));
+					sesionManagedBean.setListaPermisos(listaPermisos);
 					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idUsuario", u.getIdUsuario());
 					ConfiguracionDTO cDto = configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(u.getIdUsuario());
 					if (cDto!=null){
@@ -138,22 +143,6 @@ public class IniciarSesionManagedBean {
 		List<CredencialDTO> lista = credencialDAO.consultarCredencialPorCorreoYEstado(correo, 1);
 		return lista.size() > 0;
 	}
-
-	//	    public List<CredencialEntity> buscarCredencialesPorCorreo(String correo) {
-	//	        List<CredencialEntity> lista = crFacade.findByCorreo(correo);
-	//	        if (lista.size() > 0) {
-	//	            return lista;
-	//	        }
-	//	        return null;
-	//	    }
-
-	//	    public List<CredencialEntity> buscarCredencialesPorId(Integer id) {
-	//	        List<CredencialEntity> lista = crFacade.findByIdUsuario(id);
-	//	        if (lista.size() > 0) {
-	//	            return lista;
-	//	        }
-	//	        return null;
-	//	    }
 
 	public String getLogin() {
 		return login;

@@ -28,20 +28,36 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><h:link outcome="/ahorcado"
-							value="#{texto.JuegoDeAhorcado}"></h:link></li>
-							<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
-							<li><h:link outcome="/rubik" value="#{texto.CronometroRubik}"></h:link></li>
-							</h:panelGroup>
-							<h:panelGroup rendered="#{not empty sesionManagedBean.usuarioLogueado}">
-							<li class="dropdown">
-					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rubik <span class="caret"></span></a>
-					          <ul class="dropdown-menu">
-					            <li><h:link outcome="/rubik" value="#{texto.CronometroRubik}"></h:link></li>
-					            <li><h:link outcome="/estadisticas" value="#{texto.Estadisticas}"></h:link></li>
-					          </ul>
-					        </li>
-					        </h:panelGroup>
+					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
+						<li><h:link outcome="/ahorcado"
+								value="#{texto.JuegoDeAhorcado}"></h:link></li>
+						<li><h:link outcome="/rubik" value="#{texto.CronometroRubik}"></h:link></li>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
+						<c:forEach items="#{sesionManagedBean.listaPermisos}"
+							var="permiso">
+							<c:if
+								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)==0}">
+								<li><h:link outcome="#{permiso.url}?faces-redirect=true"
+										value="#{permiso.nombrePermiso}" /></li>
+							</c:if>
+							<c:if
+								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)!=0}">
+								<li class="dropdown"><a class="dropdown-toggle"
+									data-toggle="dropdown" href="#"> #{permiso.nombrePermiso} <span
+										class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<c:forEach
+											items="#{sesionManagedBean.consultarPermisosPorIdPadre(permiso.idPermiso)}"
+											var="subItem">
+											<li><h:link outcome="#{subItem.url}?faces-redirect=true"
+													value="#{subItem.nombrePermiso}" /></li>
+										</c:forEach>
+									</ul></li>
+							</c:if>
+						</c:forEach>
+					</h:panelGroup>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">

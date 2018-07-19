@@ -22,12 +22,11 @@ public class ConexionDatabase {
     
 	private ConexionDatabase(){
 		
-		//Version de produccion
+//		Version de produccion
 //		url="jdbc:mysql://"+VariablesDeEntorno.obtenerHost()+":"+VariablesDeEntorno.obtenerPort()+"/";
 //		user=VariablesDeEntorno.obtenerUser();
 //		password=VariablesDeEntorno.obtenerPassword();
 //		database=VariablesDeEntorno.obtenerDatabase();
-		
 		
 		//Version de desarrollo
 		url="jdbc:mysql://localhost:3306/";
@@ -36,13 +35,11 @@ public class ConexionDatabase {
 		user="root";
 		password="1234";
 		
-		
-		
 		try{
 		Class.forName(DRIVER).newInstance();
 		conn = DriverManager.getConnection(url+database+properties, user, password);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 	

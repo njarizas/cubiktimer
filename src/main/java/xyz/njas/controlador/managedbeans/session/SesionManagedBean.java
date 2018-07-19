@@ -12,6 +12,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import xyz.njas.modelo.dao.PermisosDAO;
+import xyz.njas.modelo.dto.PermisoDTO;
 import xyz.njas.modelo.dto.RolDTO;
 import xyz.njas.modelo.dto.UsuarioDTO;
 import xyz.njas.util.Mensaje;
@@ -32,6 +34,10 @@ public class SesionManagedBean implements Serializable {
     private UsuarioDTO usuarioLogueado;
     private List<RolDTO> listaRoles;
     private RolDTO rolActual;
+    
+    private PermisosDAO permisosDAO;
+    
+    private List<PermisoDTO> listaPermisos;
 
     ResourceBundle recursos;
 
@@ -52,7 +58,7 @@ public class SesionManagedBean implements Serializable {
         recursos = ResourceBundle.getBundle("texto", locale);
         mensaje = new Mensaje();
         FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) locale);
-//        System.out.println(locale.toString());
+        permisosDAO = new PermisosDAO();
     }
 
     public void goToIndex() {
@@ -84,6 +90,14 @@ public class SesionManagedBean implements Serializable {
 //                System.out.println(locale.toString());
             }
         }
+    }
+    
+    public int contarPermisosIdPadre(Integer idPadre) {
+    	return permisosDAO.contarPermisosIdPadre(idPadre);
+    }
+    
+    public List<PermisoDTO> consultarPermisosPorIdPadre(Integer idPadre) {
+    	return permisosDAO.consultarPermisosPorIdPadre(idPadre);
     }
 
     public Mensaje getMensaje() {
@@ -148,6 +162,14 @@ public class SesionManagedBean implements Serializable {
 
 	public void setRolActual(RolDTO rolActual) {
 		this.rolActual = rolActual;
+	}
+
+	public List<PermisoDTO> getListaPermisos() {
+		return listaPermisos;
+	}
+
+	public void setListaPermisos(List<PermisoDTO> listaPermisos) {
+		this.listaPermisos = listaPermisos;
 	}
     
 }
