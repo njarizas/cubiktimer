@@ -1,6 +1,7 @@
 package xyz.njas.controlador.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -181,6 +182,11 @@ public class RubikManagedBean implements Serializable {
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
+		return "";
+	}
+	
+	public String limpiarTiempos() {
+		sesionRubikActual.setTiempos(new ArrayList<Tiempo>());
 		return "";
 	}
 
