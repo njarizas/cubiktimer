@@ -153,7 +153,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			map.put("~:clave~", pass);
 			mensaje = aplicarPlantilla(mensaje, map);
 			b.close();
-			return enviarMensajeHTML(this.emailDestinatario, "Tu contraseña de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
+			return enviarMensajeHTML(this.emailDestinatario, "Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

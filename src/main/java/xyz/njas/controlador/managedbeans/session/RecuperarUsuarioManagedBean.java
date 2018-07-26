@@ -56,7 +56,7 @@ public class RecuperarUsuarioManagedBean {
 			if (emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave)) {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
 				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("HemosEnviadoUnCorreoElectronicoALaDireccion")+": "+email.trim()
-				+ " "+sesionManagedBean.getRecursos().getString("ConTuNuevaContrase\\u00f1a"));
+				+ " "+sesionManagedBean.getRecursos().getString("ConTuNuevaContraseña"));
 				sesionManagedBean.getMensaje().setType("info");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				u.setClave(EncryptService.encriptarClave(nuevaClave));
