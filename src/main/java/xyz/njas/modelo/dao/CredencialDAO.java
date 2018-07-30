@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import xyz.njas.modelo.dto.CredencialDTO;
 import xyz.njas.util.Util;
 
@@ -14,7 +16,29 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 
 	@Override
 	public int create(CredencialDTO dto) {
-		// TODO implementar metodo
+		int retorno=0;
+		conectar();
+		String sql="INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ps.setObject(1, dto.getIdCredencial());
+			ps.setObject(2, dto.getIdUsuario());
+			ps.setObject(3, dto.getCorreo());
+			ps.setObject(4, dto.getClave());
+			ps.setObject(5, dto.getFechaInicio());
+			ps.setObject(6, dto.getFechaFin());
+			ps.setObject(7, dto.getEstado());
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+			  retorno = rs.getInt(1);
+			}
+			desconectar();
+			return retorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			desconectar();
+		} 
 		return 0;
 	}
 

@@ -6,13 +6,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import xyz.njas.modelo.dto.TipoDTO;
 
 public class TipoDAO extends DAO<Integer,TipoDTO> {
 
 	@Override
 	public int create(TipoDTO dto) {
-		// TODO implementar metodo
+		int retorno=0;
+		conectar();
+		String sql="INSERT INTO tipos VALUES (?,?,?,?,?)";
+		try {
+			PreparedStatement ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ps.setObject(1, dto.getIdTipo());
+			ps.setObject(2, dto.getIdPadre());
+			ps.setObject(3, dto.getNombreTipo());
+			ps.setObject(4, dto.getNameTipo());
+			ps.setObject(5, dto.getEstado());
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs != null && rs.next()) {
+			  retorno = rs.getInt(1);
+			}
+			desconectar();
+			return retorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			desconectar();
+		} 
 		return 0;
 	}
 	

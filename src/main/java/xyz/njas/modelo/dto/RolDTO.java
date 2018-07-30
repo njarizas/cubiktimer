@@ -11,6 +11,10 @@ public class RolDTO implements Serializable {
 	private String descripcion;
 	private Integer estado;
 	
+	public RolDTO() {
+		super();
+	}
+
 	/**
 	 * Constructor mínimo
 	 * @param idRol

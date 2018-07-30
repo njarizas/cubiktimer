@@ -1,6 +1,5 @@
 package xyz.njas.controlador.managedbeans.session;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -13,6 +12,7 @@ import javax.faces.context.FacesContext;
 import xyz.njas.controlador.facade.ConfiguracionFacade;
 import xyz.njas.modelo.dao.CredencialDAO;
 import xyz.njas.modelo.dao.PermisosDAO;
+import xyz.njas.modelo.dao.RolDAO;
 import xyz.njas.modelo.dao.UsuarioDAO;
 import xyz.njas.modelo.dto.ConfiguracionDTO;
 import xyz.njas.modelo.dto.CredencialDTO;
@@ -36,6 +36,7 @@ public class IniciarSesionManagedBean {
 	private UsuarioDAO usuarioDAO;
 	private CredencialDAO credencialDAO;
 	private PermisosDAO PermisosDAO;
+	private RolDAO rolDAO;
 
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
@@ -47,6 +48,7 @@ public class IniciarSesionManagedBean {
 		usuarioDAO = new UsuarioDAO();
 		credencialDAO = new CredencialDAO();
 		PermisosDAO = new PermisosDAO();
+		rolDAO = new RolDAO();
 		configuracionFacade = new ConfiguracionFacade();
 	}
 
@@ -59,12 +61,11 @@ public class IniciarSesionManagedBean {
 		UsuarioDTO u = buscarUsuario(login);
 		if (u != null) { // si existe un usuario con el correo proporcionado
 			if (login.equals(u.getCorreo()) && pass.equals(u.getClave())) {//se comprueba que la clave y el correo correspondan
-				// TODO Traer lista de roles del usuario
-				List<RolDTO> listaRoles = new ArrayList<RolDTO>();
-				RolDTO rolActual = new RolDTO(1, "Superusuario", "Superusuario", 1);
-				listaRoles.add(rolActual);
+				List<RolDTO> listaRoles = rolDAO.consultarRolesPorIdUsuario(u.getIdUsuario());
+				for (RolDTO rolDTO : listaRoles) {
+					System.out.println(rolDTO);
+				}
 				List<PermisoDTO> listaPermisos = PermisosDAO.consultarPermisosPorIdUsuario(u.getIdUsuario());
-				
 				if (listaRoles.isEmpty()) {
 					sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
 					sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("UsuarioNoTieneNingunRol"));
