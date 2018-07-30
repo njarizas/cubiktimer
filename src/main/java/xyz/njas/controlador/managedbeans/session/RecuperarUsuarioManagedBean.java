@@ -1,5 +1,6 @@
 package xyz.njas.controlador.managedbeans.session;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -22,8 +23,10 @@ import xyz.njas.util.EncryptService;
  */
 @ManagedBean
 @ViewScoped
-public class RecuperarUsuarioManagedBean {
+public class RecuperarUsuarioManagedBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String email;
 
 	private UsuarioDAO usuarioDAO;

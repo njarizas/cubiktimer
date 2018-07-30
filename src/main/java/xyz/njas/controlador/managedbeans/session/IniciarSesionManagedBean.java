@@ -1,5 +1,6 @@
 package xyz.njas.controlador.managedbeans.session;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -28,8 +29,10 @@ import xyz.njas.util.Util;
  */
 @ManagedBean
 @ViewScoped
-public class IniciarSesionManagedBean {
+public class IniciarSesionManagedBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String login;
 	private String pass;
 

@@ -1,5 +1,6 @@
 package xyz.njas.controlador.managedbeans.session;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,10 @@ import xyz.njas.modelo.dto.ConfiguracionDTO;
  */
 @ManagedBean
 @SessionScoped
-public class ConfiguracionManagedBean {
+public class ConfiguracionManagedBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer idUsuario;
 	private ConfiguracionDTO tiempoInspeccion;
 	private ConfiguracionDTO tipoCubo;

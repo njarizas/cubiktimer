@@ -1,8 +1,11 @@
 package xyz.njas.modelo.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ConfiguracionDTO {
+public class ConfiguracionDTO implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Integer idConfiguracion;
 	private Integer idUsuario;

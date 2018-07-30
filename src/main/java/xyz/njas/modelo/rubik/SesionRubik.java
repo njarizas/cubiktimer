@@ -1,5 +1,6 @@
 package xyz.njas.modelo.rubik;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -8,7 +9,9 @@ import java.util.List;
 import xyz.njas.modelo.dto.SesionRubikDTO;
 import xyz.njas.util.Util;
 
-public class SesionRubik {
+public class SesionRubik implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private List<Tiempo> tiempos;
 	private SesionRubikDTO sesionRubikDTO;

@@ -1,11 +1,15 @@
 package xyz.njas.modelo.rubik;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Nelson
  */
-public abstract class CuboRubik extends Puzzle {
+public abstract class CuboRubik extends Puzzle implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
     public CuboRubik(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre);
 	}

@@ -1,6 +1,10 @@
 package xyz.njas.modelo.rubik;
 
-public abstract class Puzzle {
+import java.io.Serializable;
+
+public abstract class Puzzle implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Integer idTipoCubo;
 	private String nombre;
