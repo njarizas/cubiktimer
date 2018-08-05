@@ -1,38 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"     
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no" />
-        <title><ui:insert name="title">SIGOLF</ui:insert></title>
-        <link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<!--        <link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<title><ui:insert name="title">SIGOLF</ui:insert></title>
+	<meta name="Description" content="Cronometro Rubik Online" />
+	<meta name="Keywords" content="Cronometro, Rubik, Timer, Online" />
+	<meta property="og:url" content="http://www.cubiktimer.com" />
+	<meta property="og:title" content="Cronometro Rubik Online" />
+	<meta property="og:description" content="Cronometro Rubik Online" />
+	<meta property="og:image"
+		content="http://www.cubiktimer.com/resources/images/portada.png" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
+	<!--        <link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
         <link href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css" rel="stylesheet" type="text/css"/>-->
-        <link href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-        <script src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js" type="text/javascript"></script>
-        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
-        <ui:insert name="head"></ui:insert> 
-    </h:head>
-    <h:body>
-        <div class="container">
-            <ui:include src="/WEB-INF/banners/bannerExterno.xhtml" />
-            <div class="col-xs-12">
-                <ui:insert name="body">Default Body</ui:insert>
-            </div>
-        </div>
-        <c:if test="#{iniciarSesionManagedBean.sesionManagedBean.mensaje.mensajePendiente}">
-            <script>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
+		rel="stylesheet" type="text/css" />
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"
+		type="text/javascript"></script>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<h:body>
+	<div class="container">
+		<ui:include src="/WEB-INF/banners/bannerExterno.xhtml" />
+		<div class="col-xs-12">
+			<ui:insert name="body">Default Body</ui:insert>
+		</div>
+	</div>
+	<c:if
+		test="#{iniciarSesionManagedBean.sesionManagedBean.mensaje.mensajePendiente}">
+		<script>
                 swal("#{iniciarSesionManagedBean.sesionManagedBean.mensaje.titulo}", "#{iniciarSesionManagedBean.sesionManagedBean.mensaje.mensaje}", "#{iniciarSesionManagedBean.sesionManagedBean.mensaje.tipo}");
                 #{iniciarSesionManagedBean.sesionManagedBean.mensaje.mensajePendiente=false}
             </script>
-        </c:if>
-        <script src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
-<!--        <script src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js" type="text/javascript"></script>
+	</c:if>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<!--        <script src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js" type="text/javascript"></script>
         <script src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>-->
-        <ui:insert name="foot"></ui:insert>
-    </h:body>
+	<ui:insert name="foot"></ui:insert>
+</h:body>
 </html>

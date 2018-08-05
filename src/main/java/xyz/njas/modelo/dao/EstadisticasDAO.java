@@ -90,6 +90,52 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 		}
 		return lista;
 	}
+	
+	/**
+	 * Método que retorna la lista de promedios de un tipo de cubo agrupando por fecha, se usa para hacer una gráfica de línea
+	 * @param idUsuario
+	 * @param idTipoCubo
+	 * @return
+	 */
+	public List<Promedio> obtenerListaPromediosCategoriaComparacion(Integer idUsuario, Integer idTipoCubo){
+		conectar();
+		List<Promedio> lista = new ArrayList<Promedio>();
+		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, " + 
+				" CONCAT(u.nombres,' - ', t.nombre_tipo) tipo_cubo," + 
+				" DATE_FORMAT(sr.fecha,\"%d/%m/%Y\") fecha" + 
+				" FROM tiempos tr" + 
+				" INNER JOIN sesiones_rubik sr" + 
+				" ON tr.id_sesion=sr.id_sesion" + 
+				" INNER JOIN tipos t" + 
+				" ON tr.id_tipo_cubo=t.id_tipo" + 
+				" INNER JOIN usuarios u" + 
+				" ON sr.id_usuario = u.id_usuario" + 
+				" WHERE sr.id_usuario=?" + 
+				" AND tr.id_tipo_cubo=?" + 
+				" AND tr.estado=1" + 
+				" AND sr.estado=1" + 
+				" AND tr.dnf=0" + 
+				" GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + 
+				" ORDER BY sr.fecha";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idUsuario);
+			ps.setInt(2, idTipoCubo);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Promedio promedio = new Promedio();
+				promedio.setPromedio(rs.getInt("promedio"));
+				promedio.setTipoCubo(rs.getString("tipo_cubo"));
+				promedio.setFecha(rs.getString("fecha"));
+				lista.add(promedio);
+			}
+			desconectar();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			desconectar();
+		}
+		return lista;
+	}
 
 	/**
 	 * Metodo que retorna una lista con los id de las categorias que el usuario ha registrado
@@ -126,6 +172,25 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
 		for (Integer idTipoCubo : listaCategorias) {
 			List<Promedio> listaPromedio = obtenerListaPromediosCategoria(idUsuario, idTipoCubo);
+			ListaPromedioCategoria listaPromedioCategoria = new ListaPromedioCategoria();
+			listaPromedioCategoria.setLista(listaPromedio);
+			listaPromediosTotales.add(listaPromedioCategoria);
+		}
+		return listaPromediosTotales;
+	}
+	
+	public List<ListaPromedioCategoria> obtenerListaPromediosComparacion(Integer idUsuario, Integer idAmigo){
+		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<ListaPromedioCategoria>();
+		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
+		List<Integer> listaCategoriasAmigo = obtenerIdCategoriasRegistradas(idAmigo);
+		for (Integer idTipoCubo : listaCategorias) {
+			List<Promedio> listaPromedio = obtenerListaPromediosCategoriaComparacion(idUsuario, idTipoCubo);
+			ListaPromedioCategoria listaPromedioCategoria = new ListaPromedioCategoria();
+			listaPromedioCategoria.setLista(listaPromedio);
+			listaPromediosTotales.add(listaPromedioCategoria);
+		}
+		for (Integer idTipoCubo : listaCategoriasAmigo) {
+			List<Promedio> listaPromedio = obtenerListaPromediosCategoriaComparacion(idAmigo, idTipoCubo);
 			ListaPromedioCategoria listaPromedioCategoria = new ListaPromedioCategoria();
 			listaPromedioCategoria.setLista(listaPromedio);
 			listaPromediosTotales.add(listaPromedioCategoria);

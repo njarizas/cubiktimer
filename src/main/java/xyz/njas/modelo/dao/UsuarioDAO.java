@@ -122,6 +122,37 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 		return lista;
 	}
 	
+	public List<UsuarioDTO> traerTodoPorCorreo(String correo){
+		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
+		conectar();
+		String sql="SELECT * FROM usuarios WHERE correo = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, correo);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				UsuarioDTO u = new UsuarioDTO();
+				u.setIdUsuario(rs.getInt("id_usuario"));
+				u.setCorreo(rs.getString("correo"));
+				u.setClave(rs.getString("clave"));
+				u.setNombres(rs.getString("nombres"));
+				u.setApellidos(rs.getString("apellidos"));
+				u.setSexo(rs.getString("sexo").charAt(0));
+				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
+				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
+				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
+				u.setEstado(rs.getInt("estado"));
+				lista.add(u);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		return lista;
+	}
+	
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuario(int idUsuario){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
 		conectar();
@@ -202,6 +233,70 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 				u.setApellidos(rs.getString("apellidos"));
 				u.setSexo(rs.getString("sexo").charAt(0));
 				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_nacimiento")));
+				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
+				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
+				u.setEstado(rs.getInt("estado"));
+				lista.add(u);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public List<UsuarioDTO> consultarUsuarios(){
+		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
+		conectar();
+		String sql="SELECT * FROM usuarios WHERE estado = 1";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				UsuarioDTO u = new UsuarioDTO();
+				u.setIdUsuario(rs.getInt("id_usuario"));
+				u.setCorreo(rs.getString("correo"));
+				u.setNombres(rs.getString("nombres"));
+				u.setApellidos(rs.getString("apellidos"));
+				u.setSexo(rs.getString("sexo").charAt(0));
+				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_nacimiento")));
+				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
+				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
+				u.setEstado(rs.getInt("estado"));
+				lista.add(u);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public List<UsuarioDTO> consultarAmigosPorIdUsuario(Integer idUsuario){
+		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
+		conectar();
+		String sql="SELECT u.* FROM amigos a"
+				+ " INNER JOIN usuarios u"
+				+ " ON a.id_amigo=u.id_usuario"
+				+ " WHERE a.id_usuario = ?"
+				+ " AND u.estado = 1"
+				+ " AND a.estado = 1";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				UsuarioDTO u = new UsuarioDTO();
+				u.setIdUsuario(rs.getInt("id_usuario"));
+				u.setCorreo(rs.getString("correo"));
+				u.setNombres(rs.getString("nombres"));
+				u.setApellidos(rs.getString("apellidos"));
+				u.setSexo(rs.getString("sexo").charAt(0));
+				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
 				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
 				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
 				u.setEstado(rs.getInt("estado"));

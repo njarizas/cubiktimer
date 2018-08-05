@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
@@ -30,6 +31,9 @@ public class ConfiguracionManagedBean implements Serializable {
 	private ConfiguracionDTO paginaInicial;
 
 	private ConfiguracionFacade configuracionFacade;
+	
+	@ManagedProperty(value = "#{sesionManagedBean}")
+	private SesionManagedBean sesionManagedBean;
 
 	public ConfiguracionManagedBean() {
 		this.tiempoInspeccion = new ConfiguracionDTO();
@@ -90,6 +94,10 @@ public class ConfiguracionManagedBean implements Serializable {
 			listaConfiguraciones.add(this.paginaInicial);
 			configuracionFacade.guardar(listaConfiguraciones);
 			System.out.println("Se guarda configuracion");
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+	        sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
+	        sesionManagedBean.getMensaje().setType("success");
+	        sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else{
 			System.out.println("No se guarda configuracion ya que es un usuario no logueado");
 		}
@@ -138,6 +146,18 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	public void setPaginaInicial(ConfiguracionDTO paginaInicial) {
 		this.paginaInicial = paginaInicial;
+	}
+	
+	public SesionManagedBean getSesionManagedBean() {
+		if (this.sesionManagedBean != null) {
+			return this.sesionManagedBean;
+		} else {
+			return new SesionManagedBean();
+		}
+	}
+
+	public void setSesionManagedBean(SesionManagedBean sesionManagedBean) {
+		this.sesionManagedBean = sesionManagedBean;
 	}
 
 }

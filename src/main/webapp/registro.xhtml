@@ -10,14 +10,6 @@
 <h:head>
 	<title>#{texto.Registrarse}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<style>
-#formulario_de_registro {
-	background-color: rgba(0, 0, 0, 0.2);
-	margin-top: 50px;
-	border-radius: 10px;
-	padding: 30px;
-}
-</style>
 	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
 		type="text/css" />
 	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
@@ -27,6 +19,14 @@
 	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
 	<link href="resources/css/formValidation.min.css" rel="stylesheet"
 		type="text/css" />
+	<style>
+#formulario_de_registro {
+	background-color: rgba(0, 0, 0, 0.2);
+	margin-top: 50px;
+	border-radius: 10px;
+	padding: 30px;
+}
+</style>
 </h:head>
 <h:body>
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
@@ -36,13 +36,14 @@
 			id="formulario_de_registro">
 			<div class="col-xs-12 col-sm-10 col-sm-offset-1">
 				<div class="col-xs-12 input-group">
-					<h4 class="text-center">#{texto.FormularioDeRegistroDeUsuario}</h4>
+					<h3 class="text-center">#{texto.FormularioDeRegistroDeUsuario}</h3>
 					<span class="help-block"></span>
 					<div class="col-xs-12 input-group">
 						<span class="input-group-addon glyphicon glyphicon-envelope"></span>
 						<div class="validacion">
 							<h:inputText styleClass="form-control input-sm" id="email"
-								maxlength="96" required="true" title="#{texto.CorreoElectronico}*"
+								maxlength="96" required="true"
+								title="#{texto.CorreoElectronico}*"
 								pt:placeholder="#{texto.CorreoElectronico}*"
 								value="#{registroManagedBean.usuario.correo}">
 							</h:inputText>
@@ -63,8 +64,9 @@
 					<div class="col-xs-12 input-group">
 						<span class="input-group-addon glyphicon glyphicon-lock"></span>
 						<div class="validacion">
-							<h:inputSecret styleClass="form-control input-sm" id="confirmarClave"
-								maxlength="32" required="true" title="#{texto.ConfirmarContraseña}*"
+							<h:inputSecret styleClass="form-control input-sm"
+								id="confirmarClave" maxlength="32" required="true"
+								title="#{texto.ConfirmarContraseña}*"
 								pt:placeholder="#{texto.ConfirmarContraseña}*"
 								value="#{registroManagedBean.confirmarClave}">
 							</h:inputSecret>
@@ -96,8 +98,9 @@
 					<div class="col-xs-12 input-group">
 						<span class="input-group-addon glyphicon glyphicon-info-sign"></span>
 						<div class="validacion">
-							<h:selectOneMenu styleClass="form-control input-sm" id="sexo" title="#{texto.Sexo}"
-								required="true" value="#{registroManagedBean.usuario.sexo}">
+							<h:selectOneMenu styleClass="form-control input-sm" id="sexo"
+								title="#{texto.Sexo}" required="true"
+								value="#{registroManagedBean.usuario.sexo}">
 								<f:selectItem itemLabel="#{texto.Sexo}" itemValue=''
 									noSelectionOption="true"></f:selectItem>
 								<f:selectItem itemLabel="#{texto.Masculino}" itemValue='M'></f:selectItem>
@@ -143,9 +146,11 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 	</c:if>
-	<script src="resources/js/formValidation/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation/bootstrap.min.js"
+		type="text/javascript"></script>
 	<script src="resources/js/formValidation.min.js" type="text/javascript"></script>
-	<script src="resources/js/formValidation/bootstrap.js" type="text/javascript"></script>
+	<script src="resources/js/formValidation/bootstrap.js"
+		type="text/javascript"></script>
 	<script type="text/javascript">
 	 $(document).ready(function() {
 	     document.getElementById('formulario_de_registro:fechaNacimiento_input').className = 'form-control input-sm';

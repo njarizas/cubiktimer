@@ -10,67 +10,45 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
 	<title><ui:insert name="title">SIGOLF</ui:insert></title>
-	<link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
-	<link href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css" rel="stylesheet" type="text/css" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap-table.min.css" rel="stylesheet" />
-	<script src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"	type="text/javascript"></script>
-	<script	src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
-	<script	src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js" type="text/javascript"></script>
-	<script src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js" type="text/javascript"></script>
-    <script src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table-es-ES.js" type="text/javascript"></script>
+	<meta name="Description" content="Cronometro Rubik Online" />
+	<meta name="Keywords" content="Cronometro, Rubik, Timer, Online" />
+	<meta property="og:url" content="http://www.cubiktimer.com" />
+	<meta property="og:title" content="Cronometro Rubik Online" />
+	<meta property="og:description" content="Cronometro Rubik Online" />
+	<meta property="og:image"
+		content="http://www.cubiktimer.com/resources/images/portada.png" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css"></link>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap-table.min.css"
+		rel="stylesheet" />
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"
+		type="text/javascript"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"
+		type="text/javascript"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"
+		type="text/javascript"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js"
+		type="text/javascript"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table-es-ES.js"
+		type="text/javascript"></script>
 	<ui:insert name="head"></ui:insert>
 </h:head>
 <h:body>
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
-			<ui:insert name="body">Default Body</ui:insert>
-		<h:form id="formConfiguracion">
-		<div class="modal fade" id="configuraciones" tabindex="-1"
-			role="dialog" aria-labelledby="labelConfiguraciones"
-			style="background-color: rgba(0, 0, 0, 0.5);">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" id="labelConfiguraciones">#{texto.Configuraciones}</h4>
-					</div>
-					<div class="modal-body">
-						<h:outputLabel
-							value="#{texto.TiempoDeInspeccion} (#{texto.Segundos}):"></h:outputLabel>
-						<h:inputText id="txtTiempoInspeccion" styleClass="form-control"
-							pt:type="number" pt:min="0" pt:max="15"
-							value="#{configuracionManagedBean.tiempoInspeccion.valorEntero}"
-							autocomplete="off"></h:inputText>
-						<h:outputLabel value="#{texto.CuboFavorito}:"></h:outputLabel>
-						<h:selectOneMenu id="cuboFavorito" styleClass="form-control"
-							value="#{configuracionManagedBean.tipoCubo.valorEntero}">
-							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l"
-								itemValue="#{l.idTipo}" itemLabel="#{l.nombreTipo}"></f:selectItems>
-						</h:selectOneMenu>
-						<h:outputLabel value="#{texto.IdiomaPreferido}:"></h:outputLabel>
-						<h:selectOneMenu class="form-control"
-							value="#{configuracionManagedBean.idioma.valorTexto}">
-							<f:selectItems value="#{sesionManagedBean.listaIdiomas}"></f:selectItems>
-						</h:selectOneMenu>
-						<h:outputLabel value="#{texto.PaginaInicial}:"></h:outputLabel>
-						<h:selectOneMenu class="form-control"
-							value="#{configuracionManagedBean.paginaInicial.valorTexto}">
-							<f:selectItem itemValue="ahorcado" itemLabel="ahorcado" />
-							<f:selectItem itemValue="rubik" itemLabel="rubik" />
-						</h:selectOneMenu>
-					</div>
-					<div class="modal-footer">
-						<h:commandButton styleClass="btn btn-success"
-							action="#{configuracionManagedBean.guardarConfiguracion}"
-							value="#{texto.Guardar}"></h:commandButton>
-					</div>
-				</div>
-			</div>
-		</div>
-	</h:form>
+	<ui:insert name="body">Default Body</ui:insert>
 	<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
 		<script>
                 swal("#{sesionManagedBean.mensaje.title}", "#{sesionManagedBean.mensaje.text}", "#{sesionManagedBean.mensaje.type}");

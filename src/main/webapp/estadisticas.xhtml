@@ -7,14 +7,13 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/WEB-INF/templates/template-interno.xhtml">
 	<ui:define name="title">#{texto.Estadisticas}</ui:define>
-        <ui:define name="head">
-            <style type="text/css">
+	<ui:define name="head">
+		<style type="text/css">
 ${
-                demo
-                    .css
+demo.css
 }
-            </style>
-            <script type="text/javascript">
+</style>
+		<script type="text/javascript">
             $(function () {
                 $('#container').highcharts(
                         {
@@ -167,24 +166,30 @@ ${
                });
 
             </script>
-        </ui:define>
-        <ui:define name="title">
-            <h:outputText value="#{texto.Estadisticas}" />
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup>
-            <div class="col-xs-12 contactenos">
-                <script src="#{sesionManagedBean.contextPath}/resources/js/highcharts.js" type="text/javascript"></script>
-                <script src="#{sesionManagedBean.contextPath}/resources/js/highcharts-3d.js" type="text/javascript"></script>
-                <script src="#{sesionManagedBean.contextPath}/resources/js/modules/exporting.js"></script>
-                <div id="container" class="col-xs-12 col-md-5" style="height: 400px; margin-bottom: 10px;"></div>
-<!--                 <div id="container_1" class="col-xs-12 col-md-7" style="height: 400px; margin-bottom: 10px;"></div> -->
-<!--                 <div id="container1" class="col-xs-12" style="height: 400px; margin-bottom: 10px;"></div> -->
-                <div id="container2" class="col-xs-12 col-md-6" style="height: 400px; margin-bottom: 10px;"></div>
-                <div id="container3" class="col-xs-12 col-md-6" style="height: 400px; margin-bottom: 10px;"></div>
-            </div>
-                </h:panelGroup>
-        </ui:define>
-    </ui:composition>
+	</ui:define>
+	<ui:define name="title">
+		<h:outputText value="#{texto.Estadisticas}" />
+	</ui:define>
+	<ui:define name="body">
+		<div class="col-xs-12">
+			<h:panelGroup>
+					<script
+						src="#{sesionManagedBean.contextPath}/resources/js/highcharts.js"
+						type="text/javascript"></script>
+					<script
+						src="#{sesionManagedBean.contextPath}/resources/js/highcharts-3d.js"
+						type="text/javascript"></script>
+					<script
+						src="#{sesionManagedBean.contextPath}/resources/js/modules/exporting.js"></script>
+					<div id="container" class="col-xs-12"
+						style="height: 400px; margin-bottom: 10px;"></div>
+					<div id="container2" class="col-xs-12 col-md-7"
+						style="height: 400px; margin-bottom: 10px;"></div>
+					<div id="container3" class="col-xs-12 col-md-5"
+						style="height: 400px; margin-bottom: 10px;"></div>
+			</h:panelGroup>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>
 

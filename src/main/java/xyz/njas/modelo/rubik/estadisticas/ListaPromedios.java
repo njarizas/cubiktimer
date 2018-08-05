@@ -1,6 +1,7 @@
 package xyz.njas.modelo.rubik.estadisticas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListaPromedios implements Serializable{
@@ -8,6 +9,11 @@ public class ListaPromedios implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	public List<ListaPromedioCategoria> lista;
+
+	public ListaPromedios() {
+		super();
+		lista = new ArrayList<ListaPromedioCategoria>();
+	}
 
 	public List<ListaPromedioCategoria> getLista() {
 		return lista;

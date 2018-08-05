@@ -33,11 +33,11 @@
 </h:head>
 <h:body>
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
-	<div class="text-center">
+	<div class="col-xs-12">
 		<h:form id="formulario_recuperar_clave"
 			class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="col-xs-12">
-			<h3>#{texto.RecuperarContraseña}</h3>
+			<h3 class="text-center">#{texto.RecuperarContraseña}</h3>
 				<span class="help-block"></span>
 				<h:outputLabel value="#{texto.CorreoElectronico}:" for="email"></h:outputLabel>
 				<div class="col-xs-12 input-group">
@@ -56,8 +56,8 @@
 					style="margin-top: 20px;"
 					action="#{recuperarUsuarioManagedBean.recuperarClave}">
 				</h:commandButton>
-				<div class="col-xs-12 input-group">
-					<h:link outcome="recuperar-usuario" styleClass="centrado"
+				<div class="col-xs-12 input-group text-center">
+					<h:link outcome="recuperar-usuario"
 						style="font-size: 0.8em;" value="#{texto.OlvidoSuUsuario}"></h:link>
 				</div>
 				<h:link styleClass="btn btn-primary col-xs-8 col-xs-offset-2"

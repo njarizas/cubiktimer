@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
@@ -61,11 +62,14 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 				c.setEstado(rs.getInt("estado"));
 				lista.add(c);
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		catch (ParseException pe) {
 			pe.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}
@@ -90,11 +94,14 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 				c.setEstado(rs.getInt("estado"));
 				lista.add(c);
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		catch (ParseException pe) {
 			pe.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}
@@ -120,13 +127,67 @@ public class CredencialDAO extends DAO<Integer,CredencialDTO> {
 				c.setEstado(rs.getInt("estado"));
 				lista.add(c);
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		catch (ParseException pe) {
 			pe.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}
+	
+	public List<CredencialDTO> traerTodoPorCorreo(String correo){
+		List<CredencialDTO> lista= new ArrayList<CredencialDTO>();
+		conectar();
+		String sql="SELECT * FROM credenciales WHERE correo = ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, correo);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				CredencialDTO c = new CredencialDTO();
+				c.setIdCredencial(rs.getInt("id_credencial"));
+				c.setIdUsuario(rs.getInt("id_usuario"));
+				c.setCorreo(rs.getString("correo"));
+				c.setClave(rs.getString("clave"));
+				c.setFechaInicio(Util.fechaHoraMySql.parse(rs.getString("fecha_inicio")));
+				c.setFechaFin(Util.fechaHoraMySql.parse(rs.getString("fecha_fin")));
+				c.setEstado(rs.getInt("estado"));
+				lista.add(c);
+			}
+			desconectar();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			desconectar();
+		}
+		catch (ParseException pe) {
+			pe.printStackTrace();
+			desconectar();
+		}
+		return lista;
+	}
+	
+    public Date obtenerFechaUltimaCredencial(Integer idUsuario){
+        Date retorno = null;
+        conectar();
+        try {
+            String sql="SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
+            PreparedStatement ps = conn.prepareCall(sql);
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                retorno = Util.fechaHoraMySql.parse(rs.getString("fecha_ultimo_cambio"));
+                System.out.println("encontro: "+rs.getString("fecha_ultimo_cambio"));
+            }
+            desconectar();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            desconectar();
+        }
+        return retorno;
+    }
 
 }

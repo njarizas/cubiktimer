@@ -10,9 +10,6 @@
 	<title>#{texto.IniciarSesion}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<style>
-.text-center {
-	text-align: center;
-}
 
 #formulario_de_inicio_de_sesion {
 	background-color: rgba(0, 0, 0, 0.2);
@@ -31,7 +28,7 @@
 </h:head>
 <h:body>
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
-	<div class="text-center">
+	<div class="text-center  col-xs-12">
 		<h:form id="formulario_de_inicio_de_sesion"
 			styleClass="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"
 			pt:autocomplete="off">
@@ -67,7 +64,7 @@
 					action="#{iniciarSesionManagedBean.iniciarSesion}">
 				</h:commandButton>
 				<div class="col-xs-12 input-group">
-					<h:link outcome="recuperar-clave" styleClass="centrado"
+					<h:link outcome="recuperar-clave"
 						style="font-size: 0.8em;" value="#{texto.OlvidoSuContraseña}"></h:link>
 				</div>
 				<h:link styleClass="btn btn-primary col-xs-8 col-xs-offset-2"

@@ -1,27 +1,30 @@
 package xyz.njas.controlador.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpSession;
 
 import xyz.njas.controlador.managedbeans.session.ConfiguracionManagedBean;
 import xyz.njas.controlador.managedbeans.session.SesionManagedBean;
 import xyz.njas.modelo.dao.EstadisticasDAO;
-import xyz.njas.modelo.rubik.estadisticas.ListaCuentaPuzzle;
-import xyz.njas.modelo.rubik.estadisticas.ListaPromedioCategoria;
+import xyz.njas.modelo.dao.UsuarioDAO;
+import xyz.njas.modelo.dto.UsuarioDTO;
 import xyz.njas.modelo.rubik.estadisticas.ListaPromedios;
 
 @ManagedBean
 @ViewScoped
-public class EstadisticasManagedBean implements Serializable {
+public class CompararEstadisticasManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@ManagedProperty(value = "#{configuracionManagedBean}")
 	private ConfiguracionManagedBean configuracionManagedBean;
 
@@ -30,30 +33,42 @@ public class EstadisticasManagedBean implements Serializable {
 	
 	private HttpSession session;
 	private Integer idUsuario;
+	private Integer idAmigo;
+	private ListaPromedios listaPromediosComparacion;
+	private List<UsuarioDTO> listaAmigos;
 	private EstadisticasDAO estadisticasDAO;
-	private ListaCuentaPuzzle listaCuentaPuzzle;
-	private ListaPromedioCategoria listaPromedioCategoria;
-	private ListaPromedios listaPromedios;
-
-    public EstadisticasManagedBean() {
-        estadisticasDAO = new EstadisticasDAO();
-        listaCuentaPuzzle = new ListaCuentaPuzzle();
-        listaPromedioCategoria = new ListaPromedioCategoria();
-        listaPromedios = new ListaPromedios();
+	private UsuarioDAO usuarioDAO;
+	
+	public CompararEstadisticasManagedBean() {
+		estadisticasDAO = new EstadisticasDAO();
+		usuarioDAO = new UsuarioDAO();
+		listaPromediosComparacion = new ListaPromedios();
+		listaAmigos = new ArrayList<UsuarioDTO>();
         session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         if (session.getAttribute("idUsuario") != null) {
             idUsuario = Integer.parseInt(session.getAttribute("idUsuario").toString());
         }
-    }
-
+        if (idUsuario!=null) {
+        	listaAmigos = usuarioDAO.consultarAmigosPorIdUsuario(idUsuario);
+        	if (!listaAmigos.isEmpty()) {
+        		idAmigo=listaAmigos.get(0).getIdUsuario();
+        	}
+        }
+	}
+	
     @PostConstruct
     public void init() {
-    	listaCuentaPuzzle.setLista(estadisticasDAO.obtenerListaConteoPuzzles(idUsuario));
-    	listaPromedioCategoria.setLista(estadisticasDAO.obtenerListaPromediosCategoria(idUsuario, estadisticasDAO.consultarIdPuzzleMasPracticado(idUsuario)));
-    	listaPromedios.setLista(estadisticasDAO.obtenerListaPromediosTotales(idUsuario));
+    	if (idAmigo!=null) {
+    		listaPromediosComparacion.setLista(estadisticasDAO.obtenerListaPromediosComparacion(idUsuario, idAmigo));
+    	}
     }
     
+    public void cambioAmigo(ValueChangeEvent event) {
+		this.idAmigo = Integer.parseInt(event.getNewValue().toString());
+		init();
+	}
+	
 	public Integer getIdUsuario() {
 		return idUsuario;
 	}
@@ -61,37 +76,29 @@ public class EstadisticasManagedBean implements Serializable {
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-
-	public EstadisticasDAO getEstadisticasDAO() {
-		return estadisticasDAO;
+	
+	public Integer getIdAmigo() {
+		return idAmigo;
 	}
 
-	public void setEstadisticasDAO(EstadisticasDAO estadisticasDAO) {
-		this.estadisticasDAO = estadisticasDAO;
+	public void setIdAmigo(Integer idAmigo) {
+		this.idAmigo = idAmigo;
 	}
 
-	public ListaCuentaPuzzle getListaCuentaPuzzle() {
-		return listaCuentaPuzzle;
+	public ListaPromedios getListaPromediosComparacion() {
+		return listaPromediosComparacion;
 	}
 
-	public void setListaCuentaPuzzle(ListaCuentaPuzzle listaCuentaPuzzle) {
-		this.listaCuentaPuzzle = listaCuentaPuzzle;
+	public void setListaPromediosComparacion(ListaPromedios listaPromediosComparacion) {
+		this.listaPromediosComparacion = listaPromediosComparacion;
 	}
 
-	public ListaPromedioCategoria getListaPromedioCategoria() {
-		return listaPromedioCategoria;
+	public List<UsuarioDTO> getListaAmigos() {
+		return listaAmigos;
 	}
 
-	public void setListaPromedioCategoria(ListaPromedioCategoria listaPromedioCategoria) {
-		this.listaPromedioCategoria = listaPromedioCategoria;
-	}
-
-	public ListaPromedios getListaPromedios() {
-		return listaPromedios;
-	}
-
-	public void setListaPromedios(ListaPromedios listaPromedios) {
-		this.listaPromedios = listaPromedios;
+	public void setListaAmigos(List<UsuarioDTO> listaAmigos) {
+		this.listaAmigos = listaAmigos;
 	}
 
 	public ConfiguracionManagedBean getConfiguracionManagedBean() {
@@ -117,5 +124,5 @@ public class EstadisticasManagedBean implements Serializable {
 	public void setSesionManagedBean(SesionManagedBean sesionManagedBean) {
 		this.sesionManagedBean = sesionManagedBean;
 	}
-	
+
 }

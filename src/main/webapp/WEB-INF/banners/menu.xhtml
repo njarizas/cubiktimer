@@ -8,7 +8,7 @@
 	<div class="col-xs-12">
 		#{idiomaManagedBean.foo()}
 		<h:form>
-			<nav class="navbar navbar-default menu" style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
+			<nav class="navbar navbar-default menu" style="margin:0;">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
@@ -71,15 +71,18 @@
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
-						<li><a href="#">#{sesionManagedBean.usuarioLogueado.correo}</a>
-						</li>
-						<li>
-							<button id="configuracion" class="btn btn-default navbar-brand"
-								type="button" data-toggle="modal" data-target="#configuraciones"
+						<li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#{sesionManagedBean.usuarioLogueado.correo} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><h:link outcome="cambiar-clave" value="#{texto.CambiarContraseña}"></h:link></li>
+                                </ul>
+                            </li>
+						<li><h:commandLink id="configuracion"
+								styleClass="btn btn-default navbar-brand"
+								action="configuracion?faces-redirect=true"
 								title="#{texto.Configuraciones}">
 								<span class="glyphicon glyphicon-cog"></span>
-							</button>
-						</li>
+							</h:commandLink></li>
 						<li><h:commandLink id="cerrarSesion"
 								styleClass="btn btn-default navbar-brand"
 								action="#{sesionManagedBean.cerrarSesion()}"
