@@ -26,7 +26,7 @@ $(document).ready(function () {
 
 	//(Cuando se oprime la tecla) Esta función detiene el cronometro
 	$(document).keydown(function (tecla) {
-		if (tecla.keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden') && $('#configuraciones').is(':hidden')) {
+		if (tecla.keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden')) {
 			if ($('#lbl-comenzar').text() === 'Detener' && estado===2) {//si el cronometro esta corriendo
 				estado = 3;
 				mostrarTiempo();
@@ -57,7 +57,7 @@ $(document).ready(function () {
 
 	//(Cuando se levanta la tecla) Esta función pone el conteo regresivo o el cronometro según sea el caso
 	$(document).keyup(function (tecla) {
-		if (tecla.keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden') && $('#configuraciones').is(':hidden')) {
+		if (tecla.keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden')) {
 			if ($('#lbl-comenzar').text() === 'Detener' && estado===3)//Entra aca si acaba de detener el cronometro
 			{
 				$('#lbl-comenzar').text('Comenzar');
