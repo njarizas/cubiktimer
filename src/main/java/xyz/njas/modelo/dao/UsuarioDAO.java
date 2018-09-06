@@ -36,7 +36,7 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 			retorno=ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs != null && rs.next()) {
-			  retorno = rs.getInt(1);
+				retorno = rs.getInt(1);
 			}
 			List<Integer> listaRoles = new ArrayList<Integer>();
 			listaRoles.add(1);
@@ -55,7 +55,7 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 		} 
 		return 0;
 	}
-	
+
 	public int update(UsuarioDTO dto) {
 		int retorno=0;
 		conectar();
@@ -82,7 +82,7 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 		} 
 		return 0;
 	}
-	
+
 	public int merge(UsuarioDTO dto) {
 		if (dto.getIdUsuario()==null){
 			return create(dto);
@@ -93,201 +93,107 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreo(String correo){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios WHERE correo = ?";
 		try {
+			String sql="SELECT * FROM usuarios WHERE correo = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, correo);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setClave(rs.getString("clave"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
-			}
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		catch (ParseException pe) {
-			pe.printStackTrace();
-		}
 		return lista;
 	}
-	
+
 	public List<UsuarioDTO> traerTodoPorCorreo(String correo){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios WHERE correo = ?";
 		try {
+			String sql="SELECT * FROM usuarios WHERE correo = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, correo);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setClave(rs.getString("clave"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
-			}
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		catch (ParseException pe) {
-			pe.printStackTrace();
-		}
 		return lista;
 	}
-	
+
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuario(int idUsuario){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios WHERE id_usuario = ?";
 		try {
+			String sql="SELECT * FROM usuarios WHERE id_usuario = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setClave(rs.getString("clave"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
-			}
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		catch (ParseException pe) {
-			pe.printStackTrace();
-		}
 		return lista;
 	}
-	
+
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuarioYClave(int idUsuario, String clave){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios WHERE id_usuario = ? AND clave = ?";
 		try {
+			String sql="SELECT * FROM usuarios WHERE id_usuario = ? AND clave = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
 			ps.setString(2, clave);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setClave(rs.getString("clave"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaCreacion(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaModificacion(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
-			}
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-		}
-		catch (ParseException pe) {
-			pe.printStackTrace();
 		}
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreoYEstado(String correo, Integer estado){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios WHERE correo = ? AND estado = ?";
 		try {
+			String sql="SELECT * FROM usuarios WHERE correo = ? AND estado = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, correo);
 			ps.setInt(2, estado);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
-			}
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		catch (ParseException pe) {
-			pe.printStackTrace();
-		}
 		return lista;
 	}
-	
+
 	public List<UsuarioDTO> consultarUsuarios(){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios WHERE estado = 1";
 		try {
+			String sql="SELECT * FROM usuarios WHERE estado = 1";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
-			}
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
-		catch (ParseException pe) {
-			pe.printStackTrace();
-		}
 		return lista;
 	}
-	
+
 	public List<UsuarioDTO> consultarAmigosPorIdUsuario(Integer idUsuario){
 		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
-		conectar();
-		String sql="SELECT u.* FROM amigos a"
-				+ " INNER JOIN usuarios u"
-				+ " ON a.id_amigo=u.id_usuario"
-				+ " WHERE a.id_usuario = ?"
-				+ " AND u.estado = 1"
-				+ " AND a.estado = 1";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+			String sql="SELECT u.* FROM amigos a"
+					+ " INNER JOIN usuarios u"
+					+ " ON a.id_amigo=u.id_usuario"
+					+ " WHERE a.id_usuario = ?"
+					+ " AND u.estado = 1"
+					+ " AND a.estado = 1";
+			PreparedStatement ps;
+			ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
+			lista = findList(ps);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return lista;
+	}
+
+	public List<UsuarioDTO> findList(PreparedStatement ps){
+		List<UsuarioDTO> lista= new ArrayList<UsuarioDTO>();
+		try {
+			conectar();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				UsuarioDTO u = new UsuarioDTO();
@@ -302,11 +208,14 @@ public class UsuarioDAO extends DAO<Integer,UsuarioDTO> {
 				u.setEstado(rs.getInt("estado"));
 				lista.add(u);
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		catch (ParseException pe) {
 			pe.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}

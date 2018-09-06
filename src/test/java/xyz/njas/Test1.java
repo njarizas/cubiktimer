@@ -12,7 +12,6 @@ import xyz.njas.util.EncryptService;
 
 public class Test1 extends TestCase{
 
-
     @BeforeClass
     public static void setUpClass() {
     }
@@ -43,6 +42,5 @@ public class Test1 extends TestCase{
     public void testConexion(){
         assertNotNull("Probando conexion JDBC", ConexionDatabase.getInstance());
     }
- 
 
 }

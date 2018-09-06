@@ -57,11 +57,21 @@ public class UsuarioRolDAO extends DAO<Integer,UsuarioRolDTO> {
 	
 	public List<UsuarioRolDTO> consultarRolesPorIdUsuario(int idUsuario){
 		List<UsuarioRolDTO> lista= new ArrayList<UsuarioRolDTO>();
-		conectar();
-		String sql="SELECT * FROM usuarios_roles WHERE id_usuario = ?";
 		try {
+			String sql="SELECT * FROM usuarios_roles WHERE id_usuario = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
+			lista = findList(ps);
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public List<UsuarioRolDTO> findList(PreparedStatement ps){
+		List<UsuarioRolDTO> lista= new ArrayList<UsuarioRolDTO>();
+		try {
+			conectar();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				UsuarioRolDTO u = new UsuarioRolDTO();
@@ -70,8 +80,10 @@ public class UsuarioRolDAO extends DAO<Integer,UsuarioRolDTO> {
 				u.setEstado(rs.getInt("estado"));
 				lista.add(u);
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}
