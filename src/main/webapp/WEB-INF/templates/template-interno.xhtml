@@ -41,14 +41,19 @@
 	<ui:insert name="head"></ui:insert>
 </h:head>
 <h:body>
-	<ui:include src="/WEB-INF/banners/menu.xhtml" />
-	<ui:insert name="body">Default Body</ui:insert>
-	<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
-		<script>
+	<h:panelGroup rendered="#{(!empty sesionManagedBean.usuarioLogueado)}">
+		<ui:include src="/WEB-INF/banners/menu.xhtml" />
+		<ui:insert name="body">Default Body</ui:insert>
+		<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
+			<script>
                 swal("#{sesionManagedBean.mensaje.title}", "#{sesionManagedBean.mensaje.text}", "#{sesionManagedBean.mensaje.type}");
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
-	</c:if>
+		</c:if>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
+            #{sesionManagedBean.goToIndex()}
+</h:panelGroup>
 	<ui:insert name="foot"></ui:insert>
 </h:body>
 </html>

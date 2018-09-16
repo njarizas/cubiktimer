@@ -1,5 +1,6 @@
 package xyz.njas.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,15 +11,17 @@ import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.PermisoDTO;
 
-public class PermisosDAO extends DAO<Integer,PermisoDTO> {
+public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public int create(PermisoDTO dto) {
 		int retorno = 0;
 		conectar();
-		String sql="INSERT INTO permisos VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO permisos VALUES (?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement ps=conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setObject(1, null);
 			ps.setString(2, dto.getUrl());
 			ps.setObject(3, dto.getIdPadre());
@@ -30,25 +33,24 @@ public class PermisosDAO extends DAO<Integer,PermisoDTO> {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			if (rs != null && rs.next()) {
-			  retorno = rs.getInt(1);
+				retorno = rs.getInt(1);
 			}
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
 			e.printStackTrace();
 			desconectar();
-		} 
+		}
 		return 0;
 	}
-	
+
 	public int update(PermisoDTO dto) {
 		int retorno = 0;
 		conectar();
-		String sql="UPDATE usuarios_roles SET url = ?, id_padre = ?, nombre_permiso = ?, descripcion_permiso = ?,"
-				+ " name_permiso = ?, description_permiso = ?, estado = ? "
-				+ " WHERE id_permiso = ?";
+		String sql = "UPDATE usuarios_roles SET url = ?, id_padre = ?, nombre_permiso = ?, descripcion_permiso = ?,"
+				+ " name_permiso = ?, description_permiso = ?, estado = ? " + " WHERE id_permiso = ?";
 		try {
-			PreparedStatement ps=conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getUrl());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setString(3, dto.getNombrePermiso());
@@ -58,41 +60,35 @@ public class PermisosDAO extends DAO<Integer,PermisoDTO> {
 			ps.setObject(7, dto.getEstado());
 			ps.setObject(8, dto.getIdPermiso());
 			ps.executeUpdate();
-			retorno=dto.getIdPermiso();
+			retorno = dto.getIdPermiso();
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
 			e.printStackTrace();
 			desconectar();
-		} 
+		}
 		return 0;
 	}
-	
+
 	public int merge(PermisoDTO dto) {
-		if (dto.getIdPermiso()==null){
+		if (dto.getIdPermiso() == null) {
 			return create(dto);
-		} else{
+		} else {
 			return update(dto);
 		}
 	}
-	
-	public List<PermisoDTO> consultarPermisosPorIdUsuario(int idUsuario){
-		List<PermisoDTO> lista= new ArrayList<PermisoDTO>();
+
+	public List<PermisoDTO> consultarPermisosPorIdUsuario(int idUsuario) {
+		List<PermisoDTO> lista = new ArrayList<PermisoDTO>();
 		conectar();
-		String sql="SELECT DISTINCT p.*" + 
-				" FROM usuarios_roles ur" + 
-				" INNER JOIN roles r" + 
-				" ON ur.id_rol = r.id_rol" + 
-				" INNER JOIN roles_permisos rp" + 
-				" ON r.id_rol = rp.id_rol" + 
-				" INNER JOIN permisos p" + 
-				" ON rp.id_permiso = p.id_permiso" + 
-				" WHERE id_usuario=?";
+		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles r"
+				+ " ON ur.id_rol = r.id_rol" + " INNER JOIN roles_permisos rp" + " ON r.id_rol = rp.id_rol"
+				+ " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso" + " WHERE id_usuario=?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				PermisoDTO p = new PermisoDTO();
 				p.setIdPermiso(rs.getInt("id_permiso"));
 				p.setUrl(rs.getString("url"));
@@ -109,18 +105,16 @@ public class PermisosDAO extends DAO<Integer,PermisoDTO> {
 		}
 		return lista;
 	}
-	
-	public List<PermisoDTO> consultarPermisosPorIdPadre(int idPadre){
-		List<PermisoDTO> lista= new ArrayList<PermisoDTO>();
+
+	public List<PermisoDTO> consultarPermisosPorIdPadre(int idPadre) {
+		List<PermisoDTO> lista = new ArrayList<PermisoDTO>();
 		conectar();
-		String sql="SELECT *" + 
-				" FROM permisos" + 
-				" WHERE id_padre=?";
+		String sql = "SELECT *" + " FROM permisos" + " WHERE id_padre=?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idPadre);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				PermisoDTO p = new PermisoDTO();
 				p.setIdPermiso(rs.getInt("id_permiso"));
 				p.setUrl(rs.getString("url"));
@@ -137,23 +131,22 @@ public class PermisosDAO extends DAO<Integer,PermisoDTO> {
 		}
 		return lista;
 	}
-	
+
 	/**
 	 * Metodo que retorna la cantidad de submenus que tiene un permiso
+	 * 
 	 * @param idUsuario
 	 * @return
 	 */
-	public Integer contarPermisosIdPadre(Integer idPermiso){
+	public Integer contarPermisosIdPadre(Integer idPermiso) {
 		int retorno = 0;
 		conectar();
-		String sql="SELECT count(*) conteo" + 
-				" FROM permisos" + 
-				" WHERE id_padre=?";
+		String sql = "SELECT count(*) conteo" + " FROM permisos" + " WHERE id_padre=?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idPermiso);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				retorno = rs.getInt("conteo");
 			}
 			return retorno;

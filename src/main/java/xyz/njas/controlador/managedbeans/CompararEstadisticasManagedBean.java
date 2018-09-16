@@ -24,13 +24,13 @@ import xyz.njas.modelo.rubik.estadisticas.ListaPromedios;
 public class CompararEstadisticasManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManagedProperty(value = "#{configuracionManagedBean}")
 	private ConfiguracionManagedBean configuracionManagedBean;
 
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
-	
+
 	private HttpSession session;
 	private Integer idUsuario;
 	private Integer idAmigo;
@@ -38,37 +38,36 @@ public class CompararEstadisticasManagedBean implements Serializable {
 	private List<UsuarioDTO> listaAmigos;
 	private EstadisticasDAO estadisticasDAO;
 	private UsuarioDAO usuarioDAO;
-	
+
 	public CompararEstadisticasManagedBean() {
 		estadisticasDAO = new EstadisticasDAO();
 		usuarioDAO = new UsuarioDAO();
 		listaPromediosComparacion = new ListaPromedios();
 		listaAmigos = new ArrayList<UsuarioDTO>();
-        session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        if (session.getAttribute("idUsuario") != null) {
-            idUsuario = Integer.parseInt(session.getAttribute("idUsuario").toString());
-        }
-        if (idUsuario!=null) {
-        	listaAmigos = usuarioDAO.consultarAmigosPorIdUsuario(idUsuario);
-        	if (!listaAmigos.isEmpty()) {
-        		idAmigo=listaAmigos.get(0).getIdUsuario();
-        	}
-        }
+		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		if (session.getAttribute("idUsuario") != null) {
+			idUsuario = Integer.parseInt(session.getAttribute("idUsuario").toString());
+		}
+		if (idUsuario != null) {
+			listaAmigos = usuarioDAO.consultarAmigosPorIdUsuario(idUsuario);
+			if (!listaAmigos.isEmpty()) {
+				idAmigo = listaAmigos.get(0).getIdUsuario();
+			}
+		}
 	}
-	
-    @PostConstruct
-    public void init() {
-    	if (idAmigo!=null) {
-    		listaPromediosComparacion.setLista(estadisticasDAO.obtenerListaPromediosComparacion(idUsuario, idAmigo));
-    	}
-    }
-    
-    public void cambioAmigo(ValueChangeEvent event) {
+
+	@PostConstruct
+	public void init() {
+		if (idAmigo != null) {
+			listaPromediosComparacion.setLista(estadisticasDAO.obtenerListaPromediosComparacion(idUsuario, idAmigo));
+		}
+	}
+
+	public void cambioAmigo(ValueChangeEvent event) {
 		this.idAmigo = Integer.parseInt(event.getNewValue().toString());
 		init();
 	}
-	
+
 	public Integer getIdUsuario() {
 		return idUsuario;
 	}
@@ -76,7 +75,7 @@ public class CompararEstadisticasManagedBean implements Serializable {
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	
+
 	public Integer getIdAmigo() {
 		return idAmigo;
 	}
@@ -102,9 +101,9 @@ public class CompararEstadisticasManagedBean implements Serializable {
 	}
 
 	public ConfiguracionManagedBean getConfiguracionManagedBean() {
-		if(this.configuracionManagedBean!=null){
+		if (this.configuracionManagedBean != null) {
 			return configuracionManagedBean;
-		} else{
+		} else {
 			return new ConfiguracionManagedBean();
 		}
 	}

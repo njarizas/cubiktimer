@@ -28,7 +28,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				+ " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion"
 				+ " WHERE id_usuario=?"
-				+ " GROUP BY t.nombre_tipo;";
+				+ " GROUP BY t.nombre_tipo";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
@@ -70,7 +70,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				" AND sr.estado=1" + 
 				" AND tr.dnf=0" + 
 				" GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + 
-				" ORDER BY sr.fecha;";
+				" ORDER BY sr.fecha";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
@@ -151,7 +151,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				+ " ON tr.id_sesion=sr.id_sesion"
 				+ " WHERE sr.id_usuario=?"
 				+ " AND tr.estado=1"
-				+ " AND sr.estado=1;";
+				+ " AND sr.estado=1";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
@@ -209,7 +209,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				+ " AND tr.estado=1"
 				+ " AND sr.estado=1"
 				+ " GROUP BY (tr.id_tipo_cubo)"
-				+ " ORDER BY COUNT(*);";
+				+ " ORDER BY COUNT(*)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
