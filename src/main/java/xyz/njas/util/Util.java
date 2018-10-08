@@ -48,6 +48,7 @@ public class Util {
 	 * @return 
 	 */
 	public static String darFormatoTiempo(Integer miliseg) {
+		miliseg-=miliseg%10;
 		String retorno = "";
 		double seg=miliseg/1000d;
 		int min;
