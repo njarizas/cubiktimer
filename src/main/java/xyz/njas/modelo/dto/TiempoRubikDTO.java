@@ -62,7 +62,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 				}
 				if (este<otro) {
 					return -1;
-				} else if (este<otro) {
+				} else if (este>otro) {
 					return 1;
 				} else {
 					return 0;

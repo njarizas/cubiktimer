@@ -32,8 +32,12 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			ps.setObject(8, dto.getEstado());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
-			if (rs != null && rs.next()) {
-				retorno = rs.getInt(1);
+			try {
+				if (rs != null && rs.next()) {
+					retorno = rs.getInt(1);
+				}
+			} finally {
+				rs.close();
 			}
 			desconectar();
 			return retorno;
@@ -88,20 +92,26 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				PermisoDTO p = new PermisoDTO();
-				p.setIdPermiso(rs.getInt("id_permiso"));
-				p.setUrl(rs.getString("url"));
-				p.setIdPadre(rs.getInt("id_padre"));
-				p.setNombrePermiso(rs.getString("nombre_permiso"));
-				p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
-				p.setNamePermiso(rs.getString("name_permiso"));
-				p.setDescriptionPermiso(rs.getString("description_permiso"));
-				p.setEstado(rs.getInt("estado"));
-				lista.add(p);
+			try {
+				while (rs.next()) {
+					PermisoDTO p = new PermisoDTO();
+					p.setIdPermiso(rs.getInt("id_permiso"));
+					p.setUrl(rs.getString("url"));
+					p.setIdPadre(rs.getInt("id_padre"));
+					p.setNombrePermiso(rs.getString("nombre_permiso"));
+					p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
+					p.setNamePermiso(rs.getString("name_permiso"));
+					p.setDescriptionPermiso(rs.getString("description_permiso"));
+					p.setEstado(rs.getInt("estado"));
+					lista.add(p);
+				}
+			} finally {
+				rs.close();
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}
@@ -114,20 +124,26 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idPadre);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				PermisoDTO p = new PermisoDTO();
-				p.setIdPermiso(rs.getInt("id_permiso"));
-				p.setUrl(rs.getString("url"));
-				p.setIdPadre(rs.getInt("id_padre"));
-				p.setNombrePermiso(rs.getString("nombre_permiso"));
-				p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
-				p.setNamePermiso(rs.getString("name_permiso"));
-				p.setDescriptionPermiso(rs.getString("description_permiso"));
-				p.setEstado(rs.getInt("estado"));
-				lista.add(p);
+			try {
+				while (rs.next()) {
+					PermisoDTO p = new PermisoDTO();
+					p.setIdPermiso(rs.getInt("id_permiso"));
+					p.setUrl(rs.getString("url"));
+					p.setIdPadre(rs.getInt("id_padre"));
+					p.setNombrePermiso(rs.getString("nombre_permiso"));
+					p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
+					p.setNamePermiso(rs.getString("name_permiso"));
+					p.setDescriptionPermiso(rs.getString("description_permiso"));
+					p.setEstado(rs.getInt("estado"));
+					lista.add(p);
+				}
+			} finally {
+				rs.close();
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}
@@ -146,12 +162,18 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, idPermiso);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				retorno = rs.getInt("conteo");
+			try {
+				while (rs.next()) {
+					retorno = rs.getInt("conteo");
+				}
+			} finally {
+				rs.close();
 			}
+			desconectar();
 			return retorno;
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		return 0;
 	}

@@ -21,6 +21,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)";
 		String sql2 = "INSERT INTO usuarios_roles VALUES (?,?,?)";
 		try {
+			Util util = Util.getInstance();
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			PreparedStatement ps2 = conn.prepareStatement(sql2);
 			ps.setObject(1, null);
@@ -29,14 +30,18 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(4, dto.getNombres());
 			ps.setString(5, dto.getApellidos());
 			ps.setString(6, String.valueOf(dto.getSexo()));
-			ps.setString(7, Util.fechaHoraMySql.format(dto.getFechaNacimiento()));
-			ps.setString(8, Util.fechaHoraMySql.format(dto.getFechaCreacion()));
-			ps.setString(9, Util.fechaHoraMySql.format(dto.getFechaModificacion()));
+			ps.setString(7, util.FECHA_HORA_MYSQL.format(dto.getFechaNacimiento()));
+			ps.setString(8, util.FECHA_HORA_MYSQL.format(dto.getFechaCreacion()));
+			ps.setString(9, util.FECHA_HORA_MYSQL.format(dto.getFechaModificacion()));
 			ps.setObject(10, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
-			if (rs != null && rs.next()) {
-				retorno = rs.getInt(1);
+			try {
+				if (rs != null && rs.next()) {
+					retorno = rs.getInt(1);
+				}
+			} finally {
+				rs.close();
 			}
 			List<Integer> listaRoles = new ArrayList<Integer>();
 			listaRoles.add(1);
@@ -62,15 +67,16 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 		String sql = "UPDATE usuarios SET correo = ?, clave = ?, nombres = ?, apellidos = ?, sexo = ?,"
 				+ " fecha_nacimiento = ?, fecha_creacion = ?, fecha_modificacion = ?, estado = ? WHERE id_usuario = ?";
 		try {
+			Util util = Util.getInstance();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getCorreo());
 			ps.setString(2, dto.getClave());
 			ps.setString(3, dto.getNombres());
 			ps.setString(4, dto.getApellidos());
 			ps.setString(5, String.valueOf(dto.getSexo()));
-			ps.setString(6, Util.fechaHoraMySql.format(dto.getFechaNacimiento()));
-			ps.setString(7, Util.fechaHoraMySql.format(dto.getFechaCreacion()));
-			ps.setString(8, Util.fechaHoraMySql.format(dto.getFechaModificacion()));
+			ps.setString(6, util.FECHA_HORA_MYSQL.format(dto.getFechaNacimiento()));
+			ps.setString(7, util.FECHA_HORA_MYSQL.format(dto.getFechaCreacion()));
+			ps.setString(8, util.FECHA_HORA_MYSQL.format(dto.getFechaModificacion()));
 			ps.setObject(9, dto.getEstado());
 			ps.setObject(10, dto.getIdUsuario());
 			ps.executeUpdate();
@@ -261,7 +267,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 		}
 		return lista;
 	}
-	
+
 	public List<UsuarioDTO> consultarUsuariosAmigos(Integer idUsuario) {
 		List<UsuarioDTO> lista = new ArrayList<UsuarioDTO>();
 		try {
@@ -286,24 +292,32 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 		List<UsuarioDTO> lista = new ArrayList<UsuarioDTO>();
 		try {
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				UsuarioDTO u = new UsuarioDTO();
-				u.setIdUsuario(rs.getInt("id_usuario"));
-				u.setCorreo(rs.getString("correo"));
-				u.setClave(rs.getString("clave"));
-				u.setNombres(rs.getString("nombres"));
-				u.setApellidos(rs.getString("apellidos"));
-				u.setSexo(rs.getString("sexo").charAt(0));
-				u.setFechaNacimiento(Util.fechaMySql.parse(rs.getString("fecha_nacimiento")));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_creacion")));
-				u.setFechaNacimiento(Util.fechaHoraMySql.parse(rs.getString("fecha_modificacion")));
-				u.setEstado(rs.getInt("estado"));
-				lista.add(u);
+			try {
+				Util util = Util.getInstance();
+				while (rs.next()) {
+					UsuarioDTO u = new UsuarioDTO();
+					u.setIdUsuario(rs.getInt("id_usuario"));
+					u.setCorreo(rs.getString("correo"));
+					u.setClave(rs.getString("clave"));
+					u.setNombres(rs.getString("nombres"));
+					u.setApellidos(rs.getString("apellidos"));
+					u.setSexo(rs.getString("sexo").charAt(0));
+					u.setFechaNacimiento(util.FECHA_MYSQL.parse(rs.getString("fecha_nacimiento")));
+					u.setFechaNacimiento(util.FECHA_HORA_MYSQL.parse(rs.getString("fecha_creacion")));
+					u.setFechaNacimiento(util.FECHA_HORA_MYSQL.parse(rs.getString("fecha_modificacion")));
+					u.setEstado(rs.getInt("estado"));
+					lista.add(u);
+				}
+			} finally {
+				rs.close();
 			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		} catch (ParseException pe) {
 			pe.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}

@@ -7,19 +7,19 @@ import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.TiempoRubikDTO;
 
-public class TiempoRubikDAO extends DAO<Integer,TiempoRubikDTO>{
+public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> {
 
 	@Override
 	public int create(TiempoRubikDTO dto) {
-		int retorno=0;
+		int retorno = 0;
 		conectar();
-		String sql="INSERT INTO tiempos_rubik"
+		String sql = "INSERT INTO tiempos_rubik"
 				+ " (id_tiempo,id_sesion,id_tipo_cubo,mezcla,tiempo_inspeccion_segundos,"
 				+ " tiempo_inspeccion_usado_milisegundos,tiempo_inspeccion_usado_texto,"
 				+ " tiempo_milisegundos,tiempo_texto,dnf,penalizacion,comentario,video,ip,estado)"
 				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement ps=conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdSesion());
 			ps.setObject(3, dto.getIdTipoCubo());
@@ -35,30 +35,33 @@ public class TiempoRubikDAO extends DAO<Integer,TiempoRubikDTO>{
 			ps.setString(13, dto.getVideo());
 			ps.setString(14, dto.getIp());
 			ps.setObject(15, dto.getEstado());
-			retorno=ps.executeUpdate();
+			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
-			if (rs != null && rs.next()) {
-			  retorno = rs.getInt(1);
+			try {
+				if (rs != null && rs.next()) {
+					retorno = rs.getInt(1);
+				}
+			} finally {
+				rs.close();
 			}
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
 			e.printStackTrace();
 			desconectar();
-		} 
+		}
 		return 0;
 	}
-	
+
 	public int update(TiempoRubikDTO dto) {
-		int retorno=0;
+		int retorno = 0;
 		conectar();
-		String sql="UPDATE tiempos_rubik"
-				+ " SET id_sesion=?,id_tipo_cubo=?,mezcla=?,tiempo_inspeccion_segundos=?,"
+		String sql = "UPDATE tiempos_rubik" + " SET id_sesion=?,id_tipo_cubo=?,mezcla=?,tiempo_inspeccion_segundos=?,"
 				+ " tiempo_inspeccion_usado_milisegundos=?,tiempo_inspeccion_usado_texto=?,"
 				+ " tiempo_milisegundos=?,tiempo_texto=?,dnf=?,penalizacion=?,comentario=?,video=?,ip=?,estado=?"
 				+ " WHERE id_tiempo=?";
 		try {
-			PreparedStatement ps=conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, dto.getIdSesion());
 			ps.setObject(2, dto.getIdTipoCubo());
 			ps.setString(3, dto.getMezcla());
@@ -75,20 +78,20 @@ public class TiempoRubikDAO extends DAO<Integer,TiempoRubikDTO>{
 			ps.setObject(14, dto.getEstado());
 			ps.setObject(15, dto.getIdTiempo());
 			ps.executeUpdate();
-			retorno=dto.getIdTiempo();
+			retorno = dto.getIdTiempo();
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
 			e.printStackTrace();
 			desconectar();
-		} 
+		}
 		return 0;
 	}
-	
+
 	public int merge(TiempoRubikDTO dto) {
-		if (dto.getIdTiempo()==null){
+		if (dto.getIdTiempo() == null) {
 			return create(dto);
-		} else{
+		} else {
 			return update(dto);
 		}
 	}

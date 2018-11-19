@@ -9,11 +9,23 @@ import javax.servlet.ServletContext;
 
 public class Util {
 
-	public static SimpleDateFormat fechaHoraMySql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-	public static SimpleDateFormat fechaMySql = new SimpleDateFormat("yyyy-MM-dd");
-	public static SimpleDateFormat formatoFechaLarga = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy",new Locale( "es" , "ES" ));  
-	public static DecimalFormat df =new DecimalFormat("0.00");
+	public SimpleDateFormat FECHA_HORA_MYSQL = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	public SimpleDateFormat FECHA_MYSQL = new SimpleDateFormat("yyyy-MM-dd");
+	public SimpleDateFormat FORMATO_FECHA_LARGA = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy",new Locale( "es" , "ES" ));  
+	public static final DecimalFormat DF =new DecimalFormat("0.00");
+	private static Util util;
 
+	private Util(){
+		
+	}
+	
+	public static Util getInstance() {
+		if (util == null) {
+			util = new Util();
+		}
+		return util;
+	}
+	
 	/**
 	 * Método que recibe una cadena con minutos y segundos y centesimas de segundo en formato "mm:ss.cc"
 	 * y lo convierte en un double que representa sólo segundos
@@ -61,7 +73,7 @@ public class Util {
 		if (seg<10){
 			retorno+="0";
 		}
-		retorno+=df.format(seg);
+		retorno+=DF.format(seg);
 		return retorno.replace(",", ".");
 	}
 	

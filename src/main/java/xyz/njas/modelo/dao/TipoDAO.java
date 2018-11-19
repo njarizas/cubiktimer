@@ -26,8 +26,12 @@ public class TipoDAO extends DAO<Integer,TipoDTO> {
 			ps.setObject(5, dto.getEstado());
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
+			try {
 			if (rs != null && rs.next()) {
 			  retorno = rs.getInt(1);
+			}
+			} finally {
+				rs.close();
 			}
 			desconectar();
 			return retorno;
@@ -45,6 +49,7 @@ public class TipoDAO extends DAO<Integer,TipoDTO> {
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			try {
 			while(rs.next()){
 				TipoDTO t = new TipoDTO();
 				t.setIdTipo((Integer)rs.getObject("id_tipo"));
@@ -54,8 +59,13 @@ public class TipoDAO extends DAO<Integer,TipoDTO> {
 				t.setEstado((Integer)rs.getObject("estado"));
 				lista.add(t);
 			}
+			} finally {
+				rs.close();
+			}
+			desconectar();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
+			desconectar();
 		}
 		return lista;
 	}

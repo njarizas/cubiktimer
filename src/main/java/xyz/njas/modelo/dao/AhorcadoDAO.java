@@ -13,10 +13,11 @@ public class AhorcadoDAO extends DAO<Integer,AhorcadoDTO> {
 		conectar();
 		String sql="INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
 		try {
+			Util util = Util.getInstance();
 			PreparedStatement ps=conn.prepareStatement(sql);
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
-			ps.setString(3, Util.fechaHoraMySql.format(dto.getFecha()));
+			ps.setString(3, util.FECHA_HORA_MYSQL.format(dto.getFecha()));
 			ps.setString(4, dto.getPalabra());
 			ps.setString(5, dto.getLetrasUsadas());
 			ps.setObject(6, dto.getIntentosSobrantes());

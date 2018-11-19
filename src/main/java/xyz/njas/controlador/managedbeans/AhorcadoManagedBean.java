@@ -26,7 +26,7 @@ import xyz.njas.util.Util;
  */
 @ManagedBean
 @ViewScoped
-public class AhorcadoManagedBean implements Serializable{
+public class AhorcadoManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class AhorcadoManagedBean implements Serializable{
 	private char[] palabraOculta;
 	private int intentosRestantes;
 	private String letra;
-	private boolean juegoEstaFinalizado=false;
+	private boolean juegoEstaFinalizado = false;
 	private String realPath;
 	private ArrayList<String> letrasUsadas;
 
@@ -47,18 +47,18 @@ public class AhorcadoManagedBean implements Serializable{
 
 	public AhorcadoManagedBean() {
 		reset();
-		dto=new AhorcadoDTO();
-		dao=new AhorcadoDAO();
+		dto = new AhorcadoDTO();
+		dao = new AhorcadoDAO();
 	}
 
-	public String reiniciar(){
+	public String reiniciar() {
 		reset();
 		return "";
 	}
 
-	public void reset(){
+	public void reset() {
 		letrasUsadas = new ArrayList<String>();
-		juegoEstaFinalizado=false;
+		juegoEstaFinalizado = false;
 		palabra = "dinosaurio";
 		try {
 			inicializarPalabra();
@@ -75,18 +75,18 @@ public class AhorcadoManagedBean implements Serializable{
 	}
 
 	@PostConstruct
-	public void init(){
-		if (sesionManagedBean.getUsuarioLogueado()!=null){
+	public void init() {
+		if (sesionManagedBean.getUsuarioLogueado() != null) {
 			this.dto.setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
-		} 
+		}
 	}
 
 	public void comprobarLetra() {
 		if (!juegoEstaFinalizado) {
 			boolean encontroLetra = false;
 			if (letra.length() > 0) {
-				String l=String.valueOf(letra.toUpperCase().charAt(0));
-				if(letrasUsadas.indexOf(l.toUpperCase())<0){
+				String l = String.valueOf(letra.toUpperCase().charAt(0));
+				if (letrasUsadas.indexOf(l.toUpperCase()) < 0) {
 					letrasUsadas.add(l.toUpperCase());
 				}
 				for (int i = 0; i < palabraOculta.length; i++) {
@@ -103,24 +103,23 @@ public class AhorcadoManagedBean implements Serializable{
 			letra = "";
 			if (sonPalabrasIguales()) {
 				sesionManagedBean.getMensaje().setTitle("¡Ganaste!");
-				sesionManagedBean.getMensaje().setText("La palabra era: "+this.palabra);
+				sesionManagedBean.getMensaje().setText("La palabra era: " + this.palabra);
 				sesionManagedBean.getMensaje().setType("success");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
-				juegoEstaFinalizado=true;
-				//new Date(), palabra, false, letrasUsadas
+				juegoEstaFinalizado = true;
+				// new Date(), palabra, false, letrasUsadas
 				dto.setFecha(new Date());
 				dto.setPalabra(this.palabra);
 				dto.setLetrasUsadas(Arrays.toString(letrasUsadas.toArray()));
 				dto.setIntentosSobrantes(intentosRestantes);
 				dto.setGano(true);
 				dao.create(dto);
-			}
-			else if (intentosRestantes == 0) {
+			} else if (intentosRestantes == 0) {
 				sesionManagedBean.getMensaje().setTitle("¡Perdiste!");
-				sesionManagedBean.getMensaje().setText("La palabra era: "+this.palabra);
+				sesionManagedBean.getMensaje().setText("La palabra era: " + this.palabra);
 				sesionManagedBean.getMensaje().setType("error");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
-				juegoEstaFinalizado= true;
+				juegoEstaFinalizado = true;
 				dto.setFecha(new Date());
 				dto.setPalabra(this.palabra);
 				dto.setLetrasUsadas(Arrays.toString(letrasUsadas.toArray()));
@@ -131,8 +130,8 @@ public class AhorcadoManagedBean implements Serializable{
 		}
 	}
 
-	public boolean seHaUsadoLetra(String letra){
-		return this.letrasUsadas.indexOf(letra)>=0;
+	public boolean seHaUsadoLetra(String letra) {
+		return this.letrasUsadas.indexOf(letra) >= 0;
 	}
 
 	public void mostrarPalabra() {
@@ -160,33 +159,39 @@ public class AhorcadoManagedBean implements Serializable{
 	}
 
 	public void inicializarPalabra() throws FileNotFoundException, IOException {
-		realPath=Util.getRealPath();
-		System.out.println("Real Path"+realPath);
+		realPath = Util.getRealPath();
+		System.out.println("Real Path" + realPath);
 		String cadena;
 		Random random = new Random();
 		int lineas = 0;
 		int linea;
-		String archivo = realPath+"resources/txt/palabras_ahorcado.txt";
+		String archivo = realPath + "resources/txt/palabras_ahorcado.txt";
 		FileReader f = new FileReader(archivo);
 		BufferedReader b = new BufferedReader(f);
-		while ((cadena = b.readLine()) != null) {
-			//System.out.println(cadena);
-			lineas++;
+		try {
+			while ((cadena = b.readLine()) != null) {
+				// System.out.println(cadena);
+				lineas++;
+			}
+		} finally {
+			b.close();
+			f.close();
 		}
-		b.close();
-		f.close();
 		linea = random.nextInt(lineas);
 		FileReader a = new FileReader(archivo);
 		BufferedReader c = new BufferedReader(a);
-		lineas = 0;
-		while ((cadena = c.readLine()) != null) {
-			if (linea == lineas) {
-				this.palabra = cadena;
+		try {
+			lineas = 0;
+			while ((cadena = c.readLine()) != null) {
+				if (linea == lineas) {
+					this.palabra = cadena;
+				}
+				lineas++;
 			}
-			lineas++;
+		} finally {
+			c.close();
+			a.close();
 		}
-		c.close();
-		a.close();
 		System.out.println("palabra seleccionada: " + this.palabra);
 
 	}
@@ -236,7 +241,7 @@ public class AhorcadoManagedBean implements Serializable{
 	}
 
 	public void setJuegoEstaFinalizado(boolean juegoEstaFinalizado) {
-		this.juegoEstaFinalizado = juegoEstaFinalizado;	
+		this.juegoEstaFinalizado = juegoEstaFinalizado;
 	}
 
 	public ArrayList<String> getLetrasUsadas() {

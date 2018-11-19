@@ -80,11 +80,11 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	@PostConstruct
-	public void init(){
-		if (sesionManagedBean.getUsuarioLogueado()==null){
-			this.sesionRubikActual= new SesionRubik(new Date());
-		} else{
-			this.sesionRubikActual= new SesionRubik(new Date(),sesionManagedBean.getUsuarioLogueado().getIdUsuario());
+	public void init() {
+		if (sesionManagedBean.getUsuarioLogueado() == null) {
+			this.sesionRubikActual = new SesionRubik(new Date());
+		} else {
+			this.sesionRubikActual = new SesionRubik(new Date(), sesionManagedBean.getUsuarioLogueado().getIdUsuario());
 		}
 		this.tipoCubo = configuracionManagedBean.getTipoCubo().getValorEntero();
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
@@ -98,7 +98,7 @@ public class RubikManagedBean implements Serializable {
 		mezclaAleatoria();
 	}
 
-	public List<TipoDTO> listarCubos(){
+	public List<TipoDTO> listarCubos() {
 		List<TipoDTO> lista = tipoDAO.listarTiposDeCubo();
 		return lista;
 	}
@@ -128,15 +128,15 @@ public class RubikManagedBean implements Serializable {
 		}
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		System.out.println(cubo);
+		System.out.println("secuencia Mezcla: " + secuenciaMezcla);
 		return "";
 	}
 
 	public String mezclaPersonalizada() {
 		resetearCubo();
-		this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase()
-				.replace("f", " f").replace("b", " b").replace("r", " r")
-				.replace("l", " l").replace("u", " u").replace("d", " d")
-				.replace("x", " x").replace("y", " y").replace("z", " z").replace("  ", " ");
+		this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase().replace("f", " f").replace("b", " b")
+				.replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x")
+				.replace("y", " y").replace("z", " z").replace("  ", " ");
 		System.out.println(this.secuenciaMezcla);
 		mezcla = this.secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
@@ -155,36 +155,45 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	/**
-	 * Método que se encarga de guardar los tiempos empleados para solucionar el cubo de rubik en la sesión actual
+	 * Método que se encarga de guardar los tiempos empleados para solucionar el
+	 * cubo de rubik en la sesión actual
+	 * 
 	 * @return
 	 */
 	public String guardarSesionRubik() {
-		//Si tiene sesion iniciada se verifica que el id de usuario se encuentre asignado correctamente
-		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()==null && sesionManagedBean.getUsuarioLogueado()!=null && sesionManagedBean.getUsuarioLogueado().getIdUsuario()!=null) {
+		// Si tiene sesion iniciada se verifica que el id de usuario se encuentre
+		// asignado correctamente
+		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario() == null
+				&& sesionManagedBean.getUsuarioLogueado() != null
+				&& sesionManagedBean.getUsuarioLogueado().getIdUsuario() != null) {
 			sesionRubikActual.getSesionRubikDTO().setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
 		}
-		//si el usuario se encuentra logueado tiene sentido guardar los tiempos, de lo contrario no
-		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario()!=null) {
-			if(rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos())>0){
+		// si el usuario se encuentra logueado tiene sentido guardar los tiempos, de lo
+		// contrario no
+		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario() != null) {
+			if (rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos()) > 0) {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Informacion"));
-				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("SeHanGuardadoLosTiemposActuales"));
+				sesionManagedBean.getMensaje()
+						.setText(sesionManagedBean.getRecursos().getString("SeHanGuardadoLosTiemposActuales"));
 				sesionManagedBean.getMensaje().setType("success");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			} else {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("SePresentoUnErrorAlTratarDeGuardar"));
+				sesionManagedBean.getMensaje()
+						.setText(sesionManagedBean.getRecursos().getString("SePresentoUnErrorAlTratarDeGuardar"));
 				sesionManagedBean.getMensaje().setType("error");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			}
 		} else {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeGuardarTiemposDeUnUsuarioQueNoHaIniciadoSesion"));
+			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos()
+					.getString("NoSePuedeGuardarTiemposDeUnUsuarioQueNoHaIniciadoSesion"));
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return "";
 	}
-	
+
 	public String limpiarTiempos() {
 		sesionRubikActual.setTiempos(new ArrayList<Tiempo>());
 		return "";
@@ -199,21 +208,31 @@ public class RubikManagedBean implements Serializable {
 
 	public String mostrarDNF(Tiempo t) {
 		if (sesionRubikActual.getTiempos().contains(t)) {
-			if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getDnf()) {
-				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setTiempoTexto("DNF("+Util.darFormatoTiempo(sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
-						.getTiempoRubikDTO().getTiempoMilisegundos())+")");
-				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setDnf(true);
+			if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+					.getDnf()) {
+				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.setTiempoTexto("DNF(" + Util.darFormatoTiempo(
+								sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
+										.getTiempoRubikDTO().getTiempoMilisegundos())
+								+ ")");
+				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.setDnf(true);
 			} else {
-				if (sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getPenalizacion()) {
+				if (sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.getPenalizacion()) {
 					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-					.setTiempoTexto(Util.darFormatoTiempo(sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
-							.getTiempoRubikDTO().getTiempoMilisegundos()) + " +2");
+							.setTiempoTexto(Util.darFormatoTiempo(
+									sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
+											.getTiempoRubikDTO().getTiempoMilisegundos())
+									+ " +2");
 				} else {
 					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-					.setTiempoTexto(Util.darFormatoTiempo(sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
-							.getTiempoRubikDTO().getTiempoMilisegundos()));
+							.setTiempoTexto(Util.darFormatoTiempo(
+									sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
+											.getTiempoRubikDTO().getTiempoMilisegundos()));
 				}
-				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setDnf(false);
+				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.setDnf(false);
 			}
 		}
 		return "";
@@ -221,23 +240,33 @@ public class RubikManagedBean implements Serializable {
 
 	public String mostrarPenalizacion(Tiempo t) {
 		if (sesionRubikActual.getTiempos().contains(t)) {
-			if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getDnf()) {
-				if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getPenalizacion()) {
+			if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+					.getDnf()) {
+				if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.getPenalizacion()) {
 					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-					.setTiempoTexto(Util.darFormatoTiempo(sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
-							.getTiempoRubikDTO().getTiempoMilisegundos()) + " +2");
-					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setPenalizacion(true);
+							.setTiempoTexto(Util.darFormatoTiempo(
+									sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
+											.getTiempoRubikDTO().getTiempoMilisegundos())
+									+ " +2");
+					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+							.setPenalizacion(true);
 				} else {
 					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-					.setTiempoTexto(Util.darFormatoTiempo(sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
-							.getTiempoRubikDTO().getTiempoMilisegundos()));
-					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setPenalizacion(false);
+							.setTiempoTexto(Util.darFormatoTiempo(
+									sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
+											.getTiempoRubikDTO().getTiempoMilisegundos()));
+					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+							.setPenalizacion(false);
 				}
 			} else {
-				if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().getPenalizacion()) {
-					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setPenalizacion(true);
+				if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.getPenalizacion()) {
+					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+							.setPenalizacion(true);
 				} else {
-					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO().setPenalizacion(false);
+					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+							.setPenalizacion(false);
 				}
 			}
 		}
@@ -373,9 +402,9 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public ConfiguracionManagedBean getConfiguracionManagedBean() {
-		if(this.configuracionManagedBean!=null){
+		if (this.configuracionManagedBean != null) {
 			return configuracionManagedBean;
-		} else{
+		} else {
 			return new ConfiguracionManagedBean();
 		}
 	}

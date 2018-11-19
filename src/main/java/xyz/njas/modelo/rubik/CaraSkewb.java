@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CaraSkewb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Celda celdaNoroccidente;
 	private Celda celdaNororiente;
 	private Celda celdaCentro;
@@ -31,11 +31,10 @@ public class CaraSkewb implements Serializable {
 		this.celdaSuroriente = celdaSuroriente;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return celdaNoroccidente + "," + celdaNororiente+ "," + celdaCentro + "," + celdaSuroccidente + ","	+ celdaSuroriente;
+		return celdaNoroccidente + "," + celdaNororiente + "," + celdaCentro + "," + celdaSuroccidente + ","
+				+ celdaSuroriente;
 	}
 
 	public Celda getCeldaNoroccidente() {

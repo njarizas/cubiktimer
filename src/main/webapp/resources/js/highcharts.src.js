@@ -17667,7 +17667,7 @@
                 addEvent(series, 'destroy', remover);
 
                 // Do it now
-                setInvert(inverted); // do it now
+                setInvert(); // do it now
 
                 // On subsequent render and redraw, just do setInvert without setting up events again
                 series.invertGroups = setInvert;

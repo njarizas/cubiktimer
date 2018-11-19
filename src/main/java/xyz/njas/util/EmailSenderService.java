@@ -43,7 +43,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			Properties propiedades = new Properties();
 			propiedades.setProperty("mail.smtp.host", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.starttls.enable", "true");
-			propiedades.setProperty("mail.smtp.port", "25");//587
+			propiedades.setProperty("mail.smtp.port", "25");// 587
 			propiedades.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
 			propiedades.setProperty("mail.smtp.user", this.emailRemitente);
 			propiedades.setProperty("mail.smtp.auth", "true");
@@ -64,7 +64,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			init();
 			mimeMessage.setSubject(asunto);
 			mimeMessage.setText(contenido);
-			//mimeMessage.setContent(contenido, "text/html");
+			// mimeMessage.setContent(contenido, "text/html");
 			Transport transport = session.getTransport("smtp");
 			transport.connect(emailRemitente, passRemitente);
 			transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
@@ -82,7 +82,7 @@ public class EmailSenderService implements EmailSenderInterface {
 		try {
 			init();
 			mimeMessage.setSubject(asunto);
-			//mimeMessage.setText(contenido);
+			// mimeMessage.setText(contenido);
 			mimeMessage.setContent(contenido, "text/html");
 			Transport transport = session.getTransport("smtp");
 			transport.connect(emailRemitente, passRemitente);
@@ -97,7 +97,7 @@ public class EmailSenderService implements EmailSenderInterface {
 
 	private String obtenerRutaPlantillasHTML() {
 		String realPath = Util.getRealPath();
-		String ruta = realPath+"WEB-INF/plantillasHTML/";
+		String ruta = realPath + "WEB-INF/plantillasHTML/";
 		return ruta;
 	}
 
@@ -113,21 +113,22 @@ public class EmailSenderService implements EmailSenderInterface {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
 			StringBuilder stringBuilder = new StringBuilder(usuario.getClave());
 			String nekot = stringBuilder.reverse().toString();
-			StringBuffer msg=new StringBuffer("");
-			String cadena="";
+			StringBuffer msg = new StringBuffer("");
+			String cadena = "";
 			String ruta = obtenerRutaPlantillasHTML();
-			FileReader f = new FileReader(ruta+"mensaje-activacion-cuenta.html");
-			BufferedReader b = new BufferedReader(f);
-			while((cadena = b.readLine())!=null) {
-				msg.append(cadena);
+			try (FileReader f = new FileReader(ruta + "mensaje-activacion-cuenta.html");
+					BufferedReader b = new BufferedReader(f)) {
+				while ((cadena = b.readLine()) != null) {
+					msg.append(cadena);
+				}
 			}
 			String mensaje = msg.toString();
-			Map<String,String> map = new HashMap<String, String>();
+			Map<String, String> map = new HashMap<String, String>();
 			map.put("~:nombreUsuario~", usuario.getNombres());
 			map.put("~:idUsuario~", usuario.getIdUsuario().toString());
 			map.put("~:token~", nekot);
 			mensaje = aplicarPlantilla(mensaje, map);
-			b.close();
+
 			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en www.cubiktimer.com", mensaje);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,21 +140,23 @@ public class EmailSenderService implements EmailSenderInterface {
 	public boolean enviarMensajeDeRecuperacionDeClave(UsuarioDTO usuario, String pass) {
 		try {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
-			StringBuffer msg=new StringBuffer("");
-			String cadena="";
+			StringBuffer msg = new StringBuffer("");
+			String cadena = "";
 			String ruta = obtenerRutaPlantillasHTML();
-			FileReader f = new FileReader(ruta+"mensaje-recuperacion-clave.html");
-			BufferedReader b = new BufferedReader(f);
-			while((cadena = b.readLine())!=null) {
-				msg.append(cadena);
+			try (FileReader f = new FileReader(ruta + "mensaje-recuperacion-clave.html");
+					BufferedReader b = new BufferedReader(f)) {
+				while ((cadena = b.readLine()) != null) {
+					msg.append(cadena);
+				}
 			}
 			String mensaje = msg.toString();
-			Map<String,String> map = new HashMap<String, String>();
+			Map<String, String> map = new HashMap<String, String>();
 			map.put("~:nombreUsuario~", usuario.getNombres());
 			map.put("~:clave~", pass);
 			mensaje = aplicarPlantilla(mensaje, map);
-			b.close();
-			return enviarMensajeHTML(this.emailDestinatario, "Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
+
+			return enviarMensajeHTML(this.emailDestinatario,
+					"Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

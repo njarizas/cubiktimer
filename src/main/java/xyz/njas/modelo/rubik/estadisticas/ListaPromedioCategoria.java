@@ -57,7 +57,7 @@ public class ListaPromedioCategoria implements Serializable{
 	}
 	
 	public String obtenerTipoCubo(){
-		if (lista.size()>=0){
+		if (!lista.isEmpty()){
 			return lista.get(0).getTipoCubo();
 		}
 		return "";

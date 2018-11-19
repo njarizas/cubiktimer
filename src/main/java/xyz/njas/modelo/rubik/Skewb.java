@@ -5,7 +5,7 @@ import java.io.Serializable;
 import xyz.njas.util.Constantes;
 import xyz.njas.util.ScrambleGenerator;
 
-public class Skewb extends Puzzle implements Serializable{
+public class Skewb extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,23 +29,23 @@ public class Skewb extends Puzzle implements Serializable{
 	@Override
 	public boolean girar(String giro) {
 		giro = giro.toLowerCase().trim();
-		if (giro.equals("u")){
+		if (giro.equals("u")) {
 			u(1);
-		} else if (giro.equals("u'")){
+		} else if (giro.equals("u'")) {
 			u(2);
-		} else if (giro.equals("b")){
+		} else if (giro.equals("b")) {
 			b(1);
-		} else if (giro.equals("b'")){
+		} else if (giro.equals("b'")) {
 			b(2);
-		} else if (giro.equals("r")){
+		} else if (giro.equals("r")) {
 			r(1);
-		} else if (giro.equals("r'")){
+		} else if (giro.equals("r'")) {
 			r(2);
-		} else if (giro.equals("l")){
+		} else if (giro.equals("l")) {
 			l(1);
-		} else if (giro.equals("l'")){
+		} else if (giro.equals("l'")) {
 			l(2);
-		} else{
+		} else {
 			System.out.println("giro no válido");
 			return false;
 		}
@@ -199,26 +199,26 @@ public class Skewb extends Puzzle implements Serializable{
 		return secuenciaMezclada;
 	}
 
-	//	@Override
-	//	public String[] generarMezcla() {
-	//		String[] movimientos = {"U", "U'", "B", "B'", "R", "R'", "L", "L'"};
-	//		int num;
-	//		int[] mezclaInt = new int[15];
-	//		String[] mezcla = new String[mezclaInt.length];
-	//		Random random = new Random();
-	//		for (int i = 0; i < mezcla.length; i++) {
-	//			num = random.nextInt(movimientos.length);
-	//			//para que no se gire dos veces seguidas la misma cara
-	//			if (i != 0) {
-	//				while (mezclaInt[i - 1] / 2 == num / 2) {
-	//					num = random.nextInt(movimientos.length);
-	//				}
-	//			}
-	//			mezclaInt[i] = num;
-	//			mezcla[i] = movimientos[mezclaInt[i]];
-	//		}
-	//		return mezcla;
-	//	}
+	// @Override
+	// public String[] generarMezcla() {
+	// String[] movimientos = {"U", "U'", "B", "B'", "R", "R'", "L", "L'"};
+	// int num;
+	// int[] mezclaInt = new int[15];
+	// String[] mezcla = new String[mezclaInt.length];
+	// Random random = new Random();
+	// for (int i = 0; i < mezcla.length; i++) {
+	// num = random.nextInt(movimientos.length);
+	// //para que no se gire dos veces seguidas la misma cara
+	// if (i != 0) {
+	// while (mezclaInt[i - 1] / 2 == num / 2) {
+	// num = random.nextInt(movimientos.length);
+	// }
+	// }
+	// mezclaInt[i] = num;
+	// mezcla[i] = movimientos[mezclaInt[i]];
+	// }
+	// return mezcla;
+	// }
 
 	@Override
 	public String[] generarMezcla() {
@@ -230,9 +230,9 @@ public class Skewb extends Puzzle implements Serializable{
 		System.out.println(top);
 		System.out.print(left);
 		System.out.print(front);
-		System.out.println(right);
-		System.out.println(bottom);
+		System.out.print(right);
 		System.out.println(back);
+		System.out.println(bottom);
 		return "";
 	}
 
@@ -285,4 +285,3 @@ public class Skewb extends Puzzle implements Serializable{
 	}
 
 }
-

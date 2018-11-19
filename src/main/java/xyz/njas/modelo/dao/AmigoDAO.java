@@ -28,8 +28,12 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			ps.setObject(4, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
-			if (rs != null && rs.next()) {
-				retorno = rs.getInt(1);
+			try {
+				if (rs != null && rs.next()) {
+					retorno = rs.getInt(1);
+				}
+			} finally {
+				rs.close();
 			}
 			desconectar();
 			return retorno;
@@ -118,13 +122,17 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		List<AmigoDTO> lista = new ArrayList<AmigoDTO>();
 		try {
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				AmigoDTO a = new AmigoDTO();
-				a.setIdAmistad(rs.getInt("id_amistad"));
-				a.setIdUsuario(rs.getInt("id_usuario"));
-				a.setIdAmigo(rs.getInt("id_amigo"));
-				a.setEstado(rs.getInt("estado"));
-				lista.add(a);
+			try {
+				while (rs.next()) {
+					AmigoDTO a = new AmigoDTO();
+					a.setIdAmistad(rs.getInt("id_amistad"));
+					a.setIdUsuario(rs.getInt("id_usuario"));
+					a.setIdAmigo(rs.getInt("id_amigo"));
+					a.setEstado(rs.getInt("estado"));
+					lista.add(a);
+				}
+			} finally {
+				rs.close();
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();

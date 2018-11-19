@@ -2,13 +2,13 @@ package xyz.njas.util;
 
 public class Constantes {
 
-	public static String colorBlanco = "white";
-	public static String colorNaranja = "#ff8000";
-	public static String colorVerde = "green";
-	public static String colorRojo = "red";
-	public static String colorAmarillo = "yellow";
-	public static String colorAzul = "blue";
+	public static final String colorBlanco = "white";
+	public static final String colorNaranja = "#ff8000";
+	public static final String colorVerde = "green";
+	public static final String colorRojo = "red";
+	public static final String colorAmarillo = "yellow";
+	public static final String colorAzul = "blue";
 	
-	public static Integer milisegundosPenalizacion = 2000;
+	public static final Integer milisegundosPenalizacion = 2000;
 	
 }

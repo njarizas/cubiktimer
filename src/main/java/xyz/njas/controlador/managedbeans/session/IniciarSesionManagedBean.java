@@ -110,8 +110,9 @@ public class IniciarSesionManagedBean implements Serializable {
 			if (credencialDAO.consultarCredencialPorCorreoClaveYEstado(login, pass, 1).size() > 0) {//existe
 				List<CredencialDTO> listaCredenciales = credencialDAO.consultarCredencialPorCorreoClaveYEstado(login, pass, 1);
 				Date fechaMod = listaCredenciales.get(0).getFechaFin();
+				Util util = Util.getInstance();
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaContraseñaFueModificadaEl") + ": " + Util.formatoFechaLarga.format(fechaMod));
+				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaContraseñaFueModificadaEl") + ": " + util.FORMATO_FECHA_LARGA.format(fechaMod));
 				sesionManagedBean.getMensaje().setType("warning");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			} else {//No existe

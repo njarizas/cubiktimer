@@ -45,7 +45,10 @@ public class RolDTO implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return this.getIdRol().equals(((RolDTO)obj).idRol);
+		if (obj!=null) {
+			return this.getIdRol().equals(((RolDTO)obj).idRol);
+		}
+		return false;
 	}
 
 	@Override
