@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import xyz.njas.util.ScrambleGenerator;
 
-public class CuboRubik4x4r extends CuboRubikNxN implements Serializable {
+public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public CuboRubik4x4r(Integer idTipoCubo, String nombre) {
+	public CuboRubik4x4(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre, 4);
 	}
 
