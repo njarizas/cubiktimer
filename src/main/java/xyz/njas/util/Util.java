@@ -9,9 +9,9 @@ import javax.servlet.ServletContext;
 
 public class Util {
 
-	public SimpleDateFormat FECHA_HORA_MYSQL = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-	public SimpleDateFormat FECHA_MYSQL = new SimpleDateFormat("yyyy-MM-dd");
-	public SimpleDateFormat FORMATO_FECHA_LARGA = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy",new Locale( "es" , "ES" ));  
+	public SimpleDateFormat fechaHoraMysql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	public SimpleDateFormat fechaMysql = new SimpleDateFormat("yyyy-MM-dd");
+	public SimpleDateFormat formatoFechaLarga = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy",new Locale( "es" , "ES" ));  
 	public static final DecimalFormat DF =new DecimalFormat("0.00");
 	private static Util util;
 

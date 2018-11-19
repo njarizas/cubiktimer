@@ -29,7 +29,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 			ps.setObject(5, dto.getValorEntero());
 			ps.setObject(6, dto.getValorDecimal());
 			if (dto.getValorFecha() != null) {
-				ps.setString(7, util.FECHA_HORA_MYSQL.format(dto.getValorFecha()));
+				ps.setString(7, util.fechaHoraMysql.format(dto.getValorFecha()));
 			} else {
 				ps.setNull(7, java.sql.Types.DATE);
 			}
@@ -72,7 +72,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 					c.setValorEntero((Integer) rs.getObject("valor_entero"));
 					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
 					try {
-						c.setValorFecha(util.FECHA_HORA_MYSQL.parse(rs.getString("fecha_nacimiento")));
+						c.setValorFecha(util.fechaHoraMysql.parse(rs.getString("fecha_nacimiento")));
 					} catch (ParseException pe) {
 						System.out.println(
 								"La fecha de la configuracion esta nula o no tiene el formato esperado: ConfiguracionDAO");
@@ -104,7 +104,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 			ps.setObject(4, dto.getValorEntero());
 			ps.setObject(5, dto.getValorDecimal());
 			if (dto.getValorFecha() != null) {
-				ps.setString(6, util.FECHA_HORA_MYSQL.format(dto.getValorFecha()));
+				ps.setString(6, util.fechaHoraMysql.format(dto.getValorFecha()));
 			} else {
 				ps.setNull(6, java.sql.Types.DATE);
 			}
@@ -156,7 +156,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 					c.setValorEntero((Integer) rs.getObject("valor_entero"));
 					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
 					try {
-						c.setValorFecha(util.FECHA_HORA_MYSQL.parse(rs.getString("valor_fecha")));
+						c.setValorFecha(util.fechaHoraMysql.parse(rs.getString("valor_fecha")));
 					} catch (ParseException pe) {
 						System.out
 								.println("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");

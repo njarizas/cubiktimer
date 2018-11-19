@@ -20,7 +20,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> {
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
-			ps.setString(3, util.FECHA_HORA_MYSQL.format(dto.getFecha()));
+			ps.setString(3, util.fechaHoraMysql.format(dto.getFecha()));
 			ps.setString(4, dto.getIp());
 			ps.setObject(5, dto.getEstado());
 			ps.executeUpdate();
@@ -49,7 +49,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> {
 			Util util = Util.getInstance();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, dto.getIdUsuario());
-			ps.setString(2, util.FECHA_HORA_MYSQL.format(dto.getFecha()));
+			ps.setString(2, util.fechaHoraMysql.format(dto.getFecha()));
 			ps.setString(3, dto.getIp());
 			ps.setObject(4, dto.getEstado());
 			ps.setObject(5, dto.getIdSesion());

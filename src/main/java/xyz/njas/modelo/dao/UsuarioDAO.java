@@ -30,9 +30,9 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(4, dto.getNombres());
 			ps.setString(5, dto.getApellidos());
 			ps.setString(6, String.valueOf(dto.getSexo()));
-			ps.setString(7, util.FECHA_HORA_MYSQL.format(dto.getFechaNacimiento()));
-			ps.setString(8, util.FECHA_HORA_MYSQL.format(dto.getFechaCreacion()));
-			ps.setString(9, util.FECHA_HORA_MYSQL.format(dto.getFechaModificacion()));
+			ps.setString(7, util.fechaHoraMysql.format(dto.getFechaNacimiento()));
+			ps.setString(8, util.fechaHoraMysql.format(dto.getFechaCreacion()));
+			ps.setString(9, util.fechaHoraMysql.format(dto.getFechaModificacion()));
 			ps.setObject(10, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
@@ -74,9 +74,9 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(3, dto.getNombres());
 			ps.setString(4, dto.getApellidos());
 			ps.setString(5, String.valueOf(dto.getSexo()));
-			ps.setString(6, util.FECHA_HORA_MYSQL.format(dto.getFechaNacimiento()));
-			ps.setString(7, util.FECHA_HORA_MYSQL.format(dto.getFechaCreacion()));
-			ps.setString(8, util.FECHA_HORA_MYSQL.format(dto.getFechaModificacion()));
+			ps.setString(6, util.fechaHoraMysql.format(dto.getFechaNacimiento()));
+			ps.setString(7, util.fechaHoraMysql.format(dto.getFechaCreacion()));
+			ps.setString(8, util.fechaHoraMysql.format(dto.getFechaModificacion()));
 			ps.setObject(9, dto.getEstado());
 			ps.setObject(10, dto.getIdUsuario());
 			ps.executeUpdate();
@@ -302,9 +302,9 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 					u.setNombres(rs.getString("nombres"));
 					u.setApellidos(rs.getString("apellidos"));
 					u.setSexo(rs.getString("sexo").charAt(0));
-					u.setFechaNacimiento(util.FECHA_MYSQL.parse(rs.getString("fecha_nacimiento")));
-					u.setFechaNacimiento(util.FECHA_HORA_MYSQL.parse(rs.getString("fecha_creacion")));
-					u.setFechaNacimiento(util.FECHA_HORA_MYSQL.parse(rs.getString("fecha_modificacion")));
+					u.setFechaNacimiento(util.fechaMysql.parse(rs.getString("fecha_nacimiento")));
+					u.setFechaNacimiento(util.fechaHoraMysql.parse(rs.getString("fecha_creacion")));
+					u.setFechaNacimiento(util.fechaHoraMysql.parse(rs.getString("fecha_modificacion")));
 					u.setEstado(rs.getInt("estado"));
 					lista.add(u);
 				}
