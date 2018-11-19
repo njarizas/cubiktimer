@@ -142,7 +142,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	 */
 	public Integer getTiempoRealMilisegundos() {
 		if (this.getPenalizacion()) {
-			return tiempoMilisegundos + Constantes.milisegundosPenalizacion;
+			return tiempoMilisegundos + Constantes.MILISEGUNDOS_PENALIZACION;
 		}
 		return tiempoMilisegundos;
 	}

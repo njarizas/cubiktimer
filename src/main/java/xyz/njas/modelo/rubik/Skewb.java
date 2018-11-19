@@ -18,12 +18,12 @@ public class Skewb extends Puzzle implements Serializable {
 
 	public Skewb(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre);
-		top = new CaraSkewb(Constantes.colorBlanco);
-		left = new CaraSkewb(Constantes.colorNaranja);
-		front = new CaraSkewb(Constantes.colorVerde);
-		right = new CaraSkewb(Constantes.colorRojo);
-		bottom = new CaraSkewb(Constantes.colorAmarillo);
-		back = new CaraSkewb(Constantes.colorAzul);
+		top = new CaraSkewb(Constantes.COLOR_BLANCO);
+		left = new CaraSkewb(Constantes.COLOR_NARANJA);
+		front = new CaraSkewb(Constantes.COLOR_VERDE);
+		right = new CaraSkewb(Constantes.COLOR_ROJO);
+		bottom = new CaraSkewb(Constantes.COLOR_AMARILLO);
+		back = new CaraSkewb(Constantes.COLOR_AZUL);
 	}
 
 	@Override

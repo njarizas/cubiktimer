@@ -7,7 +7,7 @@ import xyz.njas.util.Constantes;
 public class TestCaraRubik {
 
 	public static void main(String[] args) {
-		CaraRubik cara = new CaraRubik(10, Constantes.colorBlanco);
+		CaraRubik cara = new CaraRubik(10, Constantes.COLOR_BLANCO);
 		for (int i = 0; i < cara.getN(); i++) {
 			for (int j = 0; j < cara.getN(); j++) {
 				cara.getCara()[i][j] = new Celda(String.valueOf((i * 10) + j + "   "));

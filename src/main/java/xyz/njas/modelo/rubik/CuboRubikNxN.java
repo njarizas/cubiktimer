@@ -19,12 +19,12 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 	public CuboRubikNxN(Integer idTipoCubo, String nombre, int n) {
 		super(idTipoCubo, nombre);
 		this.n = n;
-		top = new CaraRubik(n, Constantes.colorBlanco);
-		left = new CaraRubik(n, Constantes.colorNaranja);
-		front = new CaraRubik(n, Constantes.colorVerde);
-		right = new CaraRubik(n, Constantes.colorRojo);
-		bottom = new CaraRubik(n, Constantes.colorAmarillo);
-		back = new CaraRubik(n, Constantes.colorAzul);
+		top = new CaraRubik(n, Constantes.COLOR_BLANCO);
+		left = new CaraRubik(n, Constantes.COLOR_NARANJA);
+		front = new CaraRubik(n, Constantes.COLOR_VERDE);
+		right = new CaraRubik(n, Constantes.COLOR_ROJO);
+		bottom = new CaraRubik(n, Constantes.COLOR_AMARILLO);
+		back = new CaraRubik(n, Constantes.COLOR_AZUL);
 	}
 
 	@Override
