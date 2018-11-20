@@ -6,7 +6,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
+
 public class Test2 {
+	
+	private static final Logger log = Logger.getLogger(Test2.class);
 	
 	public static void main(String[] args) {
 		ejecutarJar();
@@ -17,7 +21,7 @@ public class Test2 {
 		try {
 			Runtime.getRuntime().exec("java -jar C:\\Disco\\NELSON\\docsJava\\juegos\\src\\main\\webapp\\resources\\jars\\TNoodle-WCA-0.13.3.jar");
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		}
 	}
 	

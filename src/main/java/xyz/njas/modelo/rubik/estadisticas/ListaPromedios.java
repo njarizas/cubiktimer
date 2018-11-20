@@ -8,7 +8,7 @@ public class ListaPromedios implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public List<ListaPromedioCategoria> lista;
+	private List<ListaPromedioCategoria> lista;
 
 	public ListaPromedios() {
 		super();

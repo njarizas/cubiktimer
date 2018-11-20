@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.CredencialDTO;
 import xyz.njas.util.Util;
 
 public class CredencialDAO extends DAO<Integer, CredencialDTO> {
+	
+	private static final Logger log = Logger.getLogger(CredencialDAO.class);
 
 	@Override
 	public int create(CredencialDTO dto) {
@@ -41,7 +45,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -63,8 +67,8 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 					c.setIdUsuario(rs.getInt("id_usuario"));
 					c.setCorreo(rs.getString("correo"));
 					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.fechaHoraMysql.parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.fechaHoraMysql.parse(rs.getString("fecha_fin")));
+					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
+					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
 					c.setEstado(rs.getInt("estado"));
 					lista.add(c);
 				}
@@ -73,10 +77,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		} catch (ParseException pe) {
-			pe.printStackTrace();
+			log.warn(pe.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -99,8 +103,8 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 					c.setIdUsuario(rs.getInt("id_usuario"));
 					c.setCorreo(rs.getString("correo"));
 					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.fechaHoraMysql.parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.fechaHoraMysql.parse(rs.getString("fecha_fin")));
+					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
+					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
 					c.setEstado(rs.getInt("estado"));
 					lista.add(c);
 				}
@@ -109,10 +113,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		} catch (ParseException pe) {
-			pe.printStackTrace();
+			log.warn(pe.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -136,8 +140,8 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 					c.setIdUsuario(rs.getInt("id_usuario"));
 					c.setCorreo(rs.getString("correo"));
 					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.fechaHoraMysql.parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.fechaHoraMysql.parse(rs.getString("fecha_fin")));
+					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
+					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
 					c.setEstado(rs.getInt("estado"));
 					lista.add(c);
 				}
@@ -146,10 +150,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		} catch (ParseException pe) {
-			pe.printStackTrace();
+			log.warn(pe.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -171,8 +175,8 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 					c.setIdUsuario(rs.getInt("id_usuario"));
 					c.setCorreo(rs.getString("correo"));
 					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.fechaHoraMysql.parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.fechaHoraMysql.parse(rs.getString("fecha_fin")));
+					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
+					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
 					c.setEstado(rs.getInt("estado"));
 					lista.add(c);
 				}
@@ -181,10 +185,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		} catch (ParseException pe) {
-			pe.printStackTrace();
+			log.warn(pe.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -201,15 +205,15 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			try {
 				if (rs.next()) {
 					Util util = Util.getInstance();
-					retorno = util.fechaHoraMysql.parse(rs.getString("fecha_ultimo_cambio"));
+					retorno = util.getFechaHoraMysql().parse(rs.getString("fecha_ultimo_cambio"));
 					System.out.println("encontro: " + rs.getString("fecha_ultimo_cambio"));
 				}
 			} finally {
 				rs.close();
 			}
 			desconectar();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return retorno;

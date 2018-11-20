@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -16,6 +14,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
+import xyz.njas.modelo.dao.AhorcadoDAO;
 import xyz.njas.modelo.dto.UsuarioDTO;
 
 /**
@@ -25,6 +26,7 @@ import xyz.njas.modelo.dto.UsuarioDTO;
 public class EmailSenderService implements EmailSenderInterface {
 
 	public final static String HOST_EMAIL_GMAIL = "smtp.gmail.com";
+	private static final Logger log = Logger.getLogger(AhorcadoDAO.class);
 
 	private String emailRemitente;
 	private String passRemitente;
@@ -53,7 +55,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			mimeMessage.setFrom(new InternetAddress(emailRemitente));
 			mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
 		} catch (MessagingException ex) {
-			Logger.getLogger(EmailSenderService.class.getName()).log(Level.SEVERE, null, ex);
+			log.warn(ex.getMessage());
 		}
 	}
 
@@ -71,7 +73,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			transport.close();
 			return true;
 		} catch (MessagingException ex) {
-			Logger.getLogger(EmailSenderService.class.getName()).log(Level.SEVERE, null, ex);
+			log.warn(ex.getMessage());
 			return false;
 		}
 	}
@@ -90,7 +92,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			transport.close();
 			return true;
 		} catch (MessagingException ex) {
-			Logger.getLogger(EmailSenderService.class.getName()).log(Level.SEVERE, null, ex);
+			log.warn(ex.getMessage());
 			return false;
 		}
 	}

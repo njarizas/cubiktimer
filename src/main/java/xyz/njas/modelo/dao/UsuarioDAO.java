@@ -7,12 +7,16 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.UsuarioDTO;
 import xyz.njas.util.Util;
 
 public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
+	
+	private static final Logger log = Logger.getLogger(UsuarioDAO.class);
 
 	@Override
 	public int create(UsuarioDTO dto) {
@@ -30,9 +34,9 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(4, dto.getNombres());
 			ps.setString(5, dto.getApellidos());
 			ps.setString(6, String.valueOf(dto.getSexo()));
-			ps.setString(7, util.fechaHoraMysql.format(dto.getFechaNacimiento()));
-			ps.setString(8, util.fechaHoraMysql.format(dto.getFechaCreacion()));
-			ps.setString(9, util.fechaHoraMysql.format(dto.getFechaModificacion()));
+			ps.setString(7, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
+			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
+			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
 			ps.setObject(10, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
@@ -55,7 +59,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -74,9 +78,9 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(3, dto.getNombres());
 			ps.setString(4, dto.getApellidos());
 			ps.setString(5, String.valueOf(dto.getSexo()));
-			ps.setString(6, util.fechaHoraMysql.format(dto.getFechaNacimiento()));
-			ps.setString(7, util.fechaHoraMysql.format(dto.getFechaCreacion()));
-			ps.setString(8, util.fechaHoraMysql.format(dto.getFechaModificacion()));
+			ps.setString(6, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
+			ps.setString(7, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
+			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
 			ps.setObject(9, dto.getEstado());
 			ps.setObject(10, dto.getIdUsuario());
 			ps.executeUpdate();
@@ -84,7 +88,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -107,7 +111,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -123,7 +127,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -139,7 +143,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -156,7 +160,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setString(2, clave);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -173,7 +177,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setInt(2, estado);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -188,7 +192,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -206,7 +210,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -234,7 +238,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setInt(3, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -261,7 +265,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setInt(2, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -281,7 +285,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			ps.setInt(2, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -302,9 +306,9 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 					u.setNombres(rs.getString("nombres"));
 					u.setApellidos(rs.getString("apellidos"));
 					u.setSexo(rs.getString("sexo").charAt(0));
-					u.setFechaNacimiento(util.fechaMysql.parse(rs.getString("fecha_nacimiento")));
-					u.setFechaNacimiento(util.fechaHoraMysql.parse(rs.getString("fecha_creacion")));
-					u.setFechaNacimiento(util.fechaHoraMysql.parse(rs.getString("fecha_modificacion")));
+					u.setFechaNacimiento(util.getFechaMysql().parse(rs.getString("fecha_nacimiento")));
+					u.setFechaNacimiento(util.getFechaHoraMysql().parse(rs.getString("fecha_creacion")));
+					u.setFechaNacimiento(util.getFechaHoraMysql().parse(rs.getString("fecha_modificacion")));
 					u.setEstado(rs.getInt("estado"));
 					lista.add(u);
 				}
@@ -313,10 +317,10 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		} catch (ParseException pe) {
-			pe.printStackTrace();
+			log.warn(pe.getMessage());
 			desconectar();
 		}
 		return lista;

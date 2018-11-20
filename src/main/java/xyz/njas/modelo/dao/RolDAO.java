@@ -6,11 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.RolDTO;
 
 public class RolDAO extends DAO<Integer, RolDTO> {
+
+	private static final Logger log = Logger.getLogger(RolDAO.class);
 
 	@Override
 	public int create(RolDTO dto) {
@@ -35,7 +39,7 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -54,7 +58,7 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 			desconectar();
 			return dto.getIdRol();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -91,7 +95,7 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		}
 		return lista;

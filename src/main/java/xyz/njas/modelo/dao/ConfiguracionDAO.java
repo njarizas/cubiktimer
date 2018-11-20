@@ -7,12 +7,16 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.ConfiguracionDTO;
 import xyz.njas.util.Util;
 
 public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
+	
+	private static final Logger log = Logger.getLogger(ConfiguracionDAO.class);
 
 	@Override
 	public int create(ConfiguracionDTO dto) {
@@ -29,7 +33,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 			ps.setObject(5, dto.getValorEntero());
 			ps.setObject(6, dto.getValorDecimal());
 			if (dto.getValorFecha() != null) {
-				ps.setString(7, util.fechaHoraMysql.format(dto.getValorFecha()));
+				ps.setString(7, util.getFechaHoraMysql().format(dto.getValorFecha()));
 			} else {
 				ps.setNull(7, java.sql.Types.DATE);
 			}
@@ -46,7 +50,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -72,11 +76,11 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 					c.setValorEntero((Integer) rs.getObject("valor_entero"));
 					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
 					try {
-						c.setValorFecha(util.fechaHoraMysql.parse(rs.getString("fecha_nacimiento")));
+						c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("fecha_nacimiento")));
 					} catch (ParseException pe) {
-						System.out.println(
+						log.trace(
 								"La fecha de la configuracion esta nula o no tiene el formato esperado: ConfiguracionDAO");
-						pe.getMessage();
+						log.warn(pe.getMessage());
 					}
 					c.setEstado((Integer) rs.getObject("estado"));
 					lista.add(c);
@@ -85,7 +89,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 				rs.close();
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		}
 		return lista;
 	}
@@ -104,7 +108,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 			ps.setObject(4, dto.getValorEntero());
 			ps.setObject(5, dto.getValorDecimal());
 			if (dto.getValorFecha() != null) {
-				ps.setString(6, util.fechaHoraMysql.format(dto.getValorFecha()));
+				ps.setString(6, util.getFechaHoraMysql().format(dto.getValorFecha()));
 			} else {
 				ps.setNull(6, java.sql.Types.DATE);
 			}
@@ -115,7 +119,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -156,16 +160,15 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 					c.setValorEntero((Integer) rs.getObject("valor_entero"));
 					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
 					try {
-						c.setValorFecha(util.fechaHoraMysql.parse(rs.getString("valor_fecha")));
+						c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("valor_fecha")));
 					} catch (ParseException pe) {
-						System.out
-								.println("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");
-						pe.getMessage();
+						log.trace("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");
+						log.warn(pe.getMessage());
 					} catch (NullPointerException npe) {
-						System.out.println("La fecha de la configuracion esta nula: ConfiguracionDAO");
-						npe.getMessage();
+						log.trace("La fecha de la configuracion esta nula: ConfiguracionDAO");
+						log.warn(npe.getMessage());
 					} catch (Exception e) {
-						e.printStackTrace();
+						log.warn(e.getMessage());
 					}
 					c.setEstado((Integer) rs.getObject("estado"));
 					lista.add(c);
@@ -174,7 +177,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> {
 				rs.close();
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		}
 		return lista;
 	}

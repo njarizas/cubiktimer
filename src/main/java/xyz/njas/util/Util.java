@@ -9,28 +9,30 @@ import javax.servlet.ServletContext;
 
 public class Util {
 
-	public SimpleDateFormat fechaHoraMysql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-	public SimpleDateFormat fechaMysql = new SimpleDateFormat("yyyy-MM-dd");
-	public SimpleDateFormat formatoFechaLarga = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy",new Locale( "es" , "ES" ));  
-	public static final DecimalFormat DF =new DecimalFormat("0.00");
+	private SimpleDateFormat fechaHoraMysql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private SimpleDateFormat fechaMysql = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat formatoFechaLarga = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+	private static final DecimalFormat DF = new DecimalFormat("0.00");
 	private static Util util;
 
-	private Util(){
-		
+	private Util() {
+
 	}
-	
+
 	public static Util getInstance() {
 		if (util == null) {
 			util = new Util();
 		}
 		return util;
 	}
-	
+
 	/**
-	 * Método que recibe una cadena con minutos y segundos y centesimas de segundo en formato "mm:ss.cc"
-	 * y lo convierte en un double que representa sólo segundos
+	 * Método que recibe una cadena con minutos y segundos y centesimas de segundo
+	 * en formato "mm:ss.cc" y lo convierte en un double que representa sólo
+	 * segundos
+	 * 
 	 * @param string
-	 * @return 
+	 * @return
 	 */
 	public static double calcularSegundos(String string) {
 		if (string.length() == 8) {
@@ -44,49 +46,70 @@ public class Util {
 	}
 
 	/**
-	 * Método que recibe una cadena con minutos y segundos y centesimas de segundo en formato "mm:ss.cc"
-	 * y lo convierte en un entero que representa sólo milesimas de segundo
+	 * Método que recibe una cadena con minutos y segundos y centesimas de segundo
+	 * en formato "mm:ss.cc" y lo convierte en un entero que representa sólo
+	 * milesimas de segundo
+	 * 
 	 * @param string
-	 * @return 
+	 * @return
 	 */
 	public static int calcularMilesimasDeSegundos(String string) {
-		return (int)(calcularSegundos(string)*1000);
+		return (int) (calcularSegundos(string) * 1000);
 	}
 
 	/**
-	 * Método que toma un Integer representando los milisegundos y devuelve una cadena con formato 
-	 * "mm:ss.ss" (minutos, segundos y centésimas de segundo)
+	 * Método que toma un Integer representando los milisegundos y devuelve una
+	 * cadena con formato "mm:ss.ss" (minutos, segundos y centésimas de segundo)
+	 * 
 	 * @param miliseg
-	 * @return 
+	 * @return
 	 */
 	public static String darFormatoTiempo(Integer miliseg) {
-		miliseg-=miliseg%10;
+		miliseg -= miliseg % 10;
 		String retorno = "";
-		double seg=miliseg/1000d;
+		double seg = miliseg / 1000d;
 		int min;
-		min=(int)Math.floor(seg)/60;
-		seg-=(min*60);
-		if (min<10){
-			retorno +="0";
+		min = (int) Math.floor(seg) / 60;
+		seg -= (min * 60);
+		if (min < 10) {
+			retorno += "0";
 		}
-		retorno+=min+":";
-		if (seg<10){
-			retorno+="0";
+		retorno += min + ":";
+		if (seg < 10) {
+			retorno += "0";
 		}
-		retorno+=DF.format(seg);
+		retorno += DF.format(seg);
 		return retorno.replace(",", ".");
 	}
-	
+
 	public static String getRealPath() {
-		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext()
+				.getContext();
 		String realPath = (String) servletContext.getRealPath("/");
 		return realPath;
 	}
-	
+
 	public static String getContextPath() {
-		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext()
+				.getContext();
 		String contextPath = (String) servletContext.getContextPath();
 		return contextPath;
+	}
+
+	public SimpleDateFormat getFechaHoraMysql() {
+		return fechaHoraMysql;
+	}
+
+	public SimpleDateFormat getFechaMysql() {
+		return fechaMysql;
+	}
+
+	public SimpleDateFormat getFormatoFechaLarga() {
+		return formatoFechaLarga;
+	}
+
+	public static DecimalFormat getDf() {
+		return DF;
 	}
 
 }

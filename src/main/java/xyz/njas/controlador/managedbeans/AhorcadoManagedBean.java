@@ -15,6 +15,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.controlador.managedbeans.session.SesionManagedBean;
 import xyz.njas.modelo.dao.AhorcadoDAO;
 import xyz.njas.modelo.dto.AhorcadoDTO;
@@ -29,6 +31,7 @@ import xyz.njas.util.Util;
 public class AhorcadoManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(AhorcadoManagedBean.class);
 
 	private String palabra;
 	private char[] palabraVisible;
@@ -63,7 +66,7 @@ public class AhorcadoManagedBean implements Serializable {
 		try {
 			inicializarPalabra();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		}
 		letra = "";
 		palabraVisible = palabra.toCharArray();

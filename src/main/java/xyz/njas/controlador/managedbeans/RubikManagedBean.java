@@ -11,6 +11,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.controlador.facade.RubikFacade;
 import xyz.njas.controlador.factories.RubikFactory;
 import xyz.njas.controlador.managedbeans.session.ConfiguracionManagedBean;
@@ -31,10 +33,8 @@ import xyz.njas.util.Util;
 @SessionScoped
 public class RubikManagedBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(RubikManagedBean.class);
 
 	@ManagedProperty(value = "#{configuracionManagedBean}")
 	private ConfiguracionManagedBean configuracionManagedBean;
@@ -127,8 +127,8 @@ public class RubikManagedBean implements Serializable {
 			this.secuenciaMezcla += string + " ";
 		}
 		secuenciaMezcla = cubo.mezclar(mezcla);
-		System.out.println(cubo);
-		System.out.println("secuencia Mezcla: " + secuenciaMezcla);
+		log.trace(cubo);
+		log.debug("secuencia Mezcla: " + secuenciaMezcla);
 		return "";
 	}
 
@@ -137,10 +137,10 @@ public class RubikManagedBean implements Serializable {
 		this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase().replace("f", " f").replace("b", " b")
 				.replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x")
 				.replace("y", " y").replace("z", " z").replace("  ", " ");
-		System.out.println(this.secuenciaMezcla);
 		mezcla = this.secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
-		System.out.println(cubo);
+		log.trace(cubo);
+		log.debug("secuencia Mezcla: " + secuenciaMezcla);
 		return "";
 	}
 

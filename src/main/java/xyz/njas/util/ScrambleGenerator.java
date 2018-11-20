@@ -8,7 +8,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.log4j.Logger;
+
 public class ScrambleGenerator {
+	
+	private static final Logger log = Logger.getLogger(ScrambleGenerator.class);
 
 	public static String[] generarMezcla(String parametro) {
 		System.out.println("Va a generar la mezcla con el Software oficial de la WCA");
@@ -29,20 +33,17 @@ public class ScrambleGenerator {
 			//si se genera ConnectException tal vez es por que no se esta ejecutando el TNoodle
 		} catch (ConnectException ce) {
 			esConnectException = true;
-			System.out.println(ce.getMessage());
+			log.warn(ce.getMessage());
 		} catch (MalformedURLException murle) {
-			System.out.println(murle.getMessage());
-			murle.printStackTrace();
+			log.warn(murle.getMessage());
 		} catch (IOException ioe) {
-			System.out.println(ioe.getMessage());
-			ioe.printStackTrace();
+			log.warn(ioe.getMessage());
 		}
 		try {
 			if(esConnectException) {
 				//se trata de ejecutar el TNoodle
-				String realPath = Util.getRealPath();
 				System.out.println("Se hace el llamado para que se ejecute el jar java -jar C:\\TNoodle-WCA-0.13.5.jar");
-				Runtime.getRuntime().exec("java -jar C:\\TNoodle-WCA-0.13.5.jar");
+				Runtime.getRuntime().exec("java -jar C:\\cubiktimer\\TNoodle-WCA-0.13.5.jar");
 				// Creando un objeto URL
 				url = new URL("http://localhost:2014/scramble/.txt?="+parametro);
 				// Realizando la petición GET
@@ -56,7 +57,7 @@ public class ScrambleGenerator {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		}
 		return stringBuffer.toString().split(" ");
 	}

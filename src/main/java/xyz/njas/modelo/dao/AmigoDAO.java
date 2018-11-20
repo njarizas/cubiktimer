@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.AmigoDTO;
@@ -14,6 +16,7 @@ import xyz.njas.modelo.dto.AmigoDTO;
 public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(AmigoDAO.class);
 
 	@Override
 	public int create(AmigoDTO dto) {
@@ -38,7 +41,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -59,7 +62,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -95,7 +98,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			ps.executeUpdate();
 			desconectar();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 	}
@@ -111,7 +114,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			ps.setInt(2, idAmigo);
 			lista = findList(ps);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 		} finally {
 			desconectar();
 		}
@@ -135,7 +138,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 				rs.close();
 			}
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		}
 		return lista;
 	}

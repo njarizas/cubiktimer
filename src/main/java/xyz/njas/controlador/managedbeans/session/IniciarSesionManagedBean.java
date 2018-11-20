@@ -112,7 +112,7 @@ public class IniciarSesionManagedBean implements Serializable {
 				Date fechaMod = listaCredenciales.get(0).getFechaFin();
 				Util util = Util.getInstance();
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaContraseñaFueModificadaEl") + ": " + util.formatoFechaLarga.format(fechaMod));
+				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaContraseñaFueModificadaEl") + ": " + util.getFormatoFechaLarga().format(fechaMod));
 				sesionManagedBean.getMensaje().setType("warning");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			} else {//No existe

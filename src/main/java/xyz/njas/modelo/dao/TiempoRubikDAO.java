@@ -3,11 +3,15 @@ package xyz.njas.modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.TiempoRubikDTO;
 
 public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> {
+
+	private static final Logger log = Logger.getLogger(TiempoRubikDAO.class);
 
 	@Override
 	public int create(TiempoRubikDTO dto) {
@@ -47,7 +51,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -82,7 +86,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> {
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;

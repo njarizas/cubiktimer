@@ -2,11 +2,14 @@ package xyz.njas.modelo.rubik;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.util.ScrambleGenerator;
 
 public class CuboRubik5x5 extends CuboRubikNxN implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(CuboRubik5x5.class);
 
 	public CuboRubik5x5(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre, 5);
@@ -56,7 +59,7 @@ public class CuboRubik5x5 extends CuboRubikNxN implements Serializable {
 		} else if (giro.equals("uw'")) {
 			uw(3);
 		} else {
-			System.out.println("giro no válido");
+			log.trace("giro no válido");
 			return false;
 		}
 		return true;

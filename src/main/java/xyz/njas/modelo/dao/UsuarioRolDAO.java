@@ -6,9 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.modelo.dto.UsuarioRolDTO;
 
 public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
+	
+	private static final Logger log = Logger.getLogger(UsuarioRolDAO.class);
 
 	@Override
 	public int create(UsuarioRolDTO dto) {
@@ -23,7 +27,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			desconectar();
 			return 1;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -41,7 +45,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			desconectar();
 			return 1;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -63,7 +67,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 		}
 		return lista;
 	}
@@ -86,7 +90,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		}
 		return lista;

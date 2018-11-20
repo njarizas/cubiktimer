@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.PermisoDTO;
@@ -14,6 +16,7 @@ import xyz.njas.modelo.dto.PermisoDTO;
 public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(PermisosDAO.class);
 
 	@Override
 	public int create(PermisoDTO dto) {
@@ -42,7 +45,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -68,7 +71,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return 0;
@@ -110,7 +113,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -142,7 +145,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -172,7 +175,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			desconectar();
 			return retorno;
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		}
 		return 0;

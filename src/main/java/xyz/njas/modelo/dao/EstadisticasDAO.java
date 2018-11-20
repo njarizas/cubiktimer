@@ -6,11 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.modelo.rubik.estadisticas.CuentaPuzzle;
 import xyz.njas.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import xyz.njas.modelo.rubik.estadisticas.Promedio;
 
 public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
+
+	private static final Logger log = Logger.getLogger(EstadisticasDAO.class);
 
 	/**
 	 * Método que retorna las categorías que se han registrado y la cantidad de
@@ -43,8 +47,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				rs.close();
 			}
 			desconectar();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -83,8 +87,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				rs.close();
 			}
 			desconectar();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -125,8 +129,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				rs.close();
 			}
 			desconectar();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -156,8 +160,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				rs.close();
 			}
 			desconectar();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
 			desconectar();
 		}
 		return lista;
@@ -213,7 +217,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 			}
 			desconectar();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			log.warn(sqle.getMessage());
 			desconectar();
 		}
 		return idTipoCubo;

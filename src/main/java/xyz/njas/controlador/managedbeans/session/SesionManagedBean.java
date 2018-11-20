@@ -12,6 +12,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.modelo.dao.PermisosDAO;
 import xyz.njas.modelo.dto.PermisoDTO;
 import xyz.njas.modelo.dto.RolDTO;
@@ -27,6 +29,7 @@ import xyz.njas.util.Mensaje;
 public class SesionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(SesionManagedBean.class);
 	
 	private String idioma;
     private Locale locale;
@@ -64,8 +67,8 @@ public class SesionManagedBean implements Serializable {
     public void goToIndex() {
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(getContextPath() + "/index.jsf");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            log.warn(e.getMessage());
         }
     }
     

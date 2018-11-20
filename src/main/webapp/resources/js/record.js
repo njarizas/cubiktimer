@@ -33,8 +33,7 @@ downloadButton.onclick = download;
 var isSecureOrigin = location.protocol === 'https:' ||
 location.hostname === 'localhost';
 if (!isSecureOrigin) {
-  alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
-    '\n\nChanging protocol to HTTPS');
+//  alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.\n\nChanging protocol to HTTPS');
   location.protocol = 'HTTPS';
 }
 
@@ -69,8 +68,7 @@ function handleSourceOpen(event) {
 
 recordedVideo.addEventListener('error', function(ev) {
   console.error('MediaRecording.recordedMedia.error()');
-  alert('Your browser can not play\n\n' + recordedVideo.src
-    + '\n\n media clip. event: ' + JSON.stringify(ev));
+//  alert('Your browser can not play\n\n' + recordedVideo.src + '\n\n media clip. event: ' + JSON.stringify(ev));
 }, true);
 
 function handleDataAvailable(event) {
@@ -113,8 +111,7 @@ function startRecording() {
     mediaRecorder = new MediaRecorder(window.stream, options);
   } catch (e) {
     console.error('Exception while creating MediaRecorder: ' + e);
-    alert('Exception while creating MediaRecorder: '
-      + e + '. mimeType: ' + options.mimeType);
+//    alert('Exception while creating MediaRecorder: ' + e + '. mimeType: ' + options.mimeType);
     return;
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);

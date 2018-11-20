@@ -6,7 +6,7 @@ import xyz.njas.config.ConexionDatabase;
 
 public abstract class DAO<PK,DTO> {
 	
-	public Connection conn;
+	protected Connection conn;
 	
 	public void conectar(){
 		conn=ConexionDatabase.getInstance();
