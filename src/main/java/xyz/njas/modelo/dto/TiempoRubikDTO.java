@@ -47,41 +47,67 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	@Override
 	public int compareTo(TiempoRubikDTO otherTiempo) {
 		if (this.getDnf().equals(otherTiempo.getDnf())) {
-			//Cuando los dos son dnf entonces son iguales
+			// Cuando los dos son dnf entonces son iguales
 			if (this.getDnf()) {
 				return 0;
 			} else {
-				Integer este = this.getTiempoMilisegundos();
-				Integer otro = otherTiempo.getTiempoMilisegundos();
-				//se aplican penalizaciones si las tienen
-				if (this.getPenalizacion()) {
-					este += 2000;
-				}
-				if (otherTiempo.getPenalizacion()) {
-					otro += 2000;
-				}
-				if (este<otro) {
+				Integer este = aplicarPenalizacion(this);
+				Integer otro = aplicarPenalizacion(otherTiempo);
+				if (este < otro) {
 					return -1;
-				} else if (este>otro) {
+				} else if (este > otro) {
 					return 1;
 				} else {
 					return 0;
 				}
 			}
-		} else { //uno es DNF y el otro no
+		} else { // uno es DNF y el otro no
 			if (this.getDnf()) {
 				return 1;
 			} else {
-				return -11;
+				return -1;
 			}
 		}
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + aplicarPenalizacion(this);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TiempoRubikDTO other = (TiempoRubikDTO) obj;
+		return aplicarPenalizacion(this) == aplicarPenalizacion(other);
+
+	}
+
+	private Integer aplicarPenalizacion(TiempoRubikDTO tiempoRubikDTO) {
+		if (tiempoRubikDTO.dnf) {
+			return Integer.MAX_VALUE;
+		} else if (tiempoRubikDTO.penalizacion) {
+			return tiempoRubikDTO.getTiempoMilisegundos() + Constantes.MILISEGUNDOS_PENALIZACION;
+		} else {
+			return tiempoRubikDTO.getTiempoMilisegundos();
+		}
+	}
+
+	@Override
 	public String toString() {
-		return "TiempoRubikDTO [mezcla=" + mezcla + ", tiempoMilisegundos="
-				+ tiempoMilisegundos + ", tiempoTexto=" + tiempoTexto + ", dnf=" + dnf + ", penalizacion="
-				+ penalizacion + "]";
+		return "TiempoRubikDTO [mezcla=" + mezcla + ", tiempoMilisegundos=" + tiempoMilisegundos + ", tiempoTexto="
+				+ tiempoTexto + ", dnf=" + dnf + ", penalizacion=" + penalizacion + "]";
 	}
 
 	public Integer getIdTiempo() {
@@ -135,9 +161,11 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	public Integer getTiempoMilisegundos() {
 		return tiempoMilisegundos;
 	}
-	
+
 	/**
-	 * Metodo que retorna los milisegundos gastados sumandole 2000 en caso de que tenga penalización
+	 * Metodo que retorna los milisegundos gastados sumandole 2000 en caso de que
+	 * tenga penalización
+	 * 
 	 * @return
 	 */
 	public Integer getTiempoRealMilisegundos() {
