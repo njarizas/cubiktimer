@@ -29,7 +29,7 @@ public class CaraRubik implements Serializable {
 	 * Metodo que se encarga de girar la cara una sola vez en sentido de las agujas del reloj
 	 */
 	public void girarCara() {
-		for (int i = 0; i < (int) this.n / 2; i++) {
+		for (int i = 0; i < this.n / 2; i++) {
 			for (int j = i; j < this.n - 1 - i; j++) {
 				Celda celdaTempo;
 				celdaTempo = cara[i][j];

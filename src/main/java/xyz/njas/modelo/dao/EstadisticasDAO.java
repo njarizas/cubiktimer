@@ -1,5 +1,6 @@
 package xyz.njas.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +13,9 @@ import xyz.njas.modelo.rubik.estadisticas.CuentaPuzzle;
 import xyz.njas.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import xyz.njas.modelo.rubik.estadisticas.Promedio;
 
-public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
+public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(EstadisticasDAO.class);
 
 	/**
@@ -26,13 +28,12 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	 */
 	public List<CuentaPuzzle> obtenerListaConteoPuzzles(Integer idUsuario) {
 		conectar();
-		List<CuentaPuzzle> lista = new ArrayList<CuentaPuzzle>();
+		List<CuentaPuzzle> lista = new ArrayList<>();
 		String sql = "SELECT sr.id_usuario,t.nombre_tipo nombre_puzzle, count(*) conteo_puzzle"
 				+ " FROM tiempos_rubik tr" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
 				+ " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion=sr.id_sesion" + " WHERE id_usuario=?"
 				+ " GROUP BY t.nombre_tipo";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -64,21 +65,20 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	 */
 	public List<Promedio> obtenerListaPromediosCategoria(Integer idUsuario, Integer idTipoCubo) {
 		conectar();
-		List<Promedio> lista = new ArrayList<Promedio>();
+		List<Promedio> lista = new ArrayList<>();
 		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, t.nombre_tipo tipo_cubo,"
 				+ " DATE_FORMAT(sr.fecha,\"%d/%m/%Y\") fecha" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
 				+ " WHERE sr.id_usuario=?" + " AND tr.id_tipo_cubo=?" + " AND tr.estado=1" + " AND sr.estado=1"
 				+ " AND tr.dnf=0" + " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + " ORDER BY sr.fecha";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipoCubo);
 			ResultSet rs = ps.executeQuery();
 			try {
 				while (rs.next()) {
 					Promedio promedio = new Promedio();
-					promedio.setPromedio(rs.getInt("promedio"));
+					promedio.setProm(rs.getInt("promedio"));
 					promedio.setTipoCubo(rs.getString("tipo_cubo"));
 					promedio.setFecha(rs.getString("fecha"));
 					lista.add(promedio);
@@ -104,7 +104,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	 */
 	public List<Promedio> obtenerListaPromediosCategoriaComparacion(Integer idUsuario, Integer idTipoCubo) {
 		conectar();
-		List<Promedio> lista = new ArrayList<Promedio>();
+		List<Promedio> lista = new ArrayList<>();
 		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, "
 				+ " CONCAT(u.nombres,' - ', t.nombre_tipo) tipo_cubo," + " DATE_FORMAT(sr.fecha,\"%d/%m/%Y\") fecha"
 				+ " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion=sr.id_sesion"
@@ -112,15 +112,14 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 				+ " ON sr.id_usuario = u.id_usuario" + " WHERE sr.id_usuario=?" + " AND tr.id_tipo_cubo=?"
 				+ " AND tr.estado=1" + " AND sr.estado=1" + " AND tr.dnf=0"
 				+ " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + " ORDER BY sr.fecha";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipoCubo);
 			ResultSet rs = ps.executeQuery();
 			try {
 				while (rs.next()) {
 					Promedio promedio = new Promedio();
-					promedio.setPromedio(rs.getInt("promedio"));
+					promedio.setProm(rs.getInt("promedio"));
 					promedio.setTipoCubo(rs.getString("tipo_cubo"));
 					promedio.setFecha(rs.getString("fecha"));
 					lista.add(promedio);
@@ -145,11 +144,10 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	 */
 	public List<Integer> obtenerIdCategoriasRegistradas(Integer idUsuario) {
 		conectar();
-		List<Integer> lista = new ArrayList<Integer>();
+		List<Integer> lista = new ArrayList<>();
 		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos_rubik tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -168,7 +166,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	}
 
 	public List<ListaPromedioCategoria> obtenerListaPromediosTotales(Integer idUsuario) {
-		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<ListaPromedioCategoria>();
+		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<>();
 		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
 		for (Integer idTipoCubo : listaCategorias) {
 			List<Promedio> listaPromedio = obtenerListaPromediosCategoria(idUsuario, idTipoCubo);
@@ -180,7 +178,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 	}
 
 	public List<ListaPromedioCategoria> obtenerListaPromediosComparacion(Integer idUsuario, Integer idAmigo) {
-		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<ListaPromedioCategoria>();
+		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<>();
 		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
 		List<Integer> listaCategoriasAmigo = obtenerIdCategoriasRegistradas(idAmigo);
 		for (Integer idTipoCubo : listaCategorias) {
@@ -204,8 +202,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> {
 		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos_rubik tr"
 				+ " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion = sr.id_sesion" + " WHERE sr.id_usuario=?"
 				+ " AND tr.estado=1" + " AND sr.estado=1" + " GROUP BY (tr.id_tipo_cubo)" + " ORDER BY COUNT(*)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {

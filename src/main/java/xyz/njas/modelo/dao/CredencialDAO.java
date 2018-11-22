@@ -1,5 +1,6 @@
 package xyz.njas.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,9 @@ import com.mysql.jdbc.Statement;
 import xyz.njas.modelo.dto.CredencialDTO;
 import xyz.njas.util.Util;
 
-public class CredencialDAO extends DAO<Integer, CredencialDTO> {
-	
+public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(CredencialDAO.class);
 
 	@Override
@@ -24,8 +26,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdCredencial());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getCorreo());
@@ -36,7 +37,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
-				if (rs != null && rs.next()) {
+				if (rs.next()) {
 					retorno = rs.getInt(1);
 				}
 			} finally {
@@ -52,12 +53,11 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {
-		List<CredencialDTO> lista = new ArrayList<CredencialDTO>();
+		List<CredencialDTO> lista = new ArrayList<>();
+		Util util = Util.getInstance();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
-		try {
-			Util util = Util.getInstance();
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -87,11 +87,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreoYEstado(String correo, Integer estado) {
-		List<CredencialDTO> lista = new ArrayList<CredencialDTO>();
+		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND estado = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setInt(2, estado);
 			ResultSet rs = ps.executeQuery();
@@ -123,11 +122,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreoClaveYEstado(String correo, String clave, Integer estado) {
-		List<CredencialDTO> lista = new ArrayList<CredencialDTO>();
+		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND clave = ? AND estado = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setString(2, clave);
 			ps.setInt(3, estado);
@@ -160,11 +158,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 	}
 
 	public List<CredencialDTO> traerTodoPorCorreo(String correo) {
-		List<CredencialDTO> lista = new ArrayList<CredencialDTO>();
+		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -197,16 +194,15 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> {
 	public Date obtenerFechaUltimaCredencial(Integer idUsuario) {
 		Date retorno = null;
 		conectar();
-		try {
-			String sql = "SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
-			PreparedStatement ps = conn.prepareCall(sql);
+		String sql = "SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
+		try (PreparedStatement ps = conn.prepareCall(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
 				if (rs.next()) {
 					Util util = Util.getInstance();
 					retorno = util.getFechaHoraMysql().parse(rs.getString("fecha_ultimo_cambio"));
-					System.out.println("encontro: " + rs.getString("fecha_ultimo_cambio"));
+					log.trace("encontro: " + rs.getString("fecha_ultimo_cambio"));
 				}
 			} finally {
 				rs.close();

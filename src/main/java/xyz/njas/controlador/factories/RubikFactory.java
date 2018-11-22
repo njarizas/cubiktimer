@@ -9,6 +9,10 @@ import xyz.njas.modelo.rubik.Skewb;
 
 public class RubikFactory {
 	
+	RubikFactory(){
+		
+	}
+	
 	public static Puzzle crearCubo(Integer tipoCubo){
 		switch (tipoCubo) {
 		case 5:

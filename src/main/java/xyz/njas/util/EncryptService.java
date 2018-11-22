@@ -8,11 +8,19 @@ package xyz.njas.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author Nelson
  */
 public class EncryptService {
+	
+	private static final Logger log = Logger.getLogger(EncryptService.class);
+	
+	private EncryptService() {
+		
+	}
 
     //algoritmos
     public static final String MD2 = "MD2";
@@ -29,15 +37,15 @@ public class EncryptService {
      * @return String creado a partir de <code>digest</code>
      */
     private static String toHexadecimal(byte[] digest) {
-        String hash = "";
+        StringBuilder hash = new StringBuilder("");
         for (byte aux : digest) {
             int b = aux & 0xff;
             if (Integer.toHexString(b).length() == 1) {
-                hash += "0";
+                hash.append("0");
             }
-            hash += Integer.toHexString(b);
+            hash.append(Integer.toHexString(b));
         }
-        return hash;
+        return hash.toString();
     }
 
     /**
@@ -57,7 +65,7 @@ public class EncryptService {
             messageDigest.update(buffer);
             digest = messageDigest.digest();
         } catch (NoSuchAlgorithmException ex) {
-            System.out.println("Error creando Digest" + ex);
+            log.warn("Error creando Digest" + ex);
         }
         return toHexadecimal(digest);
     }

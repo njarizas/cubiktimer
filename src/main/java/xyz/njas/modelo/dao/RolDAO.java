@@ -1,5 +1,6 @@
 package xyz.njas.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +13,9 @@ import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.RolDTO;
 
-public class RolDAO extends DAO<Integer, RolDTO> {
+public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(RolDAO.class);
 
 	@Override
@@ -21,8 +23,7 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO roles VALUES (?,?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdRol());
 			ps.setObject(2, dto.getNombreRol());
 			ps.setObject(3, dto.getDescripcion());
@@ -30,7 +31,7 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
-				if (rs != null && rs.next()) {
+				if (rs.next()) {
 					retorno = rs.getInt(1);
 				}
 			} finally {
@@ -48,8 +49,7 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 	public int update(RolDTO dto) {
 		conectar();
 		String sql = "UPDATE roles SET nombre_rol = ?, descripcion = ?, estado = ? WHERE id_rol = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, dto.getNombreRol());
 			ps.setObject(2, dto.getDescripcion());
 			ps.setObject(3, dto.getEstado());
@@ -73,12 +73,11 @@ public class RolDAO extends DAO<Integer, RolDTO> {
 	}
 
 	public List<RolDTO> consultarRolesPorIdUsuario(int idUsuario) {
-		List<RolDTO> lista = new ArrayList<RolDTO>();
+		List<RolDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT R.* FROM usuarios_roles UR" + " LEFT JOIN roles R" + " ON UR.id_rol = R.id_rol"
 				+ " WHERE id_usuario = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {

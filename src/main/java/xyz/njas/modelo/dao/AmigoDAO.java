@@ -23,8 +23,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO amigos VALUES (?,?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdAmigo());
@@ -32,7 +31,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
-				if (rs != null && rs.next()) {
+				if (rs.next()) {
 					retorno = rs.getInt(1);
 				}
 			} finally {
@@ -51,8 +50,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		int retorno = 0;
 		conectar();
 		String sql = "UPDATE amigos SET id_usuario = ?, id_amigo = ?, estado = ? WHERE id_amistad = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdAmigo());
 			ps.setObject(3, dto.getEstado());
@@ -73,27 +71,26 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 				&& consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).isEmpty()) {
 			return create(dto);
 		} else {
-			if (dto.getIdAmistad() == null) {
-				if (!consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).isEmpty()) {
-					dto.setIdAmistad(consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0)
-							.getIdAmistad());
-				}
+			if (dto.getIdAmistad() == null && sonAmigos(dto.getIdUsuario(), dto.getIdAmigo())) {
+				dto.setIdAmistad(consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0)
+						.getIdAmistad());
 			}
 			return update(dto);
 		}
 	}
 
+	private boolean sonAmigos(Integer idUsuario, Integer idAmigo) {
+		return !consultarAmigosPorIdUsuarioYIdAmigo(idUsuario, idAmigo).isEmpty();
+	}
+
 	public void delete(AmigoDTO dto) {
-		if (dto.getIdAmistad() == null) {
-			if (!consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).isEmpty()) {
-				dto.setIdAmistad(consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0)
-						.getIdAmistad());
-			}
+		if (dto.getIdAmistad() == null && sonAmigos(dto.getIdUsuario(), dto.getIdAmigo())) {
+			dto.setIdAmistad(
+					consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0).getIdAmistad());
 		}
+		conectar();
 		String sql = "DELETE FROM amigos WHERE id_amistad = ?";
-		try {
-			conectar();
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdAmistad());
 			ps.executeUpdate();
 			desconectar();
@@ -104,12 +101,10 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 	}
 
 	public List<AmigoDTO> consultarAmigosPorIdUsuarioYIdAmigo(Integer idUsuario, Integer idAmigo) {
-		List<AmigoDTO> lista = new ArrayList<AmigoDTO>();
-		try {
-			conectar();
-			String sql = "SELECT * FROM amigos a WHERE a.id_usuario = ? AND a.id_amigo = ?";
-			PreparedStatement ps;
-			ps = conn.prepareStatement(sql);
+		List<AmigoDTO> lista = new ArrayList<>();
+		conectar();
+		String sql = "SELECT * FROM amigos a WHERE a.id_usuario = ? AND a.id_amigo = ?";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idAmigo);
 			lista = findList(ps);
@@ -122,7 +117,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 	}
 
 	public List<AmigoDTO> findList(PreparedStatement ps) {
-		List<AmigoDTO> lista = new ArrayList<AmigoDTO>();
+		List<AmigoDTO> lista = new ArrayList<>();
 		try {
 			ResultSet rs = ps.executeQuery();
 			try {

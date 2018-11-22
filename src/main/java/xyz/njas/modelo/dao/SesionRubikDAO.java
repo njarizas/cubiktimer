@@ -17,11 +17,10 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> {
 	@Override
 	public int create(SesionRubikDTO dto) {
 		int retorno = 0;
+		Util util = Util.getInstance();
 		conectar();
 		String sql = "INSERT INTO sesiones_rubik " + " (id_sesion,id_usuario,fecha,ip,estado)" + " VALUES (?,?,?,?,?)";
-		try {
-			Util util = Util.getInstance();
-			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));
@@ -30,7 +29,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
-				if (rs != null && rs.next()) {
+				if (rs.next()) {
 					retorno = rs.getInt(1);
 				}
 			} finally {
@@ -47,11 +46,10 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> {
 
 	public int update(SesionRubikDTO dto) {
 		int retorno = 0;
+		Util util = Util.getInstance();
 		conectar();
 		String sql = "UPDATE sesiones_rubik" + " SET id_usuario=?,fecha=?,ip=?,estado=?" + " WHERE id_sesion=?";
-		try {
-			Util util = Util.getInstance();
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setString(2, util.getFechaHoraMysql().format(dto.getFecha()));
 			ps.setString(3, dto.getIp());

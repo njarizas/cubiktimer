@@ -12,7 +12,7 @@ public class ListaPromedios implements Serializable{
 
 	public ListaPromedios() {
 		super();
-		lista = new ArrayList<ListaPromedioCategoria>();
+		lista = new ArrayList<>();
 	}
 
 	public List<ListaPromedioCategoria> getLista() {
@@ -24,14 +24,14 @@ public class ListaPromedios implements Serializable{
 	}
 	
 	public String obtenerDatos(){
-		String retorno="";
+		StringBuilder retorno=new StringBuilder();
         for (int i=0; i<lista.size();i++) {
             if (i!=0){
-                retorno+=",";
+                retorno.append(",");
             }
-            retorno+=lista.get(i).obtenerDatosUTC();
+            retorno.append(lista.get(i).obtenerDatosUTC());
         }
-        return retorno;
+        return retorno.toString();
 	}
 
 }

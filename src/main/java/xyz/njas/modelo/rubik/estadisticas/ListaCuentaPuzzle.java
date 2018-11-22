@@ -18,14 +18,14 @@ public class ListaCuentaPuzzle implements Serializable{
 	}
 
 	public String obtenerDatos(){
-		String retorno="";
+		StringBuilder retorno=new StringBuilder("");
         for (int i=0; i<lista.size();i++) {
             if (i!=0){
-                retorno+=",";
+                retorno.append(",");
             }
-            retorno+=lista.get(i).toString();
+            retorno.append(lista.get(i).toString());
         }
-        return retorno;
+        return retorno.toString();
 	}
 
 }

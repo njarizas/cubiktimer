@@ -1,6 +1,10 @@
 package xyz.njas.util;
 
 public class Constantes {
+	
+	private Constantes(){
+		
+	}
 
 	public static final String COLOR_BLANCO = "white";
 	public static final String COLOR_NARANJA = "#ff8000";

@@ -1,13 +1,13 @@
 package xyz.njas.controlador.managedbeans;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
@@ -33,14 +33,15 @@ public class AhorcadoManagedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(AhorcadoManagedBean.class);
 
+	private Random random = new Random();
+
 	private String palabra;
 	private char[] palabraVisible;
 	private char[] palabraOculta;
 	private int intentosRestantes;
 	private String letra;
 	private boolean juegoEstaFinalizado = false;
-	private String realPath;
-	private ArrayList<String> letrasUsadas;
+	private List<String> letrasUsadas;
 
 	private AhorcadoDTO dto;
 	private AhorcadoDAO dao;
@@ -60,7 +61,7 @@ public class AhorcadoManagedBean implements Serializable {
 	}
 
 	public void reset() {
-		letrasUsadas = new ArrayList<String>();
+		letrasUsadas = new ArrayList<>();
 		juegoEstaFinalizado = false;
 		palabra = "dinosaurio";
 		try {
@@ -139,17 +140,16 @@ public class AhorcadoManagedBean implements Serializable {
 
 	public void mostrarPalabra() {
 		for (int i = 0; i < palabraVisible.length; i++) {
-			System.out.print(" " + palabraVisible[i] + " ");
+			log.trace(" " + palabraVisible[i] + " ");
 		}
-		System.out.println();
 	}
 
 	public String obtenerPalabra() {
-		String r = "";
+		StringBuilder r = new StringBuilder("");
 		for (int i = 0; i < palabraVisible.length; i++) {
-			r += " " + palabraVisible[i] + " ";
+			r.append(" " + palabraVisible[i] + " ");
 		}
-		return r;
+		return r.toString();
 	}
 
 	public boolean sonPalabrasIguales() {
@@ -161,11 +161,10 @@ public class AhorcadoManagedBean implements Serializable {
 		return true;
 	}
 
-	public void inicializarPalabra() throws FileNotFoundException, IOException {
-		realPath = Util.getRealPath();
-		System.out.println("Real Path" + realPath);
+	public void inicializarPalabra() throws IOException {
+		String realPath = Util.getRealPath();
+		log.trace("Real Path" + realPath);
 		String cadena;
-		Random random = new Random();
 		int lineas = 0;
 		int linea;
 		String archivo = realPath + "resources/txt/palabras_ahorcado.txt";
@@ -173,7 +172,6 @@ public class AhorcadoManagedBean implements Serializable {
 		BufferedReader b = new BufferedReader(f);
 		try {
 			while ((cadena = b.readLine()) != null) {
-				// System.out.println(cadena);
 				lineas++;
 			}
 		} finally {
@@ -195,7 +193,7 @@ public class AhorcadoManagedBean implements Serializable {
 			c.close();
 			a.close();
 		}
-		System.out.println("palabra seleccionada: " + this.palabra);
+		log.info("palabra seleccionada: " + this.palabra);
 
 	}
 
@@ -247,11 +245,11 @@ public class AhorcadoManagedBean implements Serializable {
 		this.juegoEstaFinalizado = juegoEstaFinalizado;
 	}
 
-	public ArrayList<String> getLetrasUsadas() {
+	public List<String> getLetrasUsadas() {
 		return letrasUsadas;
 	}
 
-	public void setLetrasUsadas(ArrayList<String> letrasUsadas) {
+	public void setLetrasUsadas(List<String> letrasUsadas) {
 		this.letrasUsadas = letrasUsadas;
 	}
 

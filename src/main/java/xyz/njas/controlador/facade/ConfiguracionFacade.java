@@ -3,13 +3,15 @@ package xyz.njas.controlador.facade;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.modelo.dao.ConfiguracionDAO;
 import xyz.njas.modelo.dto.ConfiguracionDTO;
 
 public class ConfiguracionFacade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger log = Logger.getLogger(ConfiguracionFacade.class);
 	private ConfiguracionDAO configuracionDAO;
 
 	public ConfiguracionFacade() {
@@ -21,11 +23,11 @@ public class ConfiguracionFacade implements Serializable {
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 18,
 				1);
 		if (lista.isEmpty()) {
-			System.out.println("El usuario con idUsuario " + idUsuario
+			log.trace("El usuario con idUsuario " + idUsuario
 					+ " no tiene configurado un tiempo de inspeccion preferido (idTipo : 18)");
 			return null;
 		} else if (lista.size() > 1) {
-			System.out.println("El usuario con idUsuario " + idUsuario
+			log.trace("El usuario con idUsuario " + idUsuario
 					+ " tiene configurado mas de un tiempo de inspeccion preferido (idTipo : 18)");
 		}
 		return lista.get(0);
@@ -35,11 +37,11 @@ public class ConfiguracionFacade implements Serializable {
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 22,
 				1);
 		if (lista.isEmpty()) {
-			System.out.println(
+			log.trace(
 					"El usuario con idUsuario " + idUsuario + " no tiene configurado un cubo preferido (idTipo : 22)");
 			return null;
 		} else if (lista.size() > 1) {
-			System.out.println("El usuario con idUsuario " + idUsuario
+			log.trace("El usuario con idUsuario " + idUsuario
 					+ " tiene configurado mas de un cubo preferido (idTipo : 22)");
 		}
 		return lista.get(0);
@@ -49,11 +51,11 @@ public class ConfiguracionFacade implements Serializable {
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 19,
 				1);
 		if (lista.isEmpty()) {
-			System.out.println("El usuario con idUsuario " + idUsuario
+			log.trace("El usuario con idUsuario " + idUsuario
 					+ " no tiene configurado un idioma preferido (idTipo : 19)");
 			return null;
 		} else if (lista.size() > 1) {
-			System.out.println("El usuario con idUsuario " + idUsuario
+			log.trace("El usuario con idUsuario " + idUsuario
 					+ " tiene configurado mas de un idioma preferido (idTipo : 19)");
 		}
 		return lista.get(0);
@@ -63,11 +65,11 @@ public class ConfiguracionFacade implements Serializable {
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 23,
 				1);
 		if (lista.isEmpty()) {
-			System.out.println(
+			log.trace(
 					"El usuario con idUsuario " + idUsuario + " no tiene configurada una página inicial (idTipo : 23)");
 			return null;
 		} else if (lista.size() > 1) {
-			System.out.println("El usuario con idUsuario " + idUsuario
+			log.trace("El usuario con idUsuario " + idUsuario
 					+ " tiene configurada mas de una página inicial (idTipo : 23)");
 		}
 		return lista.get(0);

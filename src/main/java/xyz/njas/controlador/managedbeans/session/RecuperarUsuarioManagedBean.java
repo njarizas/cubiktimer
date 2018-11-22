@@ -18,7 +18,9 @@ import xyz.njas.util.EmailSenderService;
 import xyz.njas.util.EncryptService;
 
 /**
- * Bean que se utiliza para recuperar clave o correo electronico, notese que es de vista puesto que las variables las inyecta a #{sesionManagedBean}
+ * Bean que se utiliza para recuperar clave o correo electronico, notese que es
+ * de vista puesto que las variables las inyecta a #{sesionManagedBean}
+ * 
  * @author Nelson
  */
 @ManagedBean
@@ -26,7 +28,7 @@ import xyz.njas.util.EncryptService;
 public class RecuperarUsuarioManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String email;
 
 	private UsuarioDAO usuarioDAO;
@@ -44,12 +46,14 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 	}
 
 	public String recuperarClave() {
-		List<UsuarioDTO> lu=usuarioDAO.consultarUsuarioPorCorreo(email.trim());
+		List<UsuarioDTO> lu = usuarioDAO.consultarUsuarioPorCorreo(email.trim());
 		String retorno = "";
-		if (lu.isEmpty()){
+		if (lu.isEmpty()) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("ActualmenteNoExisteUnUsuarioConCorreo")+": " + email.trim()
-			+ ", "+sesionManagedBean.getRecursos().getString("PorFavorIntenteRecordarElUsuario"));
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("ActualmenteNoExisteUnUsuarioConCorreo") + ": "
+							+ email.trim() + ", "
+							+ sesionManagedBean.getRecursos().getString("PorFavorIntenteRecordarElUsuario"));
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else {
@@ -58,8 +62,10 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 			String nuevaClave = generarClaveAleatoria();
 			if (emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave)) {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("HemosEnviadoUnCorreoElectronicoALaDireccion")+": "+email.trim()
-				+ " "+sesionManagedBean.getRecursos().getString("ConTuNuevaContraseña"));
+				sesionManagedBean.getMensaje().setText(
+						sesionManagedBean.getRecursos().getString("HemosEnviadoUnCorreoElectronicoALaDireccion") + ": "
+								+ email.trim() + " "
+								+ sesionManagedBean.getRecursos().getString("ConTuNuevaContraseña"));
 				sesionManagedBean.getMensaje().setType("info");
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				u.setClave(EncryptService.encriptarClave(nuevaClave));
@@ -70,24 +76,28 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 	}
 
 	public String recuperarUsuario() {
-		List<UsuarioDTO> lu=usuarioDAO.consultarUsuarioPorCorreo(email.trim());
-		List<CredencialDTO> lc=credencialDAO.consultarCredencialPorCorreo(email.trim());
+		List<UsuarioDTO> lu = usuarioDAO.consultarUsuarioPorCorreo(email.trim());
+		List<CredencialDTO> lc = credencialDAO.consultarCredencialPorCorreo(email.trim());
 		String retorno = "";
-		if (!lu.isEmpty()){
+		if (!lu.isEmpty()) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("SuUsuarioActualEs") + ": "+email.trim());
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("SuUsuarioActualEs") + ": " + email.trim());
 			sesionManagedBean.getMensaje().setType("info");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
-		} else if (!lc.isEmpty()){
+		} else if (!lc.isEmpty()) {
 			String correoActual = usuarioFacade.consultarCorreoActualPorCorreoAntiguo(email.trim());
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("SuUsuarioActualEs") + ": "+correoActual.trim());
+			sesionManagedBean.getMensaje().setText(
+					sesionManagedBean.getRecursos().getString("SuUsuarioActualEs") + ": " + correoActual.trim());
 			sesionManagedBean.getMensaje().setType("info");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 
 		} else {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoExisteNingunUsuarioRelacionadoConElEmail")+": "+email.trim());
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("NoExisteNingunUsuarioRelacionadoConElEmail")
+							+ ": " + email.trim());
 			sesionManagedBean.getMensaje().setType("info");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
@@ -96,12 +106,15 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 
 	public String generarClaveAleatoria() {
 		char[] caracteres;
-		caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#', '$', '%', '+', '-', '*', '~', '^', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-		String pass = "";
+		caracteres = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#',
+				'$', '%', '+', '-', '*', '~', '^', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+		StringBuilder pass = new StringBuilder("");
 		for (int i = 0; i < 12; i++) {
-			pass += caracteres[new Random().nextInt(caracteres.length+1)];
+			pass.append(caracteres[new Random().nextInt(caracteres.length + 1)]);
 		}
-		return pass;
+		return pass.toString();
 	}
 
 	public String getEmail() {

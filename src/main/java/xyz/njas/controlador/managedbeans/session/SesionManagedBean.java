@@ -42,14 +42,14 @@ public class SesionManagedBean implements Serializable {
     
     private List<PermisoDTO> listaPermisos;
 
-    ResourceBundle recursos;
+    transient ResourceBundle recursos;
 
     private static Map<String, Object> listaIdiomas;
 
     private Mensaje mensaje;
 
     static {
-        listaIdiomas = new LinkedHashMap<String, Object>();
+        listaIdiomas = new LinkedHashMap<>();
         Locale spanish = new Locale("es");
         listaIdiomas.put("Español", spanish);
         listaIdiomas.put("English", Locale.ENGLISH);
@@ -90,7 +90,6 @@ public class SesionManagedBean implements Serializable {
                 idioma = event.getNewValue().toString();
                 locale = (Locale) entry.getValue();
                 FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
-//                System.out.println(locale.toString());
             }
         }
     }

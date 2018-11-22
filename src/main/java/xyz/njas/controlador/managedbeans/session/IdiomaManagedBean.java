@@ -21,9 +21,6 @@ public class IdiomaManagedBean implements Serializable {
 	
 	@ManagedProperty(value = "#{sesionManagedBean}")
     private SesionManagedBean sesionManagedBean;
-
-    public IdiomaManagedBean() {
-    }
     
     @PostConstruct
     public void init() {

@@ -16,7 +16,6 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
-import xyz.njas.modelo.dao.AhorcadoDAO;
 import xyz.njas.modelo.dto.UsuarioDTO;
 
 /**
@@ -25,15 +24,17 @@ import xyz.njas.modelo.dto.UsuarioDTO;
  */
 public class EmailSenderService implements EmailSenderInterface {
 
-	public final static String HOST_EMAIL_GMAIL = "smtp.gmail.com";
-	private static final Logger log = Logger.getLogger(AhorcadoDAO.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Logger log = Logger.getLogger(EmailSenderService.class);
+	public static final String HOST_EMAIL_GMAIL = "smtp.gmail.com";
 
 	private String emailRemitente;
 	private String passRemitente;
 	private String emailDestinatario;
 
-	private Session session;
-	private MimeMessage mimeMessage;
+	private transient Session session;
+	private transient MimeMessage mimeMessage;
 
 	public EmailSenderService() {
 		this.emailRemitente = "cubiktimer@gmail.com";
@@ -46,7 +47,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			propiedades.setProperty("mail.smtp.host", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.starttls.enable", "true");
 			propiedades.setProperty("mail.smtp.port", "25");// 587
-			propiedades.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
+			propiedades.setProperty("mail.smtp.ssl.trust", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.user", this.emailRemitente);
 			propiedades.setProperty("mail.smtp.auth", "true");
 
@@ -66,7 +67,6 @@ public class EmailSenderService implements EmailSenderInterface {
 			init();
 			mimeMessage.setSubject(asunto);
 			mimeMessage.setText(contenido);
-			// mimeMessage.setContent(contenido, "text/html");
 			Transport transport = session.getTransport("smtp");
 			transport.connect(emailRemitente, passRemitente);
 			transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
@@ -84,7 +84,6 @@ public class EmailSenderService implements EmailSenderInterface {
 		try {
 			init();
 			mimeMessage.setSubject(asunto);
-			// mimeMessage.setText(contenido);
 			mimeMessage.setContent(contenido, "text/html");
 			Transport transport = session.getTransport("smtp");
 			transport.connect(emailRemitente, passRemitente);
@@ -98,9 +97,7 @@ public class EmailSenderService implements EmailSenderInterface {
 	}
 
 	private String obtenerRutaPlantillasHTML() {
-		String realPath = Util.getRealPath();
-		String ruta = realPath + "WEB-INF/plantillasHTML/";
-		return ruta;
+		return Util.getRealPath() + "WEB-INF/plantillasHTML/";
 	}
 
 	private String aplicarPlantilla(String plantilla, Map<String, String> map) {
@@ -115,7 +112,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
 			StringBuilder stringBuilder = new StringBuilder(usuario.getClave());
 			String nekot = stringBuilder.reverse().toString();
-			StringBuffer msg = new StringBuffer("");
+			StringBuilder msg = new StringBuilder("");
 			String cadena = "";
 			String ruta = obtenerRutaPlantillasHTML();
 			try (FileReader f = new FileReader(ruta + "mensaje-activacion-cuenta.html");
@@ -125,7 +122,7 @@ public class EmailSenderService implements EmailSenderInterface {
 				}
 			}
 			String mensaje = msg.toString();
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, String> map = new HashMap<>();
 			map.put("~:nombreUsuario~", usuario.getNombres());
 			map.put("~:idUsuario~", usuario.getIdUsuario().toString());
 			map.put("~:token~", nekot);
@@ -133,7 +130,7 @@ public class EmailSenderService implements EmailSenderInterface {
 
 			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en www.cubiktimer.com", mensaje);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return false;
 		}
 	}
@@ -142,7 +139,7 @@ public class EmailSenderService implements EmailSenderInterface {
 	public boolean enviarMensajeDeRecuperacionDeClave(UsuarioDTO usuario, String pass) {
 		try {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
-			StringBuffer msg = new StringBuffer("");
+			StringBuilder msg = new StringBuilder("");
 			String cadena = "";
 			String ruta = obtenerRutaPlantillasHTML();
 			try (FileReader f = new FileReader(ruta + "mensaje-recuperacion-clave.html");
@@ -152,7 +149,7 @@ public class EmailSenderService implements EmailSenderInterface {
 				}
 			}
 			String mensaje = msg.toString();
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, String> map = new HashMap<>();
 			map.put("~:nombreUsuario~", usuario.getNombres());
 			map.put("~:clave~", pass);
 			mensaje = aplicarPlantilla(mensaje, map);
@@ -160,7 +157,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			return enviarMensajeHTML(this.emailDestinatario,
 					"Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage());
 			return false;
 		}
 	}

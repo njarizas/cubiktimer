@@ -11,15 +11,14 @@ import org.apache.log4j.Logger;
 import xyz.njas.modelo.dto.UsuarioRolDTO;
 
 public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
-	
+
 	private static final Logger log = Logger.getLogger(UsuarioRolDAO.class);
 
 	@Override
 	public int create(UsuarioRolDTO dto) {
 		conectar();
 		String sql = "INSERT INTO usuarios_roles VALUES (?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdRol());
 			ps.setObject(3, dto.getEstado());
@@ -36,8 +35,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 	public int update(UsuarioRolDTO dto) {
 		conectar();
 		String sql = "UPDATE usuarios_roles SET estado = ? WHERE id_usuario = ? AND id_rol = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, dto.getEstado());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdRol());
@@ -60,10 +58,9 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 	}
 
 	public List<UsuarioRolDTO> consultarRolesPorIdUsuario(int idUsuario) {
-		List<UsuarioRolDTO> lista = new ArrayList<UsuarioRolDTO>();
-		try {
-			String sql = "SELECT * FROM usuarios_roles WHERE id_usuario = ?";
-			PreparedStatement ps = conn.prepareStatement(sql);
+		List<UsuarioRolDTO> lista = new ArrayList<>();
+		String sql = "SELECT * FROM usuarios_roles WHERE id_usuario = ?";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -73,7 +70,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 	}
 
 	public List<UsuarioRolDTO> findList(PreparedStatement ps) {
-		List<UsuarioRolDTO> lista = new ArrayList<UsuarioRolDTO>();
+		List<UsuarioRolDTO> lista = new ArrayList<>();
 		try {
 			conectar();
 			ResultSet rs = ps.executeQuery();

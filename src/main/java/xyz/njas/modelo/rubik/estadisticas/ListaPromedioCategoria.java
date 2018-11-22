@@ -18,42 +18,41 @@ public class ListaPromedioCategoria implements Serializable{
 	}
 	
 	public String obtenerFechas(){
-		String retorno="";
+		StringBuilder retorno=new StringBuilder("");
         for (int i=0; i<lista.size();i++) {
             if (i!=0){
-                retorno+=",";
+                retorno.append(",");
             }
-            retorno+="'"+lista.get(i).getFecha()+"'";
+            retorno.append("'"+lista.get(i).getFecha()+"'");
         }
-        return retorno;
+        return retorno.toString();
 	}
 	
 	public String obtenerDatosUTC(){
-		String retorno="{"
+		StringBuilder retorno= new StringBuilder("{"
 				+ " name: '"+obtenerTipoCubo()+"',"
-				+ " data: [";
+				+ " data: [");
         for (int i=0; i<lista.size();i++) {
             if (i!=0){
-                retorno+=","
-                		+ "";
+                retorno.append(",");
             }
-            retorno+="[Date.UTC("+lista.get(i).getFechaUTC()+"),"+lista.get(i).getPromedio()+"]";
+            retorno.append("[Date.UTC("+lista.get(i).getFechaUTC()+"),"+lista.get(i).getProm()+"]");
         }
-        retorno+=""
+        retorno.append(""
         		+ "]"
-        		+ "}";
-        return retorno;
+        		+ "}");
+        return retorno.toString();
 	}
 	
 	public String obtenerPromedios(){
-		String retorno="";
+		StringBuilder retorno= new StringBuilder("");
         for (int i=0; i<lista.size();i++) {
             if (i!=0){
-                retorno+=",";
+                retorno.append(",");
             }
-            retorno+=lista.get(i).getPromedio();
+            retorno.append(lista.get(i).getProm());
         }
-        return retorno;
+        return retorno.toString();
 	}
 	
 	public String obtenerTipoCubo(){

@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.controlador.managedbeans.session.ConfiguracionManagedBean;
 import xyz.njas.controlador.managedbeans.session.SesionManagedBean;
 import xyz.njas.modelo.dao.CredencialDAO;
@@ -25,6 +27,8 @@ import xyz.njas.util.EncryptService;
 public class EditarInformacionCuentaManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(EditarInformacionCuentaManagedBean.class);
+
 	private String claveAnterior;
 	private String claveNueva;
 	private String confirmarClaveNueva;
@@ -57,8 +61,10 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 
 	public String editarCuenta() {
 		usuarioDAO.merge(sesionManagedBean.getUsuarioLogueado());
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
-		sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaInformacionDeLaCuentaHaSidoModificada"));
+		sesionManagedBean.getMensaje()
+				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
+		sesionManagedBean.getMensaje()
+				.setText(sesionManagedBean.getRecursos().getString("LaInformacionDeLaCuentaHaSidoModificada"));
 		sesionManagedBean.getMensaje().setType("success");
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
@@ -84,7 +90,8 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	public String cambiarClave() {
 		if (claveNueva.equals("") || confirmarClaveNueva.equals("")) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NingunaDeLasContraseñasPuedeEstarVacia"));
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("NingunaDeLasContraseñasPuedeEstarVacia"));
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
@@ -98,7 +105,8 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 		}
 		if (sesionManagedBean.getUsuarioLogueado().getClave().equals(EncryptService.encriptarClave(claveNueva))) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaClaveNuevaNoPuedeSerIgualALaActual"));
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("LaClaveNuevaNoPuedeSerIgualALaActual"));
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
@@ -106,8 +114,10 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 		insertarCredencial();
 		sesionManagedBean.getUsuarioLogueado().setClave(claveNueva);
 		usuarioDAO.merge(sesionManagedBean.getUsuarioLogueado());
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
-		sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaContraseñaHaSidoCambiadaExitosamente"));
+		sesionManagedBean.getMensaje()
+				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
+		sesionManagedBean.getMensaje()
+				.setText(sesionManagedBean.getRecursos().getString("LaContraseñaHaSidoCambiadaExitosamente"));
 		sesionManagedBean.getMensaje().setType("success");
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
@@ -116,7 +126,8 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	public String cambiarCorreo() {
 		if (sesionManagedBean.getUsuarioLogueado().getCorreo().equals(correo)) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("ElCorreoNuevoNoPuedeSerIgualAlActual"));
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("ElCorreoNuevoNoPuedeSerIgualAlActual"));
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
@@ -124,24 +135,28 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 		List<UsuarioDTO> l = usuarioDAO.consultarUsuarioPorCorreo(correo);
 		if (!l.isEmpty()) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo + " " + sesionManagedBean.getRecursos().getString("PorQueEstaSiendoUsadoPorAlguien"));
-			sesionManagedBean.getMensaje().setType("warning");
-			sesionManagedBean.getMensaje().setMensajePendiente(true);
-			return "";
-		} 
-		List<CredencialDTO> lia = credencialDAO.consultarCredencialPorCorreo(correo);
-		if (!lia.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo + " " + sesionManagedBean.getRecursos().getString("PorQueYaHaSidoUsadoPorAlguien"));
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo + " "
+							+ sesionManagedBean.getRecursos().getString("PorQueEstaSiendoUsadoPorAlguien"));
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
-		List<UsuarioDTO> l2 = usuarioDAO.traerTodoPorCorreo(correo);
+		List<CredencialDTO> lia = credencialDAO.consultarCredencialPorCorreo(correo);
+		if (!lia.isEmpty()) {
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo")
+					+ " " + correo + " " + sesionManagedBean.getRecursos().getString("PorQueYaHaSidoUsadoPorAlguien"));
+			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setMensajePendiente(true);
+			return "";
+		}
+		List<UsuarioDTO> l2 = usuarioDAO.consultarUsuarioPorCorreo(correo);
 		List<CredencialDTO> lia2 = credencialDAO.traerTodoPorCorreo(correo);
 		if (!l2.isEmpty() || !lia2.isEmpty()) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo);
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo);
 			sesionManagedBean.getMensaje().setType("warning");
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
@@ -149,8 +164,10 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 		insertarCredencial();
 		sesionManagedBean.getUsuarioLogueado().setCorreo(correo);
 		usuarioDAO.merge(sesionManagedBean.getUsuarioLogueado());
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
-		sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("ElCorreoElectronicoHaSidoCambiadoExitosamente"));
+		sesionManagedBean.getMensaje()
+				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
+		sesionManagedBean.getMensaje()
+				.setText(sesionManagedBean.getRecursos().getString("ElCorreoElectronicoHaSidoCambiadoExitosamente"));
 		sesionManagedBean.getMensaje().setType("success");
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
@@ -177,8 +194,8 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 			fechaUltimoCambio = f;
 		}
 		credencial.setFechaInicio(fechaUltimoCambio);
-		if (credencialDAO.create(credencial)>0) {
-			System.out.println("Creo credencial " + credencial.getCorreo());
+		if (credencialDAO.create(credencial) > 0) {
+			log.trace("Creo credencial " + credencial.getCorreo());
 		}
 	}
 
@@ -243,9 +260,9 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public ConfiguracionManagedBean getConfiguracionManagedBean() {
-		if(this.configuracionManagedBean!=null){
+		if (this.configuracionManagedBean != null) {
 			return configuracionManagedBean;
-		} else{
+		} else {
 			return new ConfiguracionManagedBean();
 		}
 	}

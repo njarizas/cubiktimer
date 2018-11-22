@@ -25,7 +25,7 @@ public class SesionRubik implements Serializable {
 				tiemposValidos++;
 			}
 		}
-		return (String) ((tiemposValidos != 0) ? Util.darFormatoTiempo(acumulado / tiemposValidos) : "-:--.--");
+		return ((tiemposValidos != 0) ? Util.darFormatoTiempo(acumulado / tiemposValidos) : "-:--.--");
 	}
 
 	public String ao5actual() {
@@ -33,7 +33,7 @@ public class SesionRubik implements Serializable {
 		if (tiempos.size() < 5) {
 			return "-:--.--";
 		} else {
-			List<Tiempo> ultimosCincoTiempos = new ArrayList<Tiempo>(
+			List<Tiempo> ultimosCincoTiempos = new ArrayList<>(
 					tiempos.subList(tiempos.size() - 5, tiempos.size()));
 			Collections.sort(ultimosCincoTiempos);
 			for (int i = 1; i <= 3; i++) {
@@ -43,7 +43,7 @@ public class SesionRubik implements Serializable {
 				Integer esteTiempo = ultimosCincoTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
 				acumulado += esteTiempo;
 			}
-			return (String) ((ultimosCincoTiempos.size() != 0) ? Util.darFormatoTiempo(acumulado / 3) : "-:--.--");
+			return ((!ultimosCincoTiempos.isEmpty()) ? Util.darFormatoTiempo(acumulado / 3) : "-:--.--");
 		}
 	}
 
@@ -52,7 +52,7 @@ public class SesionRubik implements Serializable {
 		if (tiempos.size() < 12) {
 			return "-:--.--";
 		} else {
-			List<Tiempo> ultimosDoceTiempos = new ArrayList<Tiempo>(
+			List<Tiempo> ultimosDoceTiempos = new ArrayList<>(
 					tiempos.subList(tiempos.size() - 12, tiempos.size()));
 			Collections.sort(ultimosDoceTiempos);
 			for (int i = 1; i <= 10; i++) {
@@ -62,14 +62,14 @@ public class SesionRubik implements Serializable {
 				Integer esteTiempo = ultimosDoceTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
 				acumulado += esteTiempo;
 			}
-			return (String) ((ultimosDoceTiempos.size() != 0) ? Util.darFormatoTiempo(acumulado / 10) : "-:--.--");
+			return ((!ultimosDoceTiempos.isEmpty()) ? Util.darFormatoTiempo(acumulado / 10) : "-:--.--");
 		}
 	}
 
 	public SesionRubik(Date fecha) {
 		super();
 		this.sesionRubikDTO = new SesionRubikDTO(fecha);
-		tiempos = new ArrayList<Tiempo>();
+		tiempos = new ArrayList<>();
 	}
 
 	public SesionRubik(Date fecha, Integer idUsuario) {

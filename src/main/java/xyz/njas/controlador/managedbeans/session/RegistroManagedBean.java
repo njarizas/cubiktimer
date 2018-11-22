@@ -31,7 +31,6 @@ public class RegistroManagedBean implements Serializable {
 	private UsuarioDTO usuario;
 	private UsuarioDAO usuarioDAO;
 	private CredencialDAO credencialDAO;
-
 	private EmailSenderInterface email;
 
 	@ManagedProperty(value = "#{sesionManagedBean}")

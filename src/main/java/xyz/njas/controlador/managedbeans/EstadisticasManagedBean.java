@@ -30,7 +30,7 @@ public class EstadisticasManagedBean implements Serializable {
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
 
-	private HttpSession session;
+	private transient HttpSession session;
 	private Integer idUsuario;
 	private EstadisticasDAO estadisticasDAO;
 	private ListaCuentaPuzzle listaCuentaPuzzle;

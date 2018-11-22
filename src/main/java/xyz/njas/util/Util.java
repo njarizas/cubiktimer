@@ -85,15 +85,14 @@ public class Util {
 	public static String getRealPath() {
 		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext()
 				.getContext();
-		String realPath = (String) servletContext.getRealPath("/");
-		return realPath;
+		return servletContext.getRealPath("/");
 	}
 
 	public static String getContextPath() {
 		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext()
 				.getContext();
-		String contextPath = (String) servletContext.getContextPath();
-		return contextPath;
+		return servletContext.getContextPath();
+
 	}
 
 	public SimpleDateFormat getFechaHoraMysql() {

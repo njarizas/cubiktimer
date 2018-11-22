@@ -1,5 +1,6 @@
 package xyz.njas.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +13,9 @@ import com.mysql.jdbc.Statement;
 
 import xyz.njas.modelo.dto.TipoDTO;
 
-public class TipoDAO extends DAO<Integer, TipoDTO> {
+public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TipoDAO.class);
 
 	@Override
@@ -21,8 +23,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> {
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdTipo());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setObject(3, dto.getNombreTipo());
@@ -31,7 +32,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
-				if (rs != null && rs.next()) {
+				if (rs.next()) {
 					retorno = rs.getInt(1);
 				}
 			} finally {
@@ -47,11 +48,10 @@ public class TipoDAO extends DAO<Integer, TipoDTO> {
 	}
 
 	public List<TipoDTO> listarTiposDeCubo() {
-		List<TipoDTO> lista = new ArrayList<TipoDTO>();
+		List<TipoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=1";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
 			try {
 				while (rs.next()) {

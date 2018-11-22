@@ -1,5 +1,6 @@
 package xyz.njas.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 
 import org.apache.log4j.Logger;
@@ -7,18 +8,18 @@ import org.apache.log4j.Logger;
 import xyz.njas.modelo.dto.AhorcadoDTO;
 import xyz.njas.util.Util;
 
-public class AhorcadoDAO extends DAO<Integer,AhorcadoDTO> {
-	
+public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(AhorcadoDAO.class);
 
 	@Override
 	public int create(AhorcadoDTO dto) {
-		int retorno=0;
+		int retorno = 0;
+		Util util = Util.getInstance();
 		conectar();
-		String sql="INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
-		try {
-			Util util = Util.getInstance();
-			PreparedStatement ps=conn.prepareStatement(sql);
+		String sql = "INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));
@@ -28,13 +29,13 @@ public class AhorcadoDAO extends DAO<Integer,AhorcadoDTO> {
 			ps.setBoolean(7, dto.getGano());
 			ps.setString(8, dto.getIp());
 			ps.setObject(9, 1);
-			retorno=ps.executeUpdate();
+			retorno = ps.executeUpdate();
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
-		} 
+		}
 		return 0;
 	}
 

@@ -14,15 +14,13 @@ public class ConexionDatabase {
 	private static final Logger log = Logger.getLogger(ConexionDatabase.class);
 	private static Connection conn;
 
-//    private String host;
-	private String url;
-	private String database;
-	private String properties;
-	private String user;
-	private String password;
+	private static String url;
+	private static String database;
+	private static String properties;
+	private static String user;
+	private static String password;
 
-	private ConexionDatabase() {
-
+	static {
 		Propiedades.configurarPropiedades("C:\\cubiktimer\\conexion.properties");
 		Propiedades propiedades = Propiedades.getInstance();
 		url = propiedades.obtenerPropiedad("url");
@@ -30,7 +28,13 @@ public class ConexionDatabase {
 		properties = propiedades.obtenerPropiedad("properties");
 		user = propiedades.obtenerPropiedad("user");
 		password = propiedades.obtenerPropiedad("password");
+	}
 
+	private ConexionDatabase() {
+
+	}
+
+	public static void connect() {
 		try {
 			Class.forName(DRIVER).newInstance();
 			conn = DriverManager.getConnection(url + database + properties, user, password);
@@ -43,7 +47,7 @@ public class ConexionDatabase {
 
 	public static Connection getInstance() {
 		if (conn == null) {
-			new ConexionDatabase();
+			connect();
 		}
 		return conn;
 	}

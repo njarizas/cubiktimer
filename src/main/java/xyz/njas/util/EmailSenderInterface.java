@@ -1,12 +1,14 @@
 package xyz.njas.util;
 
+import java.io.Serializable;
+
 import xyz.njas.modelo.dto.UsuarioDTO;
 
 /**
  *
  * @author Nelson
  */
-public interface EmailSenderInterface {
+public interface EmailSenderInterface extends Serializable {
 
 	public boolean enviarMensajePlano(String destinatario, String asunto, String contenido);
 

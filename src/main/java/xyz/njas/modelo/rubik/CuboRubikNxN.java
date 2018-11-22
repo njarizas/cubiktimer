@@ -276,13 +276,13 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 
 	@Override
 	public String mezclar(String[] mezcla) {
-		String secuenciaMezclada = "";
+		StringBuilder secuenciaMezclada = new StringBuilder("");
 		for (String giro : mezcla) {
 			if (girar(giro)) {
-				secuenciaMezclada += giro.toUpperCase().replaceAll("W", "w") + " ";
+				secuenciaMezclada.append(giro.toUpperCase().replaceAll("W", "w") + " ");
 			}
 		}
-		return secuenciaMezclada;
+		return secuenciaMezclada.toString();
 	}
 
 	public CaraRubik getTop() {
@@ -343,13 +343,20 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 	
 	@Override
 	public String toString() {
-		System.out.println(getTop());
-		System.out.print(getLeft());
-		System.out.print(getFront());
-		System.out.print(getRight());
-		System.out.println(getBack());
-		System.out.println(getBottom());
-		return "";
+		StringBuilder retorno = new StringBuilder("");
+		retorno.append(getTop());
+		retorno.append("\n");
+		retorno.append(getLeft());
+		retorno.append("\n");
+		retorno.append(getFront());
+		retorno.append("\n");
+		retorno.append(getRight());
+		retorno.append("\n");
+		retorno.append(getBack());
+		retorno.append("\n");
+		retorno.append(getBottom());
+		retorno.append("\n");
+		return retorno.toString();
 	}
 
 }

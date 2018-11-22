@@ -99,8 +99,7 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public List<TipoDTO> listarCubos() {
-		List<TipoDTO> lista = tipoDAO.listarTiposDeCubo();
-		return lista;
+		return tipoDAO.listarTiposDeCubo();
 	}
 
 	public String[] generarMezcla() {
@@ -123,9 +122,6 @@ public class RubikManagedBean implements Serializable {
 		resetearCubo();
 		this.secuenciaMezcla = "";
 		this.mezcla = generarMezcla();
-		for (String string : mezcla) {
-			this.secuenciaMezcla += string + " ";
-		}
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
 		log.debug("secuencia Mezcla: " + secuenciaMezcla);

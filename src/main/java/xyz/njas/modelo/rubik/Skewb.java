@@ -2,12 +2,15 @@ package xyz.njas.modelo.rubik;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
 import xyz.njas.util.Constantes;
 import xyz.njas.util.ScrambleGenerator;
 
 public class Skewb extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(Skewb.class);
 
 	private CaraSkewb top;
 	private CaraSkewb left;
@@ -46,7 +49,7 @@ public class Skewb extends Puzzle implements Serializable {
 		} else if (giro.equals("l'")) {
 			l(2);
 		} else {
-			System.out.println("giro no válido");
+			log.trace("giro no válido");
 			return false;
 		}
 		return true;
@@ -190,35 +193,14 @@ public class Skewb extends Puzzle implements Serializable {
 
 	@Override
 	public String mezclar(String[] mezcla) {
-		String secuenciaMezclada = "";
+		StringBuilder secuenciaMezclada = new StringBuilder("");
 		for (String giro : mezcla) {
 			if (girar(giro)) {
-				secuenciaMezclada += giro.toUpperCase() + " ";
+				secuenciaMezclada.append(giro.toUpperCase() + " ");
 			}
 		}
-		return secuenciaMezclada;
+		return secuenciaMezclada.toString();
 	}
-
-	// @Override
-	// public String[] generarMezcla() {
-	// String[] movimientos = {"U", "U'", "B", "B'", "R", "R'", "L", "L'"};
-	// int num;
-	// int[] mezclaInt = new int[15];
-	// String[] mezcla = new String[mezclaInt.length];
-	// Random random = new Random();
-	// for (int i = 0; i < mezcla.length; i++) {
-	// num = random.nextInt(movimientos.length);
-	// //para que no se gire dos veces seguidas la misma cara
-	// if (i != 0) {
-	// while (mezclaInt[i - 1] / 2 == num / 2) {
-	// num = random.nextInt(movimientos.length);
-	// }
-	// }
-	// mezclaInt[i] = num;
-	// mezcla[i] = movimientos[mezclaInt[i]];
-	// }
-	// return mezcla;
-	// }
 
 	@Override
 	public String[] generarMezcla() {
@@ -227,13 +209,20 @@ public class Skewb extends Puzzle implements Serializable {
 
 	@Override
 	public String toString() {
-		System.out.println(top);
-		System.out.print(left);
-		System.out.print(front);
-		System.out.print(right);
-		System.out.println(back);
-		System.out.println(bottom);
-		return "";
+		StringBuilder retorno = new StringBuilder("");
+		retorno.append(getTop());
+		retorno.append("\n");
+		retorno.append(getLeft());
+		retorno.append("\n");
+		retorno.append(getFront());
+		retorno.append("\n");
+		retorno.append(getRight());
+		retorno.append("\n");
+		retorno.append(getBack());
+		retorno.append("\n");
+		retorno.append(getBottom());
+		retorno.append("\n");
+		return retorno.toString();
 	}
 
 	public CaraSkewb getTop() {

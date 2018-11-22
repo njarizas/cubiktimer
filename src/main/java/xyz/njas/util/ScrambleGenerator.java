@@ -11,26 +11,31 @@ import java.net.URLConnection;
 import org.apache.log4j.Logger;
 
 public class ScrambleGenerator {
-	
+
 	private static final Logger log = Logger.getLogger(ScrambleGenerator.class);
 
+	private ScrambleGenerator() {
+
+	}
+
 	public static String[] generarMezcla(String parametro) {
-		System.out.println("Va a generar la mezcla con el Software oficial de la WCA");
+		log.trace("Va a generar la mezcla con el Software oficial de la WCA");
 		URL url;
 		String linea;
-		StringBuffer stringBuffer = new StringBuffer();
-		boolean esConnectException=false;
+		StringBuilder stringBuilder = new StringBuilder();
+		boolean esConnectException = false;
 		try {
-			//se intenta obtener la conexion por metodo get
-			url = new URL("http://localhost:2014/scramble/.txt?="+parametro);
+			// se intenta obtener la conexion por metodo get
+			url = new URL("http://localhost:2014/scramble/.txt?=" + parametro);
 			URLConnection con = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			stringBuffer = new StringBuffer();
+			stringBuilder = new StringBuilder();
 			while ((linea = in.readLine()) != null) {
-				System.out.println("mezcla generada en el primer intento: " + linea);
-				stringBuffer.append(linea);
+				log.trace("mezcla generada en el primer intento: " + linea);
+				stringBuilder.append(linea);
 			}
-			//si se genera ConnectException tal vez es por que no se esta ejecutando el TNoodle
+			// si se genera ConnectException tal vez es por que no se esta ejecutando el
+			// TNoodle
 		} catch (ConnectException ce) {
 			esConnectException = true;
 			log.warn(ce.getMessage());
@@ -40,26 +45,26 @@ public class ScrambleGenerator {
 			log.warn(ioe.getMessage());
 		}
 		try {
-			if(esConnectException) {
-				//se trata de ejecutar el TNoodle
-				System.out.println("Se hace el llamado para que se ejecute el jar java -jar C:\\TNoodle-WCA-0.13.5.jar");
+			if (esConnectException) {
+				// se trata de ejecutar el TNoodle
+				log.trace("Se hace el llamado para que se ejecute el jar java -jar C:\\TNoodle-WCA-0.13.5.jar");
 				Runtime.getRuntime().exec("java -jar C:\\cubiktimer\\TNoodle-WCA-0.13.5.jar");
 				// Creando un objeto URL
-				url = new URL("http://localhost:2014/scramble/.txt?="+parametro);
+				url = new URL("http://localhost:2014/scramble/.txt?=" + parametro);
 				// Realizando la petición GET
 				URLConnection con = url.openConnection();
 				// Leyendo el resultado
 				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-				stringBuffer = new StringBuffer();
+				stringBuilder = new StringBuilder();
 				while ((linea = in.readLine()) != null) {
-					System.out.println("mezcla generada en el segundo intento: " + linea);
-					stringBuffer.append(linea);
+					log.trace("mezcla generada en el segundo intento: " + linea);
+					stringBuilder.append(linea);
 				}
 			}
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 		}
-		return stringBuffer.toString().split(" ");
+		return stringBuilder.toString().split(" ");
 	}
-	
+
 }

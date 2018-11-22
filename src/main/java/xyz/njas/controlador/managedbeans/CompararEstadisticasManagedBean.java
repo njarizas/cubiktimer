@@ -31,7 +31,7 @@ public class CompararEstadisticasManagedBean implements Serializable {
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
 
-	private HttpSession session;
+	private transient HttpSession session;
 	private Integer idUsuario;
 	private Integer idAmigo;
 	private ListaPromedios listaPromediosComparacion;
@@ -43,7 +43,7 @@ public class CompararEstadisticasManagedBean implements Serializable {
 		estadisticasDAO = new EstadisticasDAO();
 		usuarioDAO = new UsuarioDAO();
 		listaPromediosComparacion = new ListaPromedios();
-		listaAmigos = new ArrayList<UsuarioDTO>();
+		listaAmigos = new ArrayList<>();
 		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		if (session.getAttribute("idUsuario") != null) {
 			idUsuario = Integer.parseInt(session.getAttribute("idUsuario").toString());

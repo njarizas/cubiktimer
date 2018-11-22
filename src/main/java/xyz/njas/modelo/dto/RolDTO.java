@@ -30,7 +30,7 @@ public class RolDTO implements Serializable {
 	}
 
 	/**
-	 * Constructor con todo
+	 * Constructor con todos los parametros
 	 * 
 	 * @param idRol
 	 * @param nombreRol
@@ -46,6 +46,14 @@ public class RolDTO implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idRol == null) ? 0 : idRol.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -54,13 +62,15 @@ public class RolDTO implements Serializable {
 			return false;
 		}
 		RolDTO other = (RolDTO) obj;
-		return this.getIdRol().equals(other.idRol);
+		return idRol.equals(other.idRol);
 	}
 
 	@Override
 	public String toString() {
 		return this.idRol + " - " + this.nombreRol;
 	}
+	
+	
 
 	public Integer getIdRol() {
 		return idRol;

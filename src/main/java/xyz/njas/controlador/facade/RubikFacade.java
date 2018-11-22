@@ -1,5 +1,6 @@
 package xyz.njas.controlador.facade;
 
+import java.io.Serializable;
 import java.util.List;
 
 import xyz.njas.modelo.dao.SesionRubikDAO;
@@ -8,8 +9,9 @@ import xyz.njas.modelo.dto.SesionRubikDTO;
 import xyz.njas.modelo.dto.TiempoRubikDTO;
 import xyz.njas.modelo.rubik.Tiempo;
 
-public class RubikFacade {
+public class RubikFacade implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private SesionRubikDAO sesionRubikDAO;
 	private TiempoRubikDAO tiempoRubikDAO;
 
@@ -19,26 +21,25 @@ public class RubikFacade {
 		tiempoRubikDAO = new TiempoRubikDAO();
 	}
 
-	public int guardarRubik(SesionRubikDTO sesionRubikDTO,
-			List<Tiempo> listaTiemposDTO){
-		int retorno=0;
-		int idSesion=guardarSesionRubik(sesionRubikDTO);
-			retorno+=idSesion;
+	public int guardarRubik(SesionRubikDTO sesionRubikDTO, List<Tiempo> listaTiemposDTO) {
+		int retorno = 0;
+		int idSesion = guardarSesionRubik(sesionRubikDTO);
+		retorno += idSesion;
 		sesionRubikDTO.setIdSesion(idSesion);
 		for (Tiempo tiempo : listaTiemposDTO) {
 			tiempo.getTiempoRubikDTO().setIdSesion(idSesion);
-			int idTiempo=guardarTiempoRubik(tiempo.getTiempoRubikDTO());
-			retorno+=idTiempo;
+			int idTiempo = guardarTiempoRubik(tiempo.getTiempoRubikDTO());
+			retorno += idTiempo;
 			tiempo.getTiempoRubikDTO().setIdTiempo(idTiempo);
 		}
 		return retorno;
 	}
 
-	public int guardarSesionRubik(SesionRubikDTO dto){
+	public int guardarSesionRubik(SesionRubikDTO dto) {
 		return sesionRubikDAO.merge(dto);
 	}
 
-	public int guardarTiempoRubik(TiempoRubikDTO dto){
+	public int guardarTiempoRubik(TiempoRubikDTO dto) {
 		return tiempoRubikDAO.merge(dto);
 	}
 

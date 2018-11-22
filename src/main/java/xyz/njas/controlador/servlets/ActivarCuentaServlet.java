@@ -32,6 +32,7 @@ public class ActivarCuentaServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int u = request.getParameter("u") != null ? Integer.parseInt(request.getParameter("u")) : 0;
         String t = request.getParameter("t") != null ? request.getParameter("t") : "";

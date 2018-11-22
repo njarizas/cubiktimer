@@ -23,8 +23,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO permisos VALUES (?,?,?,?,?,?,?,?)";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setString(2, dto.getUrl());
 			ps.setObject(3, dto.getIdPadre());
@@ -36,7 +35,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
-				if (rs != null && rs.next()) {
+				if (rs.next()) {
 					retorno = rs.getInt(1);
 				}
 			} finally {
@@ -56,8 +55,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 		conectar();
 		String sql = "UPDATE usuarios_roles SET url = ?, id_padre = ?, nombre_permiso = ?, descripcion_permiso = ?,"
 				+ " name_permiso = ?, description_permiso = ?, estado = ? " + " WHERE id_permiso = ?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, dto.getUrl());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setString(3, dto.getNombrePermiso());
@@ -86,13 +84,12 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	}
 
 	public List<PermisoDTO> consultarPermisosPorIdUsuario(int idUsuario) {
-		List<PermisoDTO> lista = new ArrayList<PermisoDTO>();
+		List<PermisoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles r"
 				+ " ON ur.id_rol = r.id_rol" + " INNER JOIN roles_permisos rp" + " ON r.id_rol = rp.id_rol"
 				+ " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso" + " WHERE id_usuario=?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -120,11 +117,10 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	}
 
 	public List<PermisoDTO> consultarPermisosPorIdPadre(int idPadre) {
-		List<PermisoDTO> lista = new ArrayList<PermisoDTO>();
+		List<PermisoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT *" + " FROM permisos" + " WHERE id_padre=?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idPadre);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -161,8 +157,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 		int retorno = 0;
 		conectar();
 		String sql = "SELECT count(*) conteo" + " FROM permisos" + " WHERE id_padre=?";
-		try {
-			PreparedStatement ps = conn.prepareStatement(sql);
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idPermiso);
 			ResultSet rs = ps.executeQuery();
 			try {

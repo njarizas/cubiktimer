@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Nelson
  */
-public class Mensaje implements Serializable{
+public class Mensaje implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,11 +34,11 @@ public class Mensaje implements Serializable{
 	private String inputPlaceHolder;
 	private String inputValue;
 	private Boolean showLoaderOnConfirm;
-	
+
 	public Mensaje() {
 		super();
 		this.mensajePendiente = false;
-		
+
 		this.title = "Atención";
 		this.text = null;
 		this.type = null;
@@ -65,7 +65,7 @@ public class Mensaje implements Serializable{
 
 	public Mensaje(String title) {
 		this();
-	
+		this.title = title;
 	}
 
 	public boolean isMensajePendiente() {
