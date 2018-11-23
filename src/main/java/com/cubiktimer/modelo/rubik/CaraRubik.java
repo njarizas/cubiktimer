@@ -59,13 +59,14 @@ public class CaraRubik implements Serializable {
 	
 	@Override
 	public String toString() {
+		StringBuilder str = new StringBuilder("");
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < cara[i].length; j++) {
-				System.out.print((cara[i][j] != null) ? cara[i][j] + "\t" : "\t");
+				str.append((cara[i][j] != null) ? cara[i][j] + "\t" : "\t");
 			}
-			System.out.println();
+			str.append("\n");
 		}
-		return "";
+		return str.toString();
 	}
 
 }

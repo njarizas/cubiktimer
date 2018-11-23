@@ -8,6 +8,11 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Propiedades;
 
+/**
+ * Clase con patron singleton para la conexion a base de datos
+ * @author Nelson Ariza
+ *
+ */
 public class ConexionDatabase {
 
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -34,7 +39,7 @@ public class ConexionDatabase {
 
 	}
 
-	public static void connect() {
+	private static void connect() {
 		try {
 			Class.forName(DRIVER).newInstance();
 			conn = DriverManager.getConnection(url + database + properties, user, password);
@@ -45,6 +50,10 @@ public class ConexionDatabase {
 		}
 	}
 
+	/**
+	 * Metodo que retorna la conexion a base de datos
+	 * @return <code>Connection</code> Conexion a la base de datos
+	 */
 	public static Connection getInstance() {
 		if (conn == null) {
 			connect();
@@ -52,6 +61,9 @@ public class ConexionDatabase {
 		return conn;
 	}
 
+	/**
+	 * Metodo que cierra la conexion a la base de datos
+	 */
 	public static void close() {
 		try {
 			if (conn != null) {

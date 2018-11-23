@@ -6,12 +6,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cubiktimer.config.ConexionDatabase;
 import com.cubiktimer.util.EncryptService;
 
 import junit.framework.TestCase;
 
-public class Test1 extends TestCase{
+public class TestEncriptService extends TestCase{
 
     @BeforeClass
     public static void setUpClass() {
@@ -39,9 +38,4 @@ public class Test1 extends TestCase{
         assertNull("Prueba de clave vacía", EncryptService.encriptarClave(""));
     }
     
-    @Test
-    public void testConexion(){
-        assertNotNull("Probando conexion JDBC", ConexionDatabase.getInstance());
-    }
-
 }
