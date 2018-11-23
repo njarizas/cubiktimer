@@ -152,7 +152,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 			return "";
 		}
 		List<UsuarioDTO> l2 = usuarioDAO.consultarUsuarioPorCorreo(correo);
-		List<CredencialDTO> lia2 = credencialDAO.traerTodoPorCorreo(correo);
+		List<CredencialDTO> lia2 = credencialDAO.consultarCredencialPorCorreo(correo);
 		if (!l2.isEmpty() || !lia2.isEmpty()) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
 			sesionManagedBean.getMensaje()

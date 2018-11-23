@@ -2,7 +2,6 @@ package com.cubiktimer.util;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;

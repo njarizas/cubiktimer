@@ -15,7 +15,7 @@ import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
-public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serializable{
+public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(CredencialDAO.class);
@@ -53,33 +53,14 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {
 		List<CredencialDTO> lista = new ArrayList<>();
-		Util util = Util.getInstance();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, correo);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					CredencialDTO c = new CredencialDTO();
-					c.setIdCredencial(rs.getInt("id_credencial"));
-					c.setIdUsuario(rs.getInt("id_usuario"));
-					c.setCorreo(rs.getString("correo"));
-					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
-					c.setEstado(rs.getInt("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
-			}
-			desconectar();
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
-		} catch (ParseException pe) {
-			log.warn(pe.getMessage());
+		} finally {
 			desconectar();
 		}
 		return lista;
@@ -92,29 +73,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setInt(2, estado);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					Util util = Util.getInstance();
-					CredencialDTO c = new CredencialDTO();
-					c.setIdCredencial(rs.getInt("id_credencial"));
-					c.setIdUsuario(rs.getInt("id_usuario"));
-					c.setCorreo(rs.getString("correo"));
-					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
-					c.setEstado(rs.getInt("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
-			}
-			desconectar();
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
-		} catch (ParseException pe) {
-			log.warn(pe.getMessage());
+		} finally {
 			desconectar();
 		}
 		return lista;
@@ -128,63 +90,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			ps.setString(1, correo);
 			ps.setString(2, clave);
 			ps.setInt(3, estado);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					Util util = Util.getInstance();
-					CredencialDTO c = new CredencialDTO();
-					c.setIdCredencial(rs.getInt("id_credencial"));
-					c.setIdUsuario(rs.getInt("id_usuario"));
-					c.setCorreo(rs.getString("correo"));
-					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
-					c.setEstado(rs.getInt("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
-			}
-			desconectar();
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
-		} catch (ParseException pe) {
-			log.warn(pe.getMessage());
-			desconectar();
-		}
-		return lista;
-	}
-
-	public List<CredencialDTO> traerTodoPorCorreo(String correo) {
-		List<CredencialDTO> lista = new ArrayList<>();
-		conectar();
-		String sql = "SELECT * FROM credenciales WHERE correo = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, correo);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					Util util = Util.getInstance();
-					CredencialDTO c = new CredencialDTO();
-					c.setIdCredencial(rs.getInt("id_credencial"));
-					c.setIdUsuario(rs.getInt("id_usuario"));
-					c.setCorreo(rs.getString("correo"));
-					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
-					c.setEstado(rs.getInt("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
-			}
-			desconectar();
-		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage());
-			desconectar();
-		} catch (ParseException pe) {
-			log.warn(pe.getMessage());
+		} finally {
 			desconectar();
 		}
 		return lista;
@@ -212,6 +121,37 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			desconectar();
 		}
 		return retorno;
+	}
+
+	public List<CredencialDTO> findList(PreparedStatement ps) {
+		List<CredencialDTO> lista = new ArrayList<>();
+		try {
+			ResultSet rs = ps.executeQuery();
+			try {
+				while (rs.next()) {
+					Util util = Util.getInstance();
+					CredencialDTO c = new CredencialDTO();
+					c.setIdCredencial(rs.getInt("id_credencial"));
+					c.setIdUsuario(rs.getInt("id_usuario"));
+					c.setCorreo(rs.getString("correo"));
+					c.setClave(rs.getString("clave"));
+					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
+					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
+					c.setEstado(rs.getInt("estado"));
+					lista.add(c);
+				}
+			} finally {
+				rs.close();
+			}
+			desconectar();
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+			desconectar();
+		} catch (ParseException pe) {
+			log.warn(pe.getMessage());
+			desconectar();
+		}
+		return lista;
 	}
 
 }
