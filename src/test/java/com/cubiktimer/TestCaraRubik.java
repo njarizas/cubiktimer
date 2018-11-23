@@ -1,4 +1,4 @@
-package xyz.njas;
+package com.cubiktimer;
 
 import com.cubiktimer.modelo.rubik.CaraRubik;
 import com.cubiktimer.modelo.rubik.Celda;

@@ -1,4 +1,4 @@
-package xyz.njas;
+package com.cubiktimer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

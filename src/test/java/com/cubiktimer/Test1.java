@@ -1,4 +1,4 @@
-package xyz.njas;
+package com.cubiktimer;
 
 import org.junit.After;
 import org.junit.AfterClass;
