@@ -6,9 +6,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.cubiktimer.config.ConexionDatabase;
+import com.cubiktimer.util.EncryptService;
+
 import junit.framework.TestCase;
-import xyz.njas.config.ConexionDatabase;
-import xyz.njas.util.EncryptService;
 
 public class Test1 extends TestCase{
 

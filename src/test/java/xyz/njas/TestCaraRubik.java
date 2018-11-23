@@ -1,8 +1,8 @@
 package xyz.njas;
 
-import xyz.njas.modelo.rubik.CaraRubik;
-import xyz.njas.modelo.rubik.Celda;
-import xyz.njas.util.Constantes;
+import com.cubiktimer.modelo.rubik.CaraRubik;
+import com.cubiktimer.modelo.rubik.Celda;
+import com.cubiktimer.util.Constantes;
 
 public class TestCaraRubik {
 

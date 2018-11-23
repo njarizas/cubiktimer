@@ -19,7 +19,7 @@ public class Test2 {
 	
 	public static void ejecutarJar() {
 		try {
-			Runtime.getRuntime().exec("java -jar C:\\Disco\\NELSON\\docsJava\\juegos\\src\\main\\webapp\\resources\\jars\\TNoodle-WCA-0.13.3.jar");
+			Runtime.getRuntime().exec("java -jar C:\\cubiktimer\\TNoodle-WCA-0.13.5.jar");
 		} catch (IOException e) {
 			log.warn(e.getMessage());
 		}
