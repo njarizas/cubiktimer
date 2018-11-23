@@ -132,7 +132,7 @@ public class RubikManagedBean implements Serializable {
 		resetearCubo();
 		this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase().replace("f", " f").replace("b", " b")
 				.replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x")
-				.replace("y", " y").replace("z", " z").replace("  ", " ");
+				.replace("y", " y").replace("z", " z").replace("3 f", " 3f").replace("3 r", " 3r").replace("3 u", " 3u").replace("  ", " ");
 		mezcla = this.secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);

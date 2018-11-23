@@ -2,11 +2,14 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
 import com.cubiktimer.util.Constantes;
 
 public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(CuboRubikNxN.class);
 
 	protected int n;
 	protected CaraRubik top;
@@ -267,12 +270,12 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		} else if (giro.equals("y'")) {
 			y(3);
 		} else {
-			return girosAdicionales(giro);
+			log.trace("giro no valido");
+			return false;
 		}
+		log.trace("es un giro válido de 2x2 o 3x3");
 		return true;
 	}
-	
-	public abstract boolean girosAdicionales(String giro);
 
 	@Override
 	public String mezclar(String[] mezcla) {

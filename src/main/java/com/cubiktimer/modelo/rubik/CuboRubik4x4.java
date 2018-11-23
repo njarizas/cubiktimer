@@ -12,7 +12,11 @@ public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 	private static final Logger log = Logger.getLogger(CuboRubik4x4.class);
 
 	public CuboRubik4x4(Integer idTipoCubo, String nombre) {
-		super(idTipoCubo, nombre, 4);
+		this(idTipoCubo, nombre, 4);
+	}
+
+	public CuboRubik4x4(Integer idTipoCubo, String nombre, int n) {
+		super(idTipoCubo, nombre, n);
 	}
 
 	@Override
@@ -21,7 +25,8 @@ public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 	}
 
 	@Override
-	public boolean girosAdicionales(String giro) {
+	public boolean girar(String giro) {
+		giro = giro.toLowerCase().trim();
 		if (giro.equals("fw")) {
 			fw(1);
 		} else if (giro.equals("fw2")) {
@@ -41,9 +46,10 @@ public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 		} else if (giro.equals("rw'")) {
 			rw(3);
 		} else {
-			log.trace("giro no válido");
-			return false;
+			log.trace("verificando si es giro de 2x2 o 3x3");
+			return super.girar(giro);
 		}
+		log.trace("es un giro válido de 4x4");
 		return true;
 	}
 
