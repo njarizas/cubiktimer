@@ -1,10 +1,14 @@
 package com.cubiktimer;
 
+import org.junit.Test;
+
 import com.cubiktimer.modelo.rubik.CaraRubik;
 import com.cubiktimer.modelo.rubik.Celda;
 import com.cubiktimer.util.Constantes;
 
-public class TestCaraRubik {
+import junit.framework.TestCase;
+
+public class TestCaraRubik extends TestCase {
 
 	public static void main(String[] args) {
 		CaraRubik cara = new CaraRubik(10, Constantes.COLOR_BLANCO);
@@ -26,6 +30,12 @@ public class TestCaraRubik {
 			}
 			System.out.println();
 		}
+	}
+
+	// TODO implementar metodo
+	@Test
+	public void testGirarCara() {
+
 	}
 
 }

@@ -3,6 +3,7 @@ package com.cubiktimer.util;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
@@ -60,7 +61,7 @@ public class Util {
 	/**
 	 * Método que toma un Integer representando los milisegundos y devuelve una
 	 * cadena con formato "mm:ss.ss" (minutos, segundos y centésimas de segundo)
-	 * 
+	 * (no se tiene estipulado que las pruebas tomen mas de una hora)
 	 * @param miliseg
 	 * @return
 	 */
@@ -80,6 +81,24 @@ public class Util {
 		}
 		retorno += DF.format(seg);
 		return retorno.replace(",", ".");
+	}
+	
+	/**
+	 * Metodo que genera una clave aleatoria de longitud 12 caracteres y solo puede tener caracteres alfanumericos 
+	 * o los siguientes caracteres especiales: ! # $ % + - * ~ ^ @
+	 * @return <code>String</code> la clave generada aleatoriamente
+	 */
+	public static String generarClaveAleatoria() {
+		char[] caracteres;
+		caracteres = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#',
+				'$', '%', '+', '-', '*', '~', '^', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+		StringBuilder pass = new StringBuilder("");
+		for (int i = 0; i < 12; i++) {
+			pass.append(caracteres[new Random().nextInt(caracteres.length)]);
+		}
+		return pass.toString();
 	}
 
 	public static String getRealPath() {

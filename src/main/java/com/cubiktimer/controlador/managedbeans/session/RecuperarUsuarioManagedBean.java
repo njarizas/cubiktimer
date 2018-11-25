@@ -2,7 +2,6 @@ package com.cubiktimer.controlador.managedbeans.session;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Random;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -16,6 +15,7 @@ import com.cubiktimer.modelo.dto.UsuarioDTO;
 import com.cubiktimer.util.EmailSenderInterface;
 import com.cubiktimer.util.EmailSenderService;
 import com.cubiktimer.util.EncryptService;
+import com.cubiktimer.util.Util;
 
 /**
  * Bean que se utiliza para recuperar clave o correo electronico, notese que es
@@ -59,7 +59,7 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 		} else {
 			UsuarioDTO u = lu.get(0);
 			EmailSenderInterface emailSender = new EmailSenderService();
-			String nuevaClave = generarClaveAleatoria();
+			String nuevaClave = Util.generarClaveAleatoria();
 			if (emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave)) {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
 				sesionManagedBean.getMensaje().setText(
@@ -102,19 +102,6 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return retorno;
-	}
-
-	public String generarClaveAleatoria() {
-		char[] caracteres;
-		caracteres = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#',
-				'$', '%', '+', '-', '*', '~', '^', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-		StringBuilder pass = new StringBuilder("");
-		for (int i = 0; i < 12; i++) {
-			pass.append(caracteres[new Random().nextInt(caracteres.length + 1)]);
-		}
-		return pass.toString();
 	}
 
 	public String getEmail() {
