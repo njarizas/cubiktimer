@@ -15,4 +15,6 @@ public class Constantes {
 	
 	public static final Integer MILISEGUNDOS_PENALIZACION = 2000;
 	
+	public static final String PATH_CUBIKTIMER = "C:\\cubiktimer\\";
+	
 }
