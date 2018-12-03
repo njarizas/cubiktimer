@@ -8,23 +8,25 @@ import java.net.URLConnection;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.util.Constantes;
+
 public class Test2 {
-	
+
 	private static final Logger log = Logger.getLogger(Test2.class);
-	
+
 	public static void main(String[] args) {
 		ejecutarJar();
 		System.out.println(solicitarScramble());
 	}
-	
+
 	public static void ejecutarJar() {
 		try {
-			Runtime.getRuntime().exec("java -jar C:\\cubiktimer\\TNoodle-WCA-0.13.5.jar");
+			Runtime.getRuntime().exec("java -jar " + Constantes.PATH_CUBIKTIMER + "TNoodle-WCA-0.13.5.jar");
 		} catch (IOException e) {
 			log.warn(e.getMessage());
 		}
 	}
-	
+
 	public static String solicitarScramble() {
 		URL url;
 		String linea;
@@ -35,11 +37,9 @@ public class Test2 {
 			// Realizando la petición GET
 			URLConnection con = url.openConnection();
 			// Leyendo el resultado
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-			
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
 			while ((linea = in.readLine()) != null) {
-				System.out.println(linea);
 				stringBuffer.append(linea);
 			}
 		} catch (IOException e) {

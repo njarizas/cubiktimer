@@ -1,9 +1,11 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Clase que representa una cara de cubo rubik nxn
+ * 
  * @author Nelson Ariza
  *
  */
@@ -24,9 +26,23 @@ public class CaraRubik implements Serializable {
 			}
 		}
 	}
-	
+
 	/**
-	 * Metodo que se encarga de girar la cara una sola vez en sentido de las agujas del reloj
+	 * Metodo que se encarga de girar la carala cantidad de veces recibida por
+	 * parametro en sentido de las agujas del reloj
+	 * 
+	 * @param <int>cantidadGiros<int> la cantidad de veces a girar teniendo en
+	 *        cuenta que cada giro 90° en sentido de las agujas del reloj
+	 */
+	public void girarCara(int cantidadGiros) {
+		for (int i = 0; i < cantidadGiros; i++) {
+			girarCara();
+		}
+	}
+
+	/**
+	 * Metodo que se encarga de girar la cara una sola vez en sentido de las agujas
+	 * del reloj
 	 */
 	public void girarCara() {
 		for (int i = 0; i < this.n / 2; i++) {
@@ -56,7 +72,37 @@ public class CaraRubik implements Serializable {
 	public void setCara(Celda[][] cara) {
 		this.cara = cara;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(cara);
+		result = prime * result + n;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CaraRubik other = (CaraRubik) obj;
+		if (n != other.n)
+			return false;
+		for (int i = 0; i < n; i++) {
+			for (int j = i; j < n; j++) {
+				if (!cara[i][j].equals(other.cara[i][j])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder("");

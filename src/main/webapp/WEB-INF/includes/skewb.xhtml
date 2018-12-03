@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
+		<svg width="240" height="280"> <polygon
+			points="90,10 10,90 10,250 150,270 230,190 230,30"
+			style="stroke:black; stroke-width:8;" /> <polygon
+			points="90,10 50,50 160,20"
+			style="fill:#{rubikManagedBean.cubo.top.celdaNoroccidente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="160,20 190,70 230,30"
+			style="fill:#{rubikManagedBean.cubo.top.celdaNororiente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="160,20 50,50 80,100 190,70"
+			style="fill:#{rubikManagedBean.cubo.top.celdaCentro.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="50,50 10,90 80,100"
+			style="fill:#{rubikManagedBean.cubo.top.celdaSuroccidente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="80,100 150,110 190,70"
+			style="fill:#{rubikManagedBean.cubo.top.celdaSuroriente.codigoColor}; stroke:black; stroke-width:4;" />
+
+		<polygon points="10,90 10,170 80,100"
+			style="fill:#{rubikManagedBean.cubo.front.celdaNoroccidente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="80,100 150,190 150,110"
+			style="fill:#{rubikManagedBean.cubo.front.celdaNororiente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="80,100 10,170 80,260 150,190"
+			style="fill:#{rubikManagedBean.cubo.front.celdaCentro.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="10,170 10,250 80,260"
+			style="fill:#{rubikManagedBean.cubo.front.celdaSuroccidente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="80,260 150,270 150,190"
+			style="fill:#{rubikManagedBean.cubo.front.celdaSuroriente.codigoColor}; stroke:black; stroke-width:4;" />
+
+		<polygon points="150,110 150,190 190,70"
+			style="fill:#{rubikManagedBean.cubo.right.celdaNoroccidente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="190,70 230,110 230,30"
+			style="fill:#{rubikManagedBean.cubo.right.celdaNororiente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="190,70 150,190 190,230 230,110"
+			style="fill:#{rubikManagedBean.cubo.right.celdaCentro.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="150,190 150,270 190,230"
+			style="fill:#{rubikManagedBean.cubo.right.celdaSuroccidente.codigoColor}; stroke:black; stroke-width:4;" />
+		<polygon points="190,230 230,190 230,110"
+			style="fill:#{rubikManagedBean.cubo.right.celdaSuroriente.codigoColor}; stroke:black; stroke-width:4;" />
+		</svg>
+	</div>
+</ui:composition>
