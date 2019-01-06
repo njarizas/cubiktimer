@@ -6,7 +6,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/WEB-INF/templates/template-externo.xhtml">
-	<ui:define name="title">#{texto.CronometroRubik}</ui:define>
+	<ui:define name="title">cubiktimer</ui:define>
 	<ui:define name="head">
 		<link href="#{sesionManagedBean.contextPath}/resources/css/style.css"
 			rel="stylesheet" type="text/css" />
@@ -229,6 +229,18 @@ body {
 				<h:panelGroup layout="block" id="imagenSkewb"
 					rendered="#{rubikManagedBean.tipoCubo==24}">
 					<ui:include src="/WEB-INF/includes/skewb.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenMegaminx"
+					rendered="#{rubikManagedBean.tipoCubo==25}">
+					<ui:include src="/WEB-INF/includes/megaminx.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenPyraminx"
+					rendered="#{rubikManagedBean.tipoCubo==26}">
+					<ui:include src="/WEB-INF/includes/pyraminx.xhtml" />
+				</h:panelGroup>
+					<h:panelGroup layout="block" id="imagenSquare1"
+					rendered="#{rubikManagedBean.tipoCubo==27}">
+					<ui:include src="/WEB-INF/includes/square1.xhtml" />
 				</h:panelGroup>
 				<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
 					<div id="lblavgTiempo">AVG:

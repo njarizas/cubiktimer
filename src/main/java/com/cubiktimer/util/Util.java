@@ -1,14 +1,22 @@
 package com.cubiktimer.util;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
-public class Util {
+import org.apache.log4j.Logger;
+
+public class Util implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(Util.class);
 
 	private SimpleDateFormat fechaHoraMysql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private SimpleDateFormat fechaMysql = new SimpleDateFormat("yyyy-MM-dd");
@@ -111,10 +119,66 @@ public class Util {
 	 * @param secuenciaWCA
 	 * @return
 	 */
-	public static String traducirSecuenciaWCA(String secuenciaWCA) {
-		String retorno = secuenciaWCA.toUpperCase().replaceAll("BW", "b").replaceAll("DW", "d").replaceAll("FW", "f")
-				.replaceAll("LW", "l").replaceAll("RW", "r").replaceAll("UW", "u");
+	public static String traducirSecuenciaWCA(int idTipoCubo, String secuenciaWCA) {
+		String retorno;
+		if (idTipoCubo == 25) {
+			retorno = secuenciaWCA.replaceAll("R[\\+][\\+]", "br br").replaceAll("R--", "br' br'")
+					.replaceAll("D[\\+][\\+]", "d d").replaceAll("D--", "d' d'");
+		} else if (idTipoCubo == 27) {
+			retorno = traducirSecuenciaWCASquare1(secuenciaWCA);
+		} else {
+			retorno = secuenciaWCA.replaceAll("Bw", "b").replaceAll("Dw", "d").replaceAll("Fw", "f")
+					.replaceAll("Lw", "l").replaceAll("Rw", "r").replaceAll("Uw", "u");
+		}
 		return retorno;
+	}
+
+	public static String traducirSecuenciaWCASquare1(String secuencia) {
+		secuencia = secuencia.replaceAll(" ", "");
+		StringBuilder retorno = new StringBuilder("");
+		List<String> lista;
+		lista = Arrays.asList(secuencia.split("/"));
+		for (String string : lista) {
+			String temp[] = string.split(",");
+			if (temp.length > 1) {
+				String u = temp[0].replaceAll("\\(", "").replaceAll(" ", "");
+				String d = temp[1].replaceAll("\\)", "").replaceAll(" ", "");
+				try {
+					int sup = Integer.parseInt(u);
+					int inf = Integer.parseInt(d);
+					retorno.append("/ ");
+					if (sup >= 0) {
+						for (int i = 0; i < sup; i++) {
+							retorno.append("U ");
+
+						}
+					} else {
+						for (int i = 0; i > sup; i--) {
+							retorno.append("U' ");
+
+						}
+					}
+					if (inf >= 0) {
+						for (int i = 0; i < inf; i++) {
+							retorno.append("D ");
+
+						}
+					} else {
+						for (int i = 0; i > inf; i--) {
+							retorno.append("D' ");
+
+						}
+					}
+
+				} catch (Exception e) {
+					log.warn(e);
+				}
+			} else {
+				log.warn("Se encontró una inconsistencia en la mezcla square1: " + string);
+			}
+
+		}
+		return retorno.toString().replaceFirst("/", "");
 	}
 
 	public static String getRealPath() {

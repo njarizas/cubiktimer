@@ -49,7 +49,7 @@ public class Skewb extends Puzzle implements Serializable {
 		} else if (giro.equals("l'")) {
 			l(2);
 		} else {
-			log.trace("giro no válido");
+			log.trace("giro no válido: "+giro);
 			return false;
 		}
 		return true;

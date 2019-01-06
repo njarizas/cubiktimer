@@ -1,5 +1,6 @@
 package com.cubiktimer.modelo.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -8,8 +9,9 @@ import org.apache.log4j.Logger;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
 import com.mysql.jdbc.Statement;
 
-public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> {
+public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TiempoRubikDAO.class);
 
 	@Override

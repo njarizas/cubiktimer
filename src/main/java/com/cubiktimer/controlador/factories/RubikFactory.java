@@ -6,14 +6,13 @@ import com.cubiktimer.modelo.rubik.CuboRubik4x4;
 import com.cubiktimer.modelo.rubik.CuboRubik5x5;
 import com.cubiktimer.modelo.rubik.CuboRubik6x6;
 import com.cubiktimer.modelo.rubik.CuboRubik7x7;
+import com.cubiktimer.modelo.rubik.Megaminx;
 import com.cubiktimer.modelo.rubik.Puzzle;
+import com.cubiktimer.modelo.rubik.Pyraminx;
 import com.cubiktimer.modelo.rubik.Skewb;
+import com.cubiktimer.modelo.rubik.Square1;
 
 public class RubikFactory {
-	
-	RubikFactory(){
-		
-	}
 	
 	public static Puzzle crearCubo(Integer tipoCubo){
 		switch (tipoCubo) {
@@ -41,6 +40,12 @@ public class RubikFactory {
 			return new CuboRubik5x5(tipoCubo, "5X5X5 BLD");
 		case 24:
 			return new Skewb(tipoCubo, "Skewb");
+		case 25:
+			return new Megaminx(tipoCubo, "Megaminx");
+		case 26:
+			return new Pyraminx(tipoCubo, "Pyraminx");
+		case 27:
+			return new Square1(tipoCubo, "Square 1");
 		default:
 			return null;
 		}
