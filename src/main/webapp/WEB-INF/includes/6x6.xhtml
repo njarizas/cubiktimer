@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+		<div id="cubo6" class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
+		<script>
+	TTk.AlgorithmPuzzle(6)
+ 	.alg("x2 #{rubikManagedBean.mezclaTraducida()}")
+	.size({width: 240, height: 280})
+	.controls(false)
+	.showAlg(false)
+	.hoverButtons(false)
+	.hoverAlg(false)
+	('#cubo6');
+		</script>
+	</div>
+	
+</ui:composition>

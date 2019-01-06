@@ -60,8 +60,9 @@ public class Util {
 
 	/**
 	 * Método que toma un Integer representando los milisegundos y devuelve una
-	 * cadena con formato "mm:ss.ss" (minutos, segundos y centésimas de segundo)
-	 * (no se tiene estipulado que las pruebas tomen mas de una hora)
+	 * cadena con formato "mm:ss.ss" (minutos, segundos y centésimas de segundo) (no
+	 * se tiene estipulado que las pruebas tomen mas de una hora)
+	 * 
 	 * @param miliseg
 	 * @return
 	 */
@@ -82,10 +83,12 @@ public class Util {
 		retorno += DF.format(seg);
 		return retorno.replace(",", ".");
 	}
-	
+
 	/**
-	 * Metodo que genera una clave aleatoria de longitud 12 caracteres y solo puede tener caracteres alfanumericos 
-	 * o los siguientes caracteres especiales: ! # $ % + - * ~ ^ @
+	 * Metodo que genera una clave aleatoria de longitud 12 caracteres y solo puede
+	 * tener caracteres alfanumericos o los siguientes caracteres especiales: ! # $
+	 * % + - * ~ ^ @
+	 * 
 	 * @return <code>String</code> la clave generada aleatoriamente
 	 */
 	public static String generarClaveAleatoria() {
@@ -99,6 +102,19 @@ public class Util {
 			pass.append(caracteres[new Random().nextInt(caracteres.length)]);
 		}
 		return pass.toString();
+	}
+
+	/**
+	 * método que recibe un algoritmo con notación WCA y lo traduce a la notación
+	 * utilizada por twistysim
+	 * 
+	 * @param secuenciaWCA
+	 * @return
+	 */
+	public static String traducirSecuenciaWCA(String secuenciaWCA) {
+		String retorno = secuenciaWCA.toUpperCase().replaceAll("BW", "b").replaceAll("DW", "d").replaceAll("FW", "f")
+				.replaceAll("LW", "l").replaceAll("RW", "r").replaceAll("UW", "u");
+		return retorno;
 	}
 
 	public static String getRealPath() {

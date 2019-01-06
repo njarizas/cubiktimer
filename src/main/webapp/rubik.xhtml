@@ -13,6 +13,7 @@
 		<link
 			href="#{sesionManagedBean.contextPath}/resources/css/modificaciones-bootstrap.css"
 			rel="stylesheet" type="text/css" />
+			<script src="#{sesionManagedBean.contextPath}/resources/js/twistysim.js"></script>
 		<style>
 body {
 	min-width: 360px;
@@ -216,6 +217,14 @@ body {
 				<h:panelGroup layout="block" id="imagenCubo5x5"
 					rendered="#{rubikManagedBean.tipoCubo==8 || rubikManagedBean.tipoCubo==15}">
 					<ui:include src="/WEB-INF/includes/5x5.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo6x6"
+					rendered="#{rubikManagedBean.tipoCubo==9}">
+					<ui:include src="/WEB-INF/includes/6x6.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo7x7"
+					rendered="#{rubikManagedBean.tipoCubo==10}">
+					<ui:include src="/WEB-INF/includes/7x7.xhtml" />
 				</h:panelGroup>
 				<h:panelGroup layout="block" id="imagenSkewb"
 					rendered="#{rubikManagedBean.tipoCubo==24}">
