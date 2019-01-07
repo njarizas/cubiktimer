@@ -34,14 +34,9 @@ public class Megaminx extends Puzzle implements Serializable {
 	@Override
 	public boolean girar(String giro) {
 		giro = giro.toLowerCase().trim();
-		if (giro.equals("d--")) {
-		} else if (giro.equals("d++")) {
-		} else if (giro.equals("r--")) {
-		} else if (giro.equals("r++")) {
-		} else if (giro.equals("u")) {
-		} else if (giro.equals("u'")) {
-		} else {
-			log.trace("giro no válido. "+giro);
+		if (!giro.equals("d--") && !giro.equals("d++") && !giro.equals("r--") && !giro.equals("r++")
+				&& !giro.equals("u") && !giro.equals("u'")) {
+			log.trace("giro no válido. " + giro);
 			return false;
 		}
 		return true;

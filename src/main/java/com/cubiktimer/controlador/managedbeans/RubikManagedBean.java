@@ -260,14 +260,9 @@ public class RubikManagedBean implements Serializable {
 							.setPenalizacion(false);
 				}
 			} else {
-				if (!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-						.getPenalizacion()) {
-					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-							.setPenalizacion(true);
-				} else {
-					sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
-							.setPenalizacion(false);
-				}
+				sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t)).getTiempoRubikDTO()
+						.setPenalizacion(!sesionRubikActual.getTiempos().get(sesionRubikActual.getTiempos().indexOf(t))
+								.getTiempoRubikDTO().getPenalizacion());
 			}
 		}
 		return "";

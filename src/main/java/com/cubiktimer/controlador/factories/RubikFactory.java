@@ -14,6 +14,10 @@ import com.cubiktimer.modelo.rubik.Square1;
 
 public class RubikFactory {
 	
+	private RubikFactory() {
+		
+	}
+	
 	public static Puzzle crearCubo(Integer tipoCubo){
 		switch (tipoCubo) {
 		case 5:

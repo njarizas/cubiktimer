@@ -96,11 +96,11 @@ public class TestUtil extends TestCase {
 				"Dw' F' 3Uw2 R 3Dw2 Bw2 3Dw2 3Bw' 3Dw' D 3Uw Bw2 3Lw' 3Uw' R' D' Dw2 3Uw' Fw2 3Dw Lw2 Bw 3Rw' Uw2 3Lw 3Rw' 3Bw R2 D' 3Lw Lw F2 R' Rw Uw2 L 3Uw Bw Lw2 D Bw' Dw R2 B' F' 3Dw2 Fw' Bw2 U' D F 3Dw Bw2 D2 Lw' Fw' 3Rw R2 3Dw2 R 3Dw2 3Lw2 3Fw B Bw' 3Bw 3Dw' 3Bw D' B' Uw2 3Dw' 3Lw Uw 3Dw' Bw 3Dw' Lw' 3Fw' Dw 3Uw L2 3Rw' Bw2 Dw 3Fw2 Uw2 3Bw' Bw 3Dw' Dw L' U Dw 3Rw2 R' Bw2 B2 3Lw2 Uw2"),
 				"d' F' 3u2 R 3d2 b2 3d2 3b' 3d' D 3u b2 3l' 3u' R' D' d2 3u' f2 3d l2 b 3r' u2 3l 3r' 3b R2 D' 3l l F2 R' r u2 L 3u b l2 D b' d R2 B' F' 3d2 f' b2 U' D F 3d b2 D2 l' f' 3r R2 3d2 R 3d2 3l2 3f B b' 3b 3d' 3b D' B' u2 3d' 3l u 3d' b 3d' l' 3f' d 3u L2 3r' b2 d 3f2 u2 3b' b 3d' d L' U d 3r2 R' b2 B2 3l2 u2");
 		assertEquals("prueba traduciendo mezcla megaminx", Util.traducirSecuenciaWCA(25,
-				"R-- D++ R-- D++ R-- D++ R-- D++ R++ D-- U' R-- D++ R-- D++ R-- D++ R++ D++ R++ D-- U' R-- D++ R-- D++ R++ D++ R++ D-- R++ D-- U' R++ D-- R-- D-- R-- D-- R-- D++ R-- D++ U  R++ D-- R++ D-- R++ D-- R++ D-- R-- D++ U  R++ D-- R-- D-- R++ D-- R-- D++ R-- D-- U' R++ D-- R++ D-- R++ D-- R++ D-- R++ D-- U'"),
-				"br' br' d d br' br' d d br' br' d d br' br' d d br br d' d' U' br' br' d d br' br' d d br' br' d d br br d d br br d' d' U' br' br' d d br' br' d d br br d d br br d' d' br br d' d' U' br br d' d' br' br' d' d' br' br' d' d' br' br' d d br' br' d d U  br br d' d' br br d' d' br br d' d' br br d' d' br' br' d d U  br br d' d' br' br' d' d' br br d' d' br' br' d d br' br' d' d' U' br br d' d' br br d' d' br br d' d' br br d' d' br br d' d' U'");
-//		assertEquals("prueba traduciendo mezcla square 1", Util.traducirSecuenciaWCA(27,
-//				"(0,2) / (4,-5) / (2,-1) / (3,0) / (-2,-5) / (-4,-3) / (3,0) / (1,0) / (-4,0) / (-4,-4) / (3,0) / (-2,0) / (3,0)"),
-//				"D D / U U U U D' D' D' D' D' / U U D' / U U U / U' U' D' D' D' D' D' / U' U' U' U' D' D' D' / U U U / U / U' U' U' U' / U' U' U' U' D' D' D' D' / U U U / U' U' / U U U");
+				"R-- D++ R-- D++ R-- D++ R-- D++ R++ D-- U' R-- D++ R-- D++ R-- D++ R++ D++ R++ D-- U' R-- D++ R-- D++ R++ D++ R++ D-- R++ D-- U' R++ D-- R-- D-- R-- D-- R-- D++ R-- D++ U R++ D-- R++ D-- R++ D-- R++ D-- R-- D++ U R++ D-- R-- D-- R++ D-- R-- D++ R-- D-- U' R++ D-- R++ D-- R++ D-- R++ D-- R++ D-- U'"),
+				"br2' d2 br2' d2 br2' d2 br2' d2 br2 d2' U' br2' d2 br2' d2 br2' d2 br2 d2 br2 d2' U' br2' d2 br2' d2 br2 d2 br2 d2' br2 d2' U' br2 d2' br2' d2' br2' d2' br2' d2 br2' d2 U br2 d2' br2 d2' br2 d2' br2 d2' br2' d2 U br2 d2' br2' d2' br2 d2' br2' d2 br2' d2' U' br2 d2' br2 d2' br2 d2' br2 d2' br2 d2' U'");
+		assertEquals("prueba traduciendo mezcla square 1", Util.traducirSecuenciaWCA(27,
+				"(0,2) / (4,-5) / (2,-1) / (3,0) / (-2,-5) / (-4,-3) / (3,0) / (1,0) / (-4,0) / (-4,-4) / (3,0) / (-2,0) / (3,0)"),
+				"D D / U U U U D' D' D' D' D' / U U D' / U U U / U' U' D' D' D' D' D' / U' U' U' U' D' D' D' / U U U / U / U' U' U' U' / U' U' U' U' D' D' D' D' / U U U / U' U' / U U U");
 	}
 
 }

@@ -4,117 +4,130 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
-		<svg width="240" height="280"> <polygon
-			points="90,10 10,90 10,250 150,270 230,190 230,30"
-			style="stroke:black; stroke-width:8;" /> <polygon
-			points="90,10 70,30 105,35 125,15"
-			style="fill:#{rubikManagedBean.cubo.top.cara[0][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="70,30 50,50 85,55 105,35"
-			style="fill:#{rubikManagedBean.cubo.top.cara[1][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="50,50 30,70 65,75 85,55"
-			style="fill:#{rubikManagedBean.cubo.top.cara[2][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="30,70 10,90 45,95 65,75"
-			style="fill:#{rubikManagedBean.cubo.top.cara[3][0].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 	<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center"> -->
+	<!-- 		<svg width="240" height="280"> <polygon -->
+	<!-- 			points="90,10 10,90 10,250 150,270 230,190 230,30" -->
+	<!-- 			style="stroke:black; stroke-width:8;" /> <polygon -->
+	<!-- 			points="90,10 70,30 105,35 125,15" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[0][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="70,30 50,50 85,55 105,35" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[1][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="50,50 30,70 65,75 85,55" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[2][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="30,70 10,90 45,95 65,75" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[3][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="125,15 105,35 140,40 160,20"
-			style="fill:#{rubikManagedBean.cubo.top.cara[0][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="105,35 85,55 120,60 140,40"
-			style="fill:#{rubikManagedBean.cubo.top.cara[1][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="85,55 65,75 100,80 120,60"
-			style="fill:#{rubikManagedBean.cubo.top.cara[2][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="65,75 45,95 80,100 100,80"
-			style="fill:#{rubikManagedBean.cubo.top.cara[3][1].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="125,15 105,35 140,40 160,20" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[0][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="105,35 85,55 120,60 140,40" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[1][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="85,55 65,75 100,80 120,60" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[2][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="65,75 45,95 80,100 100,80" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[3][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="160,20 140,40 175,45 195,25"
-			style="fill:#{rubikManagedBean.cubo.top.cara[0][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="140,40 120,60 155,65 175,45"
-			style="fill:#{rubikManagedBean.cubo.top.cara[1][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="120,60 100,80 135,85 155,65"
-			style="fill:#{rubikManagedBean.cubo.top.cara[2][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="100,80 80,100 115,105 135,85"
-			style="fill:#{rubikManagedBean.cubo.top.cara[3][2].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="160,20 140,40 175,45 195,25" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[0][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="140,40 120,60 155,65 175,45" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[1][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="120,60 100,80 135,85 155,65" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[2][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="100,80 80,100 115,105 135,85" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[3][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="195,25 175,45 210,50 230,30"
-			style="fill:#{rubikManagedBean.cubo.top.cara[0][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="175,45 155,65 190,70 210,50"
-			style="fill:#{rubikManagedBean.cubo.top.cara[1][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="155,65 135,85 170,90 190,70"
-			style="fill:#{rubikManagedBean.cubo.top.cara[2][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="135,85 115,105 150,110 170,90"
-			style="fill:#{rubikManagedBean.cubo.top.cara[3][3].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="195,25 175,45 210,50 230,30" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[0][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="175,45 155,65 190,70 210,50" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[1][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="155,65 135,85 170,90 190,70" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[2][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="135,85 115,105 150,110 170,90" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.top.cara[3][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="10,90 10,130 45,135 45,95"
-			style="fill:#{rubikManagedBean.cubo.front.cara[0][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="10,130 10,170 45,175 45,135"
-			style="fill:#{rubikManagedBean.cubo.front.cara[1][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="10,170 10,210 45,215 45,175"
-			style="fill:#{rubikManagedBean.cubo.front.cara[2][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="10,210 10,250 45,255 45,215"
-			style="fill:#{rubikManagedBean.cubo.front.cara[3][0].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="10,90 10,130 45,135 45,95" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[0][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="10,130 10,170 45,175 45,135" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[1][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="10,170 10,210 45,215 45,175" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[2][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="10,210 10,250 45,255 45,215" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[3][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="45,95 45,135 80,140 80,100"
-			style="fill:#{rubikManagedBean.cubo.front.cara[0][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="45,135 45,175 80,180 80,140"
-			style="fill:#{rubikManagedBean.cubo.front.cara[1][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="45,175 45,215 80,220 80,180"
-			style="fill:#{rubikManagedBean.cubo.front.cara[2][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="45,215 45,255 80,260 80,220"
-			style="fill:#{rubikManagedBean.cubo.front.cara[3][1].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="45,95 45,135 80,140 80,100" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[0][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="45,135 45,175 80,180 80,140" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[1][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="45,175 45,215 80,220 80,180" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[2][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="45,215 45,255 80,260 80,220" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[3][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="80,100 80,140 115,145 115,105"
-			style="fill:#{rubikManagedBean.cubo.front.cara[0][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="80,140 80,180 115,185 115,145"
-			style="fill:#{rubikManagedBean.cubo.front.cara[1][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="80,180 80,220 115,225 115,185"
-			style="fill:#{rubikManagedBean.cubo.front.cara[2][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="80,220 80,260 115,265 115,225"
-			style="fill:#{rubikManagedBean.cubo.front.cara[3][2].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="80,100 80,140 115,145 115,105" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[0][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="80,140 80,180 115,185 115,145" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[1][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="80,180 80,220 115,225 115,185" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[2][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="80,220 80,260 115,265 115,225" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[3][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="115,105 115,145 150,150 150,110"
-			style="fill:#{rubikManagedBean.cubo.front.cara[0][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="115,145 115,185 150,190 150,150"
-			style="fill:#{rubikManagedBean.cubo.front.cara[1][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="115,185 115,225 150,230 150,190"
-			style="fill:#{rubikManagedBean.cubo.front.cara[2][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="115,225 115,265 150,270 150,230"
-			style="fill:#{rubikManagedBean.cubo.front.cara[3][3].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="115,105 115,145 150,150 150,110" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[0][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="115,145 115,185 150,190 150,150" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[1][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="115,185 115,225 150,230 150,190" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[2][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="115,225 115,265 150,270 150,230" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.front.cara[3][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="150,110 150,150 170,130 170,90"
-			style="fill:#{rubikManagedBean.cubo.right.cara[0][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="150,150 150,190 170,170 170,130"
-			style="fill:#{rubikManagedBean.cubo.right.cara[1][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="150,190 150,230 170,210 170,170"
-			style="fill:#{rubikManagedBean.cubo.right.cara[2][0].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="150,230 150,270 170,250 170,210"
-			style="fill:#{rubikManagedBean.cubo.right.cara[3][0].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="150,110 150,150 170,130 170,90" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[0][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="150,150 150,190 170,170 170,130" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[1][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="150,190 150,230 170,210 170,170" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[2][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="150,230 150,270 170,250 170,210" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[3][0].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="170,90 170,130 190,110 190,70"
-			style="fill:#{rubikManagedBean.cubo.right.cara[0][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="170,130 170,170 190,150 190,110"
-			style="fill:#{rubikManagedBean.cubo.right.cara[1][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="170,170 170,210 190,190 190,150"
-			style="fill:#{rubikManagedBean.cubo.right.cara[2][1].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="170,210 170,250 190,230 190,190"
-			style="fill:#{rubikManagedBean.cubo.right.cara[3][1].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="170,90 170,130 190,110 190,70" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[0][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="170,130 170,170 190,150 190,110" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[1][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="170,170 170,210 190,190 190,150" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[2][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="170,210 170,250 190,230 190,190" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[3][1].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="190,70 190,110 210,90 210,50"
-			style="fill:#{rubikManagedBean.cubo.right.cara[0][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="190,110 190,150 210,130 210,90"
-			style="fill:#{rubikManagedBean.cubo.right.cara[1][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="190,150 190,190 210,170 210,130"
-			style="fill:#{rubikManagedBean.cubo.right.cara[2][2].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="190,190 190,230 210,210 210,170"
-			style="fill:#{rubikManagedBean.cubo.right.cara[3][2].codigoColor}; stroke:black; stroke-width:4;" />
+	<!-- 		<polygon points="190,70 190,110 210,90 210,50" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[0][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="190,110 190,150 210,130 210,90" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[1][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="190,150 190,190 210,170 210,130" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[2][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="190,190 190,230 210,210 210,170" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[3][2].codigoColor}; stroke:black; stroke-width:4;" /> -->
 
-		<polygon points="210,50 210,90 230,70 230,30"
-			style="fill:#{rubikManagedBean.cubo.right.cara[0][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="210,90 210,130 230,110 230,70"
-			style="fill:#{rubikManagedBean.cubo.right.cara[1][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="210,130 210,170 230,150 230,110"
-			style="fill:#{rubikManagedBean.cubo.right.cara[2][3].codigoColor}; stroke:black; stroke-width:4;" />
-		<polygon points="210,170 210,210 230,190 230,150"
-			style="fill:#{rubikManagedBean.cubo.right.cara[3][3].codigoColor}; stroke:black; stroke-width:4;" />
-		</svg>
+	<!-- 		<polygon points="210,50 210,90 230,70 230,30" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[0][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="210,90 210,130 230,110 230,70" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[1][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="210,130 210,170 230,150 230,110" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[2][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		<polygon points="210,170 210,210 230,190 230,150" -->
+	<!-- 			style="fill:#{rubikManagedBean.cubo.right.cara[3][3].codigoColor}; stroke:black; stroke-width:4;" /> -->
+	<!-- 		</svg> -->
+	<!-- 	</div> -->
+	<div id="cubo4"
+		class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
+		<script>
+			TTk.AlgorithmPuzzle(4).alg(
+					"x2 #{rubikManagedBean.mezclaTraducida()}").size({
+				width : 240,
+				height : 280
+			}).controls(true).showAlg(false)
+			// 	.hoverButtons(false)
+			// 	.hoverAlg(false)
+			('#cubo4');
+		</script>
 	</div>
 </ui:composition>

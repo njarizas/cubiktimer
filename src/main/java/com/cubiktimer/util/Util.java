@@ -121,25 +121,26 @@ public class Util implements Serializable {
 	 */
 	public static String traducirSecuenciaWCA(int idTipoCubo, String secuenciaWCA) {
 		String retorno;
-		if (idTipoCubo == 25) {
-			retorno = secuenciaWCA.replaceAll("R[\\+][\\+]", "br br").replaceAll("R--", "br' br'")
-					.replaceAll("D[\\+][\\+]", "d d").replaceAll("D--", "d' d'");
-		} else if (idTipoCubo == 27) {
+		if (idTipoCubo == 25) {// Megaminx
+			retorno = traducirSecuenciaWCAMegaminx(secuenciaWCA);
+		} else if (idTipoCubo == 24) {// Skewb
+			retorno = traducirSecuenciaWCASkewb(secuenciaWCA);
+		} else if (idTipoCubo == 27) {// Square1
 			retorno = traducirSecuenciaWCASquare1(secuenciaWCA);
 		} else {
-			retorno = secuenciaWCA.replaceAll("Bw", "b").replaceAll("Dw", "d").replaceAll("Fw", "f")
-					.replaceAll("Lw", "l").replaceAll("Rw", "r").replaceAll("Uw", "u");
+			retorno = traducirSecuenciaWCANxN(secuenciaWCA);
 		}
-		return retorno;
+		return retorno.trim();
 	}
 
 	public static String traducirSecuenciaWCASquare1(String secuencia) {
 		secuencia = secuencia.replaceAll(" ", "");
+
 		StringBuilder retorno = new StringBuilder("");
 		List<String> lista;
 		lista = Arrays.asList(secuencia.split("/"));
 		for (String string : lista) {
-			String temp[] = string.split(",");
+			String[] temp = string.split(",");
 			if (temp.length > 1) {
 				String u = temp[0].replaceAll("\\(", "").replaceAll(" ", "");
 				String d = temp[1].replaceAll("\\)", "").replaceAll(" ", "");
@@ -150,35 +151,47 @@ public class Util implements Serializable {
 					if (sup >= 0) {
 						for (int i = 0; i < sup; i++) {
 							retorno.append("U ");
-
 						}
 					} else {
 						for (int i = 0; i > sup; i--) {
 							retorno.append("U' ");
-
 						}
 					}
 					if (inf >= 0) {
 						for (int i = 0; i < inf; i++) {
 							retorno.append("D ");
-
 						}
 					} else {
 						for (int i = 0; i > inf; i--) {
 							retorno.append("D' ");
-
 						}
 					}
-
 				} catch (Exception e) {
 					log.warn(e);
 				}
 			} else {
 				log.warn("Se encontró una inconsistencia en la mezcla square1: " + string);
 			}
-
+		}
+		if (secuencia.endsWith("/")) {
+			retorno.append("/");
 		}
 		return retorno.toString().replaceFirst("/", "");
+	}
+
+	public static String traducirSecuenciaWCANxN(String secuencia) {
+		return secuencia.replaceAll("Bw", "b").replaceAll("Dw", "d").replaceAll("Fw", "f").replaceAll("Lw", "l")
+				.replaceAll("Rw", "r").replaceAll("Uw", "u");
+	}
+
+	public static String traducirSecuenciaWCAMegaminx(String secuencia) {
+		return secuencia.replaceAll("R[\\+][\\+]", "br2").replaceAll("R--", "br2'").replaceAll("D[\\+][\\+]", "d2")
+				.replaceAll("D--", "d2'");
+	}
+
+	public static String traducirSecuenciaWCASkewb(String secuencia) {
+		return secuencia.replaceAll("U'", "b'").replaceAll("U", "b").replaceAll("R'", "A").replaceAll("R", "R'")
+				.replaceAll("A", "R").replaceAll("B'", "C").replaceAll("B", "B'").replaceAll("C", "B");
 	}
 
 	public static String getRealPath() {
