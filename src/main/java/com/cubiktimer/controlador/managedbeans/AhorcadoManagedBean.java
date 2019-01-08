@@ -55,6 +55,15 @@ public class AhorcadoManagedBean implements Serializable {
 		dao = new AhorcadoDAO();
 	}
 
+	@PostConstruct
+	public void init() {
+		if (sesionManagedBean.getUsuarioLogueado() != null) {
+			this.dto.setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
+		}
+		this.dto.setIp(sesionManagedBean.getIpConsultante());
+		log.debug("ip: " + this.dto.getIp());
+	}
+
 	public String reiniciar() {
 		reset();
 		return "";
@@ -76,13 +85,6 @@ public class AhorcadoManagedBean implements Serializable {
 			palabraVisible[i] = '_';
 		}
 		intentosRestantes = 10;
-	}
-
-	@PostConstruct
-	public void init() {
-		if (sesionManagedBean.getUsuarioLogueado() != null) {
-			this.dto.setIdUsuario(sesionManagedBean.getUsuarioLogueado().getIdUsuario());
-		}
 	}
 
 	public void comprobarLetra() {

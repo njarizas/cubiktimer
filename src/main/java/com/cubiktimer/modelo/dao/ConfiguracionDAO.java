@@ -50,7 +50,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			log.warn(e.getMessage() + ": " + e.getStackTrace());
 			desconectar();
 		}
 		return 0;
@@ -79,7 +79,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 					} catch (ParseException pe) {
 						log.trace(
 								"La fecha de la configuracion esta nula o no tiene el formato esperado: ConfiguracionDAO");
-						log.warn(pe.getMessage());
+						log.warn(pe.getMessage() + ": " + pe.getStackTrace());
 					}
 					c.setEstado((Integer) rs.getObject("estado"));
 					lista.add(c);
@@ -88,7 +88,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 				rs.close();
 			}
 		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage());
+			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
 		}
 		return lista;
 	}
@@ -117,7 +117,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			desconectar();
 			return retorno;
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			log.warn(e.getMessage() + ": " + e.getStackTrace());
 			desconectar();
 		}
 		return 0;
@@ -156,15 +156,17 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 					c.setValorEntero((Integer) rs.getObject("valor_entero"));
 					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
 					try {
-						c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("valor_fecha")));
+						if (rs.getString("valor_fecha") != null) {
+							c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("valor_fecha")));
+						}
 					} catch (ParseException pe) {
 						log.trace("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");
-						log.warn(pe.getMessage());
+						log.warn(pe.getMessage() + ": " + pe.getStackTrace());
 					} catch (NullPointerException npe) {
 						log.trace("La fecha de la configuracion esta nula: ConfiguracionDAO");
-						log.warn(npe.getMessage());
+						log.warn(npe.getMessage() + ": " + npe.getStackTrace());
 					} catch (Exception e) {
-						log.warn(e.getMessage());
+						log.warn(e.getMessage() + ": " + e.getStackTrace());
 					}
 					c.setEstado((Integer) rs.getObject("estado"));
 					lista.add(c);
@@ -173,7 +175,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 				rs.close();
 			}
 		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage());
+			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
 		}
 		return lista;
 	}

@@ -86,6 +86,7 @@ public class RubikManagedBean implements Serializable {
 		} else {
 			this.sesionRubikActual = new SesionRubik(new Date(), sesionManagedBean.getUsuarioLogueado().getIdUsuario());
 		}
+		this.sesionRubikActual.getSesionRubikDTO().setIp(sesionManagedBean.getIpConsultante());
 		this.tipoCubo = configuracionManagedBean.getTipoCubo().getValorEntero();
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
 		mezclaAleatoria();

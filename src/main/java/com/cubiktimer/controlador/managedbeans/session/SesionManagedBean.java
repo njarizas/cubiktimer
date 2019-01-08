@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -30,117 +31,121 @@ public class SesionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(SesionManagedBean.class);
-	
+
 	private String idioma;
-    private Locale locale;
-    
-    private UsuarioDTO usuarioLogueado;
-    private List<RolDTO> listaRoles;
-    private RolDTO rolActual;
-    
-    private PermisosDAO permisosDAO;
-    
-    private List<PermisoDTO> listaPermisos;
+	private Locale locale;
 
-    transient ResourceBundle recursos;
+	private UsuarioDTO usuarioLogueado;
+	private List<RolDTO> listaRoles;
+	private RolDTO rolActual;
 
-    private static Map<String, Object> listaIdiomas;
+	private PermisosDAO permisosDAO;
 
-    private Mensaje mensaje;
+	private List<PermisoDTO> listaPermisos;
 
-    static {
-        listaIdiomas = new LinkedHashMap<>();
-        Locale spanish = new Locale("es");
-        listaIdiomas.put("Español", spanish);
-        listaIdiomas.put("English", Locale.ENGLISH);
-    }
+	transient ResourceBundle recursos;
 
-    public SesionManagedBean() {
-        idioma = "ES";
-        locale = new Locale(idioma);
-        recursos = ResourceBundle.getBundle("texto", locale);
-        mensaje = new Mensaje();
-        FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) locale);
-        permisosDAO = new PermisosDAO();
-    }
+	private static Map<String, Object> listaIdiomas;
 
-    public void goToIndex() {
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(getContextPath() + "/index.jsf");
-        } catch (Exception e) {
-            log.warn(e.getMessage());
-        }
-    }
-    
-    public String cerrarSesion() {
-        usuarioLogueado = null;
-        rolActual = null;
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/index?faces-redirect=true";
-    }
+	private Mensaje mensaje;
+	private String ipConsultante;
 
-    public String getContextPath() {
-        return com.cubiktimer.util.Util.getContextPath();
-    }
+	static {
+		listaIdiomas = new LinkedHashMap<>();
+		Locale spanish = new Locale("es");
+		listaIdiomas.put("Español", spanish);
+		listaIdiomas.put("English", Locale.ENGLISH);
+	}
 
-    public void localeChange(ValueChangeEvent event) {
-        String newLocaleValue = event.getNewValue().toString();
-        for (Map.Entry<String, Object> entry : listaIdiomas.entrySet()) {
-            if (entry.getValue().toString().equals(newLocaleValue)) {
-                idioma = event.getNewValue().toString();
-                locale = (Locale) entry.getValue();
-                FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
-            }
-        }
-    }
-    
-    public int contarPermisosIdPadre(Integer idPadre) {
-    	return permisosDAO.contarPermisosIdPadre(idPadre);
-    }
-    
-    public List<PermisoDTO> consultarPermisosPorIdPadre(Integer idPadre) {
-    	return permisosDAO.consultarPermisosPorIdPadre(idPadre);
-    }
+	public SesionManagedBean() {
+		idioma = "ES";
+		locale = new Locale(idioma);
+		recursos = ResourceBundle.getBundle("texto", locale);
+		mensaje = new Mensaje();
+		FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) locale);
+		permisosDAO = new PermisosDAO();
+		ipConsultante = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
+				.getRemoteAddr();
+		log.debug("Se ha creado una nueva sesión desde la siguiente ip: " + ipConsultante);
+	}
 
-    public Mensaje getMensaje() {
-        return mensaje;
-    }
+	public void goToIndex() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(getContextPath() + "/index.jsf");
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+	}
 
-    public void setMensaje(Mensaje mensaje) {
-        this.mensaje = mensaje;
-    }
+	public String cerrarSesion() {
+		usuarioLogueado = null;
+		rolActual = null;
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/index?faces-redirect=true";
+	}
 
-    public String getIdioma() {
-        return idioma;
-    }
+	public String getContextPath() {
+		return com.cubiktimer.util.Util.getContextPath();
+	}
 
-    public void setIdioma(String idioma) {
-        this.idioma = idioma;
-    }
+	public void localeChange(ValueChangeEvent event) {
+		String newLocaleValue = event.getNewValue().toString();
+		for (Map.Entry<String, Object> entry : listaIdiomas.entrySet()) {
+			if (entry.getValue().toString().equals(newLocaleValue)) {
+				idioma = event.getNewValue().toString();
+				locale = (Locale) entry.getValue();
+				FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
+			}
+		}
+	}
 
-    public Map<String, Object> getListaIdiomas() {
-        return listaIdiomas;
-    }
+	public int contarPermisosIdPadre(Integer idPadre) {
+		return permisosDAO.contarPermisosIdPadre(idPadre);
+	}
 
-    public static void setListaIdiomas(Map<String, Object> listaIdiomas) {
-        SesionManagedBean.listaIdiomas = listaIdiomas;
-    }
+	public List<PermisoDTO> consultarPermisosPorIdPadre(Integer idPadre) {
+		return permisosDAO.consultarPermisosPorIdPadre(idPadre);
+	}
 
-    public Locale getLocale() {
-        return locale;
-    }
+	public Mensaje getMensaje() {
+		return mensaje;
+	}
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-    }
+	public void setMensaje(Mensaje mensaje) {
+		this.mensaje = mensaje;
+	}
 
-    public ResourceBundle getRecursos() {
-        return recursos;
-    }
+	public String getIdioma() {
+		return idioma;
+	}
 
-    public void setRecursos(ResourceBundle recursos) {
-        this.recursos = recursos;
-    }
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
+	}
+
+	public Map<String, Object> getListaIdiomas() {
+		return listaIdiomas;
+	}
+
+	public static void setListaIdiomas(Map<String, Object> listaIdiomas) {
+		SesionManagedBean.listaIdiomas = listaIdiomas;
+	}
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	public ResourceBundle getRecursos() {
+		return recursos;
+	}
+
+	public void setRecursos(ResourceBundle recursos) {
+		this.recursos = recursos;
+	}
 
 	public UsuarioDTO getUsuarioLogueado() {
 		return usuarioLogueado;
@@ -173,5 +178,9 @@ public class SesionManagedBean implements Serializable {
 	public void setListaPermisos(List<PermisoDTO> listaPermisos) {
 		this.listaPermisos = listaPermisos;
 	}
-    
+
+	public String getIpConsultante() {
+		return ipConsultante;
+	}
+
 }
