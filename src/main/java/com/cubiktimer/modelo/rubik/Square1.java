@@ -33,21 +33,11 @@ public class Square1 extends Puzzle implements Serializable {
 
 	@Override
 	public boolean girar(String giro) {
-		//TODO implementar metodo para validar giros
-//		giro = giro.toLowerCase().trim();
-//		if (giro.equalsIgnoreCase("u")) {
-//		} else if (giro.equalsIgnoreCase("u'")) {
-//		} else if (giro.equalsIgnoreCase("r")) {
-//		} else if (giro.equalsIgnoreCase("r'")) {
-//		} else if (giro.equalsIgnoreCase("l")) {
-//		} else if (giro.equalsIgnoreCase("l'")) {
-//		} else if (giro.equalsIgnoreCase("b")) {
-//		} else if (giro.equalsIgnoreCase("b'")) {
-//		} else {
-//			log.trace("giro no válido: "+giro);
-//			return false;
-//		}
-		return true;
+		if (giro.matches("^\\([\\-]{0,1}[0-6]{1},[\\-]{0,1}[0-6]{1}\\)$") || giro.equals("/")) {
+			return true;
+		}
+		log.debug("giro no válido: " + giro);
+		return false;
 	}
 
 }

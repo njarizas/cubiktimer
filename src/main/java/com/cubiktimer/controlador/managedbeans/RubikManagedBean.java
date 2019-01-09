@@ -131,13 +131,16 @@ public class RubikManagedBean implements Serializable {
 
 	public String mezclaPersonalizada() {
 		resetearCubo();
-		if (this.tipoCubo != 26) {
+		if (this.tipoCubo != 26) {//Diferente a Pyraminx
 			this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase();
 		}
 		this.secuenciaMezcla = this.secuenciaMezcla.replace("f", " f").replace("b", " b").replace("r", " r")
 				.replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x").replace("y", " y")
 				.replace("z", " z").replace("3 b", " 3b").replace("3 d", " 3d").replace("3 f", " 3f")
 				.replace("3 l", " 3l").replace("3 r", " 3r").replace("3 u", " 3u").replace("  ", " ");
+		if (this.tipoCubo == 27) {//Square 1
+			this.secuenciaMezcla = this.secuenciaMezcla.replace(" ", "").replace("/", " / ");
+		}
 		mezcla = this.secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
