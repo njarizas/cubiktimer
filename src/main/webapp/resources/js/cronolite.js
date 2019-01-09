@@ -65,6 +65,7 @@ $(document).ready(function () {
 			} else {
 				if (tecla.keyCode === 32) {//para inspeccionar o poner a andar el cronometro solo se puede con [Espacio]
 					if ($('#lblTiempoInspeccion').text()==='0'){ //si no tiene tiempo de inspeccion se quitan penalizaciones
+						$("#secuencia").addClass("hidden");
 						inspeccion = new Date().getTime();
 						inicio = new Date().getTime();
 						tiempo.penalizacion = false;
@@ -73,6 +74,7 @@ $(document).ready(function () {
 						estado = 1;
 					}
 					if ($('#lbl-comenzar').text() === 'Comenzar' && estado===0){ //Si hasta ahora va a inspeccionar
+						$("#secuencia").addClass("hidden");
 						estado = 1;
 						inspeccion = new Date().getTime();
 						$('#lbl-comenzar').text('Inspeccionando');
