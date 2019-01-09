@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 import com.cubiktimer.modelo.rubik.estadisticas.CuentaPuzzle;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import com.cubiktimer.modelo.rubik.estadisticas.Promedio;
+import com.cubiktimer.modelo.rubik.estadisticas.RecordPBSingle;
+import com.cubiktimer.util.Util;
 
 public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Serializable {
 
@@ -43,6 +45,41 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 					cuentaPuzzle.setNombrePuzzle(rs.getString("nombre_puzzle"));
 					cuentaPuzzle.setConteoPuzzle(rs.getInt("conteo_puzzle"));
 					lista.add(cuentaPuzzle);
+				}
+			} finally {
+				rs.close();
+			}
+			desconectar();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+			desconectar();
+		}
+		return lista;
+	}
+
+	/**
+	 * Método que retorna los PB por categoría
+	 * 
+	 * @param idUsuario
+	 * @return
+	 */
+	public List<RecordPBSingle> obtenerListaPBSingle(Integer idUsuario) {
+		conectar();
+		List<RecordPBSingle> lista = new ArrayList<>();
+		String sql = "SELECT id_usuario, t2.nombre_tipo, min(tiempo_con_penalizacion) pb_single"
+				+ " FROM tiempos t INNER JOIN sesiones_rubik s ON t.id_sesion = s.id_sesion"
+				+ " INNER JOIN tipos t2 ON t.id_tipo_cubo = t2.id_tipo"
+				+ " WHERE id_usuario=? AND dnf=0 GROUP BY id_usuario, t2.nombre_tipo";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
+			try {
+				while (rs.next()) {
+					RecordPBSingle pbSingle = new RecordPBSingle();
+					pbSingle.setIdUsuario(rs.getInt("id_usuario"));
+					pbSingle.setNombrePuzzle(rs.getString("nombre_tipo"));
+					pbSingle.setPbSingle(Util.darFormatoTiempo(rs.getInt("pb_single")));
+					lista.add(pbSingle);
 				}
 			} finally {
 				rs.close();

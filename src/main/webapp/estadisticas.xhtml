@@ -13,7 +13,11 @@ ${
 demo
 
 
+
+
 .css
+
+
 
 
 
@@ -196,10 +200,29 @@ demo
 					style="height: 400px; margin-bottom: 10px;"></div>
 				<div id="container3" class="col-xs-12 col-md-5"
 					style="height: 400px; margin-bottom: 10px;"></div>
+				<div id="container3" class="col-xs-12 col-md-5">
+					<table id="table" class="table table-hover table-condensed table-bordered table-striped">
+						<thead>
+							<tr>
+								<th><strong>#{texto.Cubo}:</strong></th>
+								<th><strong>#{texto.Tiempo}:</strong></th>
+							</tr>
+						</thead>
+						<c:forEach
+							items="#{estadisticasManagedBean.listaRecords.getListaPBSingle()}"
+							var="record" varStatus="i">
+							<tr>
+								<td>#{record.nombrePuzzle}</td>
+								<td>#{record.pbSingle}</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{estadisticasManagedBean.obtenerListaConteoPuzzles().size()==0}">
-				<div>Aun no tienes tiempos registrados que te permitan ver estadisticas</div>
+				<div>Aun no tienes tiempos registrados que te permitan ver
+					estadisticas</div>
 			</h:panelGroup>
 		</div>
 	</ui:define>
