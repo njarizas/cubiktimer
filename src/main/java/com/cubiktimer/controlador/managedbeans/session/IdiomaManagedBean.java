@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author Nelson
@@ -18,18 +20,21 @@ import javax.faces.context.FacesContext;
 public class IdiomaManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(IdiomaManagedBean.class);
 	
 	@ManagedProperty(value = "#{sesionManagedBean}")
     private SesionManagedBean sesionManagedBean;
     
     @PostConstruct
     public void init() {
+    	log.trace("inicia init");
         FacesContext.getCurrentInstance().getViewRoot().setLocale(sesionManagedBean.getLocale());
         sesionManagedBean.recursos = ResourceBundle.getBundle("texto",sesionManagedBean.getLocale());
+        log.trace("fin init");
     }
     
     public void foo(){
-    	
+    	log.trace("foo");
     }
 
     public SesionManagedBean getSesionManagedBean() {

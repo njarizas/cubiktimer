@@ -34,16 +34,10 @@ public class Pyraminx extends Puzzle implements Serializable {
 	@Override
 	public boolean girar(String giro) {
 		giro = giro.toLowerCase().trim();
-		if (giro.equalsIgnoreCase("u")) {
-		} else if (giro.equalsIgnoreCase("u'")) {
-		} else if (giro.equalsIgnoreCase("r")) {
-		} else if (giro.equalsIgnoreCase("r'")) {
-		} else if (giro.equalsIgnoreCase("l")) {
-		} else if (giro.equalsIgnoreCase("l'")) {
-		} else if (giro.equalsIgnoreCase("b")) {
-		} else if (giro.equalsIgnoreCase("b'")) {
-		} else {
-			log.trace("giro no válido: "+giro);
+		if (!giro.equalsIgnoreCase("u") && !giro.equalsIgnoreCase("u'") && !giro.equalsIgnoreCase("r")
+				&& !giro.equalsIgnoreCase("r'") && !giro.equalsIgnoreCase("l") && !giro.equalsIgnoreCase("l'")
+				&& !giro.equalsIgnoreCase("b") && !giro.equalsIgnoreCase("b'")) {
+			log.trace("giro no válido: " + giro);
 			return false;
 		}
 		return true;

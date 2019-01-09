@@ -90,12 +90,12 @@ public class SesionManagedBean implements Serializable {
 
 	public void localeChange(ValueChangeEvent event) {
 		String newLocaleValue = event.getNewValue().toString();
-		for (Map.Entry<String, Object> entry : listaIdiomas.entrySet()) {
-			if (entry.getValue().toString().equals(newLocaleValue)) {
-				idioma = event.getNewValue().toString();
-				locale = (Locale) entry.getValue();
-				FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
-			}
+		Map.Entry<String, Object> entry = listaIdiomas.entrySet().stream()
+				.filter(x -> newLocaleValue.equals(x.getValue().toString())).findAny().orElse(null);
+		if (entry != null) {
+			idioma = newLocaleValue;
+			locale = (Locale) entry.getValue();
+			FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
 		}
 	}
 
