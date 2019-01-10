@@ -148,23 +148,25 @@ public class Util implements Serializable {
 					int sup = Integer.parseInt(u);
 					int inf = Integer.parseInt(d);
 					retorno.append("/ ");
-					if (sup >= 0) {
-						for (int i = 0; i < sup; i++) {
-							retorno.append("U ");
+					if (sup != 0) {
+						retorno.append("U");
+						if (Math.abs(sup) > 1) {
+							retorno.append(Math.abs(sup));
 						}
-					} else {
-						for (int i = 0; i > sup; i--) {
-							retorno.append("U' ");
+						if (sup < 0) {
+							retorno.append("'");
 						}
+						retorno.append(" ");
 					}
-					if (inf >= 0) {
-						for (int i = 0; i < inf; i++) {
-							retorno.append("D ");
+					if (inf != 0) {
+						retorno.append("D");
+						if (Math.abs(inf) > 1) {
+							retorno.append(Math.abs(inf));
 						}
-					} else {
-						for (int i = 0; i > inf; i--) {
-							retorno.append("D' ");
+						if (inf < 0) {
+							retorno.append("'");
 						}
+						retorno.append(" ");
 					}
 				} catch (Exception e) {
 					log.warn(e);
