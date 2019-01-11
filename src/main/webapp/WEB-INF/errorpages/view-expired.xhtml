@@ -18,98 +18,21 @@
 		content="http://www.cubiktimer.com/resources/images/portada.png" />
 	<link href="/cubiktimer/resources/images/favicon.ico"
 		rel="shortcut icon" type="image/x-icon" />
-	<script
-		src="/cubiktimer/resources/js/jquery-1.12.0.min.js"></script>
+	<script src="/cubiktimer/resources/js/jquery-1.12.0.min.js"></script>
 	<link href="/cubiktimer/resources/css/bootstrap.min.css"
 		rel="stylesheet" type="text/css" />
-	<style>
-.text-center {
-	text-align: center;
-}
-
-* {
-	margin: 0;
-}
-
-.wrapper {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -20px;
-}
-
-html, body.error-404 {
-	height: 100%;
-}
-
-.error-number {
-	text-align: center;
-	display: block;
-	color: #111;
-	font-size: 200px;
-	font-family: sans-serif;
-	font-weight: 400;
-	text-shadow: 6px 5px 0 rgba(200, 200, 200, 0.2);
-}
-
-.error-title {
-	text-align: center;
-	display: block;
-	color: #000;
-	font-size: 20px;
-	font-family: sans-serif;
-	font-weight:bold;
-	text-shadow: 3px 2px 0 rgba(255, 255, 255, 0.2);
-	margin-bottom: 5px;
-}
-
-.error-text {
-	text-align: justify;
-	font-size: 16px;
-	font-weight: 300;
-	line-height: 32px;
-	color: #222;
-	margin-top: 40px;
-}
-
-@media ( min-width : 1400px) {
-
-	.error-number {
-		font-size: 150px;
-	}
-	.error-title {
-		font-size: 20px;
-		margin-bottom: 15px;
-	}
-	.error-text {
-		font-size: 16px;
-		margin-bottom: 10px;
-	}
-}
-
-.error-link {
-	color: blue;
-	text-decoration: none;
-		font-weight:bold;
-}
-
-.error-link:hover {
-	color: black;
-}
-
-</style>
+	<link href="/cubiktimer/resources/css/error-style.css"
+		rel="stylesheet" type="text/css" />
 </h:head>
-<h:body styleClass="error-404">
+<h:body>
 	<div class="container">
-		<div class="col-xs-2 col-sm-1 logo"></div>
 		<div id="wrapper">
-			<div class="error-title">La sesión expiró</div>
+			<div class="error-bigtitle">La sesión expiró</div>
 			<div
 				class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-				<div class="error-text">
-					Se superó el tiempo máximo de inactividad.
-					<br></br> &iquest;Deseas volver al <a href="/cubiktimer/index.jsf"
-						class="error-link">inicio?</a>
+				<div class="error-text text-center">
+					Se superó el tiempo máximo de inactividad. <br></br> &iquest;Deseas
+					volver al <a href="/cubiktimer/index.jsf" class="error-link">inicio?</a>
 				</div>
 			</div>
 		</div>

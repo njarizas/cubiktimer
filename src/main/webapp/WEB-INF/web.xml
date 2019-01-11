@@ -13,25 +13,29 @@
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
 	<session-config>
-		<session-timeout>1</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
 	<welcome-file-list>
 		<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
 	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/errorpages/404.xhtml</location>
+	</error-page>
+	<error-page>
 		<exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
 		<location>/WEB-INF/errorpages/404.xhtml</location>
 	</error-page>
 	<error-page>
-		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
-		<location>/WEB-INF/errorpages/view-expired.xhtml</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
+		<exception-type>java.io.FileNotFoundException</exception-type>
 		<location>/WEB-INF/errorpages/404.xhtml</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/errorpages/500.xhtml</location>
+	</error-page>
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/WEB-INF/errorpages/view-expired.xhtml</location>
 	</error-page>
 </web-app>
