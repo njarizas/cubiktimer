@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import com.cubiktimer.controlador.managedbeans.session.SesionManagedBean;
 import com.cubiktimer.modelo.dao.AhorcadoDAO;
 import com.cubiktimer.modelo.dto.AhorcadoDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 
 /**
@@ -110,7 +111,7 @@ public class AhorcadoManagedBean implements Serializable {
 			if (sonPalabrasIguales()) {
 				sesionManagedBean.getMensaje().setTitle("¡Ganaste!");
 				sesionManagedBean.getMensaje().setText("La palabra era: " + this.palabra);
-				sesionManagedBean.getMensaje().setType("success");
+				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				juegoEstaFinalizado = true;
 				// new Date(), palabra, false, letrasUsadas
@@ -123,7 +124,7 @@ public class AhorcadoManagedBean implements Serializable {
 			} else if (intentosRestantes == 0) {
 				sesionManagedBean.getMensaje().setTitle("¡Perdiste!");
 				sesionManagedBean.getMensaje().setText("La palabra era: " + this.palabra);
-				sesionManagedBean.getMensaje().setType("error");
+				sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				juegoEstaFinalizado = true;
 				dto.setFecha(new Date());

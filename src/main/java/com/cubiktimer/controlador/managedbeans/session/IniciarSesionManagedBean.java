@@ -22,6 +22,7 @@ import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.modelo.dto.PermisoDTO;
 import com.cubiktimer.modelo.dto.RolDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.EncryptService;
 import com.cubiktimer.util.Util;
 
@@ -77,10 +78,11 @@ public class IniciarSesionManagedBean implements Serializable {
 				}
 				List<PermisoDTO> listaPermisos = permisosDAO.consultarPermisosPorIdUsuario(u.getIdUsuario());
 				if (listaRoles.isEmpty()) {
-					sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+					sesionManagedBean.getMensaje()
+							.setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 					sesionManagedBean.getMensaje()
 							.setText(sesionManagedBean.getRecursos().getString("UsuarioNoTieneNingunRol"));
-					sesionManagedBean.getMensaje().setType("warning");
+					sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 					sesionManagedBean.getMensaje().setMensajePendiente(true);
 					return "";
 				}
@@ -109,10 +111,11 @@ public class IniciarSesionManagedBean implements Serializable {
 					return "/rubik?faces-redirect=true";
 				}
 				if (u.getEstado() == 2) {
-					sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+					sesionManagedBean.getMensaje()
+							.setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 					sesionManagedBean.getMensaje()
 							.setText(sesionManagedBean.getRecursos().getString("MensajeVerificarCuenta"));
-					sesionManagedBean.getMensaje().setType("warning");
+					sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 					sesionManagedBean.getMensaje().setMensajePendiente(true);
 					return "";
 				}
@@ -122,34 +125,34 @@ public class IniciarSesionManagedBean implements Serializable {
 						pass, 1);
 				Date fechaMod = listaCredenciales.get(0).getFechaFin();
 				Util util = Util.getInstance();
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("LaContraseñaFueModificadaEl") + ": "
 								+ util.getFormatoFechaLarga().format(fechaMod));
-				sesionManagedBean.getMensaje().setType("warning");
+				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			} else {// No existe
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("LaContraseñaIngresadaNoEsCorrecta"));
-				sesionManagedBean.getMensaje().setType("warning");
+				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			}
 		} // no existe un usuario con el correo proporcionado: se busca si existe un
 			// usuario antiguo en las credenciales (el usuario cambió el correo)
 		else if (existeUsuarioAntiguo(login)) { // Si existe
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("ExisteUnaCuentaAsociadaAlCorreo") + ": " + login
 							+ ", " + sesionManagedBean.getRecursos().getString("SinEmbargoEsteCorreoYaNoEsValido"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else { // No existe
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NoExisteNingunUsuarioRegistradoConCorreo")
 							+ ": " + login);
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return "";

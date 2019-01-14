@@ -16,6 +16,7 @@ import com.cubiktimer.modelo.dao.AmigoDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.AmigoDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 
 @ManagedBean
 @ViewScoped
@@ -70,10 +71,10 @@ public class AmigosManagedBean implements Serializable {
 			amigoDTO.setEstado(2);
 			amigoDAO.merge(amigoDTO);
 		}
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 		sesionManagedBean.getMensaje().setText(
 				sesionManagedBean.getRecursos().getString("LasSolicitudesDeAmistadSeleccionadasHanSidoEnviadas"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		init();
 		return "";
@@ -98,10 +99,10 @@ public class AmigosManagedBean implements Serializable {
 			amigoDTO2.setEstado(1);
 			amigoDAO.merge(amigoDTO2);
 		}
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 		sesionManagedBean.getMensaje().setText(
 				sesionManagedBean.getRecursos().getString("LasSolicitudesDeAmistadSeleccionadasHanSidoAceptadas"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		init();
 		return "";
@@ -114,16 +115,17 @@ public class AmigosManagedBean implements Serializable {
 	 */
 	public String rechazarSolicitudes() {
 		eliminarAmigos();
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 		sesionManagedBean.getMensaje().setText(
 				sesionManagedBean.getRecursos().getString("LasSolicitudesDeAmistadSeleccionadasHanSidoRechazadas"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
 	}
 
 	/**
 	 * Metodo que elimina amigos
+	 * 
 	 * @return
 	 */
 	public String eliminarAmigos() {
@@ -145,10 +147,10 @@ public class AmigosManagedBean implements Serializable {
 			amigoDTO2.setEstado(1);
 			amigoDAO.delete(amigoDTO2);
 		}
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 		sesionManagedBean.getMensaje().setText(
 				sesionManagedBean.getRecursos().getString("LosUsuariosSeleccionadosFueronRemovidosDeTusAmigos"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		init();
 		return "";
@@ -163,10 +165,10 @@ public class AmigosManagedBean implements Serializable {
 		// Si tiene sesion iniciada se verifica que el id de usuario se encuentre
 		// asignado correctamente
 		bloquearUsuarios();
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 		sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos()
 				.getString("LasSolicitudesDeAmistadSeleccionadasHanSidoRechazadasPermanentemente"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
 	}
@@ -188,10 +190,10 @@ public class AmigosManagedBean implements Serializable {
 			amigoDTO2.setEstado(3);
 			amigoDAO.merge(amigoDTO2);
 		}
-		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-		sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos()
-				.getString("LosUsuariosSeleccionadosFueronBloqueadosPermanentemente"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
+		sesionManagedBean.getMensaje().setText(
+				sesionManagedBean.getRecursos().getString("LosUsuariosSeleccionadosFueronBloqueadosPermanentemente"));
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		init();
 		return "";

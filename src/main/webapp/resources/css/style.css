@@ -1,4 +1,4 @@
-#secuencia{
+#secuencia {
 	margin-top: 2px;
 	margin-bottom: 2px;
 }
@@ -6,7 +6,7 @@
 #timer {
 	margin: 0 auto;
 	padding: 0;
-	font-family: arial;
+	font-family: Arial, sans-serif;
 	display: inline;
 	color: #000;
 	font-weight: bold;
@@ -20,11 +20,9 @@
 		display: inline;
 		font-size: 60px;
 	}
-	
-	#secuencia{
-	font-size: 18px;
+	#secuencia {
+		font-size: 18px;
 	}
-	
 }
 
 @media ( min-width : 768px) {
@@ -32,9 +30,8 @@
 		display: inline;
 		font-size: 80px;
 	}
-	
-	#secuencia{
-	font-size: 24px;
+	#secuencia {
+		font-size: 24px;
 	}
 }
 
@@ -43,8 +40,7 @@
 		display: inline;
 		font-size: 100px;
 	}
-	
-	#secuencia{
-	font-size: 30px;
+	#secuencia {
+		font-size: 30px;
 	}
 }

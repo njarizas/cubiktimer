@@ -1,8 +1,11 @@
 package com.cubiktimer;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,6 +17,18 @@ import com.cubiktimer.util.Util;
 import junit.framework.TestCase;
 
 public class TestUtil extends TestCase {
+
+	private static final Logger log = Logger.getLogger(TestUtil.class);
+
+	private Random random;
+
+	public TestUtil() {
+		try {
+			random = SecureRandom.getInstanceStrong();
+		} catch (NoSuchAlgorithmException e) {
+			log.warn("No se pudo generar variable aleatoria", e);
+		}
+	}
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -71,9 +86,9 @@ public class TestUtil extends TestCase {
 	}
 
 	public void testDoble() {
-		Random r = new Random();
+
 		for (int i = 0; i < 10; i++) {
-			int numero = r.nextInt(5999990);
+			int numero = random.nextInt(5999990);
 			assertEquals("prueba doble: " + (i + 1) + ", valor de entrada: " + numero, numero - (numero % 10),
 					Util.calcularMilesimasDeSegundos(Util.darFormatoTiempo(numero)));
 		}

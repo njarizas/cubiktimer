@@ -23,6 +23,7 @@ import com.cubiktimer.modelo.dto.TipoDTO;
 import com.cubiktimer.modelo.rubik.Puzzle;
 import com.cubiktimer.modelo.rubik.SesionRubik;
 import com.cubiktimer.modelo.rubik.Tiempo;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 
 /**
@@ -131,14 +132,14 @@ public class RubikManagedBean implements Serializable {
 
 	public String mezclaPersonalizada() {
 		resetearCubo();
-		if (this.tipoCubo != 26) {//Diferente a Pyraminx
+		if (this.tipoCubo != 26) {// Diferente a Pyraminx
 			this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase();
 		}
 		this.secuenciaMezcla = this.secuenciaMezcla.replace("f", " f").replace("b", " b").replace("r", " r")
 				.replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x").replace("y", " y")
 				.replace("z", " z").replace("3 b", " 3b").replace("3 d", " 3d").replace("3 f", " 3f")
 				.replace("3 l", " 3l").replace("3 r", " 3r").replace("3 u", " 3u").replace("  ", " ");
-		if (this.tipoCubo == 27) {//Square 1
+		if (this.tipoCubo == 27) {// Square 1
 			this.secuenciaMezcla = this.secuenciaMezcla.replace(" ", "").replace("/", " / ");
 		}
 		mezcla = this.secuenciaMezcla.trim().split(" ");
@@ -179,20 +180,20 @@ public class RubikManagedBean implements Serializable {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Informacion"));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("SeHanGuardadoLosTiemposActuales"));
-				sesionManagedBean.getMensaje().setType("success");
+				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			} else {
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("SePresentoUnErrorAlTratarDeGuardar"));
-				sesionManagedBean.getMensaje().setType("error");
+				sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			}
 		} else {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos()
 					.getString("NoSePuedeGuardarTiemposDeUnUsuarioQueNoHaIniciadoSesion"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return "";

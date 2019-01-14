@@ -3,6 +3,7 @@ package com.cubiktimer.modelo.rubik.estadisticas;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -54,7 +55,9 @@ public class Promedio implements Serializable {
 	}
 
 	public String getFechaUTC() {
-		return (date.getYear() + 1900) + "," + date.getMonth() + "," + date.getDate();
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		return c.get(Calendar.YEAR) + "," + c.get(Calendar.MONTH) + "," + c.get(Calendar.DAY_OF_MONTH);
 	}
 
 }

@@ -12,6 +12,7 @@ import com.cubiktimer.modelo.dao.CredencialDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.EmailSenderInterface;
 import com.cubiktimer.util.EmailSenderService;
 import com.cubiktimer.util.EncryptService;
@@ -49,24 +50,24 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 		List<UsuarioDTO> lu = usuarioDAO.consultarUsuarioPorCorreo(email.trim());
 		String retorno = "";
 		if (lu.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("ActualmenteNoExisteUnUsuarioConCorreo") + ": "
 							+ email.trim() + ", "
 							+ sesionManagedBean.getRecursos().getString("PorFavorIntenteRecordarElUsuario"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else {
 			UsuarioDTO u = lu.get(0);
 			EmailSenderInterface emailSender = new EmailSenderService();
 			String nuevaClave = Util.generarClaveAleatoria();
 			if (emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave)) {
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje().setText(
 						sesionManagedBean.getRecursos().getString("HemosEnviadoUnCorreoElectronicoALaDireccion") + ": "
 								+ email.trim() + " "
 								+ sesionManagedBean.getRecursos().getString("ConTuNuevaContraseña"));
-				sesionManagedBean.getMensaje().setType("info");
+				sesionManagedBean.getMensaje().setType(Constantes.INFO);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				u.setClave(EncryptService.encriptarClave(nuevaClave));
 				usuarioDAO.update(u);
@@ -80,25 +81,25 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 		List<CredencialDTO> lc = credencialDAO.consultarCredencialPorCorreo(email.trim());
 		String retorno = "";
 		if (!lu.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("SuUsuarioActualEs") + ": " + email.trim());
-			sesionManagedBean.getMensaje().setType("info");
+			sesionManagedBean.getMensaje().setType(Constantes.INFO);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else if (!lc.isEmpty()) {
 			String correoActual = usuarioFacade.consultarCorreoActualPorCorreoAntiguo(email.trim());
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(
 					sesionManagedBean.getRecursos().getString("SuUsuarioActualEs") + ": " + correoActual.trim());
-			sesionManagedBean.getMensaje().setType("info");
+			sesionManagedBean.getMensaje().setType(Constantes.INFO);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 
 		} else {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NoExisteNingunUsuarioRelacionadoConElEmail")
 							+ ": " + email.trim());
-			sesionManagedBean.getMensaje().setType("info");
+			sesionManagedBean.getMensaje().setType(Constantes.INFO);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return retorno;

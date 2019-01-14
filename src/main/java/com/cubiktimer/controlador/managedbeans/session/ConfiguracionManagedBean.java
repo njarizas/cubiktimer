@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.controlador.facade.ConfiguracionFacade;
 import com.cubiktimer.modelo.dto.ConfiguracionDTO;
+import com.cubiktimer.util.Constantes;
 
 /**
  *
@@ -26,7 +27,7 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ConfiguracionManagedBean.class);
-	
+
 	private Integer idUsuario;
 	private ConfiguracionDTO tiempoInspeccion;
 	private ConfiguracionDTO tipoCubo;
@@ -34,7 +35,7 @@ public class ConfiguracionManagedBean implements Serializable {
 	private ConfiguracionDTO paginaInicial;
 
 	private ConfiguracionFacade configuracionFacade;
-	
+
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
 
@@ -52,40 +53,43 @@ public class ConfiguracionManagedBean implements Serializable {
 		this.paginaInicial.setIdTipo(23);
 		this.paginaInicial.setValorTexto("rubik");
 		FacesContext fc = FacesContext.getCurrentInstance();
-		idUsuario=(Integer)fc.getExternalContext().getSessionMap().get("idUsuario");
+		idUsuario = (Integer) fc.getExternalContext().getSessionMap().get("idUsuario");
 		configuracionFacade = new ConfiguracionFacade();
 	}
 
 	@PostConstruct
-	public void cargarConfiguracion(){
-		if (idUsuario != null){
-			ConfiguracionDTO tiempoInspeccionParametrizado= configuracionFacade.obtenerTiempoDeInspeccionPreferidoPorIdUsuario(idUsuario);
-			if (tiempoInspeccionParametrizado != null){
+	public void cargarConfiguracion() {
+		if (idUsuario != null) {
+			ConfiguracionDTO tiempoInspeccionParametrizado = configuracionFacade
+					.obtenerTiempoDeInspeccionPreferidoPorIdUsuario(idUsuario);
+			if (tiempoInspeccionParametrizado != null) {
 				this.tiempoInspeccion = tiempoInspeccionParametrizado;
-			} 
+			}
 			this.tiempoInspeccion.setIdUsuario(idUsuario);
-			ConfiguracionDTO tipoCuboParametrizado= configuracionFacade.obtenerTipoCuboPreferidoPorIdUsuario(idUsuario);
-			if (tipoCuboParametrizado != null){
+			ConfiguracionDTO tipoCuboParametrizado = configuracionFacade
+					.obtenerTipoCuboPreferidoPorIdUsuario(idUsuario);
+			if (tipoCuboParametrizado != null) {
 				this.tipoCubo = tipoCuboParametrizado;
-			} 
+			}
 			this.tipoCubo.setIdUsuario(idUsuario);
-			ConfiguracionDTO idiomaParametrizado= configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(idUsuario);
-			if (idiomaParametrizado != null){
+			ConfiguracionDTO idiomaParametrizado = configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(idUsuario);
+			if (idiomaParametrizado != null) {
 				this.idioma = idiomaParametrizado;
-			} 
+			}
 			this.idioma.setIdUsuario(idUsuario);
-			ConfiguracionDTO paginaInicialParametrizada= configuracionFacade.obtenerPaginaInicialPorIdUsuario(idUsuario);
-			if (paginaInicialParametrizada != null){
+			ConfiguracionDTO paginaInicialParametrizada = configuracionFacade
+					.obtenerPaginaInicialPorIdUsuario(idUsuario);
+			if (paginaInicialParametrizada != null) {
 				this.paginaInicial = paginaInicialParametrizada;
-			} 
+			}
 			this.paginaInicial.setIdUsuario(idUsuario);
 		}
 	}
-	
-	public String guardarConfiguracion(){
+
+	public String guardarConfiguracion() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		idUsuario=(Integer)fc.getExternalContext().getSessionMap().get("idUsuario");
-		if (idUsuario != null){
+		idUsuario = (Integer) fc.getExternalContext().getSessionMap().get("idUsuario");
+		if (idUsuario != null) {
 			this.tiempoInspeccion.setIdUsuario(idUsuario);
 			this.tipoCubo.setIdUsuario(idUsuario);
 			this.idioma.setIdUsuario(idUsuario);
@@ -97,11 +101,12 @@ public class ConfiguracionManagedBean implements Serializable {
 			listaConfiguraciones.add(this.paginaInicial);
 			configuracionFacade.guardar(listaConfiguraciones);
 			log.trace("Se guarda configuracion");
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
-	        sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
-	        sesionManagedBean.getMensaje().setType("success");
-	        sesionManagedBean.getMensaje().setMensajePendiente(true);
-		} else{
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
+			sesionManagedBean.getMensaje()
+					.setText(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
+			sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
+			sesionManagedBean.getMensaje().setMensajePendiente(true);
+		} else {
 			log.trace("No se guarda configuracion ya que es un usuario no logueado");
 		}
 		return "";
@@ -150,7 +155,7 @@ public class ConfiguracionManagedBean implements Serializable {
 	public void setPaginaInicial(ConfiguracionDTO paginaInicial) {
 		this.paginaInicial = paginaInicial;
 	}
-	
+
 	public SesionManagedBean getSesionManagedBean() {
 		if (this.sesionManagedBean != null) {
 			return this.sesionManagedBean;

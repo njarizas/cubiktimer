@@ -14,6 +14,7 @@ import com.cubiktimer.modelo.dao.CredencialDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.EmailSenderInterface;
 import com.cubiktimer.util.EmailSenderService;
 import com.cubiktimer.util.EncryptService;
@@ -52,7 +53,7 @@ public class RegistroManagedBean implements Serializable {
 						.setTitle(sesionManagedBean.getRecursos().getString("UsuarioRegistradoExitosamente"));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("MensajeCuentaCreada"));
-				sesionManagedBean.getMensaje().setType("success");
+				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				email = new EmailSenderService();
 				email.enviarMensajeActivacionCuenta(usuario);
@@ -76,20 +77,20 @@ public class RegistroManagedBean implements Serializable {
 		if (clave.equals(confirmarClave)) {
 			usuario.setClave(EncryptService.encriptarClave(clave));
 		} else {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LasClavesNoCoinciden"));
-			sesionManagedBean.getMensaje().setType("error");
+			sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return false;
 		}
 		List<UsuarioDTO> lu = usuarioDAO.consultarUsuarioPorCorreo(usuario.getCorreo().trim());
 		List<CredencialDTO> lc = credencialDAO.consultarCredencialPorCorreo(usuario.getCorreo().trim());
 		if (!lu.isEmpty() || !lc.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCrearUnUsuarioConCorreo") + " "
 							+ usuario.getCorreo().trim());
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return false;
 		}
@@ -108,21 +109,21 @@ public class RegistroManagedBean implements Serializable {
 			List<UsuarioDTO> l = usuarioDAO.consultarUsuarioPorCorreoYEstado(usuario.getCorreo().trim(), 1);
 			List<CredencialDTO> lia = credencialDAO.consultarCredencialPorCorreoYEstado(usuario.getCorreo().trim(), 1);
 			if (!l.isEmpty()) {
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("YaExisteUnUsuarioRegistradoConCorreo")
 								+ ": " + usuario.getCorreo());
-				sesionManagedBean.getMensaje().setType("warning");
+				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				return false;
 			}
 			if (!lia.isEmpty()) {
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCrearUnUsuarioConCorreo") + ": "
 								+ usuario.getCorreo() + " "
 								+ sesionManagedBean.getRecursos().getString("PorQueYaHaSidoUsadoPorAlguien"));
-				sesionManagedBean.getMensaje().setType("warning");
+				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				return false;
 			} else {
@@ -131,10 +132,10 @@ public class RegistroManagedBean implements Serializable {
 			}
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("OcurrioUnErrorAlIntentarRegistrarElUsuario"));
-			sesionManagedBean.getMensaje().setType("error");
+			sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return false;

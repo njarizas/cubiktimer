@@ -16,6 +16,7 @@ import com.cubiktimer.modelo.dao.CredencialDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.EncryptService;
 
 /**
@@ -65,7 +66,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
 		sesionManagedBean.getMensaje()
 				.setText(sesionManagedBean.getRecursos().getString("LaInformacionDeLaCuentaHaSidoModificada"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
 	}
@@ -74,9 +75,9 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 		if (claveAnterior.equals(sesionManagedBean.getUsuarioLogueado().getClave())) {
 			verificado = true;
 		} else {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LaClaveNoEsCorrecta"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return "";
@@ -89,25 +90,25 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 
 	public String cambiarClave() {
 		if (claveNueva.equals("") || confirmarClaveNueva.equals("")) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NingunaDeLasContraseñasPuedeEstarVacia"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
 		if (!claveNueva.equals(confirmarClaveNueva)) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LasClavesNoCoinciden"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
 		if (sesionManagedBean.getUsuarioLogueado().getClave().equals(EncryptService.encriptarClave(claveNueva))) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("LaClaveNuevaNoPuedeSerIgualALaActual"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
@@ -118,46 +119,46 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
 		sesionManagedBean.getMensaje()
 				.setText(sesionManagedBean.getRecursos().getString("LaContraseñaHaSidoCambiadaExitosamente"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
 	}
 
 	public String cambiarCorreo() {
 		if (sesionManagedBean.getUsuarioLogueado().getCorreo().equals(correo)) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("ElCorreoNuevoNoPuedeSerIgualAlActual"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
 		List<UsuarioDTO> l = usuarioDAO.consultarUsuarioPorCorreo(correo);
 		if (!l.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo + " "
 							+ sesionManagedBean.getRecursos().getString("PorQueEstaSiendoUsadoPorAlguien"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
 		List<CredencialDTO> lia = credencialDAO.consultarCredencialPorCorreo(correo);
 		if (!lia.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo")
 					+ " " + correo + " " + sesionManagedBean.getRecursos().getString("PorQueYaHaSidoUsadoPorAlguien"));
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
 		List<UsuarioDTO> l2 = usuarioDAO.consultarUsuarioPorCorreo(correo);
 		List<CredencialDTO> lia2 = credencialDAO.consultarCredencialPorCorreo(correo);
 		if (!l2.isEmpty() || !lia2.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Atencion"));
+			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo);
-			sesionManagedBean.getMensaje().setType("warning");
+			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
@@ -168,7 +169,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
 		sesionManagedBean.getMensaje()
 				.setText(sesionManagedBean.getRecursos().getString("ElCorreoElectronicoHaSidoCambiadoExitosamente"));
-		sesionManagedBean.getMensaje().setType("success");
+		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
 		return "";
 	}
