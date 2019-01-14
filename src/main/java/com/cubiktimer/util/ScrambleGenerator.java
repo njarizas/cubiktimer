@@ -17,8 +17,8 @@ public class ScrambleGenerator {
 	private ScrambleGenerator() {
 
 	}
-
-	public static String[] generarMezcla(String parametro) {
+	
+	public static String generarSecuenciaMezcla(String parametro) {
 		log.trace("Va a generar la mezcla con el Software oficial de la WCA");
 		URL url;
 		String linea;
@@ -64,7 +64,11 @@ public class ScrambleGenerator {
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 		}
-		return stringBuilder.toString().split(" ");
+		return stringBuilder.toString();
+	}
+
+	public static String[] generarMezcla(String parametro) {
+		return generarSecuenciaMezcla(parametro).split(" ");
 	}
 
 }
