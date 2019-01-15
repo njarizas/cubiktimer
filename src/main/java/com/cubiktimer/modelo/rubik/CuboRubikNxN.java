@@ -19,8 +19,8 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 	protected CaraRubik bottom;
 	protected CaraRubik back;
 
-	public CuboRubikNxN(Integer idTipoCubo, String nombre, int n) {
-		super(idTipoCubo, nombre);
+	public CuboRubikNxN(Integer idTipoCubo, String nombre, String parametro, int n) {
+		super(idTipoCubo, nombre, parametro);
 		this.n = n;
 		top = new CaraRubik(n, Constantes.COLOR_BLANCO);
 		left = new CaraRubik(n, Constantes.COLOR_NARANJA);
@@ -117,10 +117,10 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 	public void r() {
 		right.girarCara();
 		for (int i = 0; i < n; i++) {
-			Celda aux = top.getCara()[i][n-1];
-			top.getCara()[i][n-1] = front.getCara()[i][n-1];
-			front.getCara()[i][n-1] = bottom.getCara()[i][n-1];
-			bottom.getCara()[i][n-1] = back.getCara()[n - 1 - i][0];
+			Celda aux = top.getCara()[i][n - 1];
+			top.getCara()[i][n - 1] = front.getCara()[i][n - 1];
+			front.getCara()[i][n - 1] = bottom.getCara()[i][n - 1];
+			bottom.getCara()[i][n - 1] = back.getCara()[n - 1 - i][0];
 			back.getCara()[n - 1 - i][0] = aux;
 		}
 	}
@@ -270,7 +270,7 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		} else if (giro.equals("y'")) {
 			y(3);
 		} else {
-			log.trace("giro no valido: "+giro);
+			log.trace("giro no valido: " + giro);
 			return false;
 		}
 		log.trace("es un giro válido de 2x2 o 3x3");
@@ -343,7 +343,7 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 	public void setN(int n) {
 		this.n = n;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder retorno = new StringBuilder("");

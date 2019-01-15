@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.util.ScrambleGenerator;
+import com.cubiktimer.util.Constantes;
 
 public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 
@@ -12,16 +12,11 @@ public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 	private static final Logger log = Logger.getLogger(CuboRubik4x4.class);
 
 	public CuboRubik4x4(Integer idTipoCubo, String nombre) {
-		this(idTipoCubo, nombre, 4);
+		this(idTipoCubo, nombre, Constantes.CUBO_4X4X4, 4);
 	}
 
-	public CuboRubik4x4(Integer idTipoCubo, String nombre, int n) {
-		super(idTipoCubo, nombre, n);
-	}
-
-	@Override
-	public String[] generarMezcla() {
-		return ScrambleGenerator.generarMezcla("444");
+	protected CuboRubik4x4(Integer idTipoCubo, String nombre, String parametro, int n) {
+		super(idTipoCubo, nombre, parametro, n);
 	}
 
 	@Override

@@ -2,23 +2,18 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
-import com.cubiktimer.util.ScrambleGenerator;
+import com.cubiktimer.util.Constantes;
 
 public class CuboRubik2x2 extends CuboRubikNxN implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	public CuboRubik2x2(Integer idTipoCubo, String nombre) {
-		this(idTipoCubo, nombre, 2);
+		this(idTipoCubo, nombre, Constantes.CUBO_2X2X2, 2);
 	}
 
-	public CuboRubik2x2(Integer idTipoCubo, String nombre, int n) {
-		super(idTipoCubo, nombre, n);
-	}
-
-	@Override
-	public String[] generarMezcla() {
-		return ScrambleGenerator.generarMezcla("222");
+	private CuboRubik2x2(Integer idTipoCubo, String nombre, String parametro, int n) {
+		super(idTipoCubo, nombre, parametro, n);
 	}
 
 }

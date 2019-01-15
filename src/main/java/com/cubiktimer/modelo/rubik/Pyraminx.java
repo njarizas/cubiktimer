@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.util.ScrambleGenerator;
+import com.cubiktimer.util.Constantes;
 
 public class Pyraminx extends Puzzle implements Serializable {
 
@@ -12,7 +12,7 @@ public class Pyraminx extends Puzzle implements Serializable {
 	private static final Logger log = Logger.getLogger(Pyraminx.class);
 
 	public Pyraminx(Integer idTipoCubo, String nombre) {
-		super(idTipoCubo, nombre);
+		super(idTipoCubo, nombre, Constantes.PYRAMINX);
 	}
 
 	@Override
@@ -24,11 +24,6 @@ public class Pyraminx extends Puzzle implements Serializable {
 			}
 		}
 		return secuenciaMezclada.toString();
-	}
-
-	@Override
-	public String[] generarMezcla() {
-		return ScrambleGenerator.generarMezcla("pyram");
 	}
 
 	@Override

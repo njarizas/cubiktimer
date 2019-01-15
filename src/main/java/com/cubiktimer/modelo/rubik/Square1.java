@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.util.ScrambleGenerator;
+import com.cubiktimer.util.Constantes;
 
 public class Square1 extends Puzzle implements Serializable {
 
@@ -12,7 +12,7 @@ public class Square1 extends Puzzle implements Serializable {
 	private static final Logger log = Logger.getLogger(Square1.class);
 
 	public Square1(Integer idTipoCubo, String nombre) {
-		super(idTipoCubo, nombre);
+		super(idTipoCubo, nombre, Constantes.SQUARE_1);
 	}
 
 	@Override
@@ -24,11 +24,6 @@ public class Square1 extends Puzzle implements Serializable {
 			}
 		}
 		return secuenciaMezclada.toString();
-	}
-
-	@Override
-	public String[] generarMezcla() {
-		return ScrambleGenerator.generarMezcla("sq1");
 	}
 
 	@Override

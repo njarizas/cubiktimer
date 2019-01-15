@@ -18,6 +18,7 @@ public class TestConexionDatabase extends TestCase {
     
     @AfterClass
     public static void tearDownClass() {
+    	
     }
     
     @Before

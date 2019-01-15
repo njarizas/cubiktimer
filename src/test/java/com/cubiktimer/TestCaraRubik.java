@@ -14,28 +14,6 @@ import junit.framework.TestCase;
 
 public class TestCaraRubik extends TestCase {
 
-	public static void main(String[] args) {
-		CaraRubik cara = new CaraRubik(10, Constantes.COLOR_BLANCO);
-		for (int i = 0; i < cara.getN(); i++) {
-			for (int j = 0; j < cara.getN(); j++) {
-				cara.getCara()[i][j] = new Celda(String.valueOf((i * 10) + j + "   "));
-			}
-		}
-		mostrar(cara);
-		cara.girarCara();
-		System.out.println("------------------------------");
-		mostrar(cara);
-	}
-
-	private static void mostrar(CaraRubik cara) {
-		for (int i = 0; i < cara.getN(); i++) {
-			for (int j = 0; j < cara.getN(); j++) {
-				System.out.print(cara.getCara()[i][j].getSigla());
-			}
-			System.out.println();
-		}
-	}
-
 	@BeforeClass
 	public static void setUpClass() {
 	}
@@ -81,7 +59,7 @@ public class TestCaraRubik extends TestCase {
 		cara3142.getCara()[1][0] = new Celda(String.valueOf(4 + "   "));
 		cara3142.getCara()[1][1] = new Celda(String.valueOf(2 + "   "));
 		assertEquals("Prueba de cuatro giros a una cara", cara1234, cara3142);
-		
+
 		CaraRubik cara123 = new CaraRubik(3, Constantes.COLOR_BLANCO);
 		cara123.getCara()[0][0] = new Celda(String.valueOf(1 + "   "));
 		cara123.getCara()[0][1] = new Celda(String.valueOf(2 + "   "));

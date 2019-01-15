@@ -5,7 +5,6 @@ import java.io.Serializable;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
-import com.cubiktimer.util.ScrambleGenerator;
 
 public class Skewb extends Puzzle implements Serializable {
 
@@ -20,7 +19,7 @@ public class Skewb extends Puzzle implements Serializable {
 	private CaraSkewb back;
 
 	public Skewb(Integer idTipoCubo, String nombre) {
-		super(idTipoCubo, nombre);
+		super(idTipoCubo, nombre, Constantes.SKEWB);
 		top = new CaraSkewb(Constantes.COLOR_BLANCO);
 		left = new CaraSkewb(Constantes.COLOR_NARANJA);
 		front = new CaraSkewb(Constantes.COLOR_VERDE);
@@ -49,7 +48,7 @@ public class Skewb extends Puzzle implements Serializable {
 		} else if (giro.equals("l'")) {
 			l(2);
 		} else {
-			log.trace("giro no válido: "+giro);
+			log.trace("giro no válido: " + giro);
 			return false;
 		}
 		return true;
@@ -200,11 +199,6 @@ public class Skewb extends Puzzle implements Serializable {
 			}
 		}
 		return secuenciaMezclada.toString();
-	}
-
-	@Override
-	public String[] generarMezcla() {
-		return ScrambleGenerator.generarMezcla("skewb");
 	}
 
 	@Override

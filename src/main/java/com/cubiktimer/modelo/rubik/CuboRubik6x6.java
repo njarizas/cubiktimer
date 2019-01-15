@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.util.ScrambleGenerator;
+import com.cubiktimer.util.Constantes;
 
 public class CuboRubik6x6 extends CuboRubik5x5 implements Serializable {
 
@@ -12,16 +12,11 @@ public class CuboRubik6x6 extends CuboRubik5x5 implements Serializable {
 	private static final Logger log = Logger.getLogger(CuboRubik6x6.class);
 
 	public CuboRubik6x6(Integer idTipoCubo, String nombre) {
-		this(idTipoCubo, nombre, 6);
-	}
-	
-	public CuboRubik6x6(Integer idTipoCubo, String nombre, int n) {
-		super(idTipoCubo, nombre, n);
+		this(idTipoCubo, nombre, Constantes.CUBO_6X6X6, 6);
 	}
 
-	@Override
-	public String[] generarMezcla() {
-		return ScrambleGenerator.generarMezcla("666");
+	protected CuboRubik6x6(Integer idTipoCubo, String nombre, String parametro, int n) {
+		super(idTipoCubo, nombre, parametro, n);
 	}
 
 	@Override
@@ -52,7 +47,7 @@ public class CuboRubik6x6 extends CuboRubik5x5 implements Serializable {
 		log.trace("es un giro válido de 6x6");
 		return true;
 	}
-	
+
 	public void tresfw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			tresfw();
@@ -69,7 +64,7 @@ public class CuboRubik6x6 extends CuboRubik5x5 implements Serializable {
 			right.getCara()[i][2] = aux;
 		}
 	}
-	
+
 	public void tresrw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			tresrw();
@@ -86,7 +81,7 @@ public class CuboRubik6x6 extends CuboRubik5x5 implements Serializable {
 			back.getCara()[n - 1 - i][2] = aux;
 		}
 	}
-	
+
 	public void tresuw(int cant) {
 		for (int i = 0; i < cant; i++) {
 			tresuw();
