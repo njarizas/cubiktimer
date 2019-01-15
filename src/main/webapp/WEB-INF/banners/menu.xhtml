@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<div class="col-xs-12">
 		#{idiomaManagedBean.foo()}
-		<h:form>
+		<h:form id="formularioNavBar">
 			<nav class="navbar navbar-default menu" style="margin:0;">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -16,7 +16,7 @@
 						class="icon-bar"></span>
 				</button>
 				<div class="navbar-brand" style="padding: 9px !important;">
-					<h:selectOneMenu class="form-control input-sm"
+					<h:selectOneMenu class="form-control input-sm" id="seleccionIdioma"
 						style="max-width: 100px;" value="#{sesionManagedBean.idioma}"
 						onchange="submit()"
 						valueChangeListener="#{sesionManagedBean.localeChange}">

@@ -22,25 +22,17 @@ body {
 	</ui:define>
 	<ui:define name="body">
 		<div class="col-xs-12">
-			<h:form>
+			<h:form id="formularioMenuRubik">
 				<nav class="navbar navbar-default menu" style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header col-xs-12">
-					<div class="navbar-brand hidden" style="padding: 9px !important;">
-						<h:selectOneMenu styleClass="form-control input-sm"
-							style="max-width: 100px;" value="#{sesionManagedBean.idioma}"
-							onchange="submit()"
-							valueChangeListener="#{sesionManagedBean.localeChange}">
-							<f:selectItem itemValue="1" itemLabel="Sesión 1"></f:selectItem>
-						</h:selectOneMenu>
-					</div>
 					<div class="navbar-brand" style="padding: 9px !important;">
-						<h:selectOneMenu styleClass="form-control input-sm"
+						<h:selectOneMenu styleClass="form-control input-sm" id="seleccionPuzzle"
 							style="display:inline; max-width: 100px;"
 							value="#{rubikManagedBean.tipoCubo}" onchange="submit()"
 							valueChangeListener="#{rubikManagedBean.cambioCubo}">
 							<!-- 						<f:selectItem itemValue="5" itemLabel="2X2X2"></f:selectItem> -->
 							<!-- 						<f:selectItem itemValue="6" itemLabel="3X3X3"></f:selectItem> -->
-							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l"
+							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l" id="puzzle_#{l.idTipo}"
 								itemValue="#{l.idTipo}" itemLabel="#{l.nombreTipo}"></f:selectItems>
 						</h:selectOneMenu>
 					</div>
