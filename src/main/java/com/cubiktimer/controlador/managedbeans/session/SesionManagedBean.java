@@ -94,6 +94,7 @@ public class SesionManagedBean implements Serializable {
 				.filter(x -> newLocaleValue.equals(x.getValue().toString())).findAny().orElse(null);
 		if (entry != null) {
 			idioma = newLocaleValue;
+			log.trace("Se cambió el idioma a: " + idioma);
 			locale = (Locale) entry.getValue();
 			FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
 		}

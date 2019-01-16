@@ -50,6 +50,9 @@ public class IniciarSesionManagedBean implements Serializable {
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
 
+	@ManagedProperty(value = "#{configuracionManagedBean}")
+	private ConfiguracionManagedBean configuracionManagedBean;
+
 	ConfiguracionFacade configuracionFacade;
 
 	public IniciarSesionManagedBean() {
@@ -93,6 +96,7 @@ public class IniciarSesionManagedBean implements Serializable {
 					sesionManagedBean.setListaPermisos(listaPermisos);
 					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idUsuario",
 							u.getIdUsuario());
+					configuracionManagedBean.setIdUsuario(u.getIdUsuario());
 					ConfiguracionDTO cDto = configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(u.getIdUsuario());
 					if (cDto != null) {
 						String idioma = cDto.getValorTexto();
@@ -103,6 +107,7 @@ public class IniciarSesionManagedBean implements Serializable {
 							FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 						}
 					}
+					configuracionManagedBean.cargarConfiguracion();
 					ConfiguracionDTO cDto2 = configuracionFacade.obtenerPaginaInicialPorIdUsuario(u.getIdUsuario());
 					if (cDto2 != null) {
 						String paginaInicio = cDto2.getValorTexto();
@@ -197,6 +202,18 @@ public class IniciarSesionManagedBean implements Serializable {
 
 	public void setSesionManagedBean(SesionManagedBean sesionManagedBean) {
 		this.sesionManagedBean = sesionManagedBean;
+	}
+
+	public ConfiguracionManagedBean getConfiguracionManagedBean() {
+		if (this.configuracionManagedBean != null) {
+			return this.configuracionManagedBean;
+		} else {
+			return new ConfiguracionManagedBean();
+		}
+	}
+
+	public void setConfiguracionManagedBean(ConfiguracionManagedBean configuracionManagedBean) {
+		this.configuracionManagedBean = configuracionManagedBean;
 	}
 
 }

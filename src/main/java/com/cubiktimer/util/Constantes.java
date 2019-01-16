@@ -20,7 +20,7 @@ public class Constantes {
 	public static final Integer MILISEGUNDOS_PENALIZACION = 2000;
 
 	// Constantes de mensajes para sweet alert
-	public static final String ATENCION = "ATENCIÓN";
+	public static final String ATENCION = "Atencion";
 
 	public static final String SUCCESS = "success";
 	public static final String INFO = "info";

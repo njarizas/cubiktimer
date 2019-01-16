@@ -9,7 +9,6 @@
 	<title>#{texto.IniciarSesion}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<style>
-
 #formulario_de_inicio_de_sesion {
 	background-color: rgba(0, 0, 0, 0.2);
 	margin-top: 50px;
@@ -23,6 +22,9 @@
 		type="text/css" />
 	<link href="resources/css/sweetalert.css" rel="stylesheet"
 		type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
+		rel="stylesheet" />
 	<script src="resources/js/sweetalert.min.js"></script>
 </h:head>
 <h:body>
@@ -33,8 +35,8 @@
 			pt:autocomplete="off">
 			<div class="col-xs-12">
 				<h3>#{texto.IniciarSesion}</h3>
-				<h:graphicImage library="images" name="usuario.png" alt="logo usuario"
-					styleClass="centrado" width="100" height="100" />
+				<h:graphicImage library="images" name="usuario.png"
+					alt="logo usuario" styleClass="centrado" width="100" height="100" />
 				<span class="help-block"></span>
 				<h:outputLabel value="#{texto.CorreoElectronico}:" for="email"></h:outputLabel>
 				<div class="col-xs-12 input-group">
@@ -63,8 +65,8 @@
 					action="#{iniciarSesionManagedBean.iniciarSesion}">
 				</h:commandButton>
 				<div class="col-xs-12 input-group">
-					<h:link outcome="recuperar-clave"
-						style="font-size: 0.8em;" value="#{texto.OlvidoSuContraseña}"></h:link>
+					<h:link outcome="recuperar-clave" style="font-size: 0.8em;"
+						value="#{texto.OlvidoSuContraseña}"></h:link>
 				</div>
 				<h:link styleClass="btn btn-primary col-xs-8 col-xs-offset-2"
 					outcome="registro" style="margin-top: 10px;"
@@ -79,7 +81,7 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 	</c:if>
-	<script src="resources/js/jquery.min.js" ></script>
-	<script src="resources/js/bootstrap.js" ></script>
+	<script src="resources/js/jquery.min.js"></script>
+	<script src="resources/js/bootstrap.js"></script>
 </h:body>
 </html>

@@ -7,7 +7,9 @@
 	<div class="col-xs-12">
 		#{idiomaManagedBean.foo()}
 		<h:form id="formularioNavBar">
-			<nav class="navbar navbar-default menu" style="margin:0;">
+			<nav
+				class="navbar #{configuracionManagedBean.estiloVisual.valorEntero==1?'navbar-inverse':'navbar-default'} menu"
+				style="margin:0;">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
@@ -22,14 +24,15 @@
 						valueChangeListener="#{sesionManagedBean.localeChange}">
 						<f:selectItems value="#{sesionManagedBean.listaIdiomas}"></f:selectItems>
 					</h:selectOneMenu>
+
 				</div>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
-<!-- 						<li><h:link outcome="/ahorcado" -->
-<!-- 								value="#{texto.JuegoDeAhorcado}"></h:link></li> -->
+						<!-- 						<li><h:link outcome="/ahorcado" -->
+						<!-- 								value="#{texto.JuegoDeAhorcado}"></h:link></li> -->
 						<li><h:link outcome="/rubik" value="#{texto.CronometroRubik}"></h:link></li>
 					</h:panelGroup>
 					<h:panelGroup
@@ -39,19 +42,21 @@
 							<c:if
 								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)==0}">
 								<li><h:link outcome="#{permiso.url}?faces-redirect=true"
-										value="#{permiso.nombrePermiso}" /></li>
+										value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}" /></li>
 							</c:if>
 							<c:if
 								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)!=0}">
 								<li class="dropdown"><a class="dropdown-toggle"
-									data-toggle="dropdown" href="#"> #{permiso.nombrePermiso} <span
-										class="caret"></span></a>
+									data-toggle="dropdown" href="#">
+										#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}
+										<span class="caret"></span>
+								</a>
 									<ul class="dropdown-menu">
 										<c:forEach
 											items="#{sesionManagedBean.consultarPermisosPorIdPadre(permiso.idPermiso)}"
 											var="subItem">
 											<li><h:link outcome="#{subItem.url}?faces-redirect=true"
-													value="#{subItem.nombrePermiso}" /></li>
+													value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?subItem.nombrePermiso:subItem.namePermiso}" /></li>
 										</c:forEach>
 									</ul></li>
 							</c:if>
@@ -70,13 +75,17 @@
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
-						<li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#{sesionManagedBean.usuarioLogueado.correo} <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><h:link outcome="cambiar-clave" value="#{texto.CambiarContraseña}"></h:link></li>
-                                     <li><h:link outcome="cambiar-correo" value="#{texto.CambiarCorreo}"></h:link></li>
-                                </ul>
-                            </li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">#{sesionManagedBean.usuarioLogueado.correo}
+								<span class="caret"></span>
+						</a>
+							<ul class="dropdown-menu">
+								<li><h:link outcome="cambiar-clave"
+										value="#{texto.CambiarContraseña}"></h:link></li>
+								<li><h:link outcome="cambiar-correo"
+										value="#{texto.CambiarCorreo}"></h:link></li>
+							</ul></li>
 						<li><h:commandLink id="configuracion"
 								styleClass="btn btn-default navbar-brand"
 								action="configuracion?faces-redirect=true"
@@ -90,6 +99,12 @@
 								<span class="glyphicon glyphicon-log-out"></span>
 							</h:commandLink></li>
 					</h:panelGroup>
+					<li><h:commandLink id="modoOscuro"
+							styleClass="btn btn-default navbar-brand"
+							action="#{rubikManagedBean.mezclaAleatoria()}"
+							title="#{texto.EstiloVisual}">
+							<span class="glyphicon glyphicon-adjust"></span>
+						</h:commandLink></li>
 				</ul>
 			</div>
 			</nav>

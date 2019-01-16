@@ -13,27 +13,35 @@
 		<link
 			href="#{sesionManagedBean.contextPath}/resources/css/modificaciones-bootstrap.css"
 			rel="stylesheet" type="text/css" />
-			<script src="#{sesionManagedBean.contextPath}/resources/js/twistysim_mod.js"></script>
+		<script
+			src="#{sesionManagedBean.contextPath}/resources/js/twistysim_mod.js"></script>
 		<style>
 body {
 	min-width: 360px;
+}
+
+ul.dropdown-menu strong {
+ color: black;
 }
 </style>
 	</ui:define>
 	<ui:define name="body">
 		<div class="col-xs-12">
 			<h:form id="formularioMenuRubik">
-				<nav class="navbar navbar-default menu" style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
+				<nav
+					class="navbar #{configuracionManagedBean.estiloVisual.valorEntero==1?'navbar-inverse':'navbar-default'} menu"
+					style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header col-xs-12">
 					<div class="navbar-brand" style="padding: 9px !important;">
-						<h:selectOneMenu styleClass="form-control input-sm" id="seleccionPuzzle"
-							style="display:inline; max-width: 100px;"
+						<h:selectOneMenu styleClass="form-control input-sm"
+							id="seleccionPuzzle" style="display:inline; max-width: 100px;"
 							value="#{rubikManagedBean.tipoCubo}" onchange="submit()"
 							valueChangeListener="#{rubikManagedBean.cambioCubo}">
 							<!-- 						<f:selectItem itemValue="5" itemLabel="2X2X2"></f:selectItem> -->
 							<!-- 						<f:selectItem itemValue="6" itemLabel="3X3X3"></f:selectItem> -->
-							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l" id="puzzle_#{l.idTipo}"
-								itemValue="#{l.idTipo}" itemLabel="#{l.nombreTipo}"></f:selectItems>
+							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l"
+								id="puzzle_#{l.idTipo}" itemValue="#{l.idTipo}"
+								itemLabel="#{l.nombreTipo}"></f:selectItems>
 						</h:selectOneMenu>
 					</div>
 					<div class="navbar-brand hidden-xs hidden-sm">
@@ -63,8 +71,7 @@ body {
 				</nav>
 			</h:form>
 		</div>
-		<div class="col-xs-12 col-md-10 col-md-offset-1"
-			style="background-color: #fff;">
+		<div class="col-xs-12 col-md-10 col-md-offset-1">
 			<h:form id="form">
 				<!-- <h2 class="text-center">#{texto.CronometroRubik}
 					#{rubikManagedBean.cubo.nombre}</h2> -->
@@ -151,8 +158,7 @@ body {
 						</div>
 					</div>
 					<div class="col-xs-12">
-						<table id="table"
-							class="table table-hover table-condensed table-bordered table-striped"
+						<table id="table" class="table table-condensed table-bordered"
 							data-toggle="table" data-pagination="true" data-sort-name="#"
 							data-sort-order="desc" data-show-toggle="true"
 							data-show-columns="true" data-search="false" data-page-size="5"
@@ -193,7 +199,7 @@ body {
 						</table>
 					</div>
 				</div>
-	
+
 				<h:panelGroup layout="block" id="imagenCubo2x2"
 					rendered="#{rubikManagedBean.tipoCubo==5}">
 					<ui:include src="/WEB-INF/includes/2x2.xhtml" />
@@ -230,7 +236,7 @@ body {
 					rendered="#{rubikManagedBean.tipoCubo==26}">
 					<ui:include src="/WEB-INF/includes/pyraminx.xhtml" />
 				</h:panelGroup>
-					<h:panelGroup layout="block" id="imagenSquare1"
+				<h:panelGroup layout="block" id="imagenSquare1"
 					rendered="#{rubikManagedBean.tipoCubo==27}">
 					<ui:include src="/WEB-INF/includes/square1.xhtml" />
 				</h:panelGroup>
@@ -270,7 +276,7 @@ body {
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
-							<h4 class="modal-title" id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
+							<h4 class="modal-title" style="color: black;" id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
 						</div>
 						<div class="modal-body">
 							<h:inputTextarea styleClass="form-control"
