@@ -56,8 +56,8 @@
 						<div class="col-xs-12 input-group">
 							<h:selectOneMenu class="form-control"
 								value="#{configuracionManagedBean.estiloVisual.valorEntero}">
-								<f:selectItem itemValue="0" itemLabel="Claro" />
-								<f:selectItem itemValue="1" itemLabel="Oscuro" />
+								<f:selectItem itemValue="0" itemLabel="#{texto.Claro}" />
+								<f:selectItem itemValue="1" itemLabel="#{texto.Oscuro}" />
 							</h:selectOneMenu>
 						</div>
 						<span class="help-block"></span>
@@ -82,8 +82,13 @@
 						<div class="col-xs-12 input-group">
 							<h:selectOneMenu class="form-control"
 								value="#{configuracionManagedBean.paginaInicial.valorTexto}">
-								<f:selectItem itemValue="ahorcado" itemLabel="ahorcado" />
-								<f:selectItem itemValue="rubik" itemLabel="rubik" />
+								<f:selectItems value="#{sesionManagedBean.listarPaginas()}"
+									var="permiso" itemValue="#{permiso.url}"
+									itemLabel="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}"></f:selectItems>
+								<f:selectItem itemValue="cambiar-clave"
+									itemLabel="#{texto.CambiarContraseña}" />
+								<f:selectItem itemValue="cambiar-correo"
+									itemLabel="#{texto.CambiarCorreo}" />
 							</h:selectOneMenu>
 						</div>
 						<span class="help-block"></span>

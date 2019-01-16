@@ -92,28 +92,32 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 		log.trace("inicio consultarPermisosPorIdUsuario");
 		List<PermisoDTO> lista = new ArrayList<>();
 		conectar();
-		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles r"
-				+ " ON ur.id_rol = r.id_rol" + " INNER JOIN roles_permisos rp" + " ON r.id_rol = rp.id_rol"
-				+ " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso" + " WHERE id_usuario=?";
+		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles_permisos rp"
+				+ " ON ur.id_rol = rp.id_rol" + " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso"
+				+ " WHERE ur.estado=1 and rp.estado=1 and p.estado=1" + " AND id_usuario=?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					PermisoDTO p = new PermisoDTO();
-					p.setIdPermiso(rs.getInt("id_permiso"));
-					p.setUrl(rs.getString("url"));
-					p.setIdPadre(rs.getInt("id_padre"));
-					p.setNombrePermiso(rs.getString("nombre_permiso"));
-					p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
-					p.setNamePermiso(rs.getString("name_permiso"));
-					p.setDescriptionPermiso(rs.getString("description_permiso"));
-					p.setEstado(rs.getInt("estado"));
-					lista.add(p);
-				}
-			} finally {
-				rs.close();
-			}
+			lista = findList(ps);
+			desconectar();
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+			desconectar();
+		}
+		log.trace("fin consultarPermisosPorIdUsuario");
+		return lista;
+	}
+
+	public List<PermisoDTO> listarPermisos(int idUsuario) {
+		log.trace("inicio consultarPermisosPorIdUsuario");
+		List<PermisoDTO> lista = new ArrayList<>();
+		conectar();
+		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles_permisos rp"
+				+ " ON ur.id_rol = rp.id_rol" + " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso"
+				+ " WHERE ur.estado=1 AND rp.estado=1 AND p.estado=1" + " AND url IS NOT NULL" + " AND url !=''"
+				+ " AND id_usuario=?";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, idUsuario);
+			lista = findList(ps);
 			desconectar();
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
@@ -130,23 +134,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 		String sql = "SELECT *" + " FROM permisos" + " WHERE id_padre=?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idPadre);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					PermisoDTO p = new PermisoDTO();
-					p.setIdPermiso(rs.getInt("id_permiso"));
-					p.setUrl(rs.getString("url"));
-					p.setIdPadre(rs.getInt("id_padre"));
-					p.setNombrePermiso(rs.getString("nombre_permiso"));
-					p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
-					p.setNamePermiso(rs.getString("name_permiso"));
-					p.setDescriptionPermiso(rs.getString("description_permiso"));
-					p.setEstado(rs.getInt("estado"));
-					lista.add(p);
-				}
-			} finally {
-				rs.close();
-			}
+			lista = findList(ps);
 			desconectar();
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
@@ -186,5 +174,35 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 		}
 		log.trace("fin contarPermisosIdPadre");
 		return 0;
+	}
+
+	public List<PermisoDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
+		List<PermisoDTO> lista = new ArrayList<>();
+		try {
+			ResultSet rs = ps.executeQuery();
+			try {
+				while (rs.next()) {
+					PermisoDTO p = new PermisoDTO();
+					p.setIdPermiso(rs.getInt("id_permiso"));
+					p.setUrl(rs.getString("url"));
+					p.setIdPadre(rs.getInt("id_padre"));
+					p.setNombrePermiso(rs.getString("nombre_permiso"));
+					p.setDescripcionPermiso(rs.getString("descripcion_permiso"));
+					p.setNamePermiso(rs.getString("name_permiso"));
+					p.setDescriptionPermiso(rs.getString("description_permiso"));
+					p.setEstado(rs.getInt("estado"));
+					lista.add(p);
+				}
+			} finally {
+				rs.close();
+			}
+			desconectar();
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+			desconectar();
+		}
+		log.trace("fin findList");
+		return lista;
 	}
 }

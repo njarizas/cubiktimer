@@ -1,6 +1,7 @@
 package com.cubiktimer.controlador.managedbeans.session;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -99,6 +100,15 @@ public class SesionManagedBean implements Serializable {
 			locale = (Locale) entry.getValue();
 			FacesContext.getCurrentInstance().getViewRoot().setLocale((Locale) entry.getValue());
 		}
+	}
+	
+	public List<PermisoDTO> listarPaginas(){
+		List<PermisoDTO> listaPaginasAutorizadas = new ArrayList<>();
+		if (usuarioLogueado == null) {
+			return listaPaginasAutorizadas;
+		}
+		listaPaginasAutorizadas = permisosDAO.listarPermisos(usuarioLogueado.getIdUsuario());
+		return listaPaginasAutorizadas;
 	}
 
 	public int contarPermisosIdPadre(Integer idPadre) {

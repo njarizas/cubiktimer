@@ -8,7 +8,16 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<title>#{texto.CambiarContraseña}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<title><ui:insert name="title">cubiktimer</ui:insert></title>
+	<meta name="Description" content="Cronometro Rubik Online" />
+	<meta name="Keywords" content="Cronometro, Rubik, Timer, Online" />
+	<meta property="og:url" content="http://www.cubiktimer.com" />
+	<meta property="og:title" content="Cronometro Rubik Online" />
+	<meta property="og:description" content="Cronometro Rubik Online" />
+	<meta property="og:image"
+		content="http://www.cubiktimer.com/resources/images/portada.png" />
 	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
 		type="text/css" />
 	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
@@ -21,6 +30,9 @@
 	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
 	<link href="resources/css/formValidation.min.css" rel="stylesheet"
 		type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
+		rel="shortcut icon" type="image/x-icon" />
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<style>
 #formulario {
