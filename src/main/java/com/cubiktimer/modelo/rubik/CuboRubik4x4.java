@@ -44,7 +44,7 @@ public class CuboRubik4x4 extends CuboRubikNxN implements Serializable {
 			log.trace("verificando si es giro de 2x2 o 3x3");
 			return super.girar(giro);
 		}
-		log.trace("es un giro válido de 4x4");
+		log.trace("es un giro válido de 4x4: " + giro);
 		return true;
 	}
 

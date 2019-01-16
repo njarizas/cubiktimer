@@ -16,6 +16,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 
 	@Override
 	public int create(TiempoRubikDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO tiempos_rubik"
@@ -49,15 +50,18 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(TiempoRubikDTO dto) {
+		log.trace("inicio update");
 		int retorno = 0;
 		conectar();
 		String sql = "UPDATE tiempos_rubik" + " SET id_sesion=?,id_tipo_cubo=?,mezcla=?,tiempo_inspeccion_segundos=?,"
@@ -83,11 +87,13 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 			ps.executeUpdate();
 			retorno = dto.getIdTiempo();
 			desconectar();
+			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 

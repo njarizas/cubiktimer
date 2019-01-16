@@ -29,6 +29,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 * @return
 	 */
 	public List<CuentaPuzzle> obtenerListaConteoPuzzles(Integer idUsuario) {
+		log.trace("inicio obtenerListaConteoPuzzles");
 		conectar();
 		List<CuentaPuzzle> lista = new ArrayList<>();
 		String sql = "SELECT sr.id_usuario,t.nombre_tipo nombre_puzzle, count(*) conteo_puzzle"
@@ -54,6 +55,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin obtenerListaConteoPuzzles");
 		return lista;
 	}
 
@@ -64,6 +66,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 * @return
 	 */
 	public List<RecordPBSingle> obtenerListaPBSingle(Integer idUsuario) {
+		log.trace("inicio obtenerListaPBSingle");
 		conectar();
 		List<RecordPBSingle> lista = new ArrayList<>();
 		String sql = "SELECT id_usuario, t2.nombre_tipo, min(tiempo_con_penalizacion) pb_single"
@@ -89,6 +92,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin obtenerListaPBSingle");
 		return lista;
 	}
 
@@ -101,6 +105,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 * @return
 	 */
 	public List<Promedio> obtenerListaPromediosCategoria(Integer idUsuario, Integer idTipoCubo) {
+		log.trace("inicio obtenerListaPromediosCategoria");
 		conectar();
 		List<Promedio> lista = new ArrayList<>();
 		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, t.nombre_tipo tipo_cubo,"
@@ -128,6 +133,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin obtenerListaPromediosCategoria");
 		return lista;
 	}
 
@@ -140,6 +146,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 * @return
 	 */
 	public List<Promedio> obtenerListaPromediosCategoriaComparacion(Integer idUsuario, Integer idTipoCubo) {
+		log.trace("inicio obtenerListaPromediosCategoriaComparacion");
 		conectar();
 		List<Promedio> lista = new ArrayList<>();
 		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, "
@@ -169,6 +176,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin obtenerListaPromediosCategoriaComparacion");
 		return lista;
 	}
 
@@ -180,6 +188,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 * @return
 	 */
 	public List<Integer> obtenerIdCategoriasRegistradas(Integer idUsuario) {
+		log.trace("inicio obtenerIdCategoriasRegistradas");
 		conectar();
 		List<Integer> lista = new ArrayList<>();
 		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos_rubik tr" + " INNER JOIN sesiones_rubik sr"
@@ -199,10 +208,12 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin obtenerIdCategoriasRegistradas");
 		return lista;
 	}
 
 	public List<ListaPromedioCategoria> obtenerListaPromediosTotales(Integer idUsuario) {
+		log.trace("inicio obtenerListaPromediosTotales");
 		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<>();
 		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
 		for (Integer idTipoCubo : listaCategorias) {
@@ -211,10 +222,12 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			listaPromedioCategoria.setLista(listaPromedio);
 			listaPromediosTotales.add(listaPromedioCategoria);
 		}
+		log.trace("fin obtenerListaPromediosTotales");
 		return listaPromediosTotales;
 	}
 
 	public List<ListaPromedioCategoria> obtenerListaPromediosComparacion(Integer idUsuario, Integer idAmigo) {
+		log.trace("inicio obtenerListaPromediosComparacion");
 		List<ListaPromedioCategoria> listaPromediosTotales = new ArrayList<>();
 		List<Integer> listaCategorias = obtenerIdCategoriasRegistradas(idUsuario);
 		List<Integer> listaCategoriasAmigo = obtenerIdCategoriasRegistradas(idAmigo);
@@ -230,10 +243,12 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			listaPromedioCategoria.setLista(listaPromedio);
 			listaPromediosTotales.add(listaPromedioCategoria);
 		}
+		log.trace("fin obtenerListaPromediosComparacion");
 		return listaPromediosTotales;
 	}
 
 	public Integer consultarIdPuzzleMasPracticado(Integer idUsuario) {
+		log.trace("inicio consultarIdPuzzleMasPracticado");
 		Integer idTipoCubo = null;
 		conectar();
 		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos_rubik tr"
@@ -254,6 +269,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("fin consultarIdPuzzleMasPracticado");
 		return idTipoCubo;
 	}
 

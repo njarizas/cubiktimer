@@ -126,7 +126,7 @@ public class RubikManagedBean implements Serializable {
 		this.mezcla = generarMezcla();
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
-		log.debug("secuencia Mezcla: " + secuenciaMezcla);
+		log.debug("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
 
@@ -145,7 +145,7 @@ public class RubikManagedBean implements Serializable {
 		mezcla = this.secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
-		log.debug("secuencia Mezcla: " + secuenciaMezcla);
+		log.debug("secuencia mezcla personalizada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
 
@@ -182,6 +182,9 @@ public class RubikManagedBean implements Serializable {
 						.setText(sesionManagedBean.getRecursos().getString("SeHanGuardadoLosTiemposActuales"));
 				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
+				log.info("El usuario: " + sesionRubikActual.getSesionRubikDTO().getIdUsuario() + " guardó "
+						+ sesionRubikActual.getTiempos().size() + " tiempos con id_sesion: "
+						+ sesionRubikActual.getSesionRubikDTO().getIdSesion());
 			} else {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()

@@ -21,6 +21,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 
 	@Override
 	public int create(ConfiguracionDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -48,15 +49,18 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage() + ": " + e.getStackTrace());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioYEstado(Integer idUsuario, Integer estado) {
+		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
 		List<ConfiguracionDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
@@ -90,10 +94,12 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
 		}
+		log.trace("fin consultarConfiguracionPorIdUsuarioYEstado");
 		return lista;
 	}
 
 	public int update(ConfiguracionDTO dto) {
+		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -115,11 +121,13 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			ps.executeUpdate();
 			retorno = dto.getIdConfiguracion();
 			desconectar();
+			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage() + ": " + e.getStackTrace());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 
@@ -137,6 +145,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioIdTipoYEstado(Integer idUsuario, Integer idTipo,
 			Integer estado) {
+		log.trace("inicio consultarConfiguracionPorIdUsuarioIdTipoYEstado");
 		List<ConfiguracionDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND id_tipo = ? AND estado = ?";
@@ -177,6 +186,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
 		}
+		log.trace("fin consultarConfiguracionPorIdUsuarioIdTipoYEstado");
 		return lista;
 	}
 

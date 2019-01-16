@@ -19,6 +19,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 
 	@Override
 	public int create(AmigoDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO amigos VALUES (?,?,?,?)";
@@ -37,15 +38,18 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(AmigoDTO dto) {
+		log.trace("inicio update");
 		int retorno = 0;
 		conectar();
 		String sql = "UPDATE amigos SET id_usuario = ?, id_amigo = ?, estado = ? WHERE id_amistad = ?";
@@ -57,11 +61,13 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
 			desconectar();
+			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 
@@ -83,6 +89,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 	}
 
 	public void delete(AmigoDTO dto) {
+		log.trace("inicio delete");
 		if (dto.getIdAmistad() == null && sonAmigos(dto.getIdUsuario(), dto.getIdAmigo())) {
 			dto.setIdAmistad(
 					consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0).getIdAmistad());
@@ -97,9 +104,11 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin delete");
 	}
 
 	public List<AmigoDTO> consultarAmigosPorIdUsuarioYIdAmigo(Integer idUsuario, Integer idAmigo) {
+		log.trace("inicio consultarAmigosPorIdUsuarioYIdAmigo");
 		List<AmigoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM amigos a WHERE a.id_usuario = ? AND a.id_amigo = ?";
@@ -112,10 +121,12 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		} finally {
 			desconectar();
 		}
+		log.trace("fin consultarAmigosPorIdUsuarioYIdAmigo");
 		return lista;
 	}
 
 	public List<AmigoDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
 		List<AmigoDTO> lista = new ArrayList<>();
 		try {
 			ResultSet rs = ps.executeQuery();
@@ -134,6 +145,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 		}
+		log.trace("fin findList");
 		return lista;
 	}
 

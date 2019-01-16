@@ -19,6 +19,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 
 	@Override
 	public int create(TipoDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
@@ -38,15 +39,18 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public List<TipoDTO> listarTiposDeCubo() {
+		log.trace("inicio listarTiposDeCubo");
 		List<TipoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=1";
@@ -70,6 +74,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("fin listarTiposDeCubo");
 		return lista;
 	}
 

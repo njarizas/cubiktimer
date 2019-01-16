@@ -273,7 +273,7 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 			log.trace("giro no valido: " + giro);
 			return false;
 		}
-		log.trace("es un giro válido de 2x2 o 3x3");
+		log.trace("es un giro válido de 2x2 o 3x3: " + giro);
 		return true;
 	}
 

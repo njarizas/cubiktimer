@@ -19,6 +19,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 
 	@Override
 	public int create(PermisoDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO permisos VALUES (?,?,?,?,?,?,?,?)";
@@ -41,15 +42,18 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(PermisoDTO dto) {
+		log.trace("inicio update");
 		int retorno = 0;
 		conectar();
 		String sql = "UPDATE usuarios_roles SET url = ?, id_padre = ?, nombre_permiso = ?, descripcion_permiso = ?,"
@@ -66,11 +70,13 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			ps.executeUpdate();
 			retorno = dto.getIdPermiso();
 			desconectar();
+			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 
@@ -83,6 +89,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	}
 
 	public List<PermisoDTO> consultarPermisosPorIdUsuario(int idUsuario) {
+		log.trace("inicio consultarPermisosPorIdUsuario");
 		List<PermisoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles r"
@@ -112,10 +119,12 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("fin consultarPermisosPorIdUsuario");
 		return lista;
 	}
 
 	public List<PermisoDTO> consultarPermisosPorIdPadre(int idPadre) {
+		log.trace("inicio consultarPermisosPorIdPadre");
 		List<PermisoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT *" + " FROM permisos" + " WHERE id_padre=?";
@@ -143,6 +152,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("fin consultarPermisosPorIdPadre");
 		return lista;
 	}
 
@@ -153,6 +163,7 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	 * @return
 	 */
 	public Integer contarPermisosIdPadre(Integer idPermiso) {
+		log.trace("inicio contarPermisosIdPadre");
 		int retorno = 0;
 		conectar();
 		String sql = "SELECT count(*) conteo" + " FROM permisos" + " WHERE id_padre=?";
@@ -167,11 +178,13 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin contarPermisosIdPadre");
 			return retorno;
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("fin contarPermisosIdPadre");
 		return 0;
 	}
 }

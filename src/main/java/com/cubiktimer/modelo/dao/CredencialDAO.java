@@ -22,6 +22,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 
 	@Override
 	public int create(CredencialDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
@@ -43,15 +44,18 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {
+		log.trace("inicio consultarCredencialPorCorreo");
 		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
@@ -63,10 +67,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		} finally {
 			desconectar();
 		}
+		log.trace("fin consultarCredencialPorCorreo");
 		return lista;
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreoYEstado(String correo, Integer estado) {
+		log.trace("inicio consultarCredencialPorCorreoYEstado");
 		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND estado = ?";
@@ -79,10 +85,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		} finally {
 			desconectar();
 		}
+		log.trace("fin consultarCredencialPorCorreoYEstado");
 		return lista;
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreoClaveYEstado(String correo, String clave, Integer estado) {
+		log.trace("inicio consultarCredencialPorCorreoClaveYEstado");
 		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND clave = ? AND estado = ?";
@@ -96,10 +104,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		} finally {
 			desconectar();
 		}
+		log.trace("fin consultarCredencialPorCorreoClaveYEstado");
 		return lista;
 	}
 
 	public Date obtenerFechaUltimaCredencial(Integer idUsuario) {
+		log.trace("inicio obtenerFechaUltimaCredencial");
 		Date retorno = null;
 		conectar();
 		String sql = "SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
@@ -120,10 +130,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin obtenerFechaUltimaCredencial");
 		return retorno;
 	}
 
 	public List<CredencialDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
 		List<CredencialDTO> lista = new ArrayList<>();
 		try {
 			ResultSet rs = ps.executeQuery();
@@ -151,6 +163,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			log.warn(pe.getMessage());
 			desconectar();
 		}
+		log.trace("fin findList");
 		return lista;
 	}
 

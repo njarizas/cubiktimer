@@ -101,7 +101,7 @@
 					</h:panelGroup>
 					<li><h:commandLink id="modoOscuro"
 							styleClass="btn btn-default navbar-brand"
-							action="#{rubikManagedBean.mezclaAleatoria()}"
+							actionListener="#{configuracionManagedBean.alternarEstiloVisual()}"
 							title="#{texto.EstiloVisual}">
 							<span class="glyphicon glyphicon-adjust"></span>
 						</h:commandLink></li>

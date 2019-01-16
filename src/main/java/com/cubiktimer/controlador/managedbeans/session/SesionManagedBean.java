@@ -78,6 +78,7 @@ public class SesionManagedBean implements Serializable {
 	}
 
 	public String cerrarSesion() {
+		log.info("Cierre de sesión de usuario : " + usuarioLogueado.getIdUsuario());
 		usuarioLogueado = null;
 		rolActual = null;
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

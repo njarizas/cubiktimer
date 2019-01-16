@@ -15,6 +15,7 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 
 	@Override
 	public int create(AhorcadoDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -31,11 +32,13 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 			ps.setObject(9, 1);
 			retorno = ps.executeUpdate();
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 

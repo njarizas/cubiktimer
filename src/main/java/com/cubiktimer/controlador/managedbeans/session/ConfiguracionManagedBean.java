@@ -62,7 +62,7 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	@PostConstruct
 	public void cargarConfiguracion() {
-		log.debug("inicio cargarConfiguracion, idUsuario: "+idUsuario+".");
+		log.debug("inicio cargarConfiguracion, idUsuario: " + idUsuario + ".");
 		if (idUsuario != null) {
 			ConfiguracionDTO tiempoInspeccionParametrizado = configuracionFacade
 					.obtenerTiempoDeInspeccionPreferidoPorIdUsuario(idUsuario);
@@ -94,7 +94,11 @@ public class ConfiguracionManagedBean implements Serializable {
 			}
 			this.paginaInicial.setIdUsuario(idUsuario);
 		}
-		log.debug("fin cargarConfiguracion, idUsuario: "+idUsuario+".");
+		log.debug("fin cargarConfiguracion, idUsuario: " + idUsuario + ".");
+	}
+
+	public void alternarEstiloVisual() {
+		this.estiloVisual.setValorEntero(Math.abs(this.estiloVisual.getValorEntero() - 1));
 	}
 
 	public String guardarConfiguracion() {
@@ -113,7 +117,7 @@ public class ConfiguracionManagedBean implements Serializable {
 			listaConfiguraciones.add(this.paginaInicial);
 			listaConfiguraciones.add(this.estiloVisual);
 			configuracionFacade.guardar(listaConfiguraciones);
-			log.trace("Se guarda configuracion");
+			log.info("Se guarda configuración de usuario: " + idUsuario);
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));

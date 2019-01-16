@@ -71,6 +71,7 @@ public class IniciarSesionManagedBean implements Serializable {
 	 * @return
 	 */
 	public String iniciarSesion() {
+		log.trace("inicio iniciarSesion");
 		UsuarioDTO u = buscarUsuario(login);
 		if (u != null) { // si existe un usuario con el correo proporcionado
 			if (login.equals(u.getCorreo()) && pass.equals(u.getClave())) {// se comprueba que la clave y el correo
@@ -87,6 +88,7 @@ public class IniciarSesionManagedBean implements Serializable {
 							.setText(sesionManagedBean.getRecursos().getString("UsuarioNoTieneNingunRol"));
 					sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 					sesionManagedBean.getMensaje().setMensajePendiente(true);
+					log.trace("fin iniciarSesion");
 					return "";
 				}
 				if (u.getEstado() == 1) {
@@ -97,6 +99,7 @@ public class IniciarSesionManagedBean implements Serializable {
 					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idUsuario",
 							u.getIdUsuario());
 					configuracionManagedBean.setIdUsuario(u.getIdUsuario());
+					log.info("Inicio de sesión de usuario : " + u.getIdUsuario());
 					ConfiguracionDTO cDto = configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(u.getIdUsuario());
 					if (cDto != null) {
 						String idioma = cDto.getValorTexto();
@@ -111,8 +114,10 @@ public class IniciarSesionManagedBean implements Serializable {
 					ConfiguracionDTO cDto2 = configuracionFacade.obtenerPaginaInicialPorIdUsuario(u.getIdUsuario());
 					if (cDto2 != null) {
 						String paginaInicio = cDto2.getValorTexto();
+						log.trace("fin iniciarSesion");
 						return "/" + paginaInicio + "?faces-redirect=true";
 					}
+					log.trace("fin iniciarSesion");
 					return "/rubik?faces-redirect=true";
 				}
 				if (u.getEstado() == 2) {
@@ -122,6 +127,7 @@ public class IniciarSesionManagedBean implements Serializable {
 							.setText(sesionManagedBean.getRecursos().getString("MensajeVerificarCuenta"));
 					sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 					sesionManagedBean.getMensaje().setMensajePendiente(true);
+					log.trace("fin iniciarSesion");
 					return "";
 				}
 			} // la clave y correo no corresponden , entonces se busca en las credenciales
@@ -160,6 +166,7 @@ public class IniciarSesionManagedBean implements Serializable {
 			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
+		log.trace("fin iniciarSesion");
 		return "";
 	}
 

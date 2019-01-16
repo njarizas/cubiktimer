@@ -17,6 +17,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 
 	@Override
 	public int create(SesionRubikDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -37,15 +38,18 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 				rs.close();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(SesionRubikDTO dto) {
+		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -59,11 +63,13 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 			ps.executeUpdate();
 			retorno = dto.getIdSesion();
 			desconectar();
+			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 

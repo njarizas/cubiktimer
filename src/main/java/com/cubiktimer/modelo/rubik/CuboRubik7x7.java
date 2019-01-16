@@ -44,7 +44,7 @@ public class CuboRubik7x7 extends CuboRubik6x6 implements Serializable {
 			log.trace("verificando si es giro de 6x6");
 			return super.girar(giro);
 		}
-		log.trace("es un giro válido de 7x7");
+		log.trace("es un giro válido de 7x7: " + giro);
 		return true;
 	}
 

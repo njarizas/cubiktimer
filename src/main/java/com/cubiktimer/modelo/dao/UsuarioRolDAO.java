@@ -16,6 +16,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 
 	@Override
 	public int create(UsuarioRolDTO dto) {
+		log.trace("inicio create");
 		conectar();
 		String sql = "INSERT INTO usuarios_roles VALUES (?,?,?)";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -24,15 +25,18 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			ps.setObject(3, dto.getEstado());
 			ps.executeUpdate();
 			desconectar();
+			log.trace("fin create");
 			return 1;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(UsuarioRolDTO dto) {
+		log.trace("inicio update");
 		conectar();
 		String sql = "UPDATE usuarios_roles SET estado = ? WHERE id_usuario = ? AND id_rol = ?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -41,11 +45,13 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			ps.setObject(3, dto.getIdRol());
 			ps.executeUpdate();
 			desconectar();
+			log.trace("fin update");
 			return 1;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 
@@ -58,6 +64,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 	}
 
 	public List<UsuarioRolDTO> consultarRolesPorIdUsuario(int idUsuario) {
+		log.trace("inicio consultarRolesPorIdUsuario");
 		List<UsuarioRolDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios_roles WHERE id_usuario = ?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -66,10 +73,12 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 		}
+		log.trace("fin consultarRolesPorIdUsuario");
 		return lista;
 	}
 
 	public List<UsuarioRolDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
 		List<UsuarioRolDTO> lista = new ArrayList<>();
 		try {
 			conectar();
@@ -90,6 +99,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("inicio findList");
 		return lista;
 	}
 

@@ -18,6 +18,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 
 	@Override
 	public int create(ParametroDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO parametros VALUES (?,?)";
@@ -26,24 +27,30 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 			ps.setObject(2, dto.getValor());
 			retorno = ps.executeUpdate();
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public String obtenerValorParametro(String codigo) {
+		log.trace("inicio obtenerValorParametro");
 		List<ParametroDTO> lista = obtenerParametro(codigo);
 		if (!lista.isEmpty()) {
+			log.trace("fin obtenerValorParametro");
 			return lista.get(0).getValor();
 		}
 		log.info("No existe un parametro con código: " + codigo);
+		log.trace("fin obtenerValorParametro");
 		return "";
 	}
 
 	public List<ParametroDTO> obtenerParametro(String codigo) {
+		log.trace("inicio obtenerParametro");
 		List<ParametroDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT codigo, valor FROM parametros WHERE codigo = ?";
@@ -55,10 +62,12 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		} finally {
 			desconectar();
 		}
+		log.trace("fin obtenerParametro");
 		return lista;
 	}
 
 	public List<ParametroDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
 		List<ParametroDTO> lista = new ArrayList<>();
 		try {
 			ResultSet rs = ps.executeQuery();
@@ -77,6 +86,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
+		log.trace("fin findList");
 		return lista;
 	}
 

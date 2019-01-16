@@ -21,6 +21,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 
 	@Override
 	public int create(UsuarioDTO dto) {
+		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -57,15 +58,18 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 				ps2.executeUpdate();
 			}
 			desconectar();
+			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(UsuarioDTO dto) {
+		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
@@ -85,11 +89,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
 			desconectar();
+			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			desconectar();
 		}
+		log.trace("fin update");
 		return 0;
 	}
 
@@ -102,6 +108,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreo(String correo) {
+		log.trace("inicio consultarUsuarioPorCorreo");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios WHERE correo = ?";
@@ -110,13 +117,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuarioPorCorreo");
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuario(int idUsuario) {
+		log.trace("inicio consultarUsuarioPorIdUsuario");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
@@ -125,13 +132,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuarioPorIdUsuario");
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuarioYClave(int idUsuario, String clave) {
+		log.trace("inicio consultarUsuarioPorIdUsuarioYClave");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND clave = ?";
@@ -141,13 +148,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuarioPorIdUsuarioYClave");
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreoYEstado(String correo, Integer estado) {
+		log.trace("inicio consultarUsuarioPorCorreoYEstado");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios WHERE correo = ? AND estado = ?";
@@ -157,13 +164,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuarioPorCorreoYEstado");
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarUsuarios() {
+		log.trace("inicio consultarUsuarios");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		try {
 			conectar();
@@ -172,13 +179,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuarios");
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarAmigosPorIdUsuario(Integer idUsuario) {
+		log.trace("inicio consultarAmigosPorIdUsuario");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT u.* FROM amigos a INNER JOIN usuarios u ON a.id_amigo=u.id_usuario"
@@ -188,9 +195,8 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarAmigosPorIdUsuario");
 		return lista;
 	}
 
@@ -202,6 +208,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	 * @return
 	 */
 	public List<UsuarioDTO> consultarUsuariosNoAmigos(Integer idUsuario) {
+		log.trace("inicio consultarUsuariosNoAmigos");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios"
@@ -214,9 +221,8 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuariosNoAmigos");
 		return lista;
 	}
 
@@ -228,6 +234,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	 * @return
 	 */
 	public List<UsuarioDTO> consultarSolicitudesDeAmistad(Integer idUsuario) {
+		log.trace("inicio consultarSolicitudesDeAmistad");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios"
@@ -239,13 +246,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarSolicitudesDeAmistad");
 		return lista;
 	}
 
 	public List<UsuarioDTO> consultarUsuariosAmigos(Integer idUsuario) {
+		log.trace("inicio consultarUsuariosAmigos");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM usuarios"
@@ -257,13 +264,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} finally {
-			desconectar();
-		}
+		} 
+		log.trace("fin consultarUsuariosAmigos");
 		return lista;
 	}
 
 	public List<UsuarioDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		try {
 			ResultSet rs = ps.executeQuery();
@@ -294,6 +301,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			log.warn(pe.getMessage());
 			desconectar();
 		}
+		log.trace("fin findList");
 		return lista;
 	}
 
