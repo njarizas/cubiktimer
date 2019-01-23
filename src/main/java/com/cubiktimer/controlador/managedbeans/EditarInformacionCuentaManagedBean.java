@@ -23,7 +23,7 @@ import com.cubiktimer.util.EncryptService;
  *
  * @author Nelson
  */
-@ManagedBean(name = "editarInformacionCuentaManagedBean")
+@ManagedBean
 @ViewScoped
 public class EditarInformacionCuentaManagedBean implements Serializable {
 

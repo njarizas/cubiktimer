@@ -84,15 +84,19 @@ public class CaraRubik implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		CaraRubik other = (CaraRubik) obj;
-		if (n != other.n)
+		if (n != other.n) {
 			return false;
+		}
 		for (int i = 0; i < n; i++) {
 			for (int j = i; j < n; j++) {
 				if (!cara[i][j].equals(other.cara[i][j])) {

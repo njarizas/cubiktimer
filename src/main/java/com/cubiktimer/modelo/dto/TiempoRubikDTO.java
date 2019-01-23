@@ -61,12 +61,10 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 					return 0;
 				}
 			}
-		} else { // uno es DNF y el otro no
-			if (this.getDnf()) {
-				return 1;
-			} else {
-				return -1;
-			}
+		} else if (this.getDnf()) {
+			return 1;
+		} else {
+			return -1;
 		}
 	}
 

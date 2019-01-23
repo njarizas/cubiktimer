@@ -91,7 +91,7 @@ public class AhorcadoManagedBean implements Serializable {
 	public void comprobarLetra() {
 		if (!juegoEstaFinalizado) {
 			boolean encontroLetra = false;
-			if (letra.length() > 0) {
+			if (!letra.isEmpty()) {
 				String l = String.valueOf(letra.toUpperCase().charAt(0));
 				if (letrasUsadas.indexOf(l.toUpperCase()) < 0) {
 					letrasUsadas.add(l.toUpperCase());
@@ -171,20 +171,15 @@ public class AhorcadoManagedBean implements Serializable {
 		int lineas = 0;
 		int linea;
 		String archivo = realPath + "resources/txt/palabras_ahorcado.txt";
-		FileReader f = new FileReader(archivo);
-		BufferedReader b = new BufferedReader(f);
-		try {
+		try (FileReader f = new FileReader(archivo);
+				BufferedReader b = new BufferedReader(f)) {
 			while ((cadena = b.readLine()) != null) {
 				lineas++;
 			}
-		} finally {
-			b.close();
-			f.close();
 		}
 		linea = random.nextInt(lineas);
-		FileReader a = new FileReader(archivo);
-		BufferedReader c = new BufferedReader(a);
-		try {
+		try (FileReader a = new FileReader(archivo);
+				BufferedReader c = new BufferedReader(a)) {
 			lineas = 0;
 			while ((cadena = c.readLine()) != null) {
 				if (linea == lineas) {
@@ -192,9 +187,6 @@ public class AhorcadoManagedBean implements Serializable {
 				}
 				lineas++;
 			}
-		} finally {
-			c.close();
-			a.close();
 		}
 		log.info("palabra seleccionada: " + this.palabra);
 
