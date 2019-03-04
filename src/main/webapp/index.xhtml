@@ -25,16 +25,16 @@
 	padding: 30px;
 }
 </style>
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+	<link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"
 		type="text/css" />
-	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
+	<link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
 		type="text/css" />
-	<link href="resources/css/sweetalert.css" rel="stylesheet"
+	<link href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css" rel="stylesheet"
 		type="text/css" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
 		rel="stylesheet" />
-	<script src="resources/js/sweetalert.min.js"></script>
+	<script src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"></script>
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
 		rel="shortcut icon" type="image/x-icon" />
@@ -93,7 +93,7 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 	</c:if>
-	<script src="resources/js/jquery.min.js"></script>
-	<script src="resources/js/bootstrap.js"></script>
+	<script src="#{sesionManagedBean.contextPath}/resources/js/jquery.min.js"></script>
+	<script src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
 </h:body>
 </html>

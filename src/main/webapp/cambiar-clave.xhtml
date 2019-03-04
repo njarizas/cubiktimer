@@ -18,17 +18,17 @@
 	<meta property="og:description" content="Cronometro Rubik Online" />
 	<meta property="og:image"
 		content="http://www.cubiktimer.com/resources/images/portada.png" />
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+	<link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"
 		type="text/css" />
-	<link href="resources/css/font-awesome.min.css" rel="stylesheet"
+	<link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
 		type="text/css" />
-	<link href="resources/css/sweetalert.css" rel="stylesheet"
+	<link href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css" rel="stylesheet"
 		type="text/css" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
 		rel="stylesheet" />
-	<script src="resources/js/sweetalert.min.js" type="text/javascript"></script>
-	<link href="resources/css/formValidation.min.css" rel="stylesheet"
+	<script src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js" type="text/javascript"></script>
+	<link href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css" rel="stylesheet"
 		type="text/css" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
@@ -125,11 +125,11 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 		</c:if>
-		<script src="resources/js/formValidation/bootstrap.min.js"
+		<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.min.js"
 			type="text/javascript"></script>
-		<script src="resources/js/formValidation.min.js"
+		<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js"
 			type="text/javascript"></script>
-		<script src="resources/js/formValidation/bootstrap.js"
+		<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.js"
 			type="text/javascript"></script>
 		<script type="text/javascript">
 			$(document)
