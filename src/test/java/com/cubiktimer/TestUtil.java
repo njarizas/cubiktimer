@@ -7,10 +7,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cubiktimer.util.Util;
@@ -29,22 +25,6 @@ public class TestUtil extends TestCase {
 		} catch (NoSuchAlgorithmException e) {
 			log.warn("No se pudo generar variable aleatoria", e);
 		}
-	}
-
-	@BeforeClass
-	public static void setUpClass() {
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-	}
-
-	@Before
-	public void setUp() {
-	}
-
-	@After
-	public void tearDown() {
 	}
 
 	@Test

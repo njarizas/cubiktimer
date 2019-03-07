@@ -1,9 +1,5 @@
 package com.cubiktimer;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.cubiktimer.modelo.rubik.CaraRubik;
@@ -14,23 +10,6 @@ import junit.framework.TestCase;
 
 public class TestCaraRubik extends TestCase {
 
-	@BeforeClass
-	public static void setUpClass() {
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-	}
-
-	@Before
-	public void setUp() {
-	}
-
-	@After
-	public void tearDown() {
-	}
-
-	// TODO implementar metodo
 	@Test
 	public void testGirarCara() {
 		CaraRubik cara = new CaraRubik(10, Constantes.COLOR_BLANCO);
