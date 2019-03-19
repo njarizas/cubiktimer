@@ -16,15 +16,15 @@ public class TestCuboRubikNxN {
 			Puzzle cubo = RubikFactory.crearCubo(i);
 			String secuenciaMezcla = ScrambleGenerator.generarSecuenciaMezcla(cubo.getParametro());
 			String[] secuencia = secuenciaMezcla.split(" ");
-			
-			assertEquals("mezcla de cubo "+cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
+
+			assertEquals("mezcla de cubo " + cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
 		}
 		for (int i = 24; i <= 27; i++) {
 			Puzzle cubo = RubikFactory.crearCubo(i);
 			String secuenciaMezcla = ScrambleGenerator.generarSecuenciaMezcla(cubo.getParametro());
 			String[] secuencia = secuenciaMezcla.split(" ");
-			
-			assertEquals("mezcla de cubo "+cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
+
+			assertEquals("mezcla de cubo " + cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
 		}
 	}
 

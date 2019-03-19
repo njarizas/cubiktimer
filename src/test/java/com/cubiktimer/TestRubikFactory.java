@@ -1,5 +1,6 @@
 package com.cubiktimer;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -35,6 +36,7 @@ public class TestRubikFactory {
 		assertTrue("creacion de Megaminx", RubikFactory.crearCubo(25) instanceof Megaminx);
 		assertTrue("creacion de Pyraminx", RubikFactory.crearCubo(26) instanceof Pyraminx);
 		assertTrue("creacion de Square 1", RubikFactory.crearCubo(27) instanceof Square1);
+		assertEquals("creacion tipo cubo no valido", RubikFactory.crearCubo(1), null);
 	}
 
 }

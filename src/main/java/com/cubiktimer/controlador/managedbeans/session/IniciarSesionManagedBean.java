@@ -74,7 +74,9 @@ public class IniciarSesionManagedBean implements Serializable {
 		log.trace("inicio iniciarSesion");
 		UsuarioDTO u = buscarUsuario(login);
 		if (u != null) { // si existe un usuario con el correo proporcionado
-			if (login.equals(u.getCorreo()) && pass.equals(u.getClave())) {// se comprueba que la clave y el correo
+			String sal = usuarioDAO.consultarSalPorUsuario(u.getCorreo());
+			String hash = EncryptService.encriptarClave(pass + sal);
+			if (login.equals(u.getCorreo()) && hash.equals(u.getClave())) {// se comprueba que la clave y el correo
 																			// correspondan
 				List<RolDTO> listaRoles = rolDAO.consultarRolesPorIdUsuario(u.getIdUsuario());
 				for (RolDTO rolDTO : listaRoles) {
@@ -131,9 +133,9 @@ public class IniciarSesionManagedBean implements Serializable {
 					return "";
 				}
 			} // la clave y correo no corresponden , entonces se busca en las credenciales
-			if (!credencialDAO.consultarCredencialPorCorreoClaveYEstado(login, pass, 1).isEmpty()) {// existe
-				List<CredencialDTO> listaCredenciales = credencialDAO.consultarCredencialPorCorreoClaveYEstado(login,
-						pass, 1);
+			List<CredencialDTO> listaCredenciales = credencialDAO.consultarCredencialPorCorreoClaveYEstado(login, hash,
+					1);
+			if (!listaCredenciales.isEmpty()) {// existe
 				Date fechaMod = listaCredenciales.get(0).getFechaFin();
 				Util util = Util.getInstance();
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
@@ -196,7 +198,7 @@ public class IniciarSesionManagedBean implements Serializable {
 	}
 
 	public void setPass(String pass) {
-		this.pass = EncryptService.encriptarClave(pass);
+		this.pass = pass;
 	}
 
 	public SesionManagedBean getSesionManagedBean() {

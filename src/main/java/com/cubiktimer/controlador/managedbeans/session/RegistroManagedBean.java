@@ -18,6 +18,7 @@ import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.EmailSenderInterface;
 import com.cubiktimer.util.EmailSenderService;
 import com.cubiktimer.util.EncryptService;
+import com.cubiktimer.util.Util;
 
 @ManagedBean
 @ViewScoped
@@ -46,6 +47,9 @@ public class RegistroManagedBean implements Serializable {
 
 	public String registrarUsuario() {
 		if (validarusuario()) {
+			String sal = Util.generarSal();
+			usuario.setClave(EncryptService.encriptarClave(clave + sal));
+			usuario.setSal(sal);
 			usuario.setFechaCreacion(new Date());
 			usuario.setFechaModificacion(new Date());
 			if (persistirUsuario()) {
@@ -74,9 +78,7 @@ public class RegistroManagedBean implements Serializable {
 	 *         <code>false</code>si los datos no son válidos
 	 */
 	public boolean validarusuario() {
-		if (clave.equals(confirmarClave)) {
-			usuario.setClave(EncryptService.encriptarClave(clave));
-		} else {
+		if (!clave.equals(confirmarClave)) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LasClavesNoCoinciden"));
 			sesionManagedBean.getMensaje().setType(Constantes.ERROR);
@@ -126,10 +128,9 @@ public class RegistroManagedBean implements Serializable {
 				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				return false;
-			} else {
-				usuario.setIdUsuario(usuarioDAO.create(usuario));
-				return true;
 			}
+			usuario.setIdUsuario(usuarioDAO.create(usuario));
+			return true;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));

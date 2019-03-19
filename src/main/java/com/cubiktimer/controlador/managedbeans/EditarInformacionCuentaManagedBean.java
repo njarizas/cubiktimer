@@ -72,7 +72,12 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public String verificar() {
-		if (claveAnterior.equals(sesionManagedBean.getUsuarioLogueado().getClave())) {
+		log.debug("ingreso a verificar");
+		String sal = usuarioDAO.consultarSalPorUsuario(sesionManagedBean.getUsuarioLogueado().getCorreo());
+		log.debug("sal " + sal);
+		sesionManagedBean.getUsuarioLogueado().setSal(sal);
+		if (EncryptService.encriptarClave(claveAnterior + sal)
+				.equals(sesionManagedBean.getUsuarioLogueado().getClave())) {
 			verificado = true;
 		} else {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
@@ -89,7 +94,13 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public String cambiarClave() {
-		if (claveNueva.equals("") || confirmarClaveNueva.equals("")) {
+		log.debug("ingreso a cambiarClave");
+		String sal = usuarioDAO.consultarSalPorUsuario(sesionManagedBean.getUsuarioLogueado().getCorreo());
+		log.debug("sal " + sal);
+		String nueva = EncryptService.encriptarClave(claveNueva + sal);
+		String confirmacion = EncryptService.encriptarClave(confirmarClaveNueva + sal);
+		sesionManagedBean.getUsuarioLogueado().setSal(sal);
+		if (nueva.equals("") || sesionManagedBean.getUsuarioLogueado().getClave().equals("")) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NingunaDeLasContraseñasPuedeEstarVacia"));
@@ -97,14 +108,14 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
-		if (!claveNueva.equals(confirmarClaveNueva)) {
+		if (!nueva.equals(confirmacion)) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LasClavesNoCoinciden"));
 			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
-		if (sesionManagedBean.getUsuarioLogueado().getClave().equals(EncryptService.encriptarClave(claveNueva))) {
+		if (sesionManagedBean.getUsuarioLogueado().getClave().equals(nueva)) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("LaClaveNuevaNoPuedeSerIgualALaActual"));
@@ -113,7 +124,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 			return "";
 		}
 		insertarCredencial();
-		sesionManagedBean.getUsuarioLogueado().setClave(claveNueva);
+		sesionManagedBean.getUsuarioLogueado().setClave(nueva);
 		usuarioDAO.merge(sesionManagedBean.getUsuarioLogueado());
 		sesionManagedBean.getMensaje()
 				.setTitle(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
@@ -121,6 +132,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 				.setText(sesionManagedBean.getRecursos().getString("LaContraseñaHaSidoCambiadaExitosamente"));
 		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
+		verificado = false;
 		return "";
 	}
 
@@ -171,6 +183,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 				.setText(sesionManagedBean.getRecursos().getString("ElCorreoElectronicoHaSidoCambiadoExitosamente"));
 		sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 		sesionManagedBean.getMensaje().setMensajePendiente(true);
+		verificado = false;
 		return "";
 	}
 
@@ -205,7 +218,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public void setClaveAnterior(String claveAnterior) {
-		this.claveAnterior = EncryptService.encriptarClave(claveAnterior);
+		this.claveAnterior = claveAnterior;
 	}
 
 	public String getClaveNueva() {
@@ -213,7 +226,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public void setClaveNueva(String claveNueva) {
-		this.claveNueva = EncryptService.encriptarClave(claveNueva);
+		this.claveNueva = claveNueva;
 	}
 
 	public String getConfirmarCorreoNuevo() {
@@ -229,7 +242,7 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public void setConfirmarClaveNueva(String confirmarClaveNueva) {
-		this.confirmarClaveNueva = EncryptService.encriptarClave(confirmarClaveNueva);
+		this.confirmarClaveNueva = confirmarClaveNueva;
 	}
 
 	public String getCorreo() {

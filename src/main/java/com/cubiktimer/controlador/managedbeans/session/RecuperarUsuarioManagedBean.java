@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.log4j.Logger;
+
 import com.cubiktimer.controlador.facade.UsuarioFacade;
 import com.cubiktimer.modelo.dao.CredencialDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
@@ -29,6 +31,7 @@ import com.cubiktimer.util.Util;
 public class RecuperarUsuarioManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(RecuperarUsuarioManagedBean.class);
 
 	private String email;
 
@@ -69,7 +72,11 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 								+ sesionManagedBean.getRecursos().getString("ConTuNuevaContraseña"));
 				sesionManagedBean.getMensaje().setType(Constantes.INFO);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
-				u.setClave(EncryptService.encriptarClave(nuevaClave));
+				String sal = usuarioDAO.consultarSalPorUsuario(u.getCorreo());
+				if (sal.isEmpty()) {
+					log.warn("El correo de la credencial de acceso no tiene sal");
+				}
+				u.setClave(EncryptService.encriptarClave(nuevaClave + sal));
 				usuarioDAO.update(u);
 			}
 		}

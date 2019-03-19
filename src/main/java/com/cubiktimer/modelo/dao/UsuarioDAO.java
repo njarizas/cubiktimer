@@ -14,7 +14,7 @@ import com.cubiktimer.modelo.dto.UsuarioDTO;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
-public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable{
+public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(UsuarioDAO.class);
@@ -25,20 +25,21 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
-		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		String sql2 = "INSERT INTO usuarios_roles VALUES (?,?,?)";
 		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				PreparedStatement ps2 = conn.prepareStatement(sql2)) {
 			ps.setObject(1, null);
 			ps.setString(2, dto.getCorreo());
-			ps.setString(3, dto.getClave());
-			ps.setString(4, dto.getNombres());
-			ps.setString(5, dto.getApellidos());
-			ps.setString(6, String.valueOf(dto.getSexo()));
-			ps.setString(7, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
-			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
-			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
-			ps.setObject(10, dto.getEstado());
+			ps.setString(3, dto.getSal());
+			ps.setString(4, dto.getClave());
+			ps.setString(5, dto.getNombres());
+			ps.setString(6, dto.getApellidos());
+			ps.setString(7, String.valueOf(dto.getSexo()));
+			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
+			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
+			ps.setString(10, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
+			ps.setObject(11, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
@@ -73,19 +74,20 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		int retorno = 0;
 		Util util = Util.getInstance();
 		conectar();
-		String sql = "UPDATE usuarios SET correo = ?, clave = ?, nombres = ?, apellidos = ?, sexo = ?,"
+		String sql = "UPDATE usuarios SET correo = ?, sal=?, clave = ?, nombres = ?, apellidos = ?, sexo = ?,"
 				+ " fecha_nacimiento = ?, fecha_creacion = ?, fecha_modificacion = ?, estado = ? WHERE id_usuario = ?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, dto.getCorreo());
-			ps.setString(2, dto.getClave());
-			ps.setString(3, dto.getNombres());
-			ps.setString(4, dto.getApellidos());
-			ps.setString(5, String.valueOf(dto.getSexo()));
-			ps.setString(6, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
-			ps.setString(7, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
-			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
-			ps.setObject(9, dto.getEstado());
-			ps.setObject(10, dto.getIdUsuario());
+			ps.setString(2, dto.getSal());
+			ps.setString(3, dto.getClave());
+			ps.setString(4, dto.getNombres());
+			ps.setString(5, dto.getApellidos());
+			ps.setString(6, String.valueOf(dto.getSexo()));
+			ps.setString(7, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
+			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
+			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
+			ps.setObject(10, dto.getEstado());
+			ps.setObject(11, dto.getIdUsuario());
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
 			desconectar();
@@ -117,7 +119,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuarioPorCorreo");
 		return lista;
 	}
@@ -132,7 +134,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuarioPorIdUsuario");
 		return lista;
 	}
@@ -148,7 +150,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuarioPorIdUsuarioYClave");
 		return lista;
 	}
@@ -164,7 +166,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuarioPorCorreoYEstado");
 		return lista;
 	}
@@ -179,7 +181,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuarios");
 		return lista;
 	}
@@ -195,7 +197,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} 
+		}
 		log.trace("fin consultarAmigosPorIdUsuario");
 		return lista;
 	}
@@ -221,7 +223,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuariosNoAmigos");
 		return lista;
 	}
@@ -246,7 +248,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} 
+		}
 		log.trace("fin consultarSolicitudesDeAmistad");
 		return lista;
 	}
@@ -264,9 +266,29 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
-		} 
+		}
 		log.trace("fin consultarUsuariosAmigos");
 		return lista;
+	}
+
+	public String consultarSalPorUsuario(String correo) {
+		String sal;
+		log.trace("inicio consultarSalPorUsuario: " + correo);
+		log.debug(correo);
+		List<UsuarioDTO> lista = new ArrayList<>();
+		conectar();
+		String sql = "SELECT * FROM usuarios WHERE correo=?";
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, correo);
+			lista = findList(ps);
+		} catch (SQLException e) {
+			log.warn(e.getMessage());
+		}
+		log.debug("registros encontrados: " + lista.size());
+		sal = lista.isEmpty() ? "" : lista.get(0).getSal();
+		log.debug(sal);
+		log.trace("fin consultarSalPorUsuario");
+		return sal;
 	}
 
 	public List<UsuarioDTO> findList(PreparedStatement ps) {
@@ -280,6 +302,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 					UsuarioDTO u = new UsuarioDTO();
 					u.setIdUsuario(rs.getInt("id_usuario"));
 					u.setCorreo(rs.getString("correo"));
+					u.setSal(rs.getString("sal"));
 					u.setClave(rs.getString("clave"));
 					u.setNombres(rs.getString("nombres"));
 					u.setApellidos(rs.getString("apellidos"));
