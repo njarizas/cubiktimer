@@ -26,6 +26,8 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 
 	public TiempoRubikDTO() {
 		super();
+		this.dnf = false;
+		this.penalizacion = false;
 		this.estado = 1;
 	}
 

@@ -11,14 +11,19 @@ import com.cubiktimer.modelo.rubik.Puzzle;
 import com.cubiktimer.modelo.rubik.Pyraminx;
 import com.cubiktimer.modelo.rubik.Skewb;
 import com.cubiktimer.modelo.rubik.Square1;
+import com.cubiktimer.modelo.rubik.TipoCubo;
 
 public class RubikFactory {
-	
+
 	private RubikFactory() {
-		
+
 	}
-	
-	public static Puzzle crearCubo(Integer tipoCubo){
+
+	public static Puzzle crearCubo(TipoCubo tipoCubo) {
+		return crearCubo(tipoCubo.getId());
+	}
+
+	public static Puzzle crearCubo(Integer tipoCubo) {
 		switch (tipoCubo) {
 		case 5:
 			return new CuboRubik2x2(tipoCubo, "2X2X2");
