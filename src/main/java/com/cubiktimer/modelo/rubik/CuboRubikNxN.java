@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
-public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
+public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(CuboRubikNxN.class);
@@ -30,14 +30,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		back = new CaraRubik(n, Constantes.COLOR_AZUL);
 	}
 
-	@Override
+	/**
+	 * Metodo que gira la cara de atrás en sentido de las manecillas del reloj la
+	 * cantidad de veces que reciba por parámetro
+	 * 
+	 * @param cant
+	 */
 	public void b(int cant) {
 		for (int i = 0; i < cant; i++) {
 			b();
 		}
 	}
 
-	@Override
+	/**
+	 * Método que gira la cara de atrás una vez en sentido de las manecillas del
+	 * reloj
+	 */
 	public void b() {
 		back.girarCara();
 		for (int i = 0; i < n; i++) {
@@ -49,14 +57,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira la cara inferior en sentido de las manecillas del reloj la
+	 * cantidad de veces que reciba por parámetro
+	 *
+	 * @param cant
+	 */
 	public void d(int cant) {
 		for (int i = 0; i < cant; i++) {
 			d();
 		}
 	}
 
-	@Override
+	/**
+	 * Método que gira la cara inferior una vez en sentido de las manecillas del
+	 * reloj
+	 */
 	public void d() {
 		bottom.girarCara();
 		for (int i = 0; i < n; i++) {
@@ -68,14 +84,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira la cara frontal en sentido de las manecillas del reloj la
+	 * cantidad de veces que reciba por parámetro
+	 *
+	 * @param cant
+	 */
 	public void f(int cant) {
 		for (int i = 0; i < cant; i++) {
 			f();
 		}
 	}
 
-	@Override
+	/**
+	 * Método que gira la cara frontal una vez en sentido de las manecillas del
+	 * reloj
+	 */
 	public void f() {
 		front.girarCara();
 		for (int i = 0; i < n; i++) {
@@ -87,14 +111,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira la cara izquierda en sentido de las manecillas del reloj la
+	 * cantidad de veces que reciba por parámetro
+	 *
+	 * @param cant
+	 */
 	public void l(int cant) {
 		for (int i = 0; i < cant; i++) {
 			l();
 		}
 	}
 
-	@Override
+	/**
+	 * Método que gira la cara izquierda una vez en sentido de las manecillas del
+	 * reloj
+	 */
 	public void l() {
 		left.girarCara();
 		for (int i = 0; i < n; i++) {
@@ -106,14 +138,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira la cara derecha en sentido de las manecillas del reloj la
+	 * cantidad de veces que reciba por parámetro
+	 *
+	 * @param cant
+	 */
 	public void r(int cant) {
 		for (int i = 0; i < cant; i++) {
 			r();
 		}
 	}
 
-	@Override
+	/**
+	 * Método que gira la cara derecha una vez en sentido de las manecillas del
+	 * reloj
+	 */
 	public void r() {
 		right.girarCara();
 		for (int i = 0; i < n; i++) {
@@ -125,14 +165,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira la cara superior en sentido de las manecillas del reloj la
+	 * cantidad de veces que reciba por parámetro
+	 *
+	 * @param cant
+	 */
 	public void u(int cant) {
 		for (int i = 0; i < cant; i++) {
 			u();
 		}
 	}
 
-	@Override
+	/**
+	 * Método que gira la cara superior una vez en sentido de las manecillas del
+	 * reloj
+	 */
 	public void u() {
 		top.girarCara();
 		for (int i = 0; i < n; i++) {
@@ -144,14 +192,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira el cubo en sentido de las manecillas del reloj sobre el plano
+	 * de la cara izquierda la cantidad de veces recibidas por parámetro
+	 *
+	 * @param cant
+	 */
 	public void x(int cant) {
 		for (int i = 0; i < cant; i++) {
 			x();
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira el cubo una vez en sentido de las manecillas del reloj sobre
+	 * el plano de la cara izquierda
+	 */
 	public void x() {
 		left.girarCara();
 		right.girarCara();
@@ -168,14 +224,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		front = aux;
 	}
 
-	@Override
+	/**
+	 * Metodo que gira el cubo en sentido de las manecillas del reloj sobre el plano
+	 * de la cara superior la cantidad de veces recibidas por parámetro
+	 *
+	 * @param cant
+	 */
 	public void y(int cant) {
 		for (int i = 0; i < cant; i++) {
 			y();
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira el cubo una vez en sentido de las manecillas del reloj sobre
+	 * el plano de la cara superior
+	 */
 	public void y() {
 		top.girarCara();
 		bottom.girarCara();
@@ -188,14 +252,22 @@ public abstract class CuboRubikNxN extends CuboRubik implements Serializable {
 		back = aux;
 	}
 
-	@Override
+	/**
+	 * Metodo que gira el cubo en sentido de las manecillas del reloj sobre el plano
+	 * de la cara frontal la cantidad de veces recibidas por parámetro
+	 *
+	 * @param cant
+	 */
 	public void z(int cant) {
 		for (int i = 0; i < cant; i++) {
 			z();
 		}
 	}
 
-	@Override
+	/**
+	 * Metodo que gira el cubo una vez en sentido de las manecillas del reloj sobre
+	 * el plano de la cara frontal
+	 */
 	public void z() {
 		front.girarCara();
 		back.girarCara();

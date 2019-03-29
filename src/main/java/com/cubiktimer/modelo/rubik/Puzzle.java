@@ -8,8 +8,18 @@ public abstract class Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id que identifica el tipo puzzle y el modo de competición
+	 */
 	private Integer idTipoCubo;
+
+	/**
+	 * Nombre que identifica el tipo puzzle y el modo de competición
+	 */
 	private String nombre;
+	/**
+	 * Parametro que se envía a TNoodle para generar mezcla
+	 */
 	private String parametro;
 
 	public Puzzle(Integer idTipoCubo, String nombre, String parametro) {

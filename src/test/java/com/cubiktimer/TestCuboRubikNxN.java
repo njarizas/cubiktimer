@@ -11,7 +11,7 @@ import com.cubiktimer.util.ScrambleGenerator;
 public class TestCuboRubikNxN {
 
 	@Test
-	public void test() {
+	public void testMezclar() {
 		for (int casos = 0; casos <= 2; casos++) {
 			for (int i = 5; i <= 15; i++) {
 				Puzzle cubo = RubikFactory.crearCubo(i);
