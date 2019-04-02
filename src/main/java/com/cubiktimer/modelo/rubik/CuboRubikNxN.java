@@ -1,13 +1,17 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public abstract class CuboRubikNxN extends Puzzle implements Serializable {
+
+	// TODO: sobreescribir el metodo equals de tal manera que retorne true si los
+	// cubos estan con la misma mezcla sin importar que esten girados
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(CuboRubikNxN.class);
@@ -361,6 +365,12 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 		return secuenciaMezclada.toString();
 	}
 
+	@Override
+	public boolean estaResuelto() {
+		return (back.estaResuelto() && bottom.estaResuelto() && front.estaResuelto() && left.estaResuelto()
+				&& right.estaResuelto() && top.estaResuelto());
+	}
+
 	public CaraRubik getTop() {
 		return top;
 	}
@@ -436,22 +446,9 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(back, bottom, front, left, n, right, top);
-	}
-
-	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CuboRubikNxN other = (CuboRubikNxN) obj;
-		return Objects.equals(back, other.back) && Objects.equals(bottom, other.bottom)
-				&& Objects.equals(front, other.front) && Objects.equals(left, other.left) && n == other.n
-				&& Objects.equals(right, other.right) && Objects.equals(top, other.top);
+		// TODO implementar metodo
+		throw new NotImplementedException();
 	}
 
 }

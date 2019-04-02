@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class Skewb extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -265,6 +267,18 @@ public class Skewb extends Puzzle implements Serializable {
 
 	public void setBack(CaraSkewb back) {
 		this.back = back;
+	}
+
+	@Override
+	public boolean estaResuelto() {
+		// TODO implementar metodo
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO implementar metodo
+		throw new NotImplementedException();
 	}
 
 }

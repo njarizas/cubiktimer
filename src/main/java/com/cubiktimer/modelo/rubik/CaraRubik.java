@@ -119,4 +119,16 @@ public class CaraRubik implements Serializable {
 		return str.toString();
 	}
 
+	public boolean estaResuelto() {
+		Celda aux = cara[0][0];
+		for (Celda[] fila : cara) {
+			for (Celda celda : fila) {
+				if (!celda.equals(aux)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 }

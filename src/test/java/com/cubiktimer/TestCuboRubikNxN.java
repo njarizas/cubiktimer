@@ -1,6 +1,7 @@
 package com.cubiktimer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -21,7 +22,9 @@ public class TestCuboRubikNxN {
 
 				assertEquals("mezcla de cubo " + cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
 				cubo.mezclar(ScrambleGenerator.generarMezclaInversa(secuenciaMezcla)).trim();
-				assertEquals("cubo desarmado y rearmado " + cubo.getNombre(), cubo, cubo2);
+				cubo2.mezclar(new String[] {"x"});
+				assertTrue("Esta resuelto cubo desarmado y rearmado", cubo.estaResuelto());
+				assertTrue("Esta resuelto cubo rotado", cubo2.estaResuelto());
 			}
 		}
 	}

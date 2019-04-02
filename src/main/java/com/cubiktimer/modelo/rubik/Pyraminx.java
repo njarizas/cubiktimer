@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class Pyraminx extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,6 +38,18 @@ public class Pyraminx extends Puzzle implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean estaResuelto() {
+		// TODO implementar metodo
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO implementar metodo
+		throw new NotImplementedException();
 	}
 
 }

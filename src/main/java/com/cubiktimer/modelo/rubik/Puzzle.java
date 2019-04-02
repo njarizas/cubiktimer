@@ -1,7 +1,6 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.cubiktimer.util.ScrambleGenerator;
 
@@ -48,9 +47,14 @@ public abstract class Puzzle implements Serializable {
 	 */
 	public abstract String mezclar(String[] mezcla);
 
+	public abstract boolean estaResuelto();
+
 	public String[] generarMezcla() {
 		return ScrambleGenerator.generarMezcla(this.getParametro());
 	}
+
+	@Override
+	public abstract boolean equals(Object obj);
 
 	public Integer getIdTipoCubo() {
 		return idTipoCubo;
@@ -75,25 +79,5 @@ public abstract class Puzzle implements Serializable {
 	public void setParametro(String parametro) {
 		this.parametro = parametro;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(idTipoCubo, nombre, parametro);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Puzzle other = (Puzzle) obj;
-		return Objects.equals(idTipoCubo, other.idTipoCubo) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(parametro, other.parametro);
-	}
-	
-	
 
 }
