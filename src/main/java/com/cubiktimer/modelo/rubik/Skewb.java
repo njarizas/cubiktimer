@@ -271,8 +271,8 @@ public class Skewb extends Puzzle implements Serializable {
 
 	@Override
 	public boolean estaResuelto() {
-		// TODO implementar metodo
-		throw new NotImplementedException();
+		return (back.estaResuelto() && bottom.estaResuelto() && front.estaResuelto() && left.estaResuelto()
+				&& right.estaResuelto() && top.estaResuelto());
 	}
 	
 	@Override

@@ -31,6 +31,12 @@ public class CaraSkewb implements Serializable {
 		this.celdaSuroriente = celdaSuroriente;
 	}
 
+	public boolean estaResuelto() {
+		return (celdaNoroccidente.equals(celdaNororiente) && celdaNororiente.equals(celdaCentro)
+				&& celdaCentro.equals(celdaSuroccidente) && celdaSuroccidente.equals(celdaSuroriente)
+				&& celdaSuroriente.equals(celdaNoroccidente));
+	}
+
 	@Override
 	public String toString() {
 		return celdaNoroccidente + "," + celdaNororiente + "," + celdaCentro + "," + celdaSuroccidente + ","
