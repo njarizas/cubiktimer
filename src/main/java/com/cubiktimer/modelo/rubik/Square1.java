@@ -31,7 +31,7 @@ public class Square1 extends Puzzle implements Serializable {
 		if (giro.matches("^\\([\\-]{0,1}[0-6]{1},[\\-]{0,1}[0-6]{1}\\)$") || giro.equals("/")) {
 			return true;
 		}
-		log.debug("giro no válido: " + giro);
+		log.trace("giro no válido: " + giro);
 		return false;
 	}
 

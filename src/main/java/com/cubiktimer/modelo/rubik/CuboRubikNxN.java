@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
@@ -432,6 +433,25 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 		retorno.append(getBottom());
 		retorno.append("\n");
 		return retorno.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(back, bottom, front, left, n, right, top);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuboRubikNxN other = (CuboRubikNxN) obj;
+		return Objects.equals(back, other.back) && Objects.equals(bottom, other.bottom)
+				&& Objects.equals(front, other.front) && Objects.equals(left, other.left) && n == other.n
+				&& Objects.equals(right, other.right) && Objects.equals(top, other.top);
 	}
 
 }
