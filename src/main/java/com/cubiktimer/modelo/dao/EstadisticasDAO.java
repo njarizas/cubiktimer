@@ -33,7 +33,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 		conectar();
 		List<CuentaPuzzle> lista = new ArrayList<>();
 		String sql = "SELECT sr.id_usuario,t.nombre_tipo nombre_puzzle, count(*) conteo_puzzle"
-				+ " FROM tiempos_rubik tr" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
+				+ " FROM tiempos tr" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
 				+ " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion=sr.id_sesion" + " WHERE id_usuario=?"
 				+ " GROUP BY t.nombre_tipo";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -191,7 +191,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 		log.trace("inicio obtenerIdCategoriasRegistradas");
 		conectar();
 		List<Integer> lista = new ArrayList<>();
-		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos_rubik tr" + " INNER JOIN sesiones_rubik sr"
+		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
@@ -251,7 +251,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 		log.trace("inicio consultarIdPuzzleMasPracticado");
 		Integer idTipoCubo = null;
 		conectar();
-		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos_rubik tr"
+		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos tr"
 				+ " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion = sr.id_sesion" + " WHERE sr.id_usuario=?"
 				+ " AND tr.estado=1" + " AND sr.estado=1" + " GROUP BY (tr.id_tipo_cubo)" + " ORDER BY COUNT(*)";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {

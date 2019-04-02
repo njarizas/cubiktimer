@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.cubiktimer.util.Constantes;
 
@@ -20,12 +21,12 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	private Boolean dnf;
 	private Boolean penalizacion;
 	private String comentario;
-	private String video;
-	private String ip;
+	private Date fecha;
 	private Integer estado;
 
 	public TiempoRubikDTO() {
 		super();
+		this.fecha = new Date();
 		this.dnf = false;
 		this.penalizacion = false;
 		this.estado = 1;
@@ -218,21 +219,13 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-
-	public String getVideo() {
-		return video;
+	
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public void setVideo(String video) {
-		this.video = video;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public Integer getEstado() {

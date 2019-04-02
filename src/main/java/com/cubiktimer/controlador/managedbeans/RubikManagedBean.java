@@ -64,8 +64,6 @@ public class RubikManagedBean implements Serializable {
 	private Boolean dnf;
 	private Boolean penalizacion;
 	private String comentario;
-	private String video;
-	private String ip;
 
 	public RubikManagedBean() {
 		this.tipoDAO = new TipoDAO();
@@ -366,22 +364,6 @@ public class RubikManagedBean implements Serializable {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
-	}
-
-	public String getVideo() {
-		return video;
-	}
-
-	public void setVideo(String video) {
-		this.video = video;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
 	}
 
 	public int getTipoCubo() {
