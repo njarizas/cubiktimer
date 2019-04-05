@@ -153,12 +153,12 @@ public class TestSesionRubik extends TestCase {
 
 	@Test
 	public void testPromedio() {
-		assertEquals("00:07.61", sesionRubik.promedio());
-		assertEquals("00:07.30", sesionRubik2.promedio());
-		assertEquals("00:08.46", sesionRubik3.promedio());
-		assertEquals("00:07.83", sesionRubik4.promedio());
-		assertEquals("00:07.89", sesionRubik5.promedio());
-		assertEquals("-:--.--", sesionRubik6.promedio());
+		assertEquals("00:07.61", sesionRubik.media());
+		assertEquals("00:07.30", sesionRubik2.media());
+		assertEquals("00:08.46", sesionRubik3.media());
+		assertEquals("00:07.83", sesionRubik4.media());
+		assertEquals("00:07.89", sesionRubik5.media());
+		assertEquals("-:--.--", sesionRubik6.media());
 	}
 
 	@Test
@@ -177,6 +177,26 @@ public class TestSesionRubik extends TestCase {
 		assertEquals("DNF", sesionRubik4.ao12actual());
 		assertEquals("00:07.94", sesionRubik5.ao12actual());
 		assertEquals("-:--.--", sesionRubik6.ao12actual());
+	}
+	
+	@Test
+	public void testMejor() {
+		assertEquals("00:03.47", sesionRubik.mejor());
+		assertEquals("00:03.47", sesionRubik2.mejor());
+		assertEquals("00:03.47", sesionRubik3.mejor());
+		assertEquals("00:03.47", sesionRubik4.mejor());
+		assertEquals("00:02.50", sesionRubik5.mejor());
+		assertEquals("-:--.--", sesionRubik6.mejor());
+	}
+	
+	@Test
+	public void testPeor() {
+		assertEquals("DNF", sesionRubik.peor());
+		assertEquals("00:11.13", sesionRubik2.peor());
+		assertEquals("DNF", sesionRubik3.peor());
+		assertEquals("DNF", sesionRubik4.peor());
+		assertEquals("00:12.80", sesionRubik5.peor());
+		assertEquals("-:--.--", sesionRubik6.peor());
 	}
 
 }

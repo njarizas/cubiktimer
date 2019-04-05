@@ -15,7 +15,7 @@ public class SesionRubik implements Serializable {
 
 	private List<Tiempo> tiempos;
 	private SesionRubikDTO sesionRubikDTO;
-	
+
 	public SesionRubik(Date fecha) {
 		super();
 		this.sesionRubikDTO = new SesionRubikDTO(fecha);
@@ -34,7 +34,7 @@ public class SesionRubik implements Serializable {
 	 * @author Nelson Ariza
 	 * @return El promedio Aritmetico de los tiempos de la sesion actual
 	 */
-	public String promedio() {
+	public String media() {
 		Integer acumulado = 0;
 		Integer tiemposValidos = 0;
 		for (Tiempo tiempo : tiempos) {
@@ -54,21 +54,7 @@ public class SesionRubik implements Serializable {
 	 * @return El Average of 5 de los ultimos 5 tiempos de la sesion actual
 	 */
 	public String ao5actual() {
-		Integer acumulado = 0;
-		if (tiempos.size() < 5) {
-			return "-:--.--";
-		} else {
-			List<Tiempo> ultimosCincoTiempos = new ArrayList<>(tiempos.subList(tiempos.size() - 5, tiempos.size()));
-			Collections.sort(ultimosCincoTiempos);
-			for (int i = 1; i <= 3; i++) {
-				if (ultimosCincoTiempos.get(i).getTiempoRubikDTO().getDnf()) {
-					return "DNF";
-				}
-				Integer esteTiempo = ultimosCincoTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
-				acumulado += esteTiempo;
-			}
-			return Util.darFormatoTiempo(acumulado / 3);
-		}
+		return aoNactual(5);
 	}
 
 	/**
@@ -79,20 +65,83 @@ public class SesionRubik implements Serializable {
 	 * @return El Average of 12 de los ultimos 12 tiempos de la sesion actual
 	 */
 	public String ao12actual() {
+		return aoNactual(12);
+	}
+
+	public String mo3actual() {
+		return moNactual(3);
+	}
+
+	/**
+	 * Método que retorna el AoN (Average of N) de los ultimos N tiempos actuales,
+	 * tiene en cuenta los DNF y las penalizaciones
+	 * 
+	 * @author Nelson Ariza
+	 * @return El Average of N de los ultimos N tiempos de la sesion actual
+	 */
+	public String aoNactual(int n) {
 		Integer acumulado = 0;
-		if (tiempos.size() < 12) {
+		if (n < 3 || tiempos.size() < n) {
 			return "-:--.--";
 		} else {
-			List<Tiempo> ultimosDoceTiempos = new ArrayList<>(tiempos.subList(tiempos.size() - 12, tiempos.size()));
-			Collections.sort(ultimosDoceTiempos);
-			for (int i = 1; i <= 10; i++) {
-				if (ultimosDoceTiempos.get(i).getTiempoRubikDTO().getDnf()) {
+			List<Tiempo> ultimosNTiempos = new ArrayList<>(tiempos.subList(tiempos.size() - n, tiempos.size()));
+			Collections.sort(ultimosNTiempos);
+			for (int i = 1; i <= n - 2; i++) {
+				if (ultimosNTiempos.get(i).getTiempoRubikDTO().getDnf()) {
 					return "DNF";
 				}
-				Integer esteTiempo = ultimosDoceTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
+				Integer esteTiempo = ultimosNTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
 				acumulado += esteTiempo;
 			}
-			return Util.darFormatoTiempo(acumulado / 10);
+			return Util.darFormatoTiempo(acumulado / (n - 2));
+		}
+	}
+
+	/**
+	 * Método que retorna la MoN (Mean of N) de los ultimos N tiempos actuales,
+	 * tiene en cuenta los DNF y las penalizaciones
+	 * 
+	 * @author Nelson Ariza
+	 * @return La media aritmetica de los ultimos N tiempos de la sesion actual
+	 */
+	public String moNactual(int n) {
+		Integer acumulado = 0;
+		if (tiempos.isEmpty()) {
+			return "-:--.--";
+		} else {
+			List<Tiempo> ultimosNTiempos = new ArrayList<>(tiempos.subList(tiempos.size() - n, tiempos.size()));
+			Collections.sort(ultimosNTiempos);
+			for (int i = 0; i <= n - 1; i++) {
+				if (ultimosNTiempos.get(i).getTiempoRubikDTO().getDnf()) {
+					return "DNF";
+				}
+				Integer esteTiempo = ultimosNTiempos.get(i).getTiempoRubikDTO().getTiempoRealMilisegundos();
+				acumulado += esteTiempo;
+			}
+			return Util.darFormatoTiempo(acumulado / n);
+		}
+	}
+
+	public String mejor() {
+		if (tiempos.isEmpty()) {
+			return "-:--.--";
+		} else {
+			List<Tiempo> ultimosTiempos = new ArrayList<>(tiempos);
+			Collections.sort(ultimosTiempos);
+			return ultimosTiempos.get(0).getTiempoRubikDTO().getDnf() ? "DNF"
+					: Util.darFormatoTiempo(ultimosTiempos.get(0).getTiempoRubikDTO().getTiempoRealMilisegundos());
+		}
+	}
+
+	public String peor() {
+		if (tiempos.isEmpty()) {
+			return "-:--.--";
+		} else {
+			List<Tiempo> ultimosTiempos = new ArrayList<>(tiempos);
+			Collections.sort(ultimosTiempos);
+			return ultimosTiempos.get(tiempos.size() - 1).getTiempoRubikDTO().getDnf() ? "DNF"
+					: Util.darFormatoTiempo(
+							ultimosTiempos.get(tiempos.size() - 1).getTiempoRubikDTO().getTiempoRealMilisegundos());
 		}
 	}
 

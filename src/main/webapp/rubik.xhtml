@@ -236,11 +236,17 @@ ul.dropdown-menu strong {
 					<ui:include src="/WEB-INF/includes/square1.xhtml" />
 				</h:panelGroup>
 				<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
-					<div id="lblavgTiempo">AVG:
-						#{rubikManagedBean.sesionRubikActual.promedio()}</div>
-					<div id="lblao5Tiempo">Ao5:
+					<div id="lblMejorTiempo" style="color: green;">#{texto.Mejor}:
+						#{rubikManagedBean.sesionRubikActual.mejor()}</div>
+					<div id="lblMejorTiempo" style="color: red;">#{texto.Peor}:
+						#{rubikManagedBean.sesionRubikActual.peor()}</div>
+					<div id="lblPeorTiempo">#{texto.Media}:
+						#{rubikManagedBean.sesionRubikActual.media()}</div>
+					<div id="lblMo3Tiempo">Mo3:
+						#{rubikManagedBean.sesionRubikActual.mo3actual()}</div>
+					<div id="lblAo5Tiempo">Ao5:
 						#{rubikManagedBean.sesionRubikActual.ao5actual()}</div>
-					<div id="lblao12Tiempo">Ao12:
+					<div id="lblAo12Tiempo">Ao12:
 						#{rubikManagedBean.sesionRubikActual.ao12actual()}</div>
 				</div>
 				<span class="help-block"></span>
