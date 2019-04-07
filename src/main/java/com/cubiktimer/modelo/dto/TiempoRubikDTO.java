@@ -34,7 +34,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 
 	public TiempoRubikDTO(Integer idTipoCubo, String mezcla, Integer tiempoInspeccionSegundos,
 			Integer tiempoInspeccionUsadoMilisegundos, String tiempoInspeccionUsadoTexto, Integer tiempoMilisegundos,
-			String tiempoTexto, Boolean dnf, Boolean penalizacion) {
+			String tiempoTexto, Boolean dnf, Boolean penalizacion, String comentario) {
 		this();
 		this.idTipoCubo = idTipoCubo;
 		this.mezcla = mezcla;
@@ -45,6 +45,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 		this.tiempoTexto = tiempoTexto;
 		this.dnf = dnf;
 		this.penalizacion = penalizacion;
+		this.comentario = comentario;
 	}
 
 	@Override

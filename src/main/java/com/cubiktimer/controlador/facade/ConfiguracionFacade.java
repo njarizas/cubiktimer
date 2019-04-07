@@ -60,6 +60,20 @@ public class ConfiguracionFacade implements Serializable {
 		}
 		return lista.get(0);
 	}
+	
+	public ConfiguracionDTO obtenerTipoCuboFewestMovesPreferidoPorIdUsuario(Integer idUsuario) {
+		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 29,
+				1);
+		if (lista.isEmpty()) {
+			log.trace(
+					"El usuario con idUsuario " + idUsuario + " no tiene configurado un cubo fewest moves preferido (idTipo : 29)");
+			return null;
+		} else if (lista.size() > 1) {
+			log.trace("El usuario con idUsuario " + idUsuario
+					+ " tiene configurado mas de un cubo fewest moves preferido (idTipo : 29)");
+		}
+		return lista.get(0);
+	}
 
 	public ConfiguracionDTO obtenerIdiomaPreferidoPorIdUsuario(Integer idUsuario) {
 		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 19,

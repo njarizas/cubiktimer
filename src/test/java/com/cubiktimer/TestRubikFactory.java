@@ -29,10 +29,13 @@ public class TestRubikFactory {
 		assertTrue("creacion de 6x6", RubikFactory.crearCubo(TipoCubo.CUBO_6X6X6) instanceof CuboRubik6x6);
 		assertTrue("creacion de 7x7", RubikFactory.crearCubo(TipoCubo.CUBO_7X7X7) instanceof CuboRubik7x7);
 		assertTrue("creacion de 3x3 BLD", RubikFactory.crearCubo(TipoCubo.CUBO_3X3X3_BLD) instanceof CuboRubik3x3);
-		assertTrue("creacion de 3x3 With Feet", RubikFactory.crearCubo(TipoCubo.CUBO_3X3X3_WITH_FEET) instanceof CuboRubik3x3);
+		assertTrue("creacion de 3x3 With Feet",
+				RubikFactory.crearCubo(TipoCubo.CUBO_3X3X3_WITH_FEET) instanceof CuboRubik3x3);
 		assertTrue("creacion de 3x3 OH", RubikFactory.crearCubo(TipoCubo.CUBO_3X3X3_OH) instanceof CuboRubik3x3);
 		assertTrue("creacion de 4x4 BLD", RubikFactory.crearCubo(TipoCubo.CUBO_4X4X4_BLD) instanceof CuboRubik4x4);
 		assertTrue("creacion de 5x5 BLD", RubikFactory.crearCubo(TipoCubo.CUBO_5X5X5_BLD) instanceof CuboRubik5x5);
+		assertTrue("creacion de 3x3 Fewest Moves",
+				RubikFactory.crearCubo(TipoCubo.CUBO_3X3X3_FEWEST_MOVES) instanceof CuboRubik3x3);
 		assertTrue("creacion de Skewb", RubikFactory.crearCubo(TipoCubo.SKEWB) instanceof Skewb);
 		assertTrue("creacion de Megaminx", RubikFactory.crearCubo(TipoCubo.MEGAMINX) instanceof Megaminx);
 		assertTrue("creacion de Pyraminx", RubikFactory.crearCubo(TipoCubo.PYRAMINX) instanceof Pyraminx);

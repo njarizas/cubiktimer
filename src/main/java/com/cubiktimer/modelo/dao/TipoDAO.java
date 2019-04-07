@@ -49,12 +49,33 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		return 0;
 	}
 
-	public List<TipoDTO> listarTiposDeCubo() {
+	public List<TipoDTO> listarTiposDeCuboPorEstado(Integer estado) {
 		log.trace("inicio listarTiposDeCubo");
 		List<TipoDTO> lista = new ArrayList<>();
 		conectar();
-		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=1";
+		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=?";
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, estado);
+			lista = findList(ps);
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+		}
+		log.trace("fin listarTiposDeCubo");
+		return lista;
+	}
+
+	public List<TipoDTO> listarTiposDeCubo() {
+		return listarTiposDeCuboPorEstado(1);
+	}
+
+	public List<TipoDTO> listarTiposDeCuboFewest() {
+		return listarTiposDeCuboPorEstado(101);
+	}
+
+	public List<TipoDTO> findList(PreparedStatement ps) {
+		log.trace("inicio findList");
+		List<TipoDTO> lista = new ArrayList<>();
+		try {
 			ResultSet rs = ps.executeQuery();
 			try {
 				while (rs.next()) {
@@ -74,7 +95,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			log.warn(sqle.getMessage());
 			desconectar();
 		}
-		log.trace("fin listarTiposDeCubo");
+		log.trace("fin findList");
 		return lista;
 	}
 

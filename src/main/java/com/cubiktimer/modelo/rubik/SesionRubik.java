@@ -14,12 +14,14 @@ public class SesionRubik implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Tiempo> tiempos;
+	private List<SolucionFewestMoves> soluciones;
 	private SesionRubikDTO sesionRubikDTO;
 
 	public SesionRubik(Date fecha) {
 		super();
 		this.sesionRubikDTO = new SesionRubikDTO(fecha);
 		tiempos = new ArrayList<>();
+		soluciones = new ArrayList<>();
 	}
 
 	public SesionRubik(Date fecha, Integer idUsuario) {
@@ -106,7 +108,7 @@ public class SesionRubik implements Serializable {
 	 */
 	public String moNactual(int n) {
 		Integer acumulado = 0;
-		if (tiempos.isEmpty()) {
+		if (tiempos.size() < n) {
 			return "-:--.--";
 		} else {
 			List<Tiempo> ultimosNTiempos = new ArrayList<>(tiempos.subList(tiempos.size() - n, tiempos.size()));
@@ -144,6 +146,62 @@ public class SesionRubik implements Serializable {
 							ultimosTiempos.get(tiempos.size() - 1).getTiempoRubikDTO().getTiempoRealMilisegundos());
 		}
 	}
+	
+	public String mediaFewest() {
+		Integer acumulado = 0;
+		Integer solucionesValidas = 0;
+		for (SolucionFewestMoves solucion : soluciones) {
+			if (!solucion.getFewestMoveDTO().getDnf()) {
+				acumulado += solucion.getFewestMoveDTO().getLongitudSolucion();
+				solucionesValidas++;
+			}
+		}
+		return ((solucionesValidas != 0) ? Util.getDf().format(acumulado / (double)solucionesValidas) : "--.--");
+	}
+	
+	public String mo3FewestActual() {
+		return moNFewestActual(3);
+	}
+	
+	public String moNFewestActual(int n) {
+		Integer acumulado = 0;
+		if (soluciones.size() < n) {
+			return "--.--";
+		} else {
+			List<SolucionFewestMoves> ultimasNSoluciones = new ArrayList<>(soluciones.subList(soluciones.size() - n, soluciones.size()));
+			Collections.sort(ultimasNSoluciones);
+			for (int i = 0; i <= n - 1; i++) {
+				if (ultimasNSoluciones.get(i).getFewestMoveDTO().getDnf()) {
+					return "DNF";
+				}
+				Integer estaSolucion = ultimasNSoluciones.get(i).getFewestMoveDTO().getLongitudSolucion();
+				acumulado += estaSolucion;
+			}
+			return Util.getDf().format(acumulado / n);
+		}
+	}
+	
+	public String mejorFewest() {
+		if (soluciones.isEmpty()) {
+			return "--";
+		} else {
+			List<SolucionFewestMoves> ultimasSoluciones = new ArrayList<>(soluciones);
+			Collections.sort(ultimasSoluciones);
+			return ultimasSoluciones.get(0).getFewestMoveDTO().getDnf() ? "DNF"
+					: ultimasSoluciones.get(0).getFewestMoveDTO().getLongitudSolucion().toString();
+		}
+	}
+
+	public String peorFewest() {
+		if (soluciones.isEmpty()) {
+			return "--";
+		} else {
+			List<SolucionFewestMoves> ultimasSoluciones = new ArrayList<>(soluciones);
+			Collections.sort(ultimasSoluciones);
+			return ultimasSoluciones.get(soluciones.size() - 1).getFewestMoveDTO().getDnf() ? "DNF"
+					: ultimasSoluciones.get(soluciones.size() - 1).getFewestMoveDTO().getLongitudSolucion().toString();
+		}
+	}
 
 	public List<Tiempo> getTiempos() {
 		return tiempos;
@@ -151,6 +209,14 @@ public class SesionRubik implements Serializable {
 
 	public void setTiempos(List<Tiempo> tiempos) {
 		this.tiempos = tiempos;
+	}
+
+	public List<SolucionFewestMoves> getSoluciones() {
+		return soluciones;
+	}
+
+	public void setSoluciones(List<SolucionFewestMoves> soluciones) {
+		this.soluciones = soluciones;
 	}
 
 	public SesionRubikDTO getSesionRubikDTO() {

@@ -47,6 +47,8 @@ public class RubikFactory {
 			return new CuboRubik4x4(tipoCubo, "4X4X4 BLD");
 		case 15:
 			return new CuboRubik5x5(tipoCubo, "5X5X5 BLD");
+		case 17:
+			return new CuboRubik3x3(tipoCubo, "3X3X3 Fewest Moves");
 		case 24:
 			return new Skewb(tipoCubo, "Skewb");
 		case 25:
