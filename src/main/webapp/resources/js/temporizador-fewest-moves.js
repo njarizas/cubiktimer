@@ -20,7 +20,7 @@ $(document).ready(function () {
 	var inicio = 0;
 	
 	var transcurrido = 0; 
-	var limite = 305000;
+	var limite = 3600000;
 	var restante =0;
 	var actual = 0;
 	

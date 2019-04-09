@@ -32,15 +32,15 @@ ul.dropdown-menu strong {
 					class="navbar #{configuracionManagedBean.estiloVisual.valorEntero==1?'navbar-inverse':'navbar-default'} menu"
 					style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header col-xs-12">
-				<div class="navbar-brand" style="padding: 9px !important;">
+					<div class="navbar-brand" style="padding: 9px !important;">
 						<h:selectOneMenu styleClass="form-control input-sm"
 							id="seleccionPuzzle" style="display:inline; max-width: 100px;"
 							value="#{rubikManagedBean.tipoCuboFewest}" onchange="submit()"
 							valueChangeListener="#{rubikManagedBean.cambioCuboFewest}">
 							<!-- 						<f:selectItem itemValue="5" itemLabel="2X2X2"></f:selectItem> -->
 							<!-- 						<f:selectItem itemValue="6" itemLabel="3X3X3"></f:selectItem> -->
-							<f:selectItems value="#{rubikManagedBean.listarCubosFewest()}" var="l"
-								id="puzzle_#{l.idTipo}" itemValue="#{l.idTipo}"
+							<f:selectItems value="#{rubikManagedBean.listarCubosFewest()}"
+								var="l" id="puzzle_#{l.idTipo}" itemValue="#{l.idTipo}"
 								itemLabel="#{l.nombreTipo}"></f:selectItems>
 						</h:selectOneMenu>
 					</div>
@@ -114,7 +114,8 @@ ul.dropdown-menu strong {
 							</div>
 							<h:inputTextarea class="form-control" id="solucion"
 								style="resize: none;"
-								pt:placeholder="Ingrese aquí la mezcla de solución" value="#{rubikManagedBean.solucion}"></h:inputTextarea>
+								pt:placeholder="Ingrese aquí la mezcla de solución"
+								value="#{rubikManagedBean.solucion}"></h:inputTextarea>
 							<div class="btn btn-primary pull-right" id="lbl-comenzar"
 								style="margin-top: 5px;">Comenzar</div>
 						</div>
@@ -135,31 +136,31 @@ ul.dropdown-menu strong {
 										data-sortable="true" data-field="secuencia"><strong>#{texto.Secuencia}:</strong></th>
 									<th data-halign="right" data-align="center"
 										data-sortable="true" data-field="solucion"><strong>#{texto.Solucion}:</strong></th>
-<!-- 									<th data-halign="right" data-align="center" -->
-<!-- 										data-sortable="true" data-field="longitudSolucion"><strong>#{texto.LongitudSolucion}:</strong></th> -->
-<!-- 									<th data-halign="right" data-align="center" -->
-<!-- 										data-sortable="true" data-field="solucionValida"><strong>#{texto.SolucionValida}:</strong></th> -->
-<!-- 									<th data-halign="right" data-align="center" -->
-<!-- 										data-sortable="true" data-field="tiempo"><strong>#{texto.Tiempo}:</strong></th> -->
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="longitudSolucion"><strong>#{texto.LongitudSolucion}:</strong></th>
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="solucionValida"><strong>#{texto.SolucionValida}:</strong></th>
+									<!-- <th data-halign="right" data-align="center" -->
+									<!-- data-visible="false" data-sortable="true" data-field="tiempo"><strong>#{texto.Tiempo}:</strong></th> -->
 									<th style="min-width: 140px;" data-halign="right"
 										data-align="center" data-field="acciones"><strong>#{texto.Acciones}:</strong></th>
 								</tr>
 							</thead>
-							<c:forEach items="#{rubikManagedBean.sesionRubikActual.soluciones}"
+							<c:forEach
+								items="#{rubikManagedBean.sesionRubikActual.soluciones}"
 								var="solucion" varStatus="i">
 								<tr>
 									<td>#{i.index+1}</td>
 									<td class="hidden-xs hidden-sm">#{solucion.cubo.nombre}</td>
 									<td>#{solucion.fewestMoveDTO.mezcla}</td>
 									<td>#{solucion.fewestMoveDTO.solucion}</td>
-<!-- 									<td>#{solucion.fewestMoveDTO.longitudSolucion}</td> -->
-<!-- 									<td>#{solucion.fewestMoveDTO.solucionValida}</td> -->
-<!-- 									<td>#{solucion.fewestMoveDTO.tiempoRestanteTexto}</td> -->
+									<td>#{solucion.fewestMoveDTO.longitudSolucion}</td>
+									<td>#{solucion.fewestMoveDTO.solucionValida}</td>
+									<!-- <td>#{solucion.fewestMoveDTO.tiempoRestanteTexto}</td> -->
 									<td><h:commandButton
 											action="#{rubikManagedBean.mostrarDNF(solucion)}"
 											styleClass="btn btn-sm #{(solucion.fewestMoveDTO.dnf)?'btn-info':'btn-default'}"
-											value="DNF"></h:commandButton>
-										<h:commandButton
+											value="DNF"></h:commandButton> <h:commandButton
 											action="#{rubikManagedBean.eliminarSolucion(solucion)}"
 											styleClass="btn btn-sm btn-danger" style="margin-left: 4px;"
 											value="X"></h:commandButton></td>
@@ -178,49 +179,52 @@ ul.dropdown-menu strong {
 						<div id="cubo3"
 							class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
 							<script>
-								TTk.AlgorithmPuzzle(3).alg(
-										"#{rubikManagedBean.mezclaTraducidaFewest()}").size({
-									width : 240,
-									height : 280
-								}).controls(true).showAlg(false)
-								// 	.hoverButtons(false)
-								// 	.hoverAlg(false)
-								('#cubo3');
+								TTk
+										.AlgorithmPuzzle(3)
+										.alg(
+												"#{rubikManagedBean.mezclaTraducidaFewest()}")
+										.size({
+											width : 240,
+											height : 280
+										}).controls(true).showAlg(false)
+										// 	.hoverButtons(false)
+										// 	.hoverAlg(false)
+										('#cubo3');
 							</script>
 						</div>
 					</h:panelGroup>
-<!-- 					<h:panelGroup layout="block" id="imagenCubo4x4" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==7 || rubikManagedBean.tipoCuboFewest==14}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/4x4.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenCubo5x5" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==8 || rubikManagedBean.tipoCuboFewest==15}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/5x5.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenCubo6x6" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==9}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/6x6.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenCubo7x7" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==10}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/7x7.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenSkewb" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==24}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/skewb.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenMegaminx" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==25}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/megaminx.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenPyraminx" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==26}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/pyraminx.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
-<!-- 					<h:panelGroup layout="block" id="imagenSquare1" -->
-<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==27}"> -->
-<!-- 						<ui:include src="/WEB-INF/includes/square1.xhtml" /> -->
-<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenCubo4x4" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==7 || rubikManagedBean.tipoCuboFewest==14}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/4x4.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenCubo5x5" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==8 || rubikManagedBean.tipoCuboFewest==15}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/5x5.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenCubo6x6" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==9}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/6x6.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenCubo7x7" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==10}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/7x7.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenSkewb" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==24}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/skewb.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenMegaminx" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==25}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/megaminx.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenPyraminx" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==26}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/pyraminx.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
+					<!-- 					<h:panelGroup layout="block" id="imagenSquare1" -->
+					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==27}"> -->
+					<!-- 						<ui:include src="/WEB-INF/includes/square1.xhtml" /> -->
+					<!-- 					</h:panelGroup> -->
 					<div id="estadisticasYBotones">
 						<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center"
 							id="estadisticas">

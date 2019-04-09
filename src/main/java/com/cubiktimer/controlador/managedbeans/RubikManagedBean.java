@@ -242,17 +242,14 @@ public class RubikManagedBean implements Serializable {
 	public String agregarSolucion() {
 		String giros[] = solucion.split(" ");
 		cuboFewestMoves.mezclar(giros);
-		System.out.println(cuboFewestMoves);
 		FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,
 				tiempoMilisegundosFewest, tiempoRestanteTexto, solucion, dnfFewest, comentarioFewest);
-		System.out.println(giros.length);
 		fewestMovesDTO.setLongitudSolucion(giros.length);
 		if (cuboFewestMoves.estaResuelto()) {
-			System.out.println("Solucion valida");
 			fewestMovesDTO.setSolucionValida(true);
 		} else {
-			System.out.println("Solucion no valida");
 			fewestMovesDTO.setSolucionValida(false);
+			fewestMovesDTO.setDnf(true);
 		}
 		SolucionFewestMoves s = new SolucionFewestMoves(cuboFewestMoves, fewestMovesDTO);
 		sesionRubikActual.getSoluciones().add(s);
