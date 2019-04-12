@@ -53,9 +53,6 @@ public abstract class Puzzle implements Serializable {
 		return ScrambleGenerator.generarMezcla(this.getParametro());
 	}
 
-	@Override
-	public abstract boolean equals(Object obj);
-
 	public Integer getIdTipoCubo() {
 		return idTipoCubo;
 	}

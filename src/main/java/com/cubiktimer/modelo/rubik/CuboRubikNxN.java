@@ -6,8 +6,6 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 
 	// TODO: sobreescribir el metodo equals de tal manera que retorne true si los
@@ -443,12 +441,6 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 		retorno.append(getBottom());
 		retorno.append("\n");
 		return retorno.toString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		// TODO implementar metodo
-		throw new NotImplementedException();
 	}
 
 }

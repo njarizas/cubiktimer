@@ -240,7 +240,7 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String agregarSolucion() {
-		String giros[] = solucion.split(" ");
+		String[] giros = solucion.split(" ");
 		cuboFewestMoves.mezclar(giros);
 		FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,
 				tiempoMilisegundosFewest, tiempoRestanteTexto, solucion, dnfFewest, comentarioFewest);

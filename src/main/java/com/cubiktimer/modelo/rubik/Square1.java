@@ -6,8 +6,6 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class Square1 extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,13 +38,7 @@ public class Square1 extends Puzzle implements Serializable {
 	@Override
 	public boolean estaResuelto() {
 		// TODO implementar metodo
-		throw new NotImplementedException();
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		// TODO implementar metodo
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException("Not implemented, yet");
 	}
 
 }
