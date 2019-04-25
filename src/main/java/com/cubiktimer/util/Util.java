@@ -27,6 +27,10 @@ public class Util implements Serializable {
 	private Util() {
 
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(generarSal());
+	}
 
 	public static Util getInstance() {
 		if (util == null) {

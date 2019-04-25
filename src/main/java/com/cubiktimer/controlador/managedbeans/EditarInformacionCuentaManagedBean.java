@@ -97,10 +97,8 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 		log.debug("ingreso a cambiarClave");
 		String sal = usuarioDAO.consultarSalPorUsuario(sesionManagedBean.getUsuarioLogueado().getCorreo());
 		log.debug("sal " + sal);
-		String nueva = EncryptService.encriptarClave(claveNueva + sal);
-		String confirmacion = EncryptService.encriptarClave(confirmarClaveNueva + sal);
 		sesionManagedBean.getUsuarioLogueado().setSal(sal);
-		if (nueva.equals("") || sesionManagedBean.getUsuarioLogueado().getClave().equals("")) {
+		if (claveNueva.equals("") || confirmarClaveNueva.equals("")) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("NingunaDeLasContraseñasPuedeEstarVacia"));
@@ -108,13 +106,14 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
-		if (!nueva.equals(confirmacion)) {
+		if (!claveNueva.equals(confirmarClaveNueva)) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("LasClavesNoCoinciden"));
 			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
 		}
+		String nueva = EncryptService.encriptarClave(claveNueva + sal);
 		if (sesionManagedBean.getUsuarioLogueado().getClave().equals(nueva)) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
