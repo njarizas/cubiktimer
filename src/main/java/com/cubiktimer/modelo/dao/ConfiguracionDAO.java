@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.ConfiguracionDTO;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
@@ -26,7 +27,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		Util util = Util.getInstance();
 		conectar();
 		String sql = "INSERT INTO configuracion VALUES (?,?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdTipo());
@@ -64,7 +65,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		List<ConfiguracionDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, estado);
 			ResultSet rs = ps.executeQuery();
@@ -105,7 +106,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		conectar();
 		String sql = "UPDATE configuracion" + " SET id_usuario=?,id_tipo=?,valor_texto=?,valor_entero=?,"
 				+ " valor_decimal=?,valor_fecha=?,estado=?" + " WHERE id_configuracion=?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdTipo());
 			ps.setString(3, dto.getValorTexto());
@@ -149,7 +150,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		List<ConfiguracionDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND id_tipo = ? AND estado = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipo);
 			ps.setInt(3, estado);

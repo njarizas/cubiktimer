@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.UsuarioRolDTO;
 
 public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
@@ -19,7 +20,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 		log.trace("inicio create");
 		conectar();
 		String sql = "INSERT INTO usuarios_roles VALUES (?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdRol());
 			ps.setObject(3, dto.getEstado());
@@ -39,7 +40,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 		log.trace("inicio update");
 		conectar();
 		String sql = "UPDATE usuarios_roles SET estado = ? WHERE id_usuario = ? AND id_rol = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getEstado());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdRol());
@@ -67,7 +68,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> {
 		log.trace("inicio consultarRolesPorIdUsuario");
 		List<UsuarioRolDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios_roles WHERE id_usuario = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {

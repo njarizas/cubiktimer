@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.TipoDTO;
 import com.mysql.jdbc.Statement;
 
@@ -23,7 +24,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdTipo());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setObject(3, dto.getNombreTipo());
@@ -54,7 +55,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		List<TipoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, estado);
 			lista = findList(ps);
 		} catch (SQLException sqle) {

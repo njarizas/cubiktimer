@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
@@ -26,7 +27,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 				+ " tiempo_inspeccion_usado_milisegundos,tiempo_inspeccion_usado_texto,"
 				+ " tiempo_milisegundos,tiempo_texto,dnf,penalizacion,comentario,fecha,estado)"
 				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdSesion());
 			ps.setObject(3, dto.getIdTipoCubo());
@@ -70,7 +71,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 				+ " tiempo_inspeccion_usado_milisegundos=?,tiempo_inspeccion_usado_texto=?,"
 				+ " tiempo_milisegundos=?,tiempo_texto=?,dnf=?,penalizacion=?,comentario=?,fecha=?,estado=?"
 				+ " WHERE id_tiempo=?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdSesion());
 			ps.setObject(2, dto.getIdTipoCubo());
 			ps.setString(3, dto.getMezcla());

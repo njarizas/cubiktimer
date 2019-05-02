@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.AmigoDTO;
 import com.mysql.jdbc.Statement;
 
@@ -23,7 +24,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO amigos VALUES (?,?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdAmigo());
@@ -53,7 +54,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		int retorno = 0;
 		conectar();
 		String sql = "UPDATE amigos SET id_usuario = ?, id_amigo = ?, estado = ? WHERE id_amistad = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdAmigo());
 			ps.setObject(3, dto.getEstado());
@@ -96,7 +97,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		}
 		conectar();
 		String sql = "DELETE FROM amigos WHERE id_amistad = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdAmistad());
 			ps.executeUpdate();
 			desconectar();
@@ -112,7 +113,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		List<AmigoDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM amigos a WHERE a.id_usuario = ? AND a.id_amigo = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idAmigo);
 			lista = findList(ps);

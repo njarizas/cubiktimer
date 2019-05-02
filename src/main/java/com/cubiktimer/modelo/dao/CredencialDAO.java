@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
@@ -26,7 +27,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdCredencial());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getCorreo());
@@ -59,7 +60,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -76,7 +77,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND estado = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setInt(2, estado);
 			lista = findList(ps);
@@ -94,7 +95,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		List<CredencialDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND clave = ? AND estado = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setString(2, clave);
 			ps.setInt(3, estado);
@@ -113,7 +114,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		Date retorno = null;
 		conectar();
 		String sql = "SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
-		try (PreparedStatement ps = conn.prepareCall(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareCall(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {

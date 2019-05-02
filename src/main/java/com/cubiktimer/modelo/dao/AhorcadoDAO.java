@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.AhorcadoDTO;
 import com.cubiktimer.util.Util;
 
@@ -20,7 +21,7 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		Util util = Util.getInstance();
 		conectar();
 		String sql = "INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));

@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.rubik.estadisticas.CuentaPuzzle;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import com.cubiktimer.modelo.rubik.estadisticas.Promedio;
@@ -36,7 +37,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 				+ " FROM tiempos tr" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
 				+ " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion=sr.id_sesion" + " WHERE id_usuario=?"
 				+ " GROUP BY t.nombre_tipo";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -73,7 +74,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 				+ " FROM tiempos t INNER JOIN sesiones_rubik s ON t.id_sesion = s.id_sesion"
 				+ " INNER JOIN tipos t2 ON t.id_tipo_cubo = t2.id_tipo"
 				+ " WHERE id_usuario=? AND dnf=0 GROUP BY id_usuario, t2.nombre_tipo";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -113,7 +114,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 				+ " ON tr.id_sesion=sr.id_sesion" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
 				+ " WHERE sr.id_usuario=?" + " AND tr.id_tipo_cubo=?" + " AND tr.estado=1" + " AND sr.estado=1"
 				+ " AND tr.dnf=0" + " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + " ORDER BY sr.fecha";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipoCubo);
 			ResultSet rs = ps.executeQuery();
@@ -156,7 +157,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 				+ " ON sr.id_usuario = u.id_usuario" + " WHERE sr.id_usuario=?" + " AND tr.id_tipo_cubo=?"
 				+ " AND tr.estado=1" + " AND sr.estado=1" + " AND tr.dnf=0"
 				+ " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + " ORDER BY sr.fecha";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipoCubo);
 			ResultSet rs = ps.executeQuery();
@@ -193,7 +194,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 		List<Integer> lista = new ArrayList<>();
 		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -254,7 +255,7 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos tr"
 				+ " INNER JOIN sesiones_rubik sr" + " ON tr.id_sesion = sr.id_sesion" + " WHERE sr.id_usuario=?"
 				+ " AND tr.estado=1" + " AND sr.estado=1" + " GROUP BY (tr.id_tipo_cubo)" + " ORDER BY COUNT(*)";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {

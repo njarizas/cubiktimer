@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UsuarioDTO implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	private Integer idUsuario;
@@ -20,7 +19,6 @@ public class UsuarioDTO implements Serializable {
 	private Integer estado;
 
 	public UsuarioDTO() {
-		super();
 		Date ahora = new Date();
 		this.fechaCreacion = ahora;
 		this.fechaModificacion = ahora;
@@ -28,13 +26,53 @@ public class UsuarioDTO implements Serializable {
 	}
 
 	public UsuarioDTO(String correo, String clave) {
-		super();
 		this.correo = correo;
 		this.clave = clave;
 		Date ahora = new Date();
 		this.fechaCreacion = ahora;
 		this.fechaModificacion = ahora;
 		this.estado = 1;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<UsuarioDTO><");
+		if (idUsuario != null) {
+			builder.append("idUsuario>").append(idUsuario).append("</idUsuario><");
+		}
+//		if (correo != null) {
+//			builder.append("correo>").append(correo).append("</correo><");
+//		}
+//		if (sal != null) {
+//			builder.append("sal>").append(sal).append("</sal><");
+//		}
+//		if (clave != null) {
+//			builder.append("clave>").append(clave).append("</clave><");
+//		}
+//		if (nombres != null) {
+//			builder.append("nombres>").append(nombres).append("</nombres><");
+//		}
+//		if (apellidos != null) {
+//			builder.append("apellidos>").append(apellidos).append("</apellidos><");
+//		}
+//		if (sexo != null) {
+//			builder.append("sexo>").append(sexo).append("</sexo><");
+//		}
+//		if (fechaNacimiento != null) {
+//			builder.append("fechaNacimiento>").append(fechaNacimiento).append("</fechaNacimiento><");
+//		}
+//		if (fechaCreacion != null) {
+//			builder.append("fechaCreacion>").append(fechaCreacion).append("</fechaCreacion><");
+//		}
+//		if (fechaModificacion != null) {
+//			builder.append("fechaModificacion>").append(fechaModificacion).append("</fechaModificacion><");
+//		}
+//		if (estado != null) {
+//			builder.append("estado>").append(estado).append("</estado");
+//		}
+		builder.append("></UsuarioDTO>");
+		return builder.toString();
 	}
 
 	public Integer getIdUsuario() {

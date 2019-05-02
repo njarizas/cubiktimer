@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.ParametroDTO;
 
 public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializable {
@@ -22,7 +23,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		int retorno = 0;
 		conectar();
 		String sql = "INSERT INTO parametros VALUES (?,?)";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setObject(1, dto.getCodigo());
 			ps.setObject(2, dto.getValor());
 			retorno = ps.executeUpdate();
@@ -54,7 +55,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		List<ParametroDTO> lista = new ArrayList<>();
 		conectar();
 		String sql = "SELECT codigo, valor FROM parametros WHERE codigo = ?";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
 			ps.setString(1, codigo);
 			lista = findList(ps);
 		} catch (SQLException e) {

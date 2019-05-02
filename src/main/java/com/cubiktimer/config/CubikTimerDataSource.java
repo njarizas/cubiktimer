@@ -15,7 +15,6 @@ public class CubikTimerDataSource {
 
 	private static String url;
 	private static String database;
-	private static String properties;
 	private static String user;
 	private static String password;
 
@@ -24,15 +23,13 @@ public class CubikTimerDataSource {
 		Propiedades propiedades = Propiedades.getInstance();
 		url = propiedades.obtenerPropiedad("conexion.url");
 		database = propiedades.obtenerPropiedad("conexion.database");
-		properties = propiedades.obtenerPropiedad("conexion.properties");
 		user = propiedades.obtenerPropiedad("conexion.user");
 		password = propiedades.obtenerPropiedad("conexion.password");
 		config = new HikariConfig();
-		config.setJdbcUrl(url + database + properties);
+		config.setJdbcUrl(url + database);
 		config.setUsername(user);
 		config.setPassword(password);
 		config.setDriverClassName("com.mysql.jdbc.Driver");
-		config.setLeakDetectionThreshold(60 * 1000);
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

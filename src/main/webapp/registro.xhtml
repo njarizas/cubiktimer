@@ -7,7 +7,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>#{texto.Registrarse}</title>
+	<title>CubikTimer - #{texto.Registrarse}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no" />
 	<title><ui:insert name="title">cubiktimer</ui:insert></title>
@@ -205,15 +205,6 @@
 	                     regexp: {
 	                         regexp: /^([a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{3,12}[ ]*){1}([a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{1,12}[ ]+){0,6}[a-zA-ZáéíóúñÁÉÍÓÚÑäëïöüÄËÏÖÜ]{0,12}[ ]*$/,
 	                         message: '#{texto.ParaElCampo} \'#{texto.Apellidos}\' #{texto.SoloSeReconocenLasLetrasDelEspañol}'
-	                     }
-	                 }
-	             },
-	             'formulario_de_registro:codigoProfesional': {
-	                 row: '.validacion',
-	                 validators: {
-	                     regexp: {
-	                         regexp: /^[0-9]{0,6}$/,
-	                         message: '#{texto.ElCampo} \'#{texto.CodigoProfesional}\' #{texto.DebeTenerEntre} 1 #{texto.Y} 6 #{texto.Digitos}'
 	                     }
 	                 }
 	             },
