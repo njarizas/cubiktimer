@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,9 +23,10 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	public int create(PermisoDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-		conectar();
+
 		String sql = "INSERT INTO permisos VALUES (?,?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = CubikTimerDataSource.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setString(2, dto.getUrl());
 			ps.setObject(3, dto.getIdPadre());
@@ -42,12 +44,12 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin create");
 		return 0;
@@ -56,10 +58,10 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	public int update(PermisoDTO dto) {
 		log.trace("inicio update");
 		int retorno = 0;
-		conectar();
+
 		String sql = "UPDATE usuarios_roles SET url = ?, id_padre = ?, nombre_permiso = ?, descripcion_permiso = ?,"
 				+ " name_permiso = ?, description_permiso = ?, estado = ? " + " WHERE id_permiso = ?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, dto.getUrl());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setString(3, dto.getNombrePermiso());
@@ -70,12 +72,12 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			ps.setObject(8, dto.getIdPermiso());
 			ps.executeUpdate();
 			retorno = dto.getIdPermiso();
-			desconectar();
+
 			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin update");
 		return 0;
@@ -92,17 +94,17 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	public List<PermisoDTO> consultarPermisosPorIdUsuario(int idUsuario) {
 		log.trace("inicio consultarPermisosPorIdUsuario");
 		List<PermisoDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles_permisos rp"
 				+ " ON ur.id_rol = rp.id_rol" + " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso"
 				+ " WHERE ur.estado=1 and rp.estado=1 and p.estado=1" + " AND id_usuario=?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
-			desconectar();
+
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin consultarPermisosPorIdUsuario");
 		return lista;
@@ -111,18 +113,18 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	public List<PermisoDTO> listarPermisos(int idUsuario) {
 		log.trace("inicio consultarPermisosPorIdUsuario");
 		List<PermisoDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT DISTINCT p.*" + " FROM usuarios_roles ur" + " INNER JOIN roles_permisos rp"
 				+ " ON ur.id_rol = rp.id_rol" + " INNER JOIN permisos p" + " ON rp.id_permiso = p.id_permiso"
 				+ " WHERE ur.estado=1 AND rp.estado=1 AND p.estado=1" + " AND url IS NOT NULL" + " AND url !=''"
 				+ " AND id_usuario=?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
-			desconectar();
+
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin consultarPermisosPorIdUsuario");
 		return lista;
@@ -131,15 +133,15 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	public List<PermisoDTO> consultarPermisosPorIdPadre(int idPadre) {
 		log.trace("inicio consultarPermisosPorIdPadre");
 		List<PermisoDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT *" + " FROM permisos" + " WHERE id_padre=?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idPadre);
 			lista = findList(ps);
-			desconectar();
+
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin consultarPermisosPorIdPadre");
 		return lista;
@@ -154,9 +156,9 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	public Integer contarPermisosIdPadre(Integer idPermiso) {
 		log.trace("inicio contarPermisosIdPadre");
 		int retorno = 0;
-		conectar();
+
 		String sql = "SELECT count(*) conteo" + " FROM permisos" + " WHERE id_padre=?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idPermiso);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -166,12 +168,12 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 			log.trace("fin contarPermisosIdPadre");
 			return retorno;
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin contarPermisosIdPadre");
 		return 0;
@@ -198,10 +200,10 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin findList");
 		return lista;

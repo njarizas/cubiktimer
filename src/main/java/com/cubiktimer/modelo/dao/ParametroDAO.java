@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,18 +22,18 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 	public int create(ParametroDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-		conectar();
+
 		String sql = "INSERT INTO parametros VALUES (?,?)";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getCodigo());
 			ps.setObject(2, dto.getValor());
 			retorno = ps.executeUpdate();
-			desconectar();
+
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin create");
 		return 0;
@@ -53,15 +54,15 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 	public List<ParametroDTO> obtenerParametro(String codigo) {
 		log.trace("inicio obtenerParametro");
 		List<ParametroDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT codigo, valor FROM parametros WHERE codigo = ?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, codigo);
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
 		} finally {
-			desconectar();
+
 		}
 		log.trace("fin obtenerParametro");
 		return lista;
@@ -82,10 +83,10 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin findList");
 		return lista;

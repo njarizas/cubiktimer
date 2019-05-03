@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +26,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public int create(CredencialDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-		conectar();
+
 		String sql = "INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = CubikTimerDataSource.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdCredencial());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getCorreo());
@@ -44,12 +46,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin create");
 		return 0;
@@ -58,15 +60,15 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {
 		log.trace("inicio consultarCredencialPorCorreo");
 		List<CredencialDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 		} finally {
-			desconectar();
+
 		}
 		log.trace("fin consultarCredencialPorCorreo");
 		return lista;
@@ -75,16 +77,16 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public List<CredencialDTO> consultarCredencialPorCorreoYEstado(String correo, Integer estado) {
 		log.trace("inicio consultarCredencialPorCorreoYEstado");
 		List<CredencialDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND estado = ?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setInt(2, estado);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 		} finally {
-			desconectar();
+
 		}
 		log.trace("fin consultarCredencialPorCorreoYEstado");
 		return lista;
@@ -93,9 +95,9 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public List<CredencialDTO> consultarCredencialPorCorreoClaveYEstado(String correo, String clave, Integer estado) {
 		log.trace("inicio consultarCredencialPorCorreoClaveYEstado");
 		List<CredencialDTO> lista = new ArrayList<>();
-		conectar();
+
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND clave = ? AND estado = ?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setString(2, clave);
 			ps.setInt(3, estado);
@@ -103,7 +105,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 		} finally {
-			desconectar();
+
 		}
 		log.trace("fin consultarCredencialPorCorreoClaveYEstado");
 		return lista;
@@ -112,7 +114,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public Date obtenerFechaUltimaCredencial(Integer idUsuario) {
 		log.trace("inicio obtenerFechaUltimaCredencial");
 		Date retorno = null;
-		conectar();
+
 		String sql = "SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
 		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareCall(sql)) {
 			ps.setInt(1, idUsuario);
@@ -126,10 +128,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin obtenerFechaUltimaCredencial");
 		return retorno;
@@ -156,13 +158,13 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			} finally {
 				rs.close();
 			}
-			desconectar();
+
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+
 		} catch (ParseException pe) {
 			log.warn(pe.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin findList");
 		return lista;

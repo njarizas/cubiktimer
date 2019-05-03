@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,9 +23,10 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 	public int create(TipoDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-		conectar();
+		
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = CubikTimerDataSource.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdTipo());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setObject(3, dto.getNombreTipo());
@@ -39,12 +41,12 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			} finally {
 				rs.close();
 			}
-			desconectar();
+			
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+			
 		}
 		log.trace("fin create");
 		return 0;
@@ -53,9 +55,9 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 	public List<TipoDTO> listarTiposDeCuboPorEstado(Integer estado) {
 		log.trace("inicio listarTiposDeCubo");
 		List<TipoDTO> lista = new ArrayList<>();
-		conectar();
+		
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=?";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, estado);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -91,10 +93,10 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			} finally {
 				rs.close();
 			}
-			desconectar();
+			
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-			desconectar();
+			
 		}
 		log.trace("fin findList");
 		return lista;

@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import org.apache.log4j.Logger;
@@ -19,9 +20,9 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		conectar();
+
 		String sql = "INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
-		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));
@@ -32,12 +33,12 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 			ps.setString(8, dto.getIp());
 			ps.setObject(9, 1);
 			retorno = ps.executeUpdate();
-			desconectar();
+
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			desconectar();
+
 		}
 		log.trace("fin create");
 		return 0;
