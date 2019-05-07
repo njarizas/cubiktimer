@@ -10,3 +10,8 @@ background-color: #262626 !important;
 table#table tr:hover  {
 background-color: #131313 !important;
 }
+
+.form-control{
+	background-color: #333 !important;
+	color: #eee !important;
+}
