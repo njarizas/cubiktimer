@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 
 import junit.framework.TestCase;
@@ -67,6 +68,7 @@ public class TestUtil extends TestCase {
 		assertEquals("maximo permitido sin agregar un nuevo digito:", Util.calcularSegundos("99:59.99"), 5999.99);
 	}
 
+	@Test
 	public void testDoble() {
 		for (int i = 0; i < 10; i++) {
 			int numero = random.nextInt(5999990);
@@ -106,6 +108,22 @@ public class TestUtil extends TestCase {
 		String regex = "^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9])(?:( [0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$";
 		assertTrue("prueba fechaHoraMysql", Util.getInstance().getFechaMysql().format(new Date()).matches(regex));
 		assertTrue("prueba fechaHoraMysql", Util.getInstance().getFechaHoraMysql().format(new Date()).matches(regex));
+	}
+
+	@Test
+	public void testObtenerLetraDeCaraPorColor() {
+		assertEquals("prueba cara B", Util.obtenerLetraDeCaraPorColor(Constantes.COLOR_CARA_B),
+				Constantes.LETRA_CARA_B);
+		assertEquals("prueba cara D", Util.obtenerLetraDeCaraPorColor(Constantes.COLOR_CARA_D),
+				Constantes.LETRA_CARA_D);
+		assertEquals("prueba cara F", Util.obtenerLetraDeCaraPorColor(Constantes.COLOR_CARA_F),
+				Constantes.LETRA_CARA_F);
+		assertEquals("prueba cara L", Util.obtenerLetraDeCaraPorColor(Constantes.COLOR_CARA_L),
+				Constantes.LETRA_CARA_L);
+		assertEquals("prueba cara R", Util.obtenerLetraDeCaraPorColor(Constantes.COLOR_CARA_R),
+				Constantes.LETRA_CARA_R);
+		assertEquals("prueba cara U", Util.obtenerLetraDeCaraPorColor(Constantes.COLOR_CARA_U),
+				Constantes.LETRA_CARA_U);
 	}
 
 }

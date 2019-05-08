@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import com.cubiktimer.controlador.factories.RubikFactory;
 import com.cubiktimer.modelo.rubik.Puzzle;
+import com.cubiktimer.modelo.rubik.TipoCubo;
 import com.cubiktimer.util.ScrambleGenerator;
+import com.cubiktimer.util.ScrambleSolver;
 
 public class TestCuboRubikNxN {
 
@@ -22,10 +24,28 @@ public class TestCuboRubikNxN {
 
 				assertEquals("mezcla de cubo " + cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
 				cubo.mezclar(ScrambleGenerator.generarMezclaInversa(secuenciaMezcla)).trim();
-				cubo2.mezclar(new String[] {"x"});
+				cubo2.mezclar(new String[] { "x" });
 				assertTrue("Esta resuelto cubo desarmado y rearmado", cubo.estaResuelto());
 				assertTrue("Esta resuelto cubo rotado", cubo2.estaResuelto());
 			}
+		}
+	}
+
+	@Test
+	public void testSolucionar() {
+		for (int casos = 0; casos <= 2; casos++) {
+			Puzzle cubo = RubikFactory.crearCubo(TipoCubo.CUBO_3X3X3.getId());
+			String secuenciaMezcla = ScrambleGenerator.generarSecuenciaMezcla(cubo.getParametro());
+			String[] secuencia = secuenciaMezcla.split(" ");
+			System.out.println(secuenciaMezcla);
+			cubo.mezclar(secuencia).trim();
+			String faceletColors = cubo.faceletToString();
+			System.out.println(faceletColors);
+			String secuenciaSolucion = ScrambleSolver.generarSecuenciaSolucion(faceletColors);
+			System.out.println(secuenciaSolucion);
+			String[] secuencia2 = secuenciaSolucion.split(" ");
+			cubo.mezclar(secuencia2).trim();
+			assertTrue("Esta resuelto con solucion de Cube Explorer", cubo.estaResuelto());
 		}
 	}
 
