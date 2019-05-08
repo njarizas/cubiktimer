@@ -14,7 +14,6 @@ import javax.servlet.ServletContext;
 import org.apache.log4j.Logger;
 
 public class Util implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(Util.class);
 
@@ -25,9 +24,8 @@ public class Util implements Serializable {
 	private static Util util;
 
 	private Util() {
-
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(generarSal());
 	}
@@ -53,7 +51,7 @@ public class Util implements Serializable {
 			double seg;
 			min = Integer.parseInt(string.substring(0, 2));
 			seg = Double.parseDouble(string.substring(3));
-			return (min * 60) + seg;
+			return min * 60 + seg;
 		}
 		return 0d;
 	}
@@ -84,7 +82,7 @@ public class Util implements Serializable {
 		double seg = miliseg / 1000d;
 		int min;
 		min = (int) Math.floor(seg) / 60;
-		seg -= (min * 60);
+		seg -= min * 60;
 		if (min < 10) {
 			retorno += "0";
 		}
@@ -132,22 +130,27 @@ public class Util implements Serializable {
 	}
 
 	/**
-	 * método que recibe un algoritmo con notación WCA y lo traduce a la notación
-	 * utilizada por twistysim
+	 * Método que recibe un algoritmo con notación WCA y lo traduce a la notación
+	 * utilizada por twistysim.
 	 * 
 	 * @param secuenciaWCA
 	 * @return
 	 */
 	public static String traducirSecuenciaWCA(int idTipoCubo, String secuenciaWCA) {
 		String retorno;
-		if (idTipoCubo == 25) {// Megaminx
+		switch (idTipoCubo) {
+		case 25:
 			retorno = traducirSecuenciaWCAMegaminx(secuenciaWCA);
-		} else if (idTipoCubo == 24) {// Skewb
+			break;
+		case 24:
 			retorno = traducirSecuenciaWCASkewb(secuenciaWCA);
-		} else if (idTipoCubo == 27) {// Square1
+			break;
+		case 27:
 			retorno = traducirSecuenciaWCASquare1(secuenciaWCA);
-		} else {
+			break;
+		default:
 			retorno = traducirSecuenciaWCANxN(secuenciaWCA);
+			break;
 		}
 		return retorno.trim();
 	}
@@ -215,6 +218,25 @@ public class Util implements Serializable {
 				.replaceAll("A", "R").replaceAll("B'", "C").replaceAll("B", "B'").replaceAll("C", "B");
 	}
 
+	public static String obtenerLetraDeCaraPorColor(String color) {
+		switch (color) {
+		case Constantes.COLOR_CARA_B:
+			return Constantes.LETRA_CARA_B;
+		case Constantes.COLOR_CARA_D:
+			return Constantes.LETRA_CARA_D;
+		case Constantes.COLOR_CARA_F:
+			return Constantes.LETRA_CARA_F;
+		case Constantes.COLOR_CARA_L:
+			return Constantes.LETRA_CARA_L;
+		case Constantes.COLOR_CARA_R:
+			return Constantes.LETRA_CARA_R;
+		case Constantes.COLOR_CARA_U:
+			return Constantes.LETRA_CARA_U;
+		default:
+			return null;
+		}
+	}
+
 	public static String getRealPath() {
 		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext()
 				.getContext();
@@ -225,7 +247,6 @@ public class Util implements Serializable {
 		ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext()
 				.getContext();
 		return servletContext.getContextPath();
-
 	}
 
 	public SimpleDateFormat getFechaHoraMysql() {
@@ -243,5 +264,4 @@ public class Util implements Serializable {
 	public static DecimalFormat getDf() {
 		return DF;
 	}
-
 }

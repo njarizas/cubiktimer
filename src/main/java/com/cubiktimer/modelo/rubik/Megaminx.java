@@ -40,7 +40,17 @@ public class Megaminx extends Puzzle implements Serializable {
 	@Override
 	public boolean estaResuelto() {
 		// TODO implementar metodo
-		throw new UnsupportedOperationException("Not implemented, yet");
+		// throw new UnsupportedOperationException("Not implemented, yet");
+		return false;
+	}
+
+	// TODO implementar toString}
+
+	@Override
+	public String faceletToString() {
+		// TODO implementar metodo
+		// throw new UnsupportedOperationException("Not implemented, yet");
+		return "";
 	}
 
 }

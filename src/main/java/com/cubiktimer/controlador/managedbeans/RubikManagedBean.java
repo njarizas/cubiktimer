@@ -175,6 +175,7 @@ public class RubikManagedBean implements Serializable {
 		this.mezcla = generarMezcla();
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
+		log.debug(cubo.faceletToString());
 		log.debug("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
@@ -186,7 +187,9 @@ public class RubikManagedBean implements Serializable {
 		this.mezclaFewest = generarMezclaFewest();
 		secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
 		log.trace(cuboFewestMoves);
-		log.debug("secuencia mezcla aleatoria (" + cuboFewestMoves.getNombre() + "): " + secuenciaMezclaFewest);
+		log.debug(cuboFewestMoves.faceletToString());
+		log.debug("secuencia mezcla aleatoria Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
+				+ secuenciaMezclaFewest);
 		return "";
 	}
 
@@ -205,6 +208,7 @@ public class RubikManagedBean implements Serializable {
 		mezcla = this.secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
+		log.debug(cubo.faceletToString());
 		log.debug("secuencia mezcla personalizada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
@@ -224,6 +228,7 @@ public class RubikManagedBean implements Serializable {
 		mezclaFewest = this.secuenciaMezclaFewest.trim().split(" ");
 		secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
 		log.trace(cuboFewestMoves);
+		log.debug(cuboFewestMoves.faceletToString());
 		log.debug("secuencia mezcla personalizada Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
 				+ secuenciaMezclaFewest);
 		return "";
@@ -274,7 +279,8 @@ public class RubikManagedBean implements Serializable {
 		// si el usuario se encuentra logueado tiene sentido guardar los tiempos, de lo
 		// contrario no
 		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario() != null) {
-			if (rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos(), sesionRubikActual.getSoluciones()) > 0) {
+			if (rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos(),
+					sesionRubikActual.getSoluciones()) > 0) {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Informacion"));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("SeHanGuardadoLosTiemposActuales"));

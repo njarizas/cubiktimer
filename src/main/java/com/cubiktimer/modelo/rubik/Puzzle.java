@@ -48,6 +48,8 @@ public abstract class Puzzle implements Serializable {
 	public abstract String mezclar(String[] mezcla);
 
 	public abstract boolean estaResuelto();
+	
+	public abstract String faceletToString();
 
 	public String[] generarMezcla() {
 		return ScrambleGenerator.generarMezcla(this.getParametro());

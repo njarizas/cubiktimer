@@ -3,6 +3,8 @@ package com.cubiktimer.modelo.rubik;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import com.cubiktimer.util.Util;
+
 /**
  * Clase que representa una cara de cubo rubik nxn
  * 
@@ -106,7 +108,7 @@ public class CaraRubik implements Serializable {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder("");
@@ -115,6 +117,17 @@ public class CaraRubik implements Serializable {
 				str.append((cara[i][j] != null) ? cara[i][j] + "\t" : "\t");
 			}
 			str.append("\n");
+		}
+		return str.toString();
+	}
+	
+	public String faceletString() {
+		StringBuilder str = new StringBuilder("");
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < cara[i].length; j++) {
+				
+				str.append(Util.obtenerLetraDeCaraPorColor(cara[i][j].getCodigoColor()));
+			}
 		}
 		return str.toString();
 	}

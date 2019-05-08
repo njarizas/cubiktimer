@@ -25,12 +25,12 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 	public CuboRubikNxN(Integer idTipoCubo, String nombre, String parametro, int n) {
 		super(idTipoCubo, nombre, parametro);
 		this.n = n;
-		top = new CaraRubik(n, Constantes.COLOR_BLANCO);
-		left = new CaraRubik(n, Constantes.COLOR_NARANJA);
-		front = new CaraRubik(n, Constantes.COLOR_VERDE);
-		right = new CaraRubik(n, Constantes.COLOR_ROJO);
-		bottom = new CaraRubik(n, Constantes.COLOR_AMARILLO);
-		back = new CaraRubik(n, Constantes.COLOR_AZUL);
+		top = new CaraRubik(n, Constantes.COLOR_CARA_U);
+		left = new CaraRubik(n, Constantes.COLOR_CARA_L);
+		front = new CaraRubik(n, Constantes.COLOR_CARA_F);
+		right = new CaraRubik(n, Constantes.COLOR_CARA_R);
+		bottom = new CaraRubik(n, Constantes.COLOR_CARA_D);
+		back = new CaraRubik(n, Constantes.COLOR_CARA_B);
 	}
 
 	/**
@@ -440,6 +440,18 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 		retorno.append("\n");
 		retorno.append(getBottom());
 		retorno.append("\n");
+		return retorno.toString();
+	}
+
+	@Override
+	public String faceletToString() {
+		StringBuilder retorno = new StringBuilder("");
+		retorno.append(getTop().faceletString());
+		retorno.append(getRight().faceletString());
+		retorno.append(getFront().faceletString());
+		retorno.append(getBottom().faceletString());
+		retorno.append(getLeft().faceletString());
+		retorno.append(getBack().faceletString());
 		return retorno.toString();
 	}
 
