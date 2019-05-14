@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.modelo.rubik;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,17 +9,17 @@ import com.cubiktimer.modelo.rubik.Puzzle;
 import com.cubiktimer.modelo.rubik.TipoCubo;
 import com.cubiktimer.util.ScrambleGenerator;
 
-public class TestPyraminx {
+public class TestSkewb {
 
 	@Test
 	public void testMezclar() {
 		for (int casos = 0; casos <= 2; casos++) {
-				Puzzle cubo = RubikFactory.crearCubo(26);
+				Puzzle cubo = RubikFactory.crearCubo(24);
 				String secuenciaMezcla = ScrambleGenerator.generarSecuenciaMezcla(cubo.getParametro());
 				String[] secuencia = secuenciaMezcla.split(" ");
 				assertEquals("mezcla de cubo " + cubo.getNombre(), secuenciaMezcla, cubo.mezclar(secuencia).trim());
 				
-				Puzzle cubo2 = RubikFactory.crearCubo(TipoCubo.PYRAMINX);
+				Puzzle cubo2 = RubikFactory.crearCubo(TipoCubo.SKEWB);
 				secuenciaMezcla = ScrambleGenerator.generarSecuenciaMezcla(cubo2.getParametro());
 				secuencia = secuenciaMezcla.split(" ");
 				assertEquals("mezcla de cubo " + cubo2.getNombre(), secuenciaMezcla, cubo2.mezclar(secuencia).trim());

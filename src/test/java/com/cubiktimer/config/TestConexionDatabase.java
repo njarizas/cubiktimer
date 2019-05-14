@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.config;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.modelo.rubik;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.util;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

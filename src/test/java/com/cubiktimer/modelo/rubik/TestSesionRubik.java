@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.modelo.rubik;
 
 import java.util.ArrayList;
 import java.util.Date;

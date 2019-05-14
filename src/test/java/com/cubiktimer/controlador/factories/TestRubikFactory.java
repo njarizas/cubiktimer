@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.controlador.factories;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

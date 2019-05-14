@@ -1,4 +1,4 @@
-package com.cubiktimer;
+package com.cubiktimer.modelo.rubik;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
