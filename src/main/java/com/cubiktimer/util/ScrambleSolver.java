@@ -19,19 +19,19 @@ import java.net.URLConnection;
 import org.apache.log4j.Logger;
 
 public class ScrambleSolver {
-	
+
 	private static final Logger log = Logger.getLogger(ScrambleGenerator.class);
-	
+
 	private ScrambleSolver() {
-		
+
 	}
-	
+
 	public static String generarSecuenciaSolucion(String parametro) {
 		log.trace("Va a generar la solucion con el Software Cube Explorer de Herbert Kociemba");
 		URL url;
 		String linea;
 		StringBuilder stringBuilder = new StringBuilder();
-//		boolean esConnectException = false;
+		boolean esConnectException = false;
 		try {
 			// se intenta obtener la conexion por metodo get
 			url = new URL("http://localhost:8081/?" + parametro);
@@ -41,37 +41,39 @@ public class ScrambleSolver {
 				log.trace("solucion generada en el primer intento: " + linea);
 				stringBuilder.append(linea);
 			}
-			// si se genera ConnectException tal vez es por que no se esta ejecutando el Cube Explorer
+			// si se genera ConnectException tal vez es por que no se esta ejecutando el
+			// Cube Explorer
 		} catch (ConnectException ce) {
-//			esConnectException = true;
+			esConnectException = true;
 			log.warn(ce.getMessage());
 		} catch (MalformedURLException murle) {
 			log.warn(murle.getMessage());
 		} catch (IOException ioe) {
 			log.warn(ioe.getMessage());
 		}
-//		try {
-//			if (esConnectException) {
-//				// se trata de ejecutar el TNoodle
-//				log.trace("Se hace el llamado para que se ejecute el jar java -jar " + Constantes.PATH_CUBIKTIMER
-//						+ "TNoodle-WCA-0.14.0.jar");
-//				Runtime.getRuntime().exec("java -jar " + Constantes.PATH_CUBIKTIMER + "TNoodle-WCA-0.14.0.jar");
-//				// Creando un objeto URL
-//				url = new URL("http://localhost:2014/scramble/.txt?=" + parametro);
-//				// Realizando la petición GET
-//				URLConnection con = url.openConnection();
-//				// Leyendo el resultado
-//				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//				stringBuilder = new StringBuilder();
-//				while ((linea = in.readLine()) != null) {
-//					log.trace("mezcla generada en el segundo intento: " + linea);
-//					stringBuilder.append(linea);
-//				}
-//			}
-//		} catch (Exception e) {
-//			log.warn(e.getMessage());
-//		}
-		return stringBuilder.toString().replaceAll("</HTML>", "").replaceAll("</BODY>", "").replaceAll("<HTML>", "").replaceAll("<BODY>", "");
+		try {
+			if (esConnectException) {
+				// se trata de ejecutar el TNoodle
+				log.trace("Se hace el llamado para que se ejecute el " + Constantes.PATH_CUBIKTIMER
+						+ "cube513/cube513htm.exe");
+				Runtime.getRuntime().exec(Constantes.PATH_CUBIKTIMER + "cube513/cube513htm.exe");
+				// Creando un objeto URL
+				url = new URL("http://localhost:8081/?" + parametro);
+				// Realizando la petición GET
+				URLConnection con = url.openConnection();
+				// Leyendo el resultado
+				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				stringBuilder = new StringBuilder();
+				while ((linea = in.readLine()) != null) {
+					log.trace("mezcla generada en el segundo intento: " + linea);
+					stringBuilder.append(linea);
+				}
+			}
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		return stringBuilder.toString().replaceAll("</HTML>", "").replaceAll("</BODY>", "").replaceAll("<HTML>", "")
+				.replaceAll("<BODY>", "");
 	}
 
 }
