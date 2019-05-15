@@ -21,7 +21,7 @@ public class TestCredencialDAO {
 	@Test
 	public void testFindAll() {
 		List<CredencialDTO> lista = credencialDAO.findAll();
-		assertTrue("busca todas las credenciales", lista.size() == 0);
+		assertTrue("busca todas las credenciales", lista.isEmpty());
 	}
 
 }

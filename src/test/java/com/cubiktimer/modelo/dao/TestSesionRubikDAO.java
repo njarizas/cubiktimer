@@ -21,7 +21,7 @@ public class TestSesionRubikDAO {
 	@Test
 	public void testFindAll() {
 		List<SesionRubikDTO> lista = sesionRubikDAO.findAll();
-		assertTrue("por lo menos una sesion", lista.size() >= 1);
+		assertTrue("por lo menos una sesion", !lista.isEmpty());
 	}
 
 }

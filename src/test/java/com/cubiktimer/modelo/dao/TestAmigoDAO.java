@@ -21,7 +21,7 @@ public class TestAmigoDAO {
 	@Test
 	public void testFindAll() {
 		List<AmigoDTO> lista = amigoDAO.findAll();
-		assertTrue("busca todos los amigos", lista.size() >= 1);
+		assertTrue("busca todos los amigos", !lista.isEmpty());
 	}
 
 }

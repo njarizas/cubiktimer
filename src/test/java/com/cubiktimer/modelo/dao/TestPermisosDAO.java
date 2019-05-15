@@ -16,7 +16,7 @@ public class TestPermisosDAO {
 
 	@Test
 	public void testFindAll() {
-		assertTrue("por lo menos un permiso", permisosDAO.findAll().size() >= 1);
+		assertTrue("por lo menos un permiso", !permisosDAO.findAll().isEmpty());
 	}
 
 }

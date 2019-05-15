@@ -16,7 +16,7 @@ public class TestRolDAO {
 
 	@Test
 	public void testConsultarRolesPorIdUsuario() {
-		assertTrue("por lo menos un rol", rolDAO.consultarRolesPorIdUsuario(2).size() >= 1);
+		assertTrue("por lo menos un rol", !rolDAO.consultarRolesPorIdUsuario(2).isEmpty());
 	}
 
 }

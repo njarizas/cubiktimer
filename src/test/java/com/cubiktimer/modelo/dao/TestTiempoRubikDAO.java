@@ -21,7 +21,7 @@ public class TestTiempoRubikDAO {
 	@Test
 	public void testFindAll() {
 		List<TiempoRubikDTO> lista = tiempoRubikDAO.findAll();
-		assertTrue("busca todos los tiempos", lista.size() >= 1);
+		assertTrue("busca todos los tiempos", !lista.isEmpty());
 	}
 
 }

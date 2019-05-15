@@ -16,7 +16,7 @@ public class TestUsuarioRolDAO {
 
 	@Test
 	public void testFindAll() {
-		assertTrue("por lo menos un rol-usuario", usuarioRolDAO.findAll().size() >= 1);
+		assertTrue("por lo menos un rol-usuario", !usuarioRolDAO.findAll().isEmpty());
 	}
 
 }

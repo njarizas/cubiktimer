@@ -21,7 +21,7 @@ public class TestAhorcadoDAO {
 	@Test
 	public void testFindAll() {
 		List<AhorcadoDTO> lista = ahorcadoDAO.findAll();
-		assertTrue("busca todos los registros de ahorcado", lista.size() >= 1);
+		assertTrue("busca todos los registros de ahorcado", !lista.isEmpty());
 	}
 
 }

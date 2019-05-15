@@ -21,7 +21,7 @@ public class TestConfiguracionDAO {
 	@Test
 	public void testFindAll() {
 		List<ConfiguracionDTO> lista = configuracionDAO.findAll();
-		assertTrue("busca todas las configuraciones", lista.size() >= 1);
+		assertTrue("busca todas las configuraciones", !lista.isEmpty());
 	}
 
 }
