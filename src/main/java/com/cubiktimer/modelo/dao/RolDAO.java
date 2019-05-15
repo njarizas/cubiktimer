@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.RolDTO;
+import com.cubiktimer.util.Constantes;
 import com.mysql.jdbc.Statement;
 
 public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
@@ -19,11 +20,14 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(RolDAO.class);
 
+	public RolDAO() {
+		super(Constantes.TABLA_ROLES);
+	}
+
 	@Override
 	public int create(RolDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-
 		String sql = "INSERT INTO roles VALUES (?,?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -40,12 +44,10 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 			} finally {
 				rs.close();
 			}
-
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin create");
 		return 0;
@@ -53,7 +55,6 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 
 	public int update(RolDTO dto) {
 		log.trace("inicio update");
-
 		String sql = "UPDATE roles SET nombre_rol = ?, descripcion = ?, estado = ? WHERE id_rol = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getNombreRol());
@@ -61,12 +62,10 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 			ps.setObject(3, dto.getEstado());
 			ps.setObject(4, dto.getIdRol());
 			ps.executeUpdate();
-
 			log.trace("fin update");
 			return dto.getIdRol();
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin update");
 		return 0;
@@ -83,30 +82,29 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 	public List<RolDTO> consultarRolesPorIdUsuario(int idUsuario) {
 		log.trace("inicio consultarRolesPorIdUsuario");
 		List<RolDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT R.* FROM usuarios_roles UR" + " LEFT JOIN roles R" + " ON UR.id_rol = R.id_rol"
 				+ " WHERE id_usuario = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					RolDTO u = new RolDTO();
-					u.setIdRol(rs.getInt("id_rol"));
-					u.setNombreRol(rs.getString("nombre_rol"));
-					u.setDescripcion(rs.getString("descripcion"));
-					u.setEstado(rs.getInt("estado"));
-					lista.add(u);
-				}
-			} finally {
-				rs.close();
-			}
-
+			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-
 		}
 		log.trace("fin consultarRolesPorIdUsuario");
+		return lista;
+	}
+
+	public List<RolDTO> setList(ResultSet rs) throws SQLException {
+		List<RolDTO> lista = new ArrayList<>();
+		while (rs.next()) {
+			RolDTO r = new RolDTO();
+			r.setIdRol((Integer) rs.getObject("id_rol"));
+			r.setNombreRol(rs.getString("nombre_rol"));
+			r.setDescripcion(rs.getString("descripcion"));
+			r.setEstado((Integer) rs.getObject("estado"));
+			lista.add(r);
+		}
+		rs.close();
 		return lista;
 	}
 

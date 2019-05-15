@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.ConfiguracionDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
@@ -21,12 +22,15 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ConfiguracionDAO.class);
 
+	public ConfiguracionDAO() {
+		super(Constantes.TABLA_CONFIGURACION);
+	}
+
 	@Override
 	public int create(ConfiguracionDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "INSERT INTO configuracion VALUES (?,?,?,?,?,?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -51,61 +55,19 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			} finally {
 				rs.close();
 			}
-
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage() + ": " + e.getStackTrace());
-
 		}
 		log.trace("fin create");
 		return 0;
-	}
-
-	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioYEstado(Integer idUsuario, Integer estado) {
-		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
-		List<ConfiguracionDTO> lista = new ArrayList<>();
-
-		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setInt(1, idUsuario);
-			ps.setInt(2, estado);
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					Util util = Util.getInstance();
-					ConfiguracionDTO c = new ConfiguracionDTO();
-					c.setIdConfiguracion((Integer) rs.getObject("id_configuracion"));
-					c.setIdUsuario((Integer) rs.getObject("id_usuario"));
-					c.setIdTipo((Integer) rs.getObject("id_tipo"));
-					c.setValorTexto(rs.getString("valor_texto"));
-					c.setValorEntero((Integer) rs.getObject("valor_entero"));
-					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
-					try {
-						c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("fecha_nacimiento")));
-					} catch (ParseException pe) {
-						log.trace(
-								"La fecha de la configuracion esta nula o no tiene el formato esperado: ConfiguracionDAO");
-						log.warn(pe.getMessage() + ": " + pe.getStackTrace());
-					}
-					c.setEstado((Integer) rs.getObject("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
-			}
-		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
-		}
-		log.trace("fin consultarConfiguracionPorIdUsuarioYEstado");
-		return lista;
 	}
 
 	public int update(ConfiguracionDTO dto) {
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "UPDATE configuracion" + " SET id_usuario=?,id_tipo=?,valor_texto=?,valor_entero=?,"
 				+ " valor_decimal=?,valor_fecha=?,estado=?" + " WHERE id_configuracion=?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -123,12 +85,10 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			ps.setObject(8, dto.getIdConfiguracion());
 			ps.executeUpdate();
 			retorno = dto.getIdConfiguracion();
-
 			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage() + ": " + e.getStackTrace());
-
 		}
 		log.trace("fin update");
 		return 0;
@@ -142,6 +102,22 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		}
 	}
 
+	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioYEstado(Integer idUsuario, Integer estado) {
+		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
+		List<ConfiguracionDTO> lista = new ArrayList<>();
+		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idUsuario);
+			ps.setInt(2, estado);
+			ResultSet rs = ps.executeQuery();
+			lista = setList(rs);
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
+		}
+		log.trace("fin consultarConfiguracionPorIdUsuarioYEstado");
+		return lista;
+	}
+
 	public boolean existeConfiguracion(Integer idUsuario, Integer idTipo) {
 		return !consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, idTipo, 1).isEmpty();
 	}
@@ -150,46 +126,43 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			Integer estado) {
 		log.trace("inicio consultarConfiguracionPorIdUsuarioIdTipoYEstado");
 		List<ConfiguracionDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND id_tipo = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipo);
 			ps.setInt(3, estado);
 			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					Util util = Util.getInstance();
-					ConfiguracionDTO c = new ConfiguracionDTO();
-					c.setIdConfiguracion((Integer) rs.getObject("id_configuracion"));
-					c.setIdUsuario((Integer) rs.getObject("id_usuario"));
-					c.setIdTipo((Integer) rs.getObject("id_tipo"));
-					c.setValorTexto(rs.getString("valor_texto"));
-					c.setValorEntero((Integer) rs.getObject("valor_entero"));
-					c.setValorDecimal((Double) rs.getObject("valor_decimal"));
-					try {
-						if (rs.getString("valor_fecha") != null) {
-							c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("valor_fecha")));
-						}
-					} catch (ParseException pe) {
-						log.trace("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");
-						log.warn(pe.getMessage() + ": " + pe.getStackTrace());
-					} catch (NullPointerException npe) {
-						log.trace("La fecha de la configuracion esta nula: ConfiguracionDAO");
-						log.warn(npe.getMessage() + ": " + npe.getStackTrace());
-					} catch (Exception e) {
-						log.warn(e.getMessage() + ": " + e.getStackTrace());
-					}
-					c.setEstado((Integer) rs.getObject("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
-			}
+			lista = setList(rs);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage() + ": " + sqle.getStackTrace());
 		}
 		log.trace("fin consultarConfiguracionPorIdUsuarioIdTipoYEstado");
+		return lista;
+	}
+
+	public List<ConfiguracionDTO> setList(ResultSet rs) throws SQLException {
+		List<ConfiguracionDTO> lista = new ArrayList<>();
+		Util util = Util.getInstance();
+		while (rs.next()) {
+			ConfiguracionDTO c = new ConfiguracionDTO();
+			c.setIdConfiguracion((Integer) rs.getObject("id_configuracion"));
+			c.setIdUsuario((Integer) rs.getObject("id_usuario"));
+			c.setIdTipo((Integer) rs.getObject("id_tipo"));
+			c.setValorTexto(rs.getString("valor_texto"));
+			c.setValorEntero((Integer) rs.getObject("valor_entero"));
+			c.setValorDecimal((Double) rs.getObject("valor_decimal"));
+			try {
+				if (rs.getString("valor_fecha") != null) {
+					c.setValorFecha(util.getFechaHoraMysql().parse(rs.getString("valor_fecha")));
+				}
+			} catch (ParseException pe) {
+				log.trace("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");
+				log.warn(pe.getMessage() + ": " + pe.getStackTrace());
+			}
+			c.setEstado((Integer) rs.getObject("estado"));
+			lista.add(c);
+		}
+		rs.close();
 		return lista;
 	}
 

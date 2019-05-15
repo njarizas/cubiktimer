@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.TipoDTO;
+import com.cubiktimer.util.Constantes;
 import com.mysql.jdbc.Statement;
 
 public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
@@ -19,11 +20,14 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TipoDAO.class);
 
+	public TipoDAO() {
+		super(Constantes.TABLA_TIPOS);
+	}
+
 	@Override
 	public int create(TipoDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-		
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -41,12 +45,10 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			} finally {
 				rs.close();
 			}
-			
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-			
 		}
 		log.trace("fin create");
 		return 0;
@@ -55,7 +57,6 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 	public List<TipoDTO> listarTiposDeCuboPorEstado(Integer estado) {
 		log.trace("inicio listarTiposDeCubo");
 		List<TipoDTO> lista = new ArrayList<>();
-		
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, estado);
@@ -75,30 +76,18 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		return listarTiposDeCuboPorEstado(101);
 	}
 
-	public List<TipoDTO> findList(PreparedStatement ps) {
-		log.trace("inicio findList");
+	public List<TipoDTO> setList(ResultSet rs) throws SQLException {
 		List<TipoDTO> lista = new ArrayList<>();
-		try {
-			ResultSet rs = ps.executeQuery();
-			try {
-				while (rs.next()) {
-					TipoDTO t = new TipoDTO();
-					t.setIdTipo((Integer) rs.getObject("id_tipo"));
-					t.setIdPadre((Integer) rs.getObject("id_padre"));
-					t.setNombreTipo(rs.getString("nombre_tipo"));
-					t.setNameTipo(rs.getString("name_tipo"));
-					t.setEstado((Integer) rs.getObject("estado"));
-					lista.add(t);
-				}
-			} finally {
-				rs.close();
-			}
-			
-		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage());
-			
+		while (rs.next()) {
+			TipoDTO t = new TipoDTO();
+			t.setIdTipo((Integer) rs.getObject("id_tipo"));
+			t.setIdPadre((Integer) rs.getObject("id_padre"));
+			t.setNombreTipo(rs.getString("nombre_tipo"));
+			t.setNameTipo(rs.getString("name_tipo"));
+			t.setEstado((Integer) rs.getObject("estado"));
+			lista.add(t);
 		}
-		log.trace("fin findList");
+		rs.close();
 		return lista;
 	}
 

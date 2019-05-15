@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.CredencialDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
@@ -22,11 +23,14 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(CredencialDAO.class);
 
+	public CredencialDAO() {
+		super(Constantes.TABLA_CREDENCIALES);
+	}
+
 	@Override
 	public int create(CredencialDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
-
 		String sql = "INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -46,12 +50,10 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			} finally {
 				rs.close();
 			}
-
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin create");
 		return 0;
@@ -60,15 +62,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {
 		log.trace("inicio consultarCredencialPorCorreo");
 		List<CredencialDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM credenciales WHERE correo = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-
 		}
 		log.trace("fin consultarCredencialPorCorreo");
 		return lista;
@@ -77,7 +76,6 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public List<CredencialDTO> consultarCredencialPorCorreoYEstado(String correo, Integer estado) {
 		log.trace("inicio consultarCredencialPorCorreoYEstado");
 		List<CredencialDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM credenciales WHERE correo = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
@@ -85,8 +83,6 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-
 		}
 		log.trace("fin consultarCredencialPorCorreoYEstado");
 		return lista;
@@ -104,8 +100,6 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-		} finally {
-
 		}
 		log.trace("fin consultarCredencialPorCorreoClaveYEstado");
 		return lista;
@@ -114,7 +108,6 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	public Date obtenerFechaUltimaCredencial(Integer idUsuario) {
 		log.trace("inicio obtenerFechaUltimaCredencial");
 		Date retorno = null;
-
 		String sql = "SELECT max(DATE_FORMAT(fecha_fin, \"%Y-%m-%d %H:%i:%s\")) fecha_ultimo_cambio FROM credenciales WHERE id_usuario=?";
 		try (PreparedStatement ps = CubikTimerDataSource.getConnection().prepareCall(sql)) {
 			ps.setInt(1, idUsuario);
@@ -128,45 +121,32 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			} finally {
 				rs.close();
 			}
-
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin obtenerFechaUltimaCredencial");
 		return retorno;
 	}
 
-	public List<CredencialDTO> findList(PreparedStatement ps) {
-		log.trace("inicio findList");
+	public List<CredencialDTO> setList(ResultSet rs) throws SQLException {
 		List<CredencialDTO> lista = new ArrayList<>();
-		try {
-			ResultSet rs = ps.executeQuery();
+		Util util = Util.getInstance();
+		while (rs.next()) {
+			CredencialDTO c = new CredencialDTO();
+			c.setIdCredencial(rs.getInt("id_credencial"));
+			c.setIdUsuario(rs.getInt("id_usuario"));
+			c.setCorreo(rs.getString("correo"));
+			c.setClave(rs.getString("clave"));
 			try {
-				while (rs.next()) {
-					Util util = Util.getInstance();
-					CredencialDTO c = new CredencialDTO();
-					c.setIdCredencial(rs.getInt("id_credencial"));
-					c.setIdUsuario(rs.getInt("id_usuario"));
-					c.setCorreo(rs.getString("correo"));
-					c.setClave(rs.getString("clave"));
-					c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
-					c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
-					c.setEstado(rs.getInt("estado"));
-					lista.add(c);
-				}
-			} finally {
-				rs.close();
+				c.setFechaInicio(util.getFechaHoraMysql().parse(rs.getString("fecha_inicio")));
+				c.setFechaFin(util.getFechaHoraMysql().parse(rs.getString("fecha_fin")));
+			} catch (ParseException e) {
+				log.warn(e.getMessage());
 			}
-
-		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage());
-
-		} catch (ParseException pe) {
-			log.warn(pe.getMessage());
-
+			c.setEstado(rs.getInt("estado"));
+			lista.add(c);
 		}
-		log.trace("fin findList");
+		rs.close();
 		return lista;
 	}
 

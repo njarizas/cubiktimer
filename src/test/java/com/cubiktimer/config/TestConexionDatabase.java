@@ -2,8 +2,6 @@ package com.cubiktimer.config;
 
 import org.junit.Test;
 
-import com.cubiktimer.config.ConexionDatabase;
-
 import junit.framework.TestCase;
 
 public class TestConexionDatabase extends TestCase {

@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.cubiktimer.controlador.factories.RubikFactory;
-import com.cubiktimer.modelo.rubik.Puzzle;
-import com.cubiktimer.modelo.rubik.TipoCubo;
 import com.cubiktimer.util.ScrambleGenerator;
 import com.cubiktimer.util.ScrambleSolver;
 

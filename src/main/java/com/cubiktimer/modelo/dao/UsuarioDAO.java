@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
@@ -21,12 +22,18 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(UsuarioDAO.class);
 
+	public UsuarioDAO() {
+		super(Constantes.TABLA_USUARIOS);
+	}
+
 	@Override
 	public int create(UsuarioDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		String sql2 = "INSERT INTO usuarios_roles VALUES (?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection();
@@ -61,22 +68,22 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 				ps2.setObject(2, integer);
 				ps2.executeUpdate();
 			}
-
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin create");
 		return 0;
 	}
 
 	public int update(UsuarioDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "UPDATE usuarios SET correo = ?, sal=?, clave = ?, nombres = ?, apellidos = ?, sexo = ?,"
 				+ " fecha_nacimiento = ?, fecha_creacion = ?, fecha_modificacion = ?, estado = ? WHERE id_usuario = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -93,18 +100,19 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			ps.setObject(11, dto.getIdUsuario());
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
-
 			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin update");
 		return 0;
 	}
 
 	public int merge(UsuarioDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (dto.getIdUsuario() == null) {
 			return create(dto);
 		} else {
@@ -115,7 +123,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarUsuarioPorCorreo(String correo) {
 		log.trace("inicio consultarUsuarioPorCorreo");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios WHERE correo = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
@@ -130,7 +137,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuario(int idUsuario) {
 		log.trace("inicio consultarUsuarioPorIdUsuario");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
@@ -145,7 +151,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarUsuarioPorIdUsuarioYClave(int idUsuario, String clave) {
 		log.trace("inicio consultarUsuarioPorIdUsuarioYClave");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND clave = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
@@ -161,7 +166,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarUsuarioPorCorreoYEstado(String correo, Integer estado) {
 		log.trace("inicio consultarUsuarioPorCorreoYEstado");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios WHERE correo = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
@@ -190,7 +194,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarAmigosPorIdUsuario(Integer idUsuario) {
 		log.trace("inicio consultarAmigosPorIdUsuario");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT u.* FROM amigos a INNER JOIN usuarios u ON a.id_amigo=u.id_usuario"
 				+ " WHERE a.id_usuario = ? AND u.estado = 1 AND a.estado = 1";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -213,7 +216,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarUsuariosNoAmigos(Integer idUsuario) {
 		log.trace("inicio consultarUsuariosNoAmigos");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios"
 				+ " WHERE id_usuario NOT IN (SELECT id_amigo FROM amigos WHERE id_usuario=? UNION SELECT id_usuario FROM amigos WHERE id_amigo=?)"
 				+ " AND id_usuario!=?";
@@ -239,7 +241,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarSolicitudesDeAmistad(Integer idUsuario) {
 		log.trace("inicio consultarSolicitudesDeAmistad");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios"
 				+ " WHERE id_usuario IN (SELECT id_usuario FROM amigos WHERE id_amigo=? AND estado=2)"
 				+ " AND id_usuario!=?";
@@ -257,7 +258,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	public List<UsuarioDTO> consultarUsuariosAmigos(Integer idUsuario) {
 		log.trace("inicio consultarUsuariosAmigos");
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios"
 				+ " WHERE id_usuario IN (SELECT id_usuario FROM amigos WHERE id_amigo=? AND estado=1)"
 				+ " AND id_usuario!=?";
@@ -277,7 +277,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio consultarSalPorUsuario: " + correo);
 		log.debug(correo);
 		List<UsuarioDTO> lista = new ArrayList<>();
-
 		String sql = "SELECT * FROM usuarios WHERE correo=?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
@@ -292,40 +291,32 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		return sal;
 	}
 
-	public List<UsuarioDTO> findList(PreparedStatement ps) {
-		log.trace("inicio findList");
+	public List<UsuarioDTO> setList(ResultSet rs) throws SQLException {
 		List<UsuarioDTO> lista = new ArrayList<>();
-		try {
-			ResultSet rs = ps.executeQuery();
-			try {
-				Util util = Util.getInstance();
-				while (rs.next()) {
-					UsuarioDTO u = new UsuarioDTO();
-					u.setIdUsuario(rs.getInt("id_usuario"));
-					u.setCorreo(rs.getString("correo"));
-					u.setSal(rs.getString("sal"));
-					u.setClave(rs.getString("clave"));
-					u.setNombres(rs.getString("nombres"));
-					u.setApellidos(rs.getString("apellidos"));
-					u.setSexo(rs.getString("sexo").charAt(0));
-					u.setFechaNacimiento(util.getFechaMysql().parse(rs.getString("fecha_nacimiento")));
-					u.setFechaNacimiento(util.getFechaHoraMysql().parse(rs.getString("fecha_creacion")));
-					u.setFechaNacimiento(util.getFechaHoraMysql().parse(rs.getString("fecha_modificacion")));
-					u.setEstado(rs.getInt("estado"));
-					lista.add(u);
-				}
-			} finally {
-				rs.close();
-			}
-
-		} catch (SQLException sqle) {
-			log.warn(sqle.getMessage());
-
-		} catch (ParseException pe) {
-			log.warn(pe.getMessage());
-
+		if (rs == null) {
+			return lista;
 		}
-		log.trace("fin findList");
+		Util util = Util.getInstance();
+		while (rs.next()) {
+			UsuarioDTO u = new UsuarioDTO();
+			u.setIdUsuario(rs.getInt("id_usuario"));
+			u.setCorreo(rs.getString("correo"));
+			u.setSal(rs.getString("sal"));
+			u.setClave(rs.getString("clave"));
+			u.setNombres(rs.getString("nombres"));
+			u.setApellidos(rs.getString("apellidos"));
+			u.setSexo(rs.getString("sexo").charAt(0));
+			try {
+				u.setFechaNacimiento(util.getFechaMysql().parse(rs.getString("fecha_nacimiento")));
+				u.setFechaNacimiento(util.getFechaHoraMysql().parse(rs.getString("fecha_creacion")));
+				u.setFechaNacimiento(util.getFechaHoraMysql().parse(rs.getString("fecha_modificacion")));
+			} catch (ParseException e) {
+				log.warn(e.getMessage());
+			}
+			u.setEstado(rs.getInt("estado"));
+			lista.add(u);
+		}
+		rs.close();
 		return lista;
 	}
 

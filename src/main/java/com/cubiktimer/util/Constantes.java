@@ -54,5 +54,24 @@ public class Constantes {
 	public static final String PYRAMINX = "pyram";
 	public static final String SKEWB = "skewb";
 	public static final String SQUARE_1 = "sq1";
+	
+	// nombres de las tablas
+	public static final String TABLA_AHORCADO = "ahorcado";
+	public static final String TABLA_AMIGOS = "amigos";
+	public static final String TABLA_CONFIGURACION = "configuracion";
+	public static final String TABLA_CREDENCIALES = "credenciales";
+	public static final String TABLA_ESTADOS = "estados";
+	public static final String TABLA_PARAMETROS = "parametros";
+	public static final String TABLA_PERMISOS = "permisos";
+	public static final String TABLA_ROLES = "roles";
+	public static final String TABLA_ROLES_PERMISOS = "roles_permisos";
+	public static final String TABLA_SESIONES_RUBIK = "sesiones_rubik";
+	public static final String TABLA_SOLUCIONES_RUBIK = "soluciones_rubik";
+	public static final String TABLA_TIEMPOS = "tiempos";
+	public static final String TABLA_TIEMPOS_RUBIK = "tiempos_rubik";
+	public static final String TABLA_TIEMPOS_RUBIK_IMPORTADOS = "tiempos_rubik_importados";
+	public static final String TABLA_TIPOS = "tipos";
+	public static final String TABLA_USUARIOS = "usuarios";
+	public static final String TABLA_USUARIOS_ROLES = "usuarios_roles";
 
 }

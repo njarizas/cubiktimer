@@ -9,9 +9,6 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import com.cubiktimer.util.Constantes;
-import com.cubiktimer.util.Util;
-
 import junit.framework.TestCase;
 
 public class TestUtil extends TestCase {

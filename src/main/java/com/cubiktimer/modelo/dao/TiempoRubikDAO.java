@@ -4,11 +4,17 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
@@ -17,12 +23,15 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TiempoRubikDAO.class);
 
+	public TiempoRubikDAO() {
+		super(Constantes.TABLA_TIEMPOS_RUBIK);
+	}
+
 	@Override
 	public int create(TiempoRubikDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "INSERT INTO tiempos_rubik"
 				+ " (id_tiempo,id_sesion,id_tipo_cubo,mezcla,tiempo_inspeccion_segundos,"
 				+ " tiempo_inspeccion_usado_milisegundos,tiempo_inspeccion_usado_texto,"
@@ -53,12 +62,10 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 			} finally {
 				rs.close();
 			}
-
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin create");
 		return 0;
@@ -68,7 +75,6 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "UPDATE tiempos_rubik" + " SET id_sesion=?,id_tipo_cubo=?,mezcla=?,tiempo_inspeccion_segundos=?,"
 				+ " tiempo_inspeccion_usado_milisegundos=?,tiempo_inspeccion_usado_texto=?,"
 				+ " tiempo_milisegundos=?,tiempo_texto=?,dnf=?,penalizacion=?,comentario=?,fecha=?,estado=?"
@@ -90,12 +96,10 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 			ps.setObject(14, dto.getIdTiempo());
 			ps.executeUpdate();
 			retorno = dto.getIdTiempo();
-
 			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin update");
 		return 0;
@@ -107,6 +111,36 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 		} else {
 			return update(dto);
 		}
+	}
+
+	public List<TiempoRubikDTO> setList(ResultSet rs) throws SQLException {
+		List<TiempoRubikDTO> lista = new ArrayList<>();
+		Util util = Util.getInstance();
+		while (rs.next()) {
+			TiempoRubikDTO t = new TiempoRubikDTO();
+			t.setIdTiempo((Integer) rs.getObject("id_tiempo"));
+			t.setIdSesion((Integer) rs.getObject("id_sesion"));
+			t.setIdTipoCubo((Integer) rs.getObject("id_tipo_cubo"));
+			t.setMezcla(rs.getString("mezcla"));
+			t.setTiempoInspeccionSegundos((Integer) rs.getObject("tiempo_inspeccion_segundos"));
+			t.setTiempoInspeccionUsadoMilisegundos((Integer) rs.getObject("tiempo_inspeccion_usado_milisegundos"));
+			t.setTiempoInspeccionUsadoTexto(rs.getString("tiempo_inspeccion_usado_texto"));
+			t.setTiempoMilisegundos((Integer) rs.getObject("tiempo_milisegundos"));
+			t.setTiempoTexto(rs.getString("tiempo_texto"));
+			t.setDnf(rs.getBoolean("dnf"));
+			t.setPenalizacion(rs.getBoolean("penalizacion"));
+			t.setComentario(rs.getString("comentario"));
+			try {
+				t.setFecha(rs.getString("fecha") == null ? new Date()
+						: util.getFechaHoraMysql().parse(rs.getString("fecha")));
+			} catch (ParseException e) {
+				log.warn(e.getMessage());
+			}
+			t.setEstado((Integer) rs.getObject("estado"));
+			lista.add(t);
+		}
+		rs.close();
+		return lista;
 	}
 
 }

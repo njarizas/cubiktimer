@@ -17,7 +17,7 @@ import com.cubiktimer.modelo.rubik.estadisticas.Promedio;
 import com.cubiktimer.modelo.rubik.estadisticas.RecordPBSingle;
 import com.cubiktimer.util.Util;
 
-public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Serializable {
+public class EstadisticasDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(EstadisticasDAO.class);
@@ -32,7 +32,6 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 */
 	public List<CuentaPuzzle> obtenerListaConteoPuzzles(Integer idUsuario) {
 		log.trace("inicio obtenerListaConteoPuzzles");
-
 		List<CuentaPuzzle> lista = new ArrayList<>();
 		String sql = "SELECT sr.id_usuario,t.nombre_tipo nombre_puzzle, count(*) conteo_puzzle" + " FROM tiempos tr"
 				+ " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo" + " INNER JOIN sesiones_rubik sr"
@@ -51,10 +50,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			} finally {
 				rs.close();
 			}
-
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin obtenerListaConteoPuzzles");
 		return lista;
@@ -68,7 +65,6 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 */
 	public List<RecordPBSingle> obtenerListaPBSingle(Integer idUsuario) {
 		log.trace("inicio obtenerListaPBSingle");
-
 		List<RecordPBSingle> lista = new ArrayList<>();
 		String sql = "SELECT id_usuario, t2.nombre_tipo, min(tiempo_con_penalizacion) pb_single"
 				+ " FROM tiempos t INNER JOIN sesiones_rubik s ON t.id_sesion = s.id_sesion"
@@ -88,10 +84,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			} finally {
 				rs.close();
 			}
-
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin obtenerListaPBSingle");
 		return lista;
@@ -107,7 +101,6 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 */
 	public List<Promedio> obtenerListaPromediosCategoria(Integer idUsuario, Integer idTipoCubo) {
 		log.trace("inicio obtenerListaPromediosCategoria");
-
 		List<Promedio> lista = new ArrayList<>();
 		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, t.nombre_tipo tipo_cubo,"
 				+ " DATE_FORMAT(sr.fecha,\"%d/%m/%Y\") fecha" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
@@ -129,10 +122,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			} finally {
 				rs.close();
 			}
-
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin obtenerListaPromediosCategoria");
 		return lista;
@@ -148,7 +139,6 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 */
 	public List<Promedio> obtenerListaPromediosCategoriaComparacion(Integer idUsuario, Integer idTipoCubo) {
 		log.trace("inicio obtenerListaPromediosCategoriaComparacion");
-
 		List<Promedio> lista = new ArrayList<>();
 		String sql = "SELECT FLOOR(avg(tr.tiempo_con_penalizacion)) promedio, "
 				+ " CONCAT(u.nombres,' - ', t.nombre_tipo) tipo_cubo," + " DATE_FORMAT(sr.fecha,\"%d/%m/%Y\") fecha"
@@ -172,10 +162,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			} finally {
 				rs.close();
 			}
-
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin obtenerListaPromediosCategoriaComparacion");
 		return lista;
@@ -190,7 +178,6 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	 */
 	public List<Integer> obtenerIdCategoriasRegistradas(Integer idUsuario) {
 		log.trace("inicio obtenerIdCategoriasRegistradas");
-
 		List<Integer> lista = new ArrayList<>();
 		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1";
@@ -204,10 +191,8 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			} finally {
 				rs.close();
 			}
-
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin obtenerIdCategoriasRegistradas");
 		return lista;
@@ -251,7 +236,6 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 	public Integer consultarIdPuzzleMasPracticado(Integer idUsuario) {
 		log.trace("inicio consultarIdPuzzleMasPracticado");
 		Integer idTipoCubo = null;
-
 		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion = sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1"
 				+ " GROUP BY (tr.id_tipo_cubo)" + " ORDER BY COUNT(*)";
@@ -265,18 +249,11 @@ public class EstadisticasDAO extends DAO<CuentaPuzzle, Integer> implements Seria
 			} finally {
 				rs.close();
 			}
-
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
-
 		}
 		log.trace("fin consultarIdPuzzleMasPracticado");
 		return idTipoCubo;
-	}
-
-	@Override
-	public int create(Integer dto) {
-		return 0;
 	}
 
 }

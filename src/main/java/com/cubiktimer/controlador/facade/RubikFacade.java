@@ -38,12 +38,6 @@ public class RubikFacade implements Serializable {
 			retorno += idTiempo;
 			tiempo.getTiempoRubikDTO().setIdTiempo(idTiempo);
 		}
-		for (Tiempo tiempo : listaTiempos) {
-			tiempo.getTiempoRubikDTO().setIdSesion(idSesion);
-			int idTiempo = guardarTiempoRubik(tiempo.getTiempoRubikDTO());
-			retorno += idTiempo;
-			tiempo.getTiempoRubikDTO().setIdTiempo(idTiempo);
-		}
 		for (SolucionFewestMoves solucion : listaSoluciones) {
 			solucion.getFewestMoveDTO().setIdSesion(idSesion);
 			int idTiempo = guardarSolucionRubik(solucion.getFewestMoveDTO());

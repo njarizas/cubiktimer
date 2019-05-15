@@ -4,11 +4,16 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.FewestMovesDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
 import com.mysql.jdbc.Statement;
 
@@ -17,12 +22,15 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(FewestMovesDAO.class);
 
+	public FewestMovesDAO() {
+		super(Constantes.TABLA_SOLUCIONES_RUBIK);
+	}
+
 	@Override
 	public int create(FewestMovesDTO dto) {
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "INSERT INTO soluciones_rubik (id_solucion, id_sesion, id_tipo_cubo, mezcla, tiempo_usado_milisegundos,"
 				+ " tiempo_restante_texto, solucion, longitud_solucion, solucion_valida, dnf, comentario, fecha, estado)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -50,12 +58,10 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 			} finally {
 				rs.close();
 			}
-
 			log.trace("fin create");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin create");
 		return 0;
@@ -65,7 +71,6 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-
 		String sql = "UPDATE cubiktimer.soluciones_rubik SET id_sesion = ?, id_tipo_cubo = ?,"
 				+ " mezcla = ?, tiempo_usado_milisegundos = ?, tiempo_restante_texto = ?, solucion = ?,"
 				+ " longitud_solucion = ?, solucion_valida = ?, dnf = ?, comentario = ?, fecha = ?, estado = ?"
@@ -86,12 +91,10 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 			ps.setObject(13, dto.getIdFewestMove());
 			ps.executeUpdate();
 			retorno = dto.getIdFewestMove();
-
 			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
-
 		}
 		log.trace("fin update");
 		return 0;
@@ -103,6 +106,34 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 		} else {
 			return update(dto);
 		}
+	}
+
+	public List<FewestMovesDTO> setList(ResultSet rs) throws SQLException {
+		List<FewestMovesDTO> lista = new ArrayList<>();
+		Util util = Util.getInstance();
+		while (rs.next()) {
+			FewestMovesDTO f = new FewestMovesDTO();
+			f.setIdFewestMove((Integer) rs.getObject("id_solucion"));
+			f.setIdSesion((Integer) rs.getObject("id_sesion"));
+			f.setIdTipoCubo((Integer) rs.getObject("id_tipo_cubo"));
+			f.setMezcla(rs.getString("mezcla"));
+			f.setTiempoUsadoMilisegundos((Integer) rs.getObject("tiempo_usado_milisegundos"));
+			f.setTiempoRestanteTexto(rs.getString("tiempo_restante_texto"));
+			f.setSolucion(rs.getString("solucion"));
+			f.setLongitudSolucion((Integer) rs.getObject("longitud_solucion"));
+			f.setSolucionValida(rs.getBoolean("solucion_valida"));
+			f.setDnf(rs.getBoolean("dnf"));
+			f.setComentario(rs.getString("comentario"));
+			try {
+				f.setFecha(util.getFechaHoraMysql().parse(rs.getString("fecha")));
+			} catch (ParseException e) {
+				log.warn(e.getMessage());
+			}
+			f.setEstado((Integer) rs.getObject("estado"));
+			lista.add(f);
+		}
+		rs.close();
+		return lista;
 	}
 
 }
