@@ -26,6 +26,9 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 
 	@Override
 	public int create(TipoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
@@ -54,6 +57,42 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		return 0;
 	}
 
+	public int update(TipoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio update");
+		int retorno = 0;
+		String sql = "UPDATE tipos SET id_tipo = ?, id_padre = ?, nombre_tipo = ?, name_tipo = ?, estado = ? WHERE id_tipo = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdTipo());
+			ps.setObject(2, dto.getIdPadre());
+			ps.setObject(3, dto.getNombreTipo());
+			ps.setObject(4, dto.getNameTipo());
+			ps.setObject(5, dto.getEstado());
+			ps.setObject(6, dto.getIdTipo());
+			ps.executeUpdate();
+			retorno = dto.getIdTipo();
+			log.trace("fin update");
+			return retorno;
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		log.trace("fin update");
+		return 0;
+	}
+
+	public int merge(TipoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		if (dto.getIdTipo() == null) {
+			return create(dto);
+		} else {
+			return update(dto);
+		}
+	}
+
 	public List<TipoDTO> listarTiposDeCuboPorEstado(Integer estado) {
 		log.trace("inicio listarTiposDeCubo");
 		List<TipoDTO> lista = new ArrayList<>();
@@ -78,6 +117,9 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 
 	public List<TipoDTO> setList(ResultSet rs) throws SQLException {
 		List<TipoDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		while (rs.next()) {
 			TipoDTO t = new TipoDTO();
 			t.setIdTipo((Integer) rs.getObject("id_tipo"));

@@ -28,6 +28,9 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 
 	@Override
 	public int create(ConfiguracionDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -65,6 +68,9 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 	}
 
 	public int update(ConfiguracionDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -95,6 +101,9 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 	}
 
 	public int merge(ConfiguracionDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (!existeConfiguracion(dto.getIdUsuario(), dto.getIdTipo())) {
 			return create(dto);
 		} else {
@@ -142,6 +151,9 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 
 	public List<ConfiguracionDTO> setList(ResultSet rs) throws SQLException {
 		List<ConfiguracionDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		Util util = Util.getInstance();
 		while (rs.next()) {
 			ConfiguracionDTO c = new ConfiguracionDTO();

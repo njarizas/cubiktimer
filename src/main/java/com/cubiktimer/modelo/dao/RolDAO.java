@@ -26,6 +26,9 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 
 	@Override
 	public int create(RolDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO roles VALUES (?,?,?,?)";
@@ -54,6 +57,9 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 	}
 
 	public int update(RolDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		String sql = "UPDATE roles SET nombre_rol = ?, descripcion = ?, estado = ? WHERE id_rol = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -72,6 +78,9 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 	}
 
 	public int merge(RolDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (dto.getIdRol() == null) {
 			return create(dto);
 		} else {
@@ -96,6 +105,9 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 
 	public List<RolDTO> setList(ResultSet rs) throws SQLException {
 		List<RolDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		while (rs.next()) {
 			RolDTO r = new RolDTO();
 			r.setIdRol((Integer) rs.getObject("id_rol"));

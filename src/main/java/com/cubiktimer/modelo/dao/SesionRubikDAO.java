@@ -28,6 +28,9 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 
 	@Override
 	public int create(SesionRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -58,6 +61,9 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 	}
 
 	public int update(SesionRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -80,6 +86,9 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 	}
 
 	public int merge(SesionRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (dto.getIdSesion() == null) {
 			return create(dto);
 		} else {
@@ -89,6 +98,9 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 
 	public List<SesionRubikDTO> setList(ResultSet rs) throws SQLException {
 		List<SesionRubikDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		Util util = Util.getInstance();
 		while (rs.next()) {
 			SesionRubikDTO s = new SesionRubikDTO();

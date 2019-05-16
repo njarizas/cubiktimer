@@ -26,6 +26,9 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 
 	@Override
 	public int create(PermisoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO permisos VALUES (?,?,?,?,?,?,?,?)";
@@ -58,6 +61,9 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	}
 
 	public int update(PermisoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		int retorno = 0;
 		String sql = "UPDATE usuarios_roles SET url = ?, id_padre = ?, nombre_permiso = ?, descripcion_permiso = ?,"
@@ -83,6 +89,9 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 	}
 
 	public int merge(PermisoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (dto.getIdPermiso() == null) {
 			return create(dto);
 		} else {
@@ -168,6 +177,9 @@ public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializabl
 
 	public List<PermisoDTO> setList(ResultSet rs) throws SQLException {
 		List<PermisoDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		while (rs.next()) {
 			PermisoDTO p = new PermisoDTO();
 			p.setIdPermiso(rs.getInt("id_permiso"));

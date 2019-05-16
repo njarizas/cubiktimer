@@ -28,6 +28,9 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 
 	@Override
 	public int create(FewestMovesDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -68,10 +71,13 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 	}
 
 	public int update(FewestMovesDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		String sql = "UPDATE cubiktimer.soluciones_rubik SET id_sesion = ?, id_tipo_cubo = ?,"
+		String sql = "UPDATE soluciones_rubik SET id_sesion = ?, id_tipo_cubo = ?,"
 				+ " mezcla = ?, tiempo_usado_milisegundos = ?, tiempo_restante_texto = ?, solucion = ?,"
 				+ " longitud_solucion = ?, solucion_valida = ?, dnf = ?, comentario = ?, fecha = ?, estado = ?"
 				+ " WHERE id_solucion = ?";
@@ -101,6 +107,9 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 	}
 
 	public int merge(FewestMovesDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (dto.getIdFewestMove() == null) {
 			return create(dto);
 		} else {
@@ -110,6 +119,9 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 
 	public List<FewestMovesDTO> setList(ResultSet rs) throws SQLException {
 		List<FewestMovesDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		Util util = Util.getInstance();
 		while (rs.next()) {
 			FewestMovesDTO f = new FewestMovesDTO();

@@ -29,6 +29,9 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 
 	@Override
 	public int create(CredencialDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO credenciales VALUES (?,?,?,?,?,?,?)";
@@ -57,6 +60,44 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		}
 		log.trace("fin create");
 		return 0;
+	}
+
+	public int update(CredencialDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio update");
+		int retorno = 0;
+		String sql = "UPDATE credenciales SET id_credencial = ?, id_usuario = ?, correo = ?, clave = ?, fecha_inicio = ?, fecha_fin = ?, estado = ? WHERE id_credencial = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdCredencial());
+			ps.setObject(2, dto.getIdUsuario());
+			ps.setObject(3, dto.getCorreo());
+			ps.setObject(4, dto.getClave());
+			ps.setObject(5, dto.getFechaInicio());
+			ps.setObject(6, dto.getFechaFin());
+			ps.setObject(7, dto.getEstado());
+			ps.setObject(8, dto.getIdCredencial());
+			ps.executeUpdate();
+			retorno = dto.getIdCredencial();
+			log.trace("fin update");
+			return retorno;
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		log.trace("fin update");
+		return 0;
+	}
+
+	public int merge(CredencialDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		if (dto.getIdCredencial() == null) {
+			return create(dto);
+		} else {
+			return update(dto);
+		}
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {
@@ -130,6 +171,9 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 
 	public List<CredencialDTO> setList(ResultSet rs) throws SQLException {
 		List<CredencialDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		Util util = Util.getInstance();
 		while (rs.next()) {
 			CredencialDTO c = new CredencialDTO();

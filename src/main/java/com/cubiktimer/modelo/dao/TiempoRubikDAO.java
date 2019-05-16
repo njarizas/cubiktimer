@@ -29,6 +29,9 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 
 	@Override
 	public int create(TiempoRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -72,6 +75,9 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 	}
 
 	public int update(TiempoRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -106,6 +112,9 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 	}
 
 	public int merge(TiempoRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		if (dto.getIdTiempo() == null) {
 			return create(dto);
 		} else {
@@ -115,6 +124,9 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 
 	public List<TiempoRubikDTO> setList(ResultSet rs) throws SQLException {
 		List<TiempoRubikDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		Util util = Util.getInstance();
 		while (rs.next()) {
 			TiempoRubikDTO t = new TiempoRubikDTO();

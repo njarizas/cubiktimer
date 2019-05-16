@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -146,7 +147,7 @@ public class SesionRubik implements Serializable {
 							ultimosTiempos.get(tiempos.size() - 1).getTiempoRubikDTO().getTiempoRealMilisegundos());
 		}
 	}
-	
+
 	public String mediaFewest() {
 		Integer acumulado = 0;
 		Integer solucionesValidas = 0;
@@ -156,19 +157,22 @@ public class SesionRubik implements Serializable {
 				solucionesValidas++;
 			}
 		}
-		return ((solucionesValidas != 0) ? Util.getDf().format(acumulado / (double)solucionesValidas) : "--.--");
+		return ((solucionesValidas != 0)
+				? Util.getDf().format(new BigDecimal(acumulado).divide(new BigDecimal(solucionesValidas)))
+				: "--.--");
 	}
-	
+
 	public String mo3FewestActual() {
 		return moNFewestActual(3);
 	}
-	
+
 	public String moNFewestActual(int n) {
 		Integer acumulado = 0;
 		if (soluciones.size() < n) {
 			return "--.--";
 		} else {
-			List<SolucionFewestMoves> ultimasNSoluciones = new ArrayList<>(soluciones.subList(soluciones.size() - n, soluciones.size()));
+			List<SolucionFewestMoves> ultimasNSoluciones = new ArrayList<>(
+					soluciones.subList(soluciones.size() - n, soluciones.size()));
 			Collections.sort(ultimasNSoluciones);
 			for (int i = 0; i <= n - 1; i++) {
 				if (ultimasNSoluciones.get(i).getFewestMoveDTO().getDnf()) {
@@ -180,7 +184,7 @@ public class SesionRubik implements Serializable {
 			return Util.getDf().format(acumulado / n);
 		}
 	}
-	
+
 	public String mejorFewest() {
 		if (soluciones.isEmpty()) {
 			return "--";

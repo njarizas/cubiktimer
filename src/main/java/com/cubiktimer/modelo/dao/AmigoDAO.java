@@ -62,14 +62,15 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		}
 		log.trace("inicio update");
 		int retorno = 0;
-		String sql = "UPDATE amigos SET id_usuario = ?, id_amigo = ?, estado = ? WHERE id_amistad = ?";
+		String sql = "UPDATE amigos SET id_amistad=?, id_usuario = ?, id_amigo = ?, estado = ? WHERE id_amistad = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getIdUsuario());
-			ps.setObject(2, dto.getIdAmigo());
-			ps.setObject(3, dto.getEstado());
-			ps.setObject(4, dto.getIdAmistad());
+			ps.setObject(1, dto.getIdAmistad());
+			ps.setObject(2, dto.getIdUsuario());
+			ps.setObject(3, dto.getIdAmigo());
+			ps.setObject(4, dto.getEstado());
+			ps.setObject(5, dto.getIdAmistad());
 			ps.executeUpdate();
-			retorno = dto.getIdUsuario();
+			retorno = dto.getIdAmistad();
 			log.trace("fin update");
 			return retorno;
 		} catch (Exception e) {

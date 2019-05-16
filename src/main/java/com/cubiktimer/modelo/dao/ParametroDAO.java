@@ -25,6 +25,9 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 
 	@Override
 	public int create(ParametroDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO parametros VALUES (?,?)";
@@ -39,6 +42,39 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		}
 		log.trace("fin create");
 		return 0;
+	}
+
+	public int update(ParametroDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio update");
+		int retorno = 0;
+		String sql = "UPDATE parametros SET codigo = ?, valor = ? WHERE codigo = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getCodigo());
+			ps.setObject(2, dto.getValor());
+			ps.setObject(3, dto.getCodigo());
+			ps.executeUpdate();
+			retorno = 1;
+			log.trace("fin update");
+			return retorno;
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		log.trace("fin update");
+		return 0;
+	}
+
+	public int merge(ParametroDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		if (!existeParametro(dto.getCodigo())) {
+			return create(dto);
+		} else {
+			return update(dto);
+		}
 	}
 
 	public String obtenerValorParametro(String codigo) {
@@ -67,8 +103,15 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		return lista;
 	}
 
+	public boolean existeParametro(String codigo) {
+		return !obtenerParametro(codigo).isEmpty();
+	}
+
 	public List<ParametroDTO> setList(ResultSet rs) throws SQLException {
 		List<ParametroDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
 		while (rs.next()) {
 			ParametroDTO p = new ParametroDTO();
 			p.setCodigo(rs.getString("codigo"));

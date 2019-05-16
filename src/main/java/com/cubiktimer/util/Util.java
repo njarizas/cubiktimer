@@ -1,6 +1,7 @@
 package com.cubiktimer.util;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -35,21 +36,20 @@ public class Util implements Serializable {
 
 	/**
 	 * Método que recibe una cadena con minutos y segundos y centesimas de segundo
-	 * en formato "mm:ss.cc" y lo convierte en un double que representa sólo
+	 * en formato "mm:ss.cc" y lo convierte en un BigDecimal que representa sólo
 	 * segundos
 	 * 
 	 * @param string
 	 * @return
 	 */
-	public static double calcularSegundos(String string) {
+	public static BigDecimal calcularSegundos(String string) {
 		if (string.length() == 8) {
-			int min;
-			double seg;
-			min = Integer.parseInt(string.substring(0, 2));
-			seg = Double.parseDouble(string.substring(3));
-			return min * 60 + seg;
+			BigDecimal min;
+			BigDecimal seg = BigDecimal.valueOf(Double.parseDouble(string.substring(3)));
+			min = new BigDecimal(string.substring(0, 2));
+			return min.multiply(new BigDecimal(60)).add(seg);
 		}
-		return 0d;
+		return BigDecimal.valueOf(0.0);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class Util implements Serializable {
 	 * @return
 	 */
 	public static int calcularMilesimasDeSegundos(String string) {
-		return (int) (calcularSegundos(string) * 1000);
+		return calcularSegundos(string).multiply(BigDecimal.valueOf(1000)).intValue();
 	}
 
 	/**
@@ -75,15 +75,15 @@ public class Util implements Serializable {
 	public static String darFormatoTiempo(Integer miliseg) {
 		miliseg -= miliseg % 10;
 		String retorno = "";
-		double seg = miliseg / 1000d;
+		BigDecimal seg = BigDecimal.valueOf(miliseg).divide(BigDecimal.valueOf(1000));
 		int min;
-		min = (int) Math.floor(seg) / 60;
-		seg -= min * 60;
+		min = (int) Math.floor(seg.doubleValue()) / 60;
+		seg = seg.subtract(BigDecimal.valueOf(min * 60));
 		if (min < 10) {
 			retorno += "0";
 		}
 		retorno += min + ":";
-		if (seg < 10) {
+		if (seg.intValue() < 10) {
 			retorno += "0";
 		}
 		retorno += DF.format(seg);

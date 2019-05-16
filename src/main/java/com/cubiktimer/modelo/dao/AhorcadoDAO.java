@@ -28,6 +28,9 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 
 	@Override
 	public int create(AhorcadoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
@@ -52,9 +55,53 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		return 0;
 	}
 
-	protected List<AhorcadoDTO> setList(ResultSet rs) throws SQLException {
+	public int update(AhorcadoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio update");
 		Util util = Util.getInstance();
+		int retorno = 0;
+		String sql = "UPDATE ahorcado SET id_ahorcado = ?, id_usuario = ?, fecha = ?, palabra = ?, letras_usadas = ?, intentos_sobrantes = ?, gano = ?, ip = ?, estado = ? WHERE id_ahorcado = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdAhorcado());
+			ps.setObject(2, dto.getIdUsuario());
+			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));
+			ps.setString(4, dto.getPalabra());
+			ps.setString(5, dto.getLetrasUsadas());
+			ps.setObject(6, dto.getIntentosSobrantes());
+			ps.setBoolean(7, dto.getGano());
+			ps.setString(8, dto.getIp());
+			ps.setObject(9, dto.getEstado());
+			ps.setObject(10, dto.getIdAhorcado());
+			ps.executeUpdate();
+			retorno = dto.getIdAhorcado();
+			log.trace("fin update");
+			return retorno;
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		log.trace("fin update");
+		return 0;
+	}
+
+	public int merge(AhorcadoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		if (dto.getIdAhorcado() == null) {
+			return create(dto);
+		} else {
+			return update(dto);
+		}
+	}
+
+	public List<AhorcadoDTO> setList(ResultSet rs) throws SQLException {
 		List<AhorcadoDTO> lista = new ArrayList<>();
+		if (rs == null) {
+			return lista;
+		}
+		Util util = Util.getInstance();
 		while (rs.next()) {
 			AhorcadoDTO a = new AhorcadoDTO();
 			a.setIdAhorcado((Integer) rs.getObject("id_ahorcado"));

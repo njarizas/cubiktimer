@@ -19,14 +19,20 @@ public abstract class DAO<P, E> implements Serializable {
 
 	private String nombreTabla;
 
-//	public DAO() {
-//	}
+	public DAO() {
+	}
 
 	public DAO(String nombreTabla) {
 		this.nombreTabla = nombreTabla;
 	}
 
 	public abstract int create(E dto);
+
+	public abstract int update(E dto);
+
+	public abstract int merge(E dto);
+
+	public abstract List<E> setList(ResultSet rs) throws SQLException;
 
 	public List<E> findAll() {
 		log.trace("inicio findAll");
@@ -40,7 +46,7 @@ public abstract class DAO<P, E> implements Serializable {
 		log.trace("fin findAll");
 		return lista;
 	}
-	
+
 	public List<E> findList(PreparedStatement ps) {
 		log.trace("inicio findList");
 		List<E> lista = new ArrayList<>();
@@ -53,8 +59,6 @@ public abstract class DAO<P, E> implements Serializable {
 		log.trace("fin findList");
 		return lista;
 	}
-	
-	protected abstract List<E> setList(ResultSet rs) throws SQLException;
 
 	public String getNombreTabla() {
 		return nombreTabla;
