@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
 
@@ -20,9 +21,29 @@ public class Tiempo implements Serializable, Comparable<Tiempo> {
 		this.tiempoRubikDTO = tiempoRubikDTO;
 	}
 
+	/**
+	 * Note: this class has a natural ordering that is inconsistent with equals.
+	 */
 	@Override
 	public int compareTo(Tiempo otherTiempo) {
 		return this.tiempoRubikDTO.compareTo(otherTiempo.tiempoRubikDTO);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(tiempoRubikDTO);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tiempo other = (Tiempo) obj;
+		return Objects.equals(tiempoRubikDTO, other.tiempoRubikDTO);
 	}
 
 	public Puzzle getCubo() {

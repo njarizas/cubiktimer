@@ -1,6 +1,7 @@
 package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import com.cubiktimer.modelo.dto.FewestMovesDTO;
 
@@ -20,9 +21,29 @@ public class SolucionFewestMoves implements Serializable, Comparable<SolucionFew
 		this.fewestMoveDTO = fewestMoveDTO;
 	}
 
+	/**
+	 * Note: this class has a natural ordering that is inconsistent with equals.
+	 */
 	@Override
 	public int compareTo(SolucionFewestMoves otherTiempo) {
 		return this.fewestMoveDTO.compareTo(otherTiempo.fewestMoveDTO);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fewestMoveDTO);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SolucionFewestMoves other = (SolucionFewestMoves) obj;
+		return Objects.equals(fewestMoveDTO, other.fewestMoveDTO);
 	}
 
 	public Puzzle getCubo() {

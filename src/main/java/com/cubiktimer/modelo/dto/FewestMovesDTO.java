@@ -2,6 +2,7 @@ package com.cubiktimer.modelo.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class FewestMovesDTO implements Serializable, Comparable<FewestMovesDTO> {
 
@@ -49,6 +50,9 @@ public class FewestMovesDTO implements Serializable, Comparable<FewestMovesDTO> 
 		this.comentario = comentario;
 	}
 
+	/**
+	 * Note: this class has a natural ordering that is inconsistent with equals.
+	 */
 	@Override
 	public int compareTo(FewestMovesDTO otherFewestMove) {
 		if (this.getDnf().equals(otherFewestMove.getDnf())) {
@@ -75,26 +79,27 @@ public class FewestMovesDTO implements Serializable, Comparable<FewestMovesDTO> 
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + this.longitudSolucion;
-		return result;
+		return Objects.hash(comentario, dnf, estado, fecha, idFewestMove, idSesion, idTipoCubo, longitudSolucion,
+				mezcla, solucion, solucionValida, tiempoRestanteTexto, tiempoUsadoMilisegundos);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		FewestMovesDTO other = (FewestMovesDTO) obj;
-		return this.longitudSolucion.equals(other.longitudSolucion);
-
+		return Objects.equals(comentario, other.comentario) && Objects.equals(dnf, other.dnf)
+				&& Objects.equals(estado, other.estado) && Objects.equals(fecha, other.fecha)
+				&& Objects.equals(idFewestMove, other.idFewestMove) && Objects.equals(idSesion, other.idSesion)
+				&& Objects.equals(idTipoCubo, other.idTipoCubo)
+				&& Objects.equals(longitudSolucion, other.longitudSolucion) && Objects.equals(mezcla, other.mezcla)
+				&& Objects.equals(solucion, other.solucion) && Objects.equals(solucionValida, other.solucionValida)
+				&& Objects.equals(tiempoRestanteTexto, other.tiempoRestanteTexto)
+				&& Objects.equals(tiempoUsadoMilisegundos, other.tiempoUsadoMilisegundos);
 	}
 
 	@Override

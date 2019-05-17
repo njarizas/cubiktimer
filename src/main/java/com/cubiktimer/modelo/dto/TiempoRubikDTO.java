@@ -48,6 +48,9 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 		this.comentario = comentario;
 	}
 
+	/**
+	 * Note: this class has a natural ordering that is inconsistent with equals.
+	 */
 	@Override
 	public int compareTo(TiempoRubikDTO otherTiempo) {
 		if (this.getDnf().equals(otherTiempo.getDnf())) {
@@ -220,7 +223,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	
+
 	public Date getFecha() {
 		return fecha;
 	}
