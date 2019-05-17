@@ -8,6 +8,7 @@ public class Constantes {
 
 	// ruta de la aplicación
 	public static final String PATH_CUBIKTIMER = "C:\\cubiktimer\\";
+	public static final String LINE_SEPARATOR="line.separator";
 
 	// colores del cubo de rubik
 	public static final String COLOR_BLANCO = "white";
@@ -67,7 +68,6 @@ public class Constantes {
 	public static final String TABLA_ROLES_PERMISOS = "roles_permisos";
 	public static final String TABLA_SESIONES_RUBIK = "sesiones_rubik";
 	public static final String TABLA_SOLUCIONES_RUBIK = "soluciones_rubik";
-	public static final String TABLA_TIEMPOS = "tiempos";
 	public static final String TABLA_TIEMPOS_RUBIK = "tiempos_rubik";
 	public static final String TABLA_TIEMPOS_RUBIK_IMPORTADOS = "tiempos_rubik_importados";
 	public static final String TABLA_TIPOS = "tipos";

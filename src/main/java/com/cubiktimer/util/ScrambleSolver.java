@@ -1,11 +1,3 @@
-/**<b>Nombre: </b> ScrambleSolver.java <br>
- * <b>Descripción:</b> TODO agregar descripcion del metodo<br>
- * <b>Fecha Creación:</b> 8/05/2019 <br>
- * <b>Autor:</b> HITSS Nelson Ariza <br>
- * <b>Fecha de Última Modificación: </b> 8/05/2019 <br>
- * <b>Modificado por: </b> HITSS Nelson Ariza <br>
- * <b>Brief: TODO XXXX</b><br>
- */
 package com.cubiktimer.util;
 
 import java.io.BufferedReader;

@@ -267,20 +267,9 @@ public class Skewb extends Puzzle implements Serializable {
 		this.back = back;
 	}
 
-	@Override
 	public boolean estaResuelto() {
-		// TODO implementar metodo
-		// throw new UnsupportedOperationException("Not implemented, yet");
-		return false;
-	}
-
-	// TODO implementar toString}
-
-	@Override
-	public String faceletToString() {
-		// TODO implementar metodo
-		// throw new UnsupportedOperationException("Not implemented, yet");
-		return "";
+		return (back.estaResuelto() && bottom.estaResuelto() && front.estaResuelto() && left.estaResuelto()
+				&& right.estaResuelto() && top.estaResuelto());
 	}
 
 }

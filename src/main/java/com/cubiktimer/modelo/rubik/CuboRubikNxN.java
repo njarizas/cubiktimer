@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
-public abstract class CuboRubikNxN extends Puzzle implements Serializable {
+public abstract class CuboRubikNxN extends Puzzle implements Serializable, Comprobable {
 
 	// TODO: sobreescribir el metodo equals de tal manera que retorne true si los
 	// cubos estan con la misma mezcla sin importar que esten girados
@@ -197,7 +197,7 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 
 	/**
 	 * Metodo que gira el cubo en sentido de las manecillas del reloj sobre el plano
-	 * de la cara izquierda la cantidad de veces recibidas por parámetro
+	 * de la cara derecha la cantidad de veces recibidas por parámetro
 	 *
 	 * @param cant
 	 */
@@ -209,22 +209,22 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 
 	/**
 	 * Metodo que gira el cubo una vez en sentido de las manecillas del reloj sobre
-	 * el plano de la cara izquierda
+	 * el plano de la cara derecha
 	 */
 	public void x() {
+		right.girarCara();
 		left.girarCara();
-		right.girarCara();
-		right.girarCara();
-		right.girarCara();
+		left.girarCara();
+		left.girarCara();
+		top.girarCara();
+		top.girarCara();
 		back.girarCara();
 		back.girarCara();
-		bottom.girarCara();
-		bottom.girarCara();
 		CaraRubik aux = top;
-		top = back;
-		back = bottom;
-		bottom = front;
-		front = aux;
+		top = front;
+		front = bottom;
+		bottom = back;
+		back = aux;
 	}
 
 	/**
@@ -326,24 +326,24 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 			d(2);
 		} else if (giro.equals("d'")) {
 			d(3);
-		} else if (giro.equals("z")) {
-			z(1);
-		} else if (giro.equals("z2")) {
-			z(2);
-		} else if (giro.equals("z'")) {
-			z(3);
-		} else if (giro.equals("x")) {
+		} else if (giro.equals("x") || giro.equals("[r]") || giro.equals("[l']")) {
 			x(1);
-		} else if (giro.equals("x2")) {
+		} else if (giro.equals("x2") || giro.equals("[r2]") || giro.equals("[l2]")) {
 			x(2);
-		} else if (giro.equals("x'")) {
+		} else if (giro.equals("x'") || giro.equals("[r']") || giro.equals("[l]")) {
 			x(3);
-		} else if (giro.equals("y")) {
+		} else if (giro.equals("y") || giro.equals("[u]") || giro.equals("[d']")) {
 			y(1);
-		} else if (giro.equals("y2")) {
+		} else if (giro.equals("y2") || giro.equals("[u2]") || giro.equals("[d2]")) {
 			y(2);
-		} else if (giro.equals("y'")) {
+		} else if (giro.equals("y'") || giro.equals("[u']") || giro.equals("[d]")) {
 			y(3);
+		} else if (giro.equals("z") || giro.equals("[f]") || giro.equals("[b']")) {
+			z(1);
+		} else if (giro.equals("z2") || giro.equals("[f2]") || giro.equals("[l2]")) {
+			z(2);
+		} else if (giro.equals("z'") || giro.equals("[f']") || giro.equals("[b]")) {
+			z(3);
 		} else {
 			log.trace("giro no valido: " + giro);
 			return false;
@@ -357,16 +357,13 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 		StringBuilder secuenciaMezclada = new StringBuilder("");
 		for (String giro : mezcla) {
 			if (girar(giro)) {
-				secuenciaMezclada.append(giro.toUpperCase().replaceAll("W", "w") + " ");
+				secuenciaMezclada.append(giro.toUpperCase().replaceAll("W", "w").replaceAll("X", "x")
+						.replaceAll("Y", "y").replaceAll("Z", "z").replaceAll("\\[B", "[b").replaceAll("\\[R", "[r")
+						.replaceAll("\\[D", "[d").replaceAll("\\[F", "[f").replaceAll("\\[L", "[l")
+						.replaceAll("\\[U", "[u") + " ");
 			}
 		}
 		return secuenciaMezclada.toString();
-	}
-
-	@Override
-	public boolean estaResuelto() {
-		return (back.estaResuelto() && bottom.estaResuelto() && front.estaResuelto() && left.estaResuelto()
-				&& right.estaResuelto() && top.estaResuelto());
 	}
 
 	public CaraRubik getTop() {
@@ -444,15 +441,9 @@ public abstract class CuboRubikNxN extends Puzzle implements Serializable {
 	}
 
 	@Override
-	public String faceletToString() {
-		StringBuilder retorno = new StringBuilder("");
-		retorno.append(getTop().faceletString());
-		retorno.append(getRight().faceletString());
-		retorno.append(getFront().faceletString());
-		retorno.append(getBottom().faceletString());
-		retorno.append(getLeft().faceletString());
-		retorno.append(getBack().faceletString());
-		return retorno.toString();
+	public boolean estaResuelto() {
+		return (back.estaResuelto() && bottom.estaResuelto() && front.estaResuelto() && left.estaResuelto()
+				&& right.estaResuelto() && top.estaResuelto());
 	}
 
 }

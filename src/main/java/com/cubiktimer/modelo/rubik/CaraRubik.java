@@ -125,7 +125,6 @@ public class CaraRubik implements Serializable {
 		StringBuilder str = new StringBuilder("");
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < cara[i].length; j++) {
-				
 				str.append(Util.obtenerLetraDeCaraPorColor(cara[i][j].getCodigoColor()));
 			}
 		}

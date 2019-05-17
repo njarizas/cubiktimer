@@ -38,20 +38,4 @@ public class Pyraminx extends Puzzle implements Serializable {
 		return true;
 	}
 
-	@Override
-	public boolean estaResuelto() {
-		// TODO implementar metodo
-		// throw new UnsupportedOperationException("Not implemented, yet");
-		return false;
-	}
-
-	// TODO implementar toString}
-
-	@Override
-	public String faceletToString() {
-		// TODO implementar metodo
-		// throw new UnsupportedOperationException("Not implemented, yet");
-		return "";
-	}
-
 }

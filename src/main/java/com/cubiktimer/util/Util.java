@@ -78,7 +78,7 @@ public class Util implements Serializable {
 		BigDecimal seg = BigDecimal.valueOf(miliseg).divide(BigDecimal.valueOf(1000));
 		int min;
 		min = (int) Math.floor(seg.doubleValue()) / 60;
-		seg = seg.subtract(BigDecimal.valueOf(min * 60));
+		seg = seg.subtract(BigDecimal.valueOf(min * 60L));
 		if (min < 10) {
 			retorno += "0";
 		}
@@ -201,7 +201,13 @@ public class Util implements Serializable {
 
 	public static String traducirSecuenciaWCANxN(String secuencia) {
 		return secuencia.replaceAll("Bw", "b").replaceAll("Dw", "d").replaceAll("Fw", "f").replaceAll("Lw", "l")
-				.replaceAll("Rw", "r").replaceAll("Uw", "u");
+				.replaceAll("Rw", "r").replaceAll("Uw", "u").replaceAll("\\[r]", "x").replaceAll("\\[r2]", "x2")
+				.replaceAll("\\[r']", "x'").replaceAll("\\[l']", "x").replaceAll("\\[l2]", "x2")
+				.replaceAll("\\[l]", "x'").replaceAll("\\[u]", "y").replaceAll("\\[u2]", "y2")
+				.replaceAll("\\[u']", "y'").replaceAll("\\[d']", "y").replaceAll("\\[d2]", "y2")
+				.replaceAll("\\[d]", "y'").replaceAll("\\[f]", "z").replaceAll("\\[f2]", "z2")
+				.replaceAll("\\[f']", "z'").replaceAll("\\[b']", "z").replaceAll("\\[b2]", "z2")
+				.replaceAll("\\[b]", "z'");
 	}
 
 	public static String traducirSecuenciaWCAMegaminx(String secuencia) {

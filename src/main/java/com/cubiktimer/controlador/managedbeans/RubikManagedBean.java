@@ -2,6 +2,7 @@ package com.cubiktimer.controlador.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import com.cubiktimer.modelo.dao.TipoDAO;
 import com.cubiktimer.modelo.dto.FewestMovesDTO;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
 import com.cubiktimer.modelo.dto.TipoDTO;
+import com.cubiktimer.modelo.rubik.Comprobable;
+import com.cubiktimer.modelo.rubik.FewestMovesSolvable;
 import com.cubiktimer.modelo.rubik.Puzzle;
 import com.cubiktimer.modelo.rubik.SesionRubik;
 import com.cubiktimer.modelo.rubik.SolucionFewestMoves;
@@ -175,62 +178,67 @@ public class RubikManagedBean implements Serializable {
 		this.mezcla = generarMezcla();
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
-		log.debug(cubo.faceletToString());
 		log.debug("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
 
 	public String mezclaAleatoriaFewest() {
-		resetearCuboFewest();
-		this.secuenciaMezclaFewest = "";
-		this.solucion = "";
-		this.mezclaFewest = generarMezclaFewest();
-		secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-		log.trace(cuboFewestMoves);
-		log.debug(cuboFewestMoves.faceletToString());
-		log.debug("secuencia mezcla aleatoria Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
-				+ secuenciaMezclaFewest);
+		if (cuboFewestMoves instanceof FewestMovesSolvable) {
+			resetearCuboFewest();
+			this.secuenciaMezclaFewest = "";
+			this.solucion = "";
+			this.mezclaFewest = generarMezclaFewest();
+			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
+			log.trace(cuboFewestMoves);
+			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
+			log.debug("secuencia mezcla aleatoria Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
+					+ secuenciaMezclaFewest);
+		} else {
+			log.debug("El cubo: " + cuboFewestMoves.getNombre() + " no es valido para Fewest Moves");
+		}
 		return "";
 	}
 
 	public String mezclaPersonalizada() {
 		resetearCubo();
-		if (this.tipoCubo != 26) {// Diferente a Pyraminx
-			this.secuenciaMezcla = this.secuenciaMezcla.toLowerCase();
+		secuenciaMezcla = secuenciaMezcla.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ").replaceAll(" ",
+				"");
+		if (tipoCubo != 26) {// Diferente a Pyraminx
+			secuenciaMezcla = secuenciaMezcla.toLowerCase();
 		}
-		this.secuenciaMezcla = this.secuenciaMezcla.replace("f", " f").replace("b", " b").replace("r", " r")
-				.replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x").replace("y", " y")
-				.replace("z", " z").replace("3 b", " 3b").replace("3 d", " 3d").replace("3 f", " 3f")
-				.replace("3 l", " 3l").replace("3 r", " 3r").replace("3 u", " 3u").replace("  ", " ");
-		if (this.tipoCubo == 27) {// Square 1
-			this.secuenciaMezcla = this.secuenciaMezcla.replace(" ", "").replace("/", " / ");
+		secuenciaMezcla = secuenciaMezcla.replace("f", " f").replace("b", " b").replace("r", " r").replace("l", " l")
+				.replace("u", " u").replace("d", " d").replace("x", " x").replace("y", " y").replace("z", " z")
+				.replace("3 b", " 3b").replace("3 d", " 3d").replace("3 f", " 3f").replace("3 l", " 3l")
+				.replace("3 r", " 3r").replace("3 u", " 3u").replaceAll("\\[ ", " [");
+		if (tipoCubo == 27) {// Square 1
+			secuenciaMezcla = secuenciaMezcla.replace(" ", "").replace("/", " / ");
 		}
-		mezcla = this.secuenciaMezcla.trim().split(" ");
+		log.info(secuenciaMezcla);
+		mezcla = secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.trace(cubo);
-		log.debug(cubo.faceletToString());
 		log.debug("secuencia mezcla personalizada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
 
 	public String mezclaPersonalizadaFewest() {
-		resetearCuboFewest();
-		if (this.tipoCuboFewest != 26) {// Diferente a Pyraminx
-			this.secuenciaMezclaFewest = this.secuenciaMezclaFewest.toLowerCase();
+		if (cuboFewestMoves instanceof FewestMovesSolvable) {
+			resetearCuboFewest();
+			secuenciaMezclaFewest = secuenciaMezclaFewest.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR),
+					" ");
+			secuenciaMezclaFewest = secuenciaMezclaFewest.toLowerCase().replaceAll(" ", "").replace("f", " f")
+					.replace("b", " b").replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d")
+					.replace("x", " x").replace("y", " y").replace("z", " z").replaceAll("\\[ ", " [");
+			log.info(secuenciaMezclaFewest);
+			mezclaFewest = secuenciaMezclaFewest.trim().split(" ");
+			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
+			log.trace(cuboFewestMoves);
+			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
+			log.debug("secuencia mezcla personalizada Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
+					+ secuenciaMezclaFewest);
+		} else {
+			log.debug("El cubo " + cuboFewestMoves.getNombre() + " no se soluciona en Fewest Moves");
 		}
-		this.secuenciaMezclaFewest = this.secuenciaMezclaFewest.replace("f", " f").replace("b", " b").replace("r", " r")
-				.replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x").replace("y", " y")
-				.replace("z", " z").replace("3 b", " 3b").replace("3 d", " 3d").replace("3 f", " 3f")
-				.replace("3 l", " 3l").replace("3 r", " 3r").replace("3 u", " 3u").replace("  ", " ");
-		if (this.tipoCuboFewest == 27) {// Square 1
-			this.secuenciaMezclaFewest = this.secuenciaMezclaFewest.replace(" ", "").replace("/", " / ");
-		}
-		mezclaFewest = this.secuenciaMezclaFewest.trim().split(" ");
-		secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-		log.trace(cuboFewestMoves);
-		log.debug(cuboFewestMoves.faceletToString());
-		log.debug("secuencia mezcla personalizada Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
-				+ secuenciaMezclaFewest);
 		return "";
 	}
 
@@ -245,21 +253,44 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String agregarSolucion() {
-		String[] giros = solucion.split(" ");
-		cuboFewestMoves.mezclar(giros);
-		FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,
-				tiempoMilisegundosFewest, tiempoRestanteTexto, solucion, dnfFewest, comentarioFewest);
-		fewestMovesDTO.setLongitudSolucion(giros.length);
-		if (cuboFewestMoves.estaResuelto()) {
-			fewestMovesDTO.setSolucionValida(true);
+		if (cuboFewestMoves instanceof Comprobable) {
+			solucion = solucion.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ");
+			solucion = solucion.toLowerCase().replaceAll(" ", "").replace("f", " f").replace("b", " b")
+					.replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x")
+					.replace("y", " y").replace("z", " z").replaceAll("\\[ ", " [");
+			log.info(solucion);
+			String[] giros = solucion.trim().split(" ");
+			cuboFewestMoves.mezclar(giros);
+			FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,
+					tiempoMilisegundosFewest, tiempoRestanteTexto, solucion, dnfFewest, comentarioFewest);
+			fewestMovesDTO.setLongitudSolucion((int) contarGiros(giros));
+			if (((Comprobable) cuboFewestMoves).estaResuelto()) {
+				fewestMovesDTO.setSolucionValida(true);
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
+				sesionManagedBean.getMensaje()
+						.setText(sesionManagedBean.getRecursos().getString("MensajePuzzleSolucionado"));
+				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
+				sesionManagedBean.getMensaje().setMensajePendiente(true);
+			} else {
+				fewestMovesDTO.setSolucionValida(false);
+				fewestMovesDTO.setDnf(true);
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
+				sesionManagedBean.getMensaje()
+						.setText(sesionManagedBean.getRecursos().getString("MensajePuzzleNoSolucionado"));
+				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
+				sesionManagedBean.getMensaje().setMensajePendiente(true);
+			}
+			SolucionFewestMoves s = new SolucionFewestMoves(cuboFewestMoves, fewestMovesDTO);
+			sesionRubikActual.getSoluciones().add(s);
+			mezclaAleatoriaFewest();
 		} else {
-			fewestMovesDTO.setSolucionValida(false);
-			fewestMovesDTO.setDnf(true);
+			log.debug("El cubo " + cuboFewestMoves.getNombre() + " no se soluciona en Fewest Moves");
 		}
-		SolucionFewestMoves s = new SolucionFewestMoves(cuboFewestMoves, fewestMovesDTO);
-		sesionRubikActual.getSoluciones().add(s);
-		mezclaAleatoriaFewest();
 		return "";
+	}
+
+	private long contarGiros(String[] giros) {
+		return Arrays.asList(giros).stream().filter(x -> x.toUpperCase().matches("^[B|R|D|F|L|U]{1}[2|']*$")).count();
 	}
 
 	/**
