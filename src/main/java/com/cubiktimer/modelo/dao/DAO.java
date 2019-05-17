@@ -18,6 +18,7 @@ public abstract class DAO<P, E> implements Serializable {
 	private static final Logger log = Logger.getLogger(DAO.class);
 
 	private String nombreTabla;
+	private String nombreLlavePrimaria;
 
 	public DAO() {
 	}
@@ -26,24 +27,47 @@ public abstract class DAO<P, E> implements Serializable {
 		this.nombreTabla = nombreTabla;
 	}
 
+	public DAO(String nombreTabla, String nombreLlavePrimaria) {
+		this.nombreTabla = nombreTabla;
+		this.nombreLlavePrimaria = nombreLlavePrimaria;
+	}
+
 	public abstract int create(E dto);
 
 	public abstract int update(E dto);
 
 	public abstract int merge(E dto);
 
+//	public abstract int delete(E dto);
+
 	public abstract List<E> setList(ResultSet rs) throws SQLException;
 
 	public List<E> findAll() {
 		log.trace("inicio findAll");
 		List<E> lista = new ArrayList<>();
-		String sql = "SELECT * FROM " + this.nombreTabla;
+		String sql = "SELECT * FROM " + nombreTabla;
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
+		} finally {
+			log.trace("fin findAll");
 		}
-		log.trace("fin findAll");
+		return lista;
+	}
+
+	public List<E> findById(P pk) {
+		log.trace("inicio findById");
+		List<E> lista = new ArrayList<>();
+		String sql = "SELECT * FROM " + nombreTabla + " WHERE " + nombreLlavePrimaria + "=?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, pk);
+			lista = findList(ps);
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+		} finally {
+			log.trace("fin findById");
+		}
 		return lista;
 	}
 
@@ -60,12 +84,55 @@ public abstract class DAO<P, E> implements Serializable {
 		return lista;
 	}
 
+	public boolean fixAutoincrement() {
+		log.trace("inicio fixAutoincrement");
+		boolean retorno = false;
+		String sql2 = "ALTER TABLE " + getNombreTabla() + " AUTO_INCREMENT=?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql2)) {
+			int autoincrement = consultarMaximoIdPK() + 1;
+			ps.setObject(1, autoincrement);
+			ps.execute();
+			retorno = true;
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin fixAutoincrement");
+		}
+		return retorno;
+	}
+
+	public int consultarMaximoIdPK() {
+		log.trace("inicio consultarMaximoIdPK");
+		int retorno = 0;
+		String sql = "SELECT MAX(" + getNombreLlavePrimaria() + ") maximo FROM " + getNombreTabla();
+		try (Connection con = CubikTimerDataSource.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
+			while (rs.next()) {
+				retorno = rs.getInt("maximo");
+			}
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin consultarMaximoIdPK");
+		}
+		return retorno;
+	}
+
 	public String getNombreTabla() {
 		return nombreTabla;
 	}
 
 	public void setNombreTabla(String nombreTabla) {
 		this.nombreTabla = nombreTabla;
+	}
+
+	public String getNombreLlavePrimaria() {
+		return nombreLlavePrimaria;
+	}
+
+	public void setNombreLlavePrimaria(String nombreLlavePrimaria) {
+		this.nombreLlavePrimaria = nombreLlavePrimaria;
 	}
 
 }

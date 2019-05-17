@@ -73,5 +73,23 @@ public class Constantes {
 	public static final String TABLA_TIPOS = "tipos";
 	public static final String TABLA_USUARIOS = "usuarios";
 	public static final String TABLA_USUARIOS_ROLES = "usuarios_roles";
+	
+	// nombres de las llaves primarias
+	public static final String PK_TABLA_AHORCADO = "id_ahorcado";
+	public static final String PK_TABLA_AMIGOS = "id_amistad";
+	public static final String PK_TABLA_CONFIGURACION = "id_configuracion";
+	public static final String PK_TABLA_CREDENCIALES = "id_credencial";
+	public static final String PK_TABLA_ESTADOS = "id_estado";
+	public static final String PK_TABLA_PARAMETROS = "id_parametros";//tiene llave primaria tipo texto
+	public static final String PK_TABLA_PERMISOS = "id_permiso";
+	public static final String PK_TABLA_ROLES = "id_rol";
+	public static final String PK_TABLA_ROLES_PERMISOS = "id_roles_permisos";//tiene llave primaria compuesta por dos campos
+	public static final String PK_TABLA_SESIONES_RUBIK = "id_sesion";
+	public static final String PK_TABLA_SOLUCIONES_RUBIK = "id_solucion";
+	public static final String PK_TABLA_TIEMPOS_RUBIK = "id_tiempo";
+	public static final String PK_TABLA_TIEMPOS_RUBIK_IMPORTADOS = "id_tiempo";//TODO poner llave primaria autoincrementable a la tabla
+	public static final String PK_TABLA_TIPOS = "id_tipo";
+	public static final String PK_TABLA_USUARIOS = "id_usuario";
+	public static final String PK_TABLA_USUARIOS_ROLES = "id_usuarios_roles";//tiene llave primaria compuesta por dos campos
 
 }

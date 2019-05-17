@@ -16,6 +16,7 @@ import com.cubiktimer.config.CubikTimerDataSource;
 import com.cubiktimer.modelo.dto.AhorcadoDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
+import com.mysql.jdbc.Statement;
 
 public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializable {
 
@@ -23,7 +24,7 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 	private static final Logger log = Logger.getLogger(AhorcadoDAO.class);
 
 	public AhorcadoDAO() {
-		super(Constantes.TABLA_AHORCADO);
+		super(Constantes.TABLA_AHORCADO, Constantes.PK_TABLA_AHORCADO);
 	}
 
 	@Override
@@ -35,7 +36,8 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = CubikTimerDataSource.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));
@@ -46,13 +48,20 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 			ps.setString(8, dto.getIp());
 			ps.setObject(9, 1);
 			retorno = ps.executeUpdate();
-			log.trace("fin create");
-			return retorno;
+			ResultSet rs = ps.getGeneratedKeys();
+			try {
+				if (rs.next()) {
+					retorno = rs.getInt(1);
+				}
+			} finally {
+				rs.close();
+			}
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(AhorcadoDTO dto) {
@@ -76,13 +85,31 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 			ps.setObject(10, dto.getIdAhorcado());
 			ps.executeUpdate();
 			retorno = dto.getIdAhorcado();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
+	}
+
+	public int delete(AhorcadoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio delete");
+		int retorno = 0;
+		String sql = "DELETE FROM ahorcado WHERE id_ahorcado = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdAhorcado());
+			ps.executeUpdate();
+			retorno = dto.getIdAhorcado();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
+		}
+		return retorno;
 	}
 
 	public int merge(AhorcadoDTO dto) {
