@@ -277,7 +277,7 @@ public class RubikManagedBean implements Serializable {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("MensajePuzzleNoSolucionado"));
-				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
+				sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			}
 			SolucionFewestMoves s = new SolucionFewestMoves(cuboFewestMoves, fewestMovesDTO);

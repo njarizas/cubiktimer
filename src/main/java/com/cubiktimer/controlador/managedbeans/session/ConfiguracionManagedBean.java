@@ -118,6 +118,7 @@ public class ConfiguracionManagedBean implements Serializable {
 		if (idUsuario != null) {
 			this.tiempoInspeccion.setIdUsuario(idUsuario);
 			this.tipoCubo.setIdUsuario(idUsuario);
+			this.tipoCuboFewest.setIdUsuario(idUsuario);
 			this.idioma.setIdUsuario(idUsuario);
 			this.paginaInicial.setIdUsuario(idUsuario);
 			this.estiloVisual.setIdUsuario(idUsuario);
