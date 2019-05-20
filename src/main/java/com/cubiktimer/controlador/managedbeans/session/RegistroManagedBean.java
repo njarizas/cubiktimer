@@ -10,9 +10,12 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.controlador.facade.UsuarioFacade;
 import com.cubiktimer.modelo.dao.CredencialDAO;
+import com.cubiktimer.modelo.dao.RolDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.CredencialDTO;
+import com.cubiktimer.modelo.dto.RolDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.EmailSenderInterface;
@@ -33,7 +36,9 @@ public class RegistroManagedBean implements Serializable {
 	private UsuarioDTO usuario;
 	private UsuarioDAO usuarioDAO;
 	private CredencialDAO credencialDAO;
+	private RolDAO rolDAO;
 	private EmailSenderInterface email;
+	private UsuarioFacade usuarioFacade;
 
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
@@ -43,6 +48,8 @@ public class RegistroManagedBean implements Serializable {
 		usuario.setEstado(2);
 		usuarioDAO = new UsuarioDAO();
 		credencialDAO = new CredencialDAO();
+		rolDAO = new RolDAO();
+		usuarioFacade = new UsuarioFacade();
 	}
 
 	public String registrarUsuario() {
@@ -129,7 +136,9 @@ public class RegistroManagedBean implements Serializable {
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 				return false;
 			}
-			usuario.setIdUsuario(usuarioDAO.create(usuario));
+			List<RolDTO> listaRolesDefault = rolDAO.findById(Constantes.ROL_POR_DEFECTO);
+//			usuario.setIdUsuario(usuarioDAO.create(usuario));
+			usuarioFacade.create(usuario, listaRolesDefault);
 			return true;
 		} catch (Exception e) {
 			log.warn(e.getMessage());

@@ -23,7 +23,7 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 	private static final Logger log = Logger.getLogger(FewestMovesDAO.class);
 
 	public FewestMovesDAO() {
-		super(Constantes.TABLA_SOLUCIONES_RUBIK);
+		super(Constantes.TABLA_SOLUCIONES_RUBIK, Constantes.PK_TABLA_SOLUCIONES_RUBIK);
 	}
 
 	@Override
@@ -61,13 +61,12 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(FewestMovesDTO dto) {
@@ -97,13 +96,12 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 			ps.setObject(13, dto.getIdFewestMove());
 			ps.executeUpdate();
 			retorno = dto.getIdFewestMove();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(FewestMovesDTO dto) {
@@ -115,6 +113,25 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(FewestMovesDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio delete");
+		int retorno = 0;
+		String sql = "DELETE FROM soluciones_rubik WHERE id_solucion = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdFewestMove());
+			ps.executeUpdate();
+			retorno = dto.getIdFewestMove();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
+		}
+		return retorno;
 	}
 
 	public List<FewestMovesDTO> setList(ResultSet rs) throws SQLException {

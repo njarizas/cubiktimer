@@ -23,7 +23,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 	private static final Logger log = Logger.getLogger(SesionRubikDAO.class);
 
 	public SesionRubikDAO() {
-		super(Constantes.TABLA_SESIONES_RUBIK);
+		super(Constantes.TABLA_SESIONES_RUBIK, Constantes.PK_TABLA_SESIONES_RUBIK);
 	}
 
 	@Override
@@ -51,13 +51,12 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(SesionRubikDTO dto) {
@@ -76,13 +75,12 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 			ps.setObject(5, dto.getIdSesion());
 			ps.executeUpdate();
 			retorno = dto.getIdSesion();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(SesionRubikDTO dto) {
@@ -94,6 +92,13 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(SesionRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		return deleteByPK(dto.getIdSesion());
 	}
 
 	public List<SesionRubikDTO> setList(ResultSet rs) throws SQLException {

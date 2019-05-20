@@ -24,7 +24,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 	private static final Logger log = Logger.getLogger(TiempoRubikDAO.class);
 
 	public TiempoRubikDAO() {
-		super(Constantes.TABLA_TIEMPOS_RUBIK);
+		super(Constantes.TABLA_TIEMPOS_RUBIK, Constantes.PK_TABLA_TIEMPOS_RUBIK);
 	}
 
 	@Override
@@ -65,13 +65,12 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(TiempoRubikDTO dto) {
@@ -102,13 +101,12 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 			ps.setObject(14, dto.getIdTiempo());
 			ps.executeUpdate();
 			retorno = dto.getIdTiempo();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(TiempoRubikDTO dto) {
@@ -120,6 +118,13 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(TiempoRubikDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		return deleteByPK(dto.getIdTiempo());
 	}
 
 	public List<TiempoRubikDTO> setList(ResultSet rs) throws SQLException {

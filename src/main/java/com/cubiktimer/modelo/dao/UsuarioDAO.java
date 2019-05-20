@@ -23,7 +23,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	private static final Logger log = Logger.getLogger(UsuarioDAO.class);
 
 	public UsuarioDAO() {
-		super(Constantes.TABLA_USUARIOS);
+		super(Constantes.TABLA_USUARIOS, Constantes.PK_TABLA_USUARIOS);
 	}
 
 	@Override
@@ -35,10 +35,8 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-		String sql2 = "INSERT INTO usuarios_roles VALUES (?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				PreparedStatement ps2 = con.prepareStatement(sql2)) {
+				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setString(2, dto.getCorreo());
 			ps.setString(3, dto.getSal());
@@ -59,22 +57,12 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			} finally {
 				rs.close();
 			}
-			List<Integer> listaRoles = new ArrayList<>();
-			listaRoles.add(1);
-			listaRoles.add(2);
-			ps2.setInt(1, retorno);
-			ps2.setInt(3, 1);
-			for (Integer integer : listaRoles) {
-				ps2.setObject(2, integer);
-				ps2.executeUpdate();
-			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(UsuarioDTO dto) {
@@ -100,16 +88,16 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			ps.setObject(11, dto.getIdUsuario());
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(UsuarioDTO dto) {
+		//TODO arreglar este merge haciendo un metodo existeUsuario();
 		if (dto == null) {
 			return 0;
 		}
@@ -118,6 +106,13 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(UsuarioDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		return deleteByPK(dto.getIdUsuario());
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreo(String correo) {
@@ -164,8 +159,11 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	}
 
 	public List<UsuarioDTO> consultarUsuarioPorCorreoYEstado(String correo, Integer estado) {
-		log.trace("inicio consultarUsuarioPorCorreoYEstado");
 		List<UsuarioDTO> lista = new ArrayList<>();
+		if (correo == null || estado == null) {
+			return lista;
+		}
+		log.trace("inicio consultarUsuarioPorCorreoYEstado");
 		String sql = "SELECT * FROM usuarios WHERE correo = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);

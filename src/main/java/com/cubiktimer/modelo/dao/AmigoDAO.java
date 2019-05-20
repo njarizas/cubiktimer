@@ -21,7 +21,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 	private static final Logger log = Logger.getLogger(AmigoDAO.class);
 
 	public AmigoDAO() {
-		super(Constantes.TABLA_AMIGOS);
+		super(Constantes.TABLA_AMIGOS, Constantes.PK_TABLA_AMIGOS);
 	}
 
 	@Override
@@ -47,13 +47,12 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(AmigoDTO dto) {
@@ -71,13 +70,12 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			ps.setObject(5, dto.getIdAmistad());
 			ps.executeUpdate();
 			retorno = dto.getIdAmistad();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(AmigoDTO dto) {
@@ -100,11 +98,12 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		return !consultarAmigosPorIdUsuarioYIdAmigo(idUsuario, idAmigo).isEmpty();
 	}
 
-	public void delete(AmigoDTO dto) {
+	public int delete(AmigoDTO dto) {
 		if (dto == null) {
-			return;
+			return 0;
 		}
 		log.trace("inicio delete");
+		int retorno = 0;
 		if (dto.getIdAmistad() == null && sonAmigos(dto.getIdUsuario(), dto.getIdAmigo())) {
 			dto.setIdAmistad(
 					consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0).getIdAmistad());
@@ -113,15 +112,22 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdAmistad());
 			ps.executeUpdate();
+			retorno = dto.getIdAmistad();
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
 		}
-		log.trace("fin delete");
+		return retorno;
 	}
 
 	public List<AmigoDTO> consultarAmigosPorIdUsuarioYIdAmigo(Integer idUsuario, Integer idAmigo) {
-		log.trace("inicio consultarAmigosPorIdUsuarioYIdAmigo");
 		List<AmigoDTO> lista = new ArrayList<>();
+		if (idUsuario == null || idAmigo == null) {
+			return lista;
+		}
+		log.trace("inicio consultarAmigosPorIdUsuarioYIdAmigo");
+
 		String sql = "SELECT * FROM amigos a WHERE a.id_usuario = ? AND a.id_amigo = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
@@ -129,8 +135,9 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 			lista = findList(ps);
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin consultarAmigosPorIdUsuarioYIdAmigo");
 		}
-		log.trace("fin consultarAmigosPorIdUsuarioYIdAmigo");
 		return lista;
 	}
 

@@ -20,7 +20,7 @@ public class UsuarioRolDAO extends DAO<Integer, UsuarioRolDTO> implements Serial
 	private static final long serialVersionUID = 1L;
 
 	public UsuarioRolDAO() {
-		super(Constantes.TABLA_USUARIOS_ROLES);
+		super(Constantes.TABLA_USUARIOS_ROLES, Constantes.PK_TABLA_USUARIOS_ROLES);
 	}
 
 	@Override

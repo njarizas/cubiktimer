@@ -93,6 +93,17 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		return retorno;
 	}
 
+	public int merge(AhorcadoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		if (dto.getIdAhorcado() == null) {
+			return create(dto);
+		} else {
+			return update(dto);
+		}
+	}
+
 	public int delete(AhorcadoDTO dto) {
 		if (dto == null) {
 			return 0;
@@ -110,17 +121,6 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 			log.trace("fin delete");
 		}
 		return retorno;
-	}
-
-	public int merge(AhorcadoDTO dto) {
-		if (dto == null) {
-			return 0;
-		}
-		if (dto.getIdAhorcado() == null) {
-			return create(dto);
-		} else {
-			return update(dto);
-		}
 	}
 
 	public List<AhorcadoDTO> setList(ResultSet rs) throws SQLException {

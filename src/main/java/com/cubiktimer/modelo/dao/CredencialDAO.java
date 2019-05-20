@@ -24,7 +24,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 	private static final Logger log = Logger.getLogger(CredencialDAO.class);
 
 	public CredencialDAO() {
-		super(Constantes.TABLA_CREDENCIALES);
+		super(Constantes.TABLA_CREDENCIALES, Constantes.PK_TABLA_CREDENCIALES);
 	}
 
 	@Override
@@ -53,13 +53,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(CredencialDTO dto) {
@@ -80,13 +79,12 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 			ps.setObject(8, dto.getIdCredencial());
 			ps.executeUpdate();
 			retorno = dto.getIdCredencial();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(CredencialDTO dto) {
@@ -98,6 +96,25 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(CredencialDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio delete");
+		int retorno = 0;
+		String sql = "DELETE FROM credenciales WHERE id_credencial = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdCredencial());
+			ps.executeUpdate();
+			retorno = dto.getIdCredencial();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
+		}
+		return retorno;
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {

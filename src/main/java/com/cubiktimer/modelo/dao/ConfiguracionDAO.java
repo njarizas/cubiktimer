@@ -23,7 +23,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 	private static final Logger log = Logger.getLogger(ConfiguracionDAO.class);
 
 	public ConfiguracionDAO() {
-		super(Constantes.TABLA_CONFIGURACION);
+		super(Constantes.TABLA_CONFIGURACION, Constantes.PK_TABLA_CONFIGURACION);
 	}
 
 	@Override
@@ -58,13 +58,12 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage() + ": " + e.getStackTrace());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(ConfiguracionDTO dto) {
@@ -91,13 +90,12 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			ps.setObject(8, dto.getIdConfiguracion());
 			ps.executeUpdate();
 			retorno = dto.getIdConfiguracion();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage() + ": " + e.getStackTrace());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(ConfiguracionDTO dto) {
@@ -111,9 +109,32 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		}
 	}
 
+	public int delete(ConfiguracionDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio delete");
+		int retorno = 0;
+		String sql = "DELETE FROM configuracion WHERE id_configuracion = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getIdConfiguracion());
+			ps.executeUpdate();
+			retorno = dto.getIdConfiguracion();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
+		}
+		return retorno;
+	}
+
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioYEstado(Integer idUsuario, Integer estado) {
-		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
 		List<ConfiguracionDTO> lista = new ArrayList<>();
+		if (idUsuario == null || estado == null) {
+			return lista;
+		}
+		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
+
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
@@ -133,8 +154,11 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioIdTipoYEstado(Integer idUsuario, Integer idTipo,
 			Integer estado) {
-		log.trace("inicio consultarConfiguracionPorIdUsuarioIdTipoYEstado");
 		List<ConfiguracionDTO> lista = new ArrayList<>();
+		if (idUsuario == null || idTipo == null || estado == null) {
+			return lista;
+		}
+		log.trace("inicio consultarConfiguracionPorIdUsuarioIdTipoYEstado");
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND id_tipo = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);

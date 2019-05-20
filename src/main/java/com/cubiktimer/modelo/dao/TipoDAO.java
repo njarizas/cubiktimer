@@ -21,7 +21,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 	private static final Logger log = Logger.getLogger(TipoDAO.class);
 
 	public TipoDAO() {
-		super(Constantes.TABLA_TIPOS);
+		super(Constantes.TABLA_TIPOS, Constantes.PK_TABLA_TIPOS);
 	}
 
 	@Override
@@ -48,13 +48,12 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			} finally {
 				rs.close();
 			}
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(TipoDTO dto) {
@@ -73,13 +72,12 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 			ps.setObject(6, dto.getIdTipo());
 			ps.executeUpdate();
 			retorno = dto.getIdTipo();
-			log.trace("fin update");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(TipoDTO dto) {
@@ -93,9 +91,19 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		}
 	}
 
+	public int delete(TipoDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		return deleteByPK(dto.getIdTipo());
+	}
+
 	public List<TipoDTO> listarTiposDeCuboPorEstado(Integer estado) {
-		log.trace("inicio listarTiposDeCubo");
 		List<TipoDTO> lista = new ArrayList<>();
+		if (estado == null) {
+			return lista;
+		}
+		log.trace("inicio listarTiposDeCubo");
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, estado);

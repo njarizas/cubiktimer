@@ -21,7 +21,7 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 	private static final Logger log = Logger.getLogger(RolDAO.class);
 
 	public RolDAO() {
-		super(Constantes.TABLA_ROLES);
+		super(Constantes.TABLA_ROLES, Constantes.PK_TABLA_ROLES);
 	}
 
 	@Override
@@ -86,6 +86,13 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(RolDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		return deleteByPK(dto.getIdRol());
 	}
 
 	public List<RolDTO> consultarRolesPorIdUsuario(int idUsuario) {

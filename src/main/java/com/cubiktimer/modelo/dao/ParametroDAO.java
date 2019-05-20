@@ -20,7 +20,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 	private static final Logger log = Logger.getLogger(ParametroDAO.class);
 
 	public ParametroDAO() {
-		super(Constantes.TABLA_PARAMETROS);
+		super(Constantes.TABLA_PARAMETROS, Constantes.PK_TABLA_PARAMETROS);
 	}
 
 	@Override
@@ -35,13 +35,12 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 			ps.setObject(1, dto.getCodigo());
 			ps.setObject(2, dto.getValor());
 			retorno = ps.executeUpdate();
-			log.trace("fin create");
-			return retorno;
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin create");
 		}
-		log.trace("fin create");
-		return 0;
+		return retorno;
 	}
 
 	public int update(ParametroDTO dto) {
@@ -55,15 +54,13 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 			ps.setObject(1, dto.getCodigo());
 			ps.setObject(2, dto.getValor());
 			ps.setObject(3, dto.getCodigo());
-			ps.executeUpdate();
-			retorno = 1;
-			log.trace("fin update");
-			return retorno;
+			retorno = ps.executeUpdate();
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin update");
 		}
-		log.trace("fin update");
-		return 0;
+		return retorno;
 	}
 
 	public int merge(ParametroDTO dto) {
@@ -75,6 +72,24 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		} else {
 			return update(dto);
 		}
+	}
+
+	public int delete(ParametroDTO dto) {
+		if (dto == null) {
+			return 0;
+		}
+		log.trace("inicio delete");
+		int retorno = 0;
+		String sql = "DELETE FROM parametros WHERE codigo = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, dto.getCodigo());
+			retorno = ps.executeUpdate();
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
+		}
+		return retorno;
 	}
 
 	public String obtenerValorParametro(String codigo) {
@@ -120,6 +135,16 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		}
 		rs.close();
 		return lista;
+	}
+
+	@Override
+	public boolean fixAutoincrement() {
+		throw new UnsupportedOperationException("Esta operacion no aplica para esta tabla");
+	}
+
+	@Override
+	public int consultarMaximoIdPK() {
+		throw new UnsupportedOperationException("Esta operacion no aplica para esta tabla");
 	}
 
 }

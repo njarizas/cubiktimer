@@ -84,6 +84,25 @@ public abstract class DAO<P, E> implements Serializable {
 		return lista;
 	}
 
+	public int deleteByPK(P pk) {
+		if (pk == null) {
+			return 0;
+		}
+		log.trace("inicio delete");
+		int retorno = 0;
+		String sql = "DELETE FROM " + nombreTabla + " WHERE " + nombreLlavePrimaria + " = ?";
+		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setObject(1, pk);
+			int aux = ps.executeUpdate();
+			retorno = (pk instanceof Integer) ? (Integer) pk : aux;
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		} finally {
+			log.trace("fin delete");
+		}
+		return retorno;
+	}
+
 	public boolean fixAutoincrement() {
 		log.trace("inicio fixAutoincrement");
 		boolean retorno = false;
