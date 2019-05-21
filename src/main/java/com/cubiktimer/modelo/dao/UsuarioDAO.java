@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
@@ -35,7 +35,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setString(2, dto.getCorreo());
@@ -74,7 +74,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		Util util = Util.getInstance();
 		String sql = "UPDATE usuarios SET correo = ?, sal=?, clave = ?, nombres = ?, apellidos = ?, sexo = ?,"
 				+ " fecha_nacimiento = ?, fecha_creacion = ?, fecha_modificacion = ?, estado = ? WHERE id_usuario = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, dto.getCorreo());
 			ps.setString(2, dto.getSal());
 			ps.setString(3, dto.getClave());
@@ -118,7 +118,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio consultarUsuarioPorCorreo");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios WHERE correo = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -132,7 +132,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio consultarUsuarioPorIdUsuario");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -146,7 +146,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio consultarUsuarioPorIdUsuarioYClave");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios WHERE id_usuario = ? AND clave = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setString(2, clave);
 			lista = findList(ps);
@@ -164,7 +164,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		}
 		log.trace("inicio consultarUsuarioPorCorreoYEstado");
 		String sql = "SELECT * FROM usuarios WHERE correo = ? AND estado = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			ps.setInt(2, estado);
 			lista = findList(ps);
@@ -179,7 +179,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio consultarUsuarios");
 		List<UsuarioDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios WHERE estado = 1";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
@@ -193,7 +193,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		List<UsuarioDTO> lista = new ArrayList<>();
 		String sql = "SELECT u.* FROM amigos a INNER JOIN usuarios u ON a.id_amigo=u.id_usuario"
 				+ " WHERE a.id_usuario = ? AND u.estado = 1 AND a.estado = 1";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException e) {
@@ -216,7 +216,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		String sql = "SELECT * FROM usuarios"
 				+ " WHERE id_usuario NOT IN (SELECT id_amigo FROM amigos WHERE id_usuario=? UNION SELECT id_usuario FROM amigos WHERE id_amigo=?)"
 				+ " AND id_usuario!=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idUsuario);
 			ps.setInt(3, idUsuario);
@@ -241,7 +241,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		String sql = "SELECT * FROM usuarios"
 				+ " WHERE id_usuario IN (SELECT id_usuario FROM amigos WHERE id_amigo=? AND estado=2)"
 				+ " AND id_usuario!=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idUsuario);
 			lista = findList(ps);
@@ -258,7 +258,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		String sql = "SELECT * FROM usuarios"
 				+ " WHERE id_usuario IN (SELECT id_usuario FROM amigos WHERE id_amigo=? AND estado=1)"
 				+ " AND id_usuario!=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idUsuario);
 			lista = findList(ps);
@@ -275,7 +275,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.debug(correo);
 		List<UsuarioDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios WHERE correo=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, correo);
 			lista = findList(ps);
 		} catch (SQLException e) {

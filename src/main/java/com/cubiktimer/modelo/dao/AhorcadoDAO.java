@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.AhorcadoDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
@@ -36,7 +36,7 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO ahorcado VALUES (?,?,?,?,?,?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
@@ -72,7 +72,7 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		Util util = Util.getInstance();
 		int retorno = 0;
 		String sql = "UPDATE ahorcado SET id_ahorcado = ?, id_usuario = ?, fecha = ?, palabra = ?, letras_usadas = ?, intentos_sobrantes = ?, gano = ?, ip = ?, estado = ? WHERE id_ahorcado = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdAhorcado());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setString(3, util.getFechaHoraMysql().format(dto.getFecha()));

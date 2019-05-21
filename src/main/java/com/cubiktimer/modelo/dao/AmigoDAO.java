@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.AmigoDTO;
 import com.cubiktimer.util.Constantes;
 import com.mysql.jdbc.Statement;
@@ -32,7 +32,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO amigos VALUES (?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
@@ -62,7 +62,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		log.trace("inicio update");
 		int retorno = 0;
 		String sql = "UPDATE amigos SET id_amistad=?, id_usuario = ?, id_amigo = ?, estado = ? WHERE id_amistad = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdAmistad());
 			ps.setObject(2, dto.getIdUsuario());
 			ps.setObject(3, dto.getIdAmigo());
@@ -113,7 +113,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		log.trace("inicio consultarAmigosPorIdUsuarioYIdAmigo");
 
 		String sql = "SELECT * FROM amigos a WHERE a.id_usuario = ? AND a.id_amigo = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idAmigo);
 			lista = findList(ps);

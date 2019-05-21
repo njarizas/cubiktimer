@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.FewestMovesDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
@@ -37,7 +37,7 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 		String sql = "INSERT INTO soluciones_rubik (id_solucion, id_sesion, id_tipo_cubo, mezcla, tiempo_usado_milisegundos,"
 				+ " tiempo_restante_texto, solucion, longitud_solucion, solucion_valida, dnf, comentario, fecha, estado)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdSesion());
@@ -80,7 +80,7 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 				+ " mezcla = ?, tiempo_usado_milisegundos = ?, tiempo_restante_texto = ?, solucion = ?,"
 				+ " longitud_solucion = ?, solucion_valida = ?, dnf = ?, comentario = ?, fecha = ?, estado = ?"
 				+ " WHERE id_solucion = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdSesion());
 			ps.setObject(2, dto.getIdTipoCubo());
 			ps.setString(3, dto.getMezcla());

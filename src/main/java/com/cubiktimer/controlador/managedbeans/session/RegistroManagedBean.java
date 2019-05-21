@@ -137,7 +137,6 @@ public class RegistroManagedBean implements Serializable {
 				return false;
 			}
 			List<RolDTO> listaRolesDefault = rolDAO.findById(Constantes.ROL_POR_DEFECTO);
-//			usuario.setIdUsuario(usuarioDAO.create(usuario));
 			usuarioFacade.create(usuario, listaRolesDefault);
 			return true;
 		} catch (Exception e) {

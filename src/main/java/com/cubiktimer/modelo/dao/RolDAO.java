@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.RolDTO;
 import com.cubiktimer.util.Constantes;
 import com.mysql.jdbc.Statement;
@@ -32,7 +32,7 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO roles VALUES (?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdRol());
 			ps.setObject(2, dto.getNombreRol());
@@ -62,7 +62,7 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 		}
 		log.trace("inicio update");
 		String sql = "UPDATE roles SET nombre_rol = ?, descripcion = ?, estado = ? WHERE id_rol = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getNombreRol());
 			ps.setObject(2, dto.getDescripcion());
 			ps.setObject(3, dto.getEstado());
@@ -100,7 +100,7 @@ public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 		List<RolDTO> lista = new ArrayList<>();
 		String sql = "SELECT R.* FROM usuarios_roles UR" + " LEFT JOIN roles R" + " ON UR.id_rol = R.id_rol"
 				+ " WHERE id_usuario = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {

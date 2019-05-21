@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.ParametroDTO;
 import com.cubiktimer.util.Constantes;
 
@@ -31,7 +31,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO parametros VALUES (?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getCodigo());
 			ps.setObject(2, dto.getValor());
 			retorno = ps.executeUpdate();
@@ -50,7 +50,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		log.trace("inicio update");
 		int retorno = 0;
 		String sql = "UPDATE parametros SET codigo = ?, valor = ? WHERE codigo = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getCodigo());
 			ps.setObject(2, dto.getValor());
 			ps.setObject(3, dto.getCodigo());
@@ -97,7 +97,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		log.trace("inicio obtenerParametro");
 		List<ParametroDTO> lista = new ArrayList<>();
 		String sql = "SELECT codigo, valor FROM parametros WHERE codigo = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, codigo);
 			lista = findList(ps);
 		} catch (SQLException e) {

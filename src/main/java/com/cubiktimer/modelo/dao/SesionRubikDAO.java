@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.SesionRubikDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
@@ -35,7 +35,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO sesiones_rubik " + " (id_sesion,id_usuario,fecha,ip,estado)" + " VALUES (?,?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
@@ -67,7 +67,7 @@ public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Seri
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "UPDATE sesiones_rubik SET id_usuario=?, fecha=?, ip=?, estado=? WHERE id_sesion=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setString(2, util.getFechaHoraMysql().format(dto.getFecha()));
 			ps.setString(3, dto.getIp());

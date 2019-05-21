@@ -8,9 +8,6 @@ import com.cubiktimer.util.Constantes;
 
 public abstract class CuboRubikNxN extends Puzzle implements Serializable, Comprobable {
 
-	// TODO: sobreescribir el metodo equals de tal manera que retorne true si los
-	// cubos estan con la misma mezcla sin importar que esten girados
-
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(CuboRubikNxN.class);
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 
 public abstract class DAO<P, E> implements Serializable {
 
@@ -38,7 +38,7 @@ public abstract class DAO<P, E> implements Serializable {
 
 	public abstract int merge(E dto);
 
-//	public abstract int delete(E dto);
+	public abstract int delete(E dto);
 
 	public abstract List<E> setList(ResultSet rs) throws SQLException;
 
@@ -46,7 +46,7 @@ public abstract class DAO<P, E> implements Serializable {
 		log.trace("inicio findAll");
 		List<E> lista = new ArrayList<>();
 		String sql = "SELECT * FROM " + nombreTabla;
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
@@ -63,7 +63,7 @@ public abstract class DAO<P, E> implements Serializable {
 		}
 		log.trace("inicio findById");
 		String sql = "SELECT * FROM " + nombreTabla + " WHERE " + nombreLlavePrimaria + "=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -94,7 +94,7 @@ public abstract class DAO<P, E> implements Serializable {
 		log.trace("inicio delete");
 		int retorno = 0;
 		String sql = "DELETE FROM " + nombreTabla + " WHERE " + nombreLlavePrimaria + " = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk);
 			int aux = ps.executeUpdate();
 			retorno = (pk instanceof Integer) ? (Integer) pk : aux;
@@ -110,7 +110,7 @@ public abstract class DAO<P, E> implements Serializable {
 		log.trace("inicio fixAutoincrement");
 		boolean retorno = false;
 		String sql2 = "ALTER TABLE " + getNombreTabla() + " AUTO_INCREMENT=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql2)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql2)) {
 			int autoincrement = consultarMaximoIdPK() + 1;
 			ps.setObject(1, autoincrement);
 			ps.execute();
@@ -127,7 +127,7 @@ public abstract class DAO<P, E> implements Serializable {
 		log.trace("inicio consultarMaximoIdPK");
 		int retorno = 0;
 		String sql = "SELECT MAX(" + getNombreLlavePrimaria() + ") maximo FROM " + getNombreTabla();
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {

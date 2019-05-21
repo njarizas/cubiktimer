@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.ConfiguracionDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
@@ -35,7 +35,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO configuracion VALUES (?,?,?,?,?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdUsuario());
@@ -75,7 +75,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		Util util = Util.getInstance();
 		String sql = "UPDATE configuracion" + " SET id_usuario=?,id_tipo=?,valor_texto=?,valor_entero=?,"
 				+ " valor_decimal=?,valor_fecha=?,estado=?" + " WHERE id_configuracion=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdTipo());
 			ps.setString(3, dto.getValorTexto());
@@ -123,7 +123,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		}
 		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, estado);
 			ResultSet rs = ps.executeQuery();
@@ -147,7 +147,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		}
 		log.trace("inicio consultarConfiguracionPorIdUsuarioIdTipoYEstado");
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND id_tipo = ? AND estado = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipo);
 			ps.setInt(3, estado);

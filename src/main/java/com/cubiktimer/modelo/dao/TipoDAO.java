@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.TipoDTO;
 import com.cubiktimer.util.Constantes;
 import com.mysql.jdbc.Statement;
@@ -32,7 +32,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		log.trace("inicio create");
 		int retorno = 0;
 		String sql = "INSERT INTO tipos VALUES (?,?,?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection();
+		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, dto.getIdTipo());
 			ps.setObject(2, dto.getIdPadre());
@@ -63,7 +63,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		log.trace("inicio update");
 		int retorno = 0;
 		String sql = "UPDATE tipos SET id_tipo = ?, id_padre = ?, nombre_tipo = ?, name_tipo = ?, estado = ? WHERE id_tipo = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdTipo());
 			ps.setObject(2, dto.getIdPadre());
 			ps.setObject(3, dto.getNombreTipo());
@@ -105,7 +105,7 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 		}
 		log.trace("inicio listarTiposDeCubo");
 		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado=?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, estado);
 			lista = findList(ps);
 		} catch (SQLException sqle) {

@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.RolPermisoDTO;
 import com.cubiktimer.modelo.dto.RolPermisoPK;
 import com.cubiktimer.util.Constantes;
@@ -32,7 +32,7 @@ public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements S
 		}
 		log.trace("inicio create");
 		String sql = "INSERT INTO " + getNombreTabla() + " VALUES (?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getRolPermisoPK().getIdRol());
 			ps.setObject(2, dto.getRolPermisoPK().getIdPermiso());
 			ps.setObject(3, dto.getEstado());
@@ -53,7 +53,7 @@ public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements S
 		log.trace("inicio update");
 		String sql = "UPDATE " + getNombreTabla()
 				+ " SET id_rol = ?, id_permiso = ?, estado = ? WHERE id_rol = ? AND id_permiso = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getRolPermisoPK().getIdRol());
 			ps.setObject(2, dto.getRolPermisoPK().getIdPermiso());
 			ps.setObject(3, dto.getEstado());
@@ -94,7 +94,7 @@ public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements S
 		log.trace("inicio delete");
 		int retorno = 0;
 		String sql = "DELETE FROM " + getNombreTabla() + " WHERE id_rol = ? AND id_permiso = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk.getIdRol());
 			ps.setObject(2, pk.getIdPermiso());
 			retorno = ps.executeUpdate();
@@ -110,7 +110,7 @@ public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements S
 		log.trace("inicio consultarPermisosPorIdRol");
 		List<RolPermisoDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM roles_permisos WHERE id_rol = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idRol);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -128,7 +128,7 @@ public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements S
 		}
 		log.trace("inicio findById");
 		String sql = "SELECT * FROM " + getNombreTabla() + " WHERE id_rol = ? AND id_permiso = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk.getIdRol());
 			ps.setObject(2, pk.getIdPermiso());
 			lista = findList(ps);

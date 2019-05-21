@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.UsuarioRolDTO;
 import com.cubiktimer.modelo.dto.UsuarioRolPK;
 import com.cubiktimer.util.Constantes;
@@ -32,7 +32,7 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		}
 		log.trace("inicio create");
 		String sql = "INSERT INTO usuarios_roles VALUES (?,?,?)";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getUsuarioRolPK().getIdUsuario());
 			ps.setObject(2, dto.getUsuarioRolPK().getIdRol());
 			ps.setObject(3, dto.getEstado());
@@ -52,7 +52,7 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		}
 		log.trace("inicio update");
 		String sql = "UPDATE usuarios_roles SET id_usuario = ?, id_rol = ?, estado = ? WHERE id_usuario = ? AND id_rol = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getUsuarioRolPK().getIdUsuario());
 			ps.setObject(2, dto.getUsuarioRolPK().getIdRol());
 			ps.setObject(3, dto.getEstado());
@@ -93,7 +93,7 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		log.trace("inicio delete");
 		int retorno = 0;
 		String sql = "DELETE FROM " + getNombreTabla() + " WHERE id_usuario = ? AND id_rol = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk.getIdUsuario());
 			ps.setObject(2, pk.getIdRol());
 			retorno = ps.executeUpdate();
@@ -109,7 +109,7 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		log.trace("inicio consultarRolesPorIdUsuario");
 		List<UsuarioRolDTO> lista = new ArrayList<>();
 		String sql = "SELECT * FROM usuarios_roles WHERE id_usuario = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
@@ -127,7 +127,7 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		}
 		log.trace("inicio findById");
 		String sql = "SELECT * FROM " + getNombreTabla() + " WHERE id_usuario = ? AND id_rol = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk.getIdUsuario());
 			ps.setObject(2, pk.getIdRol());
 			lista = findList(ps);

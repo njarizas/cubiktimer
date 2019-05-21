@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.cubiktimer.config.CubikTimerDataSource;
+import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.rubik.estadisticas.CuentaPuzzle;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import com.cubiktimer.modelo.rubik.estadisticas.Promedio;
@@ -36,7 +36,7 @@ public class EstadisticasDAO implements Serializable {
 		String sql = "SELECT sr.id_usuario,t.nombre_tipo nombre_puzzle, count(*) conteo_puzzle" + " FROM tiempos tr"
 				+ " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " WHERE id_usuario=?" + " GROUP BY t.nombre_tipo";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -70,7 +70,7 @@ public class EstadisticasDAO implements Serializable {
 				+ " FROM tiempos t INNER JOIN sesiones_rubik s ON t.id_sesion = s.id_sesion"
 				+ " INNER JOIN tipos t2 ON t.id_tipo_cubo = t2.id_tipo"
 				+ " WHERE id_usuario=? AND dnf=0 GROUP BY id_usuario, t2.nombre_tipo";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -107,7 +107,7 @@ public class EstadisticasDAO implements Serializable {
 				+ " ON tr.id_sesion=sr.id_sesion" + " INNER JOIN tipos t" + " ON tr.id_tipo_cubo=t.id_tipo"
 				+ " WHERE sr.id_usuario=?" + " AND tr.id_tipo_cubo=?" + " AND tr.estado=1" + " AND sr.estado=1"
 				+ " AND tr.dnf=0" + " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + " ORDER BY sr.fecha";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipoCubo);
 			ResultSet rs = ps.executeQuery();
@@ -147,7 +147,7 @@ public class EstadisticasDAO implements Serializable {
 				+ " ON sr.id_usuario = u.id_usuario" + " WHERE sr.id_usuario=?" + " AND tr.id_tipo_cubo=?"
 				+ " AND tr.estado=1" + " AND sr.estado=1" + " AND tr.dnf=0"
 				+ " GROUP BY t.nombre_tipo,DATE_FORMAT(sr.fecha,\"%d/%m/%Y\")" + " ORDER BY sr.fecha";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idTipoCubo);
 			ResultSet rs = ps.executeQuery();
@@ -181,7 +181,7 @@ public class EstadisticasDAO implements Serializable {
 		List<Integer> lista = new ArrayList<>();
 		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion=sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
@@ -239,7 +239,7 @@ public class EstadisticasDAO implements Serializable {
 		String sql = "SELECT tr.id_tipo_cubo,COUNT(*) cantidad" + " FROM tiempos tr" + " INNER JOIN sesiones_rubik sr"
 				+ " ON tr.id_sesion = sr.id_sesion" + " WHERE sr.id_usuario=?" + " AND tr.estado=1" + " AND sr.estado=1"
 				+ " GROUP BY (tr.id_tipo_cubo)" + " ORDER BY COUNT(*)";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);
 			ResultSet rs = ps.executeQuery();
 			try {
