@@ -78,18 +78,7 @@ public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializa
 		if (dto == null) {
 			return 0;
 		}
-		log.trace("inicio delete");
-		int retorno = 0;
-		String sql = "DELETE FROM parametros WHERE codigo = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getCodigo());
-			retorno = ps.executeUpdate();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-		} finally {
-			log.trace("fin delete");
-		}
-		return retorno;
+		return deleteByPK(dto.getCodigo());
 	}
 
 	public String obtenerValorParametro(String codigo) {

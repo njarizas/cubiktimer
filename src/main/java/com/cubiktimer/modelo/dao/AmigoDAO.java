@@ -102,23 +102,7 @@ public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 		if (dto == null) {
 			return 0;
 		}
-		log.trace("inicio delete");
-		int retorno = 0;
-		if (dto.getIdAmistad() == null && sonAmigos(dto.getIdUsuario(), dto.getIdAmigo())) {
-			dto.setIdAmistad(
-					consultarAmigosPorIdUsuarioYIdAmigo(dto.getIdUsuario(), dto.getIdAmigo()).get(0).getIdAmistad());
-		}
-		String sql = "DELETE FROM amigos WHERE id_amistad = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getIdAmistad());
-			ps.executeUpdate();
-			retorno = dto.getIdAmistad();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-		} finally {
-			log.trace("fin delete");
-		}
-		return retorno;
+		return deleteByPK(dto.getIdAmistad());
 	}
 
 	public List<AmigoDTO> consultarAmigosPorIdUsuarioYIdAmigo(Integer idUsuario, Integer idAmigo) {

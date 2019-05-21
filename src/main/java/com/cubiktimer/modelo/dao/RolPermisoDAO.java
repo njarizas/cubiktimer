@@ -11,30 +11,30 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.config.CubikTimerDataSource;
-import com.cubiktimer.modelo.dto.UsuarioRolDTO;
-import com.cubiktimer.modelo.dto.UsuarioRolPK;
+import com.cubiktimer.modelo.dto.RolPermisoDTO;
+import com.cubiktimer.modelo.dto.RolPermisoPK;
 import com.cubiktimer.util.Constantes;
 
-public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements Serializable {
+public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements Serializable {
 
-	private static final Logger log = Logger.getLogger(UsuarioRolDAO.class);
+	private static final Logger log = Logger.getLogger(RolPermisoDAO.class);
 	private static final long serialVersionUID = 1L;
 
-	public UsuarioRolDAO() {
-		super(Constantes.TABLA_USUARIOS_ROLES);
+	public RolPermisoDAO() {
+		super(Constantes.TABLA_ROLES_PERMISOS);
 	}
 
 	@Override
-	public int create(UsuarioRolDTO dto) {
+	public int create(RolPermisoDTO dto) {
 		int retorno = 0;
 		if (dto == null) {
 			return retorno;
 		}
 		log.trace("inicio create");
-		String sql = "INSERT INTO usuarios_roles VALUES (?,?,?)";
+		String sql = "INSERT INTO " + getNombreTabla() + " VALUES (?,?,?)";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getUsuarioRolPK().getIdUsuario());
-			ps.setObject(2, dto.getUsuarioRolPK().getIdRol());
+			ps.setObject(1, dto.getRolPermisoPK().getIdRol());
+			ps.setObject(2, dto.getRolPermisoPK().getIdPermiso());
 			ps.setObject(3, dto.getEstado());
 			retorno = ps.executeUpdate();
 		} catch (Exception e) {
@@ -45,19 +45,20 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		return retorno;
 	}
 
-	public int update(UsuarioRolDTO dto) {
+	public int update(RolPermisoDTO dto) {
 		int retorno = 0;
 		if (dto == null) {
 			return retorno;
 		}
 		log.trace("inicio update");
-		String sql = "UPDATE usuarios_roles SET id_usuario = ?, id_rol = ?, estado = ? WHERE id_usuario = ? AND id_rol = ?";
+		String sql = "UPDATE " + getNombreTabla()
+				+ " SET id_rol = ?, id_permiso = ?, estado = ? WHERE id_rol = ? AND id_permiso = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getUsuarioRolPK().getIdUsuario());
-			ps.setObject(2, dto.getUsuarioRolPK().getIdRol());
+			ps.setObject(1, dto.getRolPermisoPK().getIdRol());
+			ps.setObject(2, dto.getRolPermisoPK().getIdPermiso());
 			ps.setObject(3, dto.getEstado());
-			ps.setObject(4, dto.getUsuarioRolPK().getIdUsuario());
-			ps.setObject(5, dto.getUsuarioRolPK().getIdRol());
+			ps.setObject(4, dto.getRolPermisoPK().getIdRol());
+			ps.setObject(5, dto.getRolPermisoPK().getIdPermiso());
 			retorno = ps.executeUpdate();
 		} catch (Exception e) {
 			log.warn(e.getMessage());
@@ -67,35 +68,35 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		return retorno;
 	}
 
-	public int merge(UsuarioRolDTO dto) {
-		if (dto == null || dto.getUsuarioRolPK() == null) {
+	public int merge(RolPermisoDTO dto) {
+		if (dto == null || dto.getRolPermisoPK() == null) {
 			return 0;
 		}
-		if (!existeUsuarioRol(dto.getUsuarioRolPK())) {
+		if (!existeRolPermiso(dto.getRolPermisoPK())) {
 			return create(dto);
 		} else {
 			return update(dto);
 		}
 	}
 
-	public int delete(UsuarioRolDTO dto) {
+	public int delete(RolPermisoDTO dto) {
 		if (dto == null) {
 			return 0;
 		}
-		return deleteByPK(dto.getUsuarioRolPK());
+		return deleteByPK(dto.getRolPermisoPK());
 	}
 
 	@Override
-	public int deleteByPK(UsuarioRolPK pk) {
+	public int deleteByPK(RolPermisoPK pk) {
 		if (pk == null) {
 			return 0;
 		}
 		log.trace("inicio delete");
 		int retorno = 0;
-		String sql = "DELETE FROM " + getNombreTabla() + " WHERE id_usuario = ? AND id_rol = ?";
+		String sql = "DELETE FROM " + getNombreTabla() + " WHERE id_rol = ? AND id_permiso = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, pk.getIdUsuario());
-			ps.setObject(2, pk.getIdRol());
+			ps.setObject(1, pk.getIdRol());
+			ps.setObject(2, pk.getIdPermiso());
 			retorno = ps.executeUpdate();
 		} catch (Exception e) {
 			log.warn(e.getMessage());
@@ -105,31 +106,31 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		return retorno;
 	}
 
-	public List<UsuarioRolDTO> consultarRolesPorIdUsuario(int idUsuario) {
-		log.trace("inicio consultarRolesPorIdUsuario");
-		List<UsuarioRolDTO> lista = new ArrayList<>();
-		String sql = "SELECT * FROM usuarios_roles WHERE id_usuario = ?";
+	public List<RolPermisoDTO> consultarPermisosPorIdRol(int idRol) {
+		log.trace("inicio consultarPermisosPorIdRol");
+		List<RolPermisoDTO> lista = new ArrayList<>();
+		String sql = "SELECT * FROM roles_permisos WHERE id_rol = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setInt(1, idUsuario);
+			ps.setInt(1, idRol);
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
 		}
-		log.trace("fin consultarRolesPorIdUsuario");
+		log.trace("fin consultarPermisosPorIdRol");
 		return lista;
 	}
 
 	@Override
-	public List<UsuarioRolDTO> findById(UsuarioRolPK pk) {
-		List<UsuarioRolDTO> lista = new ArrayList<>();
+	public List<RolPermisoDTO> findById(RolPermisoPK pk) {
+		List<RolPermisoDTO> lista = new ArrayList<>();
 		if (pk == null) {
 			return lista;
 		}
 		log.trace("inicio findById");
-		String sql = "SELECT * FROM " + getNombreTabla() + " WHERE id_usuario = ? AND id_rol = ?";
+		String sql = "SELECT * FROM " + getNombreTabla() + " WHERE id_rol = ? AND id_permiso = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, pk.getIdUsuario());
-			ps.setObject(2, pk.getIdRol());
+			ps.setObject(1, pk.getIdRol());
+			ps.setObject(2, pk.getIdPermiso());
 			lista = findList(ps);
 		} catch (SQLException sqle) {
 			log.warn(sqle.getMessage());
@@ -139,15 +140,15 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		return lista;
 	}
 
-	public List<UsuarioRolDTO> setList(ResultSet rs) throws SQLException {
-		List<UsuarioRolDTO> lista = new ArrayList<>();
+	public List<RolPermisoDTO> setList(ResultSet rs) throws SQLException {
+		List<RolPermisoDTO> lista = new ArrayList<>();
 		if (rs == null) {
 			return lista;
 		}
 		while (rs.next()) {
-			UsuarioRolDTO u = new UsuarioRolDTO();
-			UsuarioRolPK pk = new UsuarioRolPK(rs.getInt("id_usuario"), rs.getInt("id_rol"));
-			u.setUsuarioRolPK(pk);
+			RolPermisoDTO u = new RolPermisoDTO();
+			RolPermisoPK pk = new RolPermisoPK(rs.getInt("id_permiso"), rs.getInt("id_rol"));
+			u.setRolPermisoPK(pk);
 			u.setEstado(rs.getInt("estado"));
 			lista.add(u);
 		}
@@ -155,8 +156,8 @@ public class UsuarioRolDAO extends DAO<UsuarioRolPK, UsuarioRolDTO> implements S
 		return lista;
 	}
 
-	public boolean existeUsuarioRol(UsuarioRolPK pk) {
-		List<UsuarioRolDTO> lista = findById(pk);
+	public boolean existeRolPermiso(RolPermisoPK pk) {
+		List<RolPermisoDTO> lista = findById(pk);
 		return !lista.isEmpty();
 	}
 

@@ -113,19 +113,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		if (dto == null) {
 			return 0;
 		}
-		log.trace("inicio delete");
-		int retorno = 0;
-		String sql = "DELETE FROM configuracion WHERE id_configuracion = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getIdConfiguracion());
-			ps.executeUpdate();
-			retorno = dto.getIdConfiguracion();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-		} finally {
-			log.trace("fin delete");
-		}
-		return retorno;
+		return deleteByPK(dto.getIdConfiguracion());
 	}
 
 	public List<ConfiguracionDTO> consultarConfiguracionPorIdUsuarioYEstado(Integer idUsuario, Integer estado) {
@@ -134,7 +122,6 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			return lista;
 		}
 		log.trace("inicio consultarConfiguracionPorIdUsuarioYEstado");
-
 		String sql = "SELECT * FROM configuracion WHERE id_usuario = ? AND estado = ?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, idUsuario);

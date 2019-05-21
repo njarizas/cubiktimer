@@ -119,19 +119,7 @@ public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Seri
 		if (dto == null) {
 			return 0;
 		}
-		log.trace("inicio delete");
-		int retorno = 0;
-		String sql = "DELETE FROM soluciones_rubik WHERE id_solucion = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getIdFewestMove());
-			ps.executeUpdate();
-			retorno = dto.getIdFewestMove();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-		} finally {
-			log.trace("fin delete");
-		}
-		return retorno;
+		return deleteByPK(dto.getIdFewestMove());
 	}
 
 	public List<FewestMovesDTO> setList(ResultSet rs) throws SQLException {

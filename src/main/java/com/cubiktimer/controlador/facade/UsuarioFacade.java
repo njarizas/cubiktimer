@@ -12,6 +12,7 @@ import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.modelo.dto.RolDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
 import com.cubiktimer.modelo.dto.UsuarioRolDTO;
+import com.cubiktimer.modelo.dto.UsuarioRolPK;
 
 public class UsuarioFacade implements Serializable {
 
@@ -55,8 +56,8 @@ public class UsuarioFacade implements Serializable {
 		Integer idUsuario = usuarioDAO.merge(dto);
 		for (RolDTO rol : listaRoles) {
 			UsuarioRolDTO usuarioRolDTO = new UsuarioRolDTO();
-			usuarioRolDTO.setIdUsuario(idUsuario);
-			usuarioRolDTO.setIdRol(rol.getIdRol());
+			UsuarioRolPK pk = new UsuarioRolPK(idUsuario, rol.getIdRol());
+			usuarioRolDTO.setUsuarioRolPK(pk);
 			usuarioRolDTO.setEstado(1);
 			usuarioRolDAO.create(usuarioRolDTO);
 		}

@@ -57,8 +57,11 @@ public abstract class DAO<P, E> implements Serializable {
 	}
 
 	public List<E> findById(P pk) {
-		log.trace("inicio findById");
 		List<E> lista = new ArrayList<>();
+		if (pk == null) {
+			return lista;
+		}
+		log.trace("inicio findById");
 		String sql = "SELECT * FROM " + nombreTabla + " WHERE " + nombreLlavePrimaria + "=?";
 		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, pk);

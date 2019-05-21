@@ -93,7 +93,5 @@ public class Constantes {
 																				// autoincrementable a la tabla
 	public static final String PK_TABLA_TIPOS = "id_tipo";
 	public static final String PK_TABLA_USUARIOS = "id_usuario";
-	public static final String PK_TABLA_USUARIOS_ROLES = "id_usuarios_roles";// tiene llave primaria compuesta por dos
-																				// campos
 
 }

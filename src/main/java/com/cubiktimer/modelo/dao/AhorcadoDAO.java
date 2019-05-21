@@ -108,19 +108,7 @@ public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializab
 		if (dto == null) {
 			return 0;
 		}
-		log.trace("inicio delete");
-		int retorno = 0;
-		String sql = "DELETE FROM ahorcado WHERE id_ahorcado = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getIdAhorcado());
-			ps.executeUpdate();
-			retorno = dto.getIdAhorcado();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-		} finally {
-			log.trace("fin delete");
-		}
-		return retorno;
+		return deleteByPK(dto.getIdAhorcado());
 	}
 
 	public List<AhorcadoDTO> setList(ResultSet rs) throws SQLException {

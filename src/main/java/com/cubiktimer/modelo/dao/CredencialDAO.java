@@ -102,19 +102,7 @@ public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serial
 		if (dto == null) {
 			return 0;
 		}
-		log.trace("inicio delete");
-		int retorno = 0;
-		String sql = "DELETE FROM credenciales WHERE id_credencial = ?";
-		try (Connection con = CubikTimerDataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setObject(1, dto.getIdCredencial());
-			ps.executeUpdate();
-			retorno = dto.getIdCredencial();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-		} finally {
-			log.trace("fin delete");
-		}
-		return retorno;
+		return deleteByPK(dto.getIdCredencial());
 	}
 
 	public List<CredencialDTO> consultarCredencialPorCorreo(String correo) {

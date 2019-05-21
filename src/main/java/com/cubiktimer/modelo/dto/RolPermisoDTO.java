@@ -2,39 +2,30 @@ package com.cubiktimer.modelo.dto;
 
 import java.io.Serializable;
 
-public class RolPermisoDTO implements Serializable{
+public class RolPermisoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private Integer idRol;
-	private Integer idPermiso;
+
+	private RolPermisoPK rolPermisoPK;
 	private Integer estado;
-	
+
 	public RolPermisoDTO() {
 		super();
 		this.estado = 1;
 	}
 
-	public Integer getIdRol() {
-		return idRol;
+	public RolPermisoPK getRolPermisoPK() {
+		return rolPermisoPK;
 	}
-	
-	public void setIdRol(Integer idRol) {
-		this.idRol = idRol;
+
+	public void setRolPermisoPK(RolPermisoPK rolPermisoPK) {
+		this.rolPermisoPK = rolPermisoPK;
 	}
-	
-	public Integer getIdPermiso() {
-		return idPermiso;
-	}
-	
-	public void setIdPermiso(Integer idPermiso) {
-		this.idPermiso = idPermiso;
-	}
-	
+
 	public Integer getEstado() {
 		return estado;
 	}
-	
+
 	public void setEstado(Integer estado) {
 		this.estado = estado;
 	}

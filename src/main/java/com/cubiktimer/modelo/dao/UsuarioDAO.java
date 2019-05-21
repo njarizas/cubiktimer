@@ -97,7 +97,6 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 	}
 
 	public int merge(UsuarioDTO dto) {
-		//TODO arreglar este merge haciendo un metodo existeUsuario();
 		if (dto == null) {
 			return 0;
 		}
