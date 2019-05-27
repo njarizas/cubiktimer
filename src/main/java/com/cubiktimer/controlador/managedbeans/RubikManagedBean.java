@@ -30,6 +30,7 @@ import com.cubiktimer.modelo.rubik.SolucionFewestMoves;
 import com.cubiktimer.modelo.rubik.Tiempo;
 import com.cubiktimer.modelo.rubik.TipoCubo;
 import com.cubiktimer.util.Constantes;
+import com.cubiktimer.util.ScrambleGenerator;
 import com.cubiktimer.util.Util;
 
 /**
@@ -226,9 +227,7 @@ public class RubikManagedBean implements Serializable {
 			resetearCuboFewest();
 			secuenciaMezclaFewest = secuenciaMezclaFewest.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR),
 					" ");
-			secuenciaMezclaFewest = secuenciaMezclaFewest.toLowerCase().replaceAll(" ", "").replace("f", " f")
-					.replace("b", " b").replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d")
-					.replace("x", " x").replace("y", " y").replace("z", " z").replaceAll("\\[ ", " [");
+			secuenciaMezclaFewest = corregirMezclaFewest(secuenciaMezclaFewest);
 			log.info(secuenciaMezclaFewest);
 			mezclaFewest = secuenciaMezclaFewest.trim().split(" ");
 			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
@@ -240,6 +239,14 @@ public class RubikManagedBean implements Serializable {
 			log.debug("El cubo " + cuboFewestMoves.getNombre() + " no se soluciona en Fewest Moves");
 		}
 		return "";
+	}
+
+	private String corregirMezclaFewest(String mezcla) {
+		return mezcla.toUpperCase().replaceAll(" ", "").replace("F", " F").replace("B", " B").replace("R", " R")
+				.replace("L", " L").replace("U", " U").replace("D", " D").replace("X", " X").replace("Y", " Y")
+				.replace("Z", " Z").replaceAll("\\[ ", " [").replaceAll("\\[B", " [b").replaceAll("\\[R", " [r")
+				.replaceAll("\\[D", " [d").replaceAll("\\[F", " [f").replaceAll("\\[L", " [l")
+				.replaceAll("\\[U", " [u");
 	}
 
 	public String agregarTiempo() {
@@ -255,21 +262,29 @@ public class RubikManagedBean implements Serializable {
 	public String agregarSolucion() {
 		if (cuboFewestMoves instanceof Comprobable) {
 			solucion = solucion.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ");
-			solucion = solucion.toLowerCase().replaceAll(" ", "").replace("f", " f").replace("b", " b")
-					.replace("r", " r").replace("l", " l").replace("u", " u").replace("d", " d").replace("x", " x")
-					.replace("y", " y").replace("z", " z").replaceAll("\\[ ", " [");
+			solucion = corregirMezclaFewest(solucion);
 			log.info(solucion);
 			String[] giros = solucion.trim().split(" ");
 			cuboFewestMoves.mezclar(giros);
 			FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,
 					tiempoMilisegundosFewest, tiempoRestanteTexto, solucion, dnfFewest, comentarioFewest);
 			fewestMovesDTO.setLongitudSolucion((int) contarGiros(giros));
-			if (((Comprobable) cuboFewestMoves).estaResuelto()) {
+			if (((Comprobable) cuboFewestMoves).estaResuelto() && !ScrambleGenerator
+					.generarSecuenciaMezclaInversa(secuenciaMezclaFewest).trim().equals(solucion.trim())) {
 				fewestMovesDTO.setSolucionValida(true);
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("MensajePuzzleSolucionado"));
 				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
+				sesionManagedBean.getMensaje().setMensajePendiente(true);
+			} else if (((Comprobable) cuboFewestMoves).estaResuelto() && ScrambleGenerator
+					.generarSecuenciaMezclaInversa(secuenciaMezclaFewest).trim().equals(solucion.trim())) {
+				fewestMovesDTO.setSolucionValida(false);
+				fewestMovesDTO.setDnf(true);
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
+				sesionManagedBean.getMensaje()
+						.setText(sesionManagedBean.getRecursos().getString("MensajeSolucionNoValida"));
+				sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			} else {
 				fewestMovesDTO.setSolucionValida(false);

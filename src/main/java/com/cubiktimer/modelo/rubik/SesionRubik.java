@@ -151,15 +151,21 @@ public class SesionRubik implements Serializable {
 	public String mediaFewest() {
 		Integer acumulado = 0;
 		Integer solucionesValidas = 0;
+		String retorno = "--.--";
 		for (SolucionFewestMoves solucion : soluciones) {
 			if (!solucion.getFewestMoveDTO().getDnf()) {
 				acumulado += solucion.getFewestMoveDTO().getLongitudSolucion();
 				solucionesValidas++;
 			}
 		}
-		return ((solucionesValidas != 0)
-				? Util.getDf().format(new BigDecimal(acumulado).divide(new BigDecimal(solucionesValidas)))
-				: "--.--");
+		if ((solucionesValidas != 0)) {
+			try {
+				retorno = Util.getDf().format(new BigDecimal(acumulado).divide(new BigDecimal(solucionesValidas)));
+			} catch (ArithmeticException e) {
+				retorno = Util.getDf().format(acumulado.doubleValue() / solucionesValidas.doubleValue());
+			}
+		}
+		return retorno;
 	}
 
 	public String mo3FewestActual() {
