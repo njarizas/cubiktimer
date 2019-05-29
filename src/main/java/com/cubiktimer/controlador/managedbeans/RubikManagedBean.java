@@ -178,8 +178,8 @@ public class RubikManagedBean implements Serializable {
 		this.secuenciaMezcla = "";
 		this.mezcla = generarMezcla();
 		secuenciaMezcla = cubo.mezclar(mezcla);
+		log.info("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		log.trace(cubo);
-		log.debug("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
 
@@ -190,10 +190,10 @@ public class RubikManagedBean implements Serializable {
 			this.solucion = "";
 			this.mezclaFewest = generarMezclaFewest();
 			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-			log.trace(cuboFewestMoves);
-			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
-			log.debug("secuencia mezcla aleatoria Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
+			log.info("secuencia mezcla aleatoria Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
 					+ secuenciaMezclaFewest);
+			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
+			log.trace(cuboFewestMoves);
 		} else {
 			log.debug("El cubo: " + cuboFewestMoves.getNombre() + " no es valido para Fewest Moves");
 		}
@@ -214,11 +214,11 @@ public class RubikManagedBean implements Serializable {
 		if (tipoCubo == 27) {// Square 1
 			secuenciaMezcla = secuenciaMezcla.replace(" ", "").replace("/", " / ");
 		}
-		log.info(secuenciaMezcla);
+		log.info("Secuencia ingresada: " + secuenciaMezcla);
 		mezcla = secuenciaMezcla.trim().split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
+		log.info("secuencia mezcla personalizada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		log.trace(cubo);
-		log.debug("secuencia mezcla personalizada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		return "";
 	}
 
@@ -228,13 +228,13 @@ public class RubikManagedBean implements Serializable {
 			secuenciaMezclaFewest = secuenciaMezclaFewest.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR),
 					" ");
 			secuenciaMezclaFewest = corregirMezclaFewest(secuenciaMezclaFewest);
-			log.info(secuenciaMezclaFewest);
+			log.info("Secuencia ingresada Fewest moves: " + secuenciaMezclaFewest);
 			mezclaFewest = secuenciaMezclaFewest.trim().split(" ");
 			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-			log.trace(cuboFewestMoves);
-			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
-			log.debug("secuencia mezcla personalizada Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
+			log.info("secuencia mezcla personalizada Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
 					+ secuenciaMezclaFewest);
+			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
+			log.trace(cuboFewestMoves);
 		} else {
 			log.debug("El cubo " + cuboFewestMoves.getNombre() + " no se soluciona en Fewest Moves");
 		}
@@ -263,7 +263,7 @@ public class RubikManagedBean implements Serializable {
 		if (cuboFewestMoves instanceof Comprobable) {
 			solucion = solucion.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ");
 			solucion = corregirMezclaFewest(solucion);
-			log.info(solucion);
+			log.info("Mezcla de solucion ingresada: " + solucion);
 			String[] giros = solucion.trim().split(" ");
 			cuboFewestMoves.mezclar(giros);
 			FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,

@@ -72,9 +72,9 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public String verificar() {
-		log.debug("ingreso a verificar");
+		log.trace("ingreso a verificar contraseña");
 		String sal = usuarioDAO.consultarSalPorUsuario(sesionManagedBean.getUsuarioLogueado().getCorreo());
-		log.debug("sal " + sal);
+		log.trace("sal " + sal);
 		sesionManagedBean.getUsuarioLogueado().setSal(sal);
 		if (EncryptService.encriptarClave(claveAnterior + sal)
 				.equals(sesionManagedBean.getUsuarioLogueado().getClave())) {
@@ -94,9 +94,9 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 	}
 
 	public String cambiarClave() {
-		log.debug("ingreso a cambiarClave");
+		log.trace("ingreso a cambiarClave");
 		String sal = usuarioDAO.consultarSalPorUsuario(sesionManagedBean.getUsuarioLogueado().getCorreo());
-		log.debug("sal " + sal);
+		log.trace("sal " + sal);
 		sesionManagedBean.getUsuarioLogueado().setSal(sal);
 		if (claveNueva.equals("") || confirmarClaveNueva.equals("")) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));

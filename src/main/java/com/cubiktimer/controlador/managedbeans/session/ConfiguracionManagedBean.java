@@ -130,14 +130,14 @@ public class ConfiguracionManagedBean implements Serializable {
 			listaConfiguraciones.add(this.paginaInicial);
 			listaConfiguraciones.add(this.estiloVisual);
 			configuracionFacade.guardar(listaConfiguraciones);
-			log.info("Se guarda configuración de usuario: " + idUsuario);
+			log.debug("Se guarda configuración de usuario: " + idUsuario);
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("ElCambioFueRealizadoExitosamente"));
 			sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else {
-			log.trace("No se guarda configuracion ya que es un usuario no logueado");
+			log.debug("No se guarda configuracion ya que es un usuario no logueado");
 		}
 		return "";
 	}

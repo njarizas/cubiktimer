@@ -67,7 +67,7 @@ public class SesionManagedBean implements Serializable {
 		permisosDAO = new PermisosDAO();
 		ipConsultante = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())
 				.getRemoteAddr();
-		log.debug("Se ha creado una nueva sesión desde la siguiente ip: " + ipConsultante);
+		log.info("Se ha creado una nueva sesión desde la siguiente ip: " + ipConsultante);
 	}
 
 	public void goToIndex() {

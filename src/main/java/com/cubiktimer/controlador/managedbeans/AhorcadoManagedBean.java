@@ -141,12 +141,6 @@ public class AhorcadoManagedBean implements Serializable {
 		return this.letrasUsadas.indexOf(letra) >= 0;
 	}
 
-	public void mostrarPalabra() {
-		for (int i = 0; i < palabraVisible.length; i++) {
-			log.trace(" " + palabraVisible[i] + " ");
-		}
-	}
-
 	public String obtenerPalabra() {
 		StringBuilder r = new StringBuilder("");
 		for (int i = 0; i < palabraVisible.length; i++) {
