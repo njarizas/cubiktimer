@@ -202,37 +202,50 @@ public class RubikManagedBean implements Serializable {
 
 	public String mezclaPersonalizada() {
 		resetearCubo();
-		secuenciaMezcla = secuenciaMezcla.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ").replaceAll(" ",
-				"");
-		if (tipoCubo != 26) {// Diferente a Pyraminx
-			secuenciaMezcla = secuenciaMezcla.toLowerCase();
-		}
-		secuenciaMezcla = secuenciaMezcla.replace("f", " f").replace("b", " b").replace("r", " r").replace("l", " l")
-				.replace("u", " u").replace("d", " d").replace("x", " x").replace("y", " y").replace("z", " z")
-				.replace("3 b", " 3b").replace("3 d", " 3d").replace("3 f", " 3f").replace("3 l", " 3l")
-				.replace("3 r", " 3r").replace("3 u", " 3u").replaceAll("\\[ ", " [");
-		if (tipoCubo == 27) {// Square 1
-			secuenciaMezcla = secuenciaMezcla.replace(" ", "").replace("/", " / ");
-		}
-		log.info("Secuencia ingresada: " + secuenciaMezcla);
-		mezcla = secuenciaMezcla.trim().split(" ");
+		log.info("Secuencia ingresada: (" + cubo.getNombre() + "):" + secuenciaMezcla);
+		secuenciaMezcla = corregirMezcla(secuenciaMezcla);
+		mezcla = secuenciaMezcla.split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
-		log.info("secuencia mezcla personalizada (" + cubo.getNombre() + "): " + secuenciaMezcla);
+		log.info("Secuencia aplicada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		log.trace(cubo);
 		return "";
+	}
+
+	/**
+	 * Método que realiza la limpieza de las mezclas que se ingresan en el modo de
+	 * mezcla personalizada para todos los cubos disponibles
+	 * 
+	 * @return
+	 */
+	private String corregirMezcla(String secuencia) {
+		String retorno = secuencia.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ").replaceAll(" ", "");
+		if (tipoCubo != 26) {// Diferente a Pyraminx
+			retorno = retorno.toLowerCase();
+		}
+		retorno = retorno.replace("f", " f ").replace("b", " b ").replace("r", " r ").replace("l", " l ")
+				.replace("u", " u ").replace("d", " d ").replace("x", " x ").replace("y", " y ").replace("z", " z ")
+				.replace("3 b", " 3b ").replace("3 d", " 3d ").replace("3 f", " 3f ").replace("3 l", " 3l ")
+				.replace("3 r", " 3r ").replace("3 u", " 3u ").replaceAll(" '", "' ").replaceAll(" 2", "2 ")
+				.replaceAll("\\[ ", " [");
+		if (tipoCubo == 27) {// Square 1
+			retorno = retorno.replace(" ", "").replace("/", " / ");
+		}
+		retorno = retorno.trim();
+		log.info("Secuencia corregida (" + cubo.getNombre() + "): " + retorno);
+		return retorno;
 	}
 
 	public String mezclaPersonalizadaFewest() {
 		if (cuboFewestMoves instanceof FewestMovesSolvable) {
 			resetearCuboFewest();
+			log.info("Secuencia ingresada Fewest moves: " + secuenciaMezclaFewest);
 			secuenciaMezclaFewest = secuenciaMezclaFewest.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR),
 					" ");
 			secuenciaMezclaFewest = corregirMezclaFewest(secuenciaMezclaFewest);
-			log.info("Secuencia ingresada Fewest moves: " + secuenciaMezclaFewest);
-			mezclaFewest = secuenciaMezclaFewest.trim().split(" ");
+			log.info("Secuencia corregida Fewest moves: " + secuenciaMezclaFewest);
+			mezclaFewest = secuenciaMezclaFewest.split(" ");
 			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-			log.info("secuencia mezcla personalizada Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
-					+ secuenciaMezclaFewest);
+			log.info("secuencia aplicada Fewest Moves (" + cuboFewestMoves.getNombre() + "): " + secuenciaMezclaFewest);
 			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
 			log.trace(cuboFewestMoves);
 		} else {
@@ -245,8 +258,8 @@ public class RubikManagedBean implements Serializable {
 		return mezcla.toUpperCase().replaceAll(" ", "").replace("F", " F").replace("B", " B").replace("R", " R")
 				.replace("L", " L").replace("U", " U").replace("D", " D").replace("X", " X").replace("Y", " Y")
 				.replace("Z", " Z").replaceAll("\\[ ", " [").replaceAll("\\[B", " [b").replaceAll("\\[R", " [r")
-				.replaceAll("\\[D", " [d").replaceAll("\\[F", " [f").replaceAll("\\[L", " [l")
-				.replaceAll("\\[U", " [u");
+				.replaceAll("\\[D", " [d").replaceAll("\\[F", " [f").replaceAll("\\[L", " [l").replaceAll("\\[U", " [u")
+				.trim();
 	}
 
 	public String agregarTiempo() {
