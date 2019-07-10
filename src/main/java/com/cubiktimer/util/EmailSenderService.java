@@ -49,7 +49,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			Properties propiedades = new Properties();
 			propiedades.setProperty("mail.smtp.host", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.starttls.enable", "true");
-			propiedades.setProperty("mail.smtp.port", "25");// 587
+			propiedades.setProperty("mail.smtp.port", "25");// 587-25-465
 			propiedades.setProperty("mail.smtp.ssl.trust", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.user", this.emailRemitente);
 			propiedades.setProperty("mail.smtp.auth", "true");
@@ -94,7 +94,8 @@ public class EmailSenderService implements EmailSenderInterface {
 			transport.close();
 			return true;
 		} catch (MessagingException ex) {
-			log.warn(ex.getMessage());
+			ex.printStackTrace();
+			log.warn("Excepcion ", ex);
 			return false;
 		}
 	}
@@ -135,7 +136,8 @@ public class EmailSenderService implements EmailSenderInterface {
 
 			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en www.cubiktimer.com", mensaje);
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			e.printStackTrace();
+			log.warn("Excepcion ", e);
 			return false;
 		}
 	}
@@ -162,7 +164,8 @@ public class EmailSenderService implements EmailSenderInterface {
 			return enviarMensajeHTML(this.emailDestinatario,
 					"Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			e.printStackTrace();
+			log.warn("Excepcion ", e);
 			return false;
 		}
 	}
