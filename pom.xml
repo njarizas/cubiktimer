@@ -35,6 +35,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<sonar.sources>src/main/java</sonar.sources>
+		<sonar.tests>src/test/java</sonar.tests>
+		<!-- Below property indicates the pattern of the test suite -->
+		<runSuite>D:/eclipse_workspace/cubiktimer/target/test-classes/com/cubiktimer/util/TestSuite.class</runSuite>
+		<!-- Sonar-JaCoCo properties -->
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPaths>D:/eclipse_workspace/cubiktimer/target/jacoco.exec</sonar.jacoco.reportPaths>
+		<sonar.language>java</sonar.language>
+		<jacoco.version>0.7.9</jacoco.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -95,6 +105,19 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jmockit</groupId>
+			<artifactId>jmockit</artifactId>
+			<version>1.44</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.praqma</groupId>
+			<artifactId>junit-tools</artifactId>
+			<version>0.1.0</version>
+			<scope>system</scope>
+			<systemPath>D:/eclipse_workspace/cubiktimer/src/lib/junit-tools.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>

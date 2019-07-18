@@ -121,7 +121,7 @@ public class TestRolPermisoDAO {
 		} catch (UnsupportedOperationException e) {
 			return;
 		}
-		fail("No generó la excepcion esperada");
+		fail("No genero la excepcion esperada");
 	}
 
 	@MethodRef(name = "consultarMaximoIdPK", signature = "()I")
@@ -132,6 +132,6 @@ public class TestRolPermisoDAO {
 		} catch (UnsupportedOperationException e) {
 			return;
 		}
-		fail("No generó la excepcion esperada");
+		fail("No genero la excepcion esperada");
 	}
 }
