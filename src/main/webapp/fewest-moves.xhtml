@@ -78,9 +78,8 @@ ul.dropdown-menu strong {
 					<div style="padding-right: 20px; padding-left: 20px;">
 						<span class="help-block hidden-xs"></span>
 						<div class="row">
-						<div class="alert alert-info hidden-xs" role="alert">
-								#{texto.MovimientosValidos} 
-								<br /><strong>#{texto.ListaMovimientosValidos}</strong>
+							<div class="alert alert-info hidden-xs" role="alert">
+								#{texto.MovimientosValidos} <br /> <strong>#{texto.ListaMovimientosValidos}</strong>
 							</div>
 							<h:commandButton id="guardarSolucion" styleClass="hidden"
 								value="Guardar Solucion"
@@ -255,7 +254,7 @@ ul.dropdown-menu strong {
 								rendered="#{not empty sesionManagedBean.usuarioLogueado and rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
 								styleClass="btn btn-sm btn-success pull-right"
 								style="margin-left: 4px; margin-top:8px;"
-								value="#{texto.GuardarTiempos}"></h:commandButton>
+								value="#{texto.GuardarSoluciones}"></h:commandButton>
 						</div>
 					</div>
 				</div>
