@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dao.ParametroDAO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
 
@@ -59,7 +60,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			mimeMessage.setFrom(new InternetAddress(emailRemitente));
 			mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
 		} catch (MessagingException ex) {
-			log.warn(ex.getMessage());
+			log.error(ex.getMessage());
 		}
 	}
 
@@ -76,7 +77,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			transport.close();
 			return true;
 		} catch (MessagingException ex) {
-			log.warn(ex.getMessage());
+			log.error(ex.getMessage());
 			return false;
 		}
 	}
@@ -94,8 +95,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			transport.close();
 			return true;
 		} catch (MessagingException ex) {
-			ex.printStackTrace();
-			log.warn("Excepcion ", ex);
+			ExceptionHandler.manejarExcepcionGrave(ex);
 			return false;
 		}
 	}
@@ -136,8 +136,7 @@ public class EmailSenderService implements EmailSenderInterface {
 
 			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en www.cubiktimer.com", mensaje);
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.warn("Excepcion ", e);
+			ExceptionHandler.manejarExcepcionGrave(e);
 			return false;
 		}
 	}
@@ -164,8 +163,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			return enviarMensajeHTML(this.emailDestinatario,
 					"Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.warn("Excepcion ", e);
+			ExceptionHandler.manejarExcepcionGrave(e);
 			return false;
 		}
 	}

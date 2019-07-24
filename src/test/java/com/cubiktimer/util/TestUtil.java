@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 import junit.framework.TestCase;
 
 public class TestUtil extends TestCase {
@@ -20,7 +22,7 @@ public class TestUtil extends TestCase {
 			random = SecureRandom.getInstanceStrong();
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("No se pudo generar variable aleatoria");
-			System.out.println(e.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(e);
 		}
 	}
 

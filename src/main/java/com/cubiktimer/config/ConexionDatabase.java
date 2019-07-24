@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Propiedades;
 
@@ -46,8 +47,8 @@ public class ConexionDatabase {
 			conn = DriverManager.getConnection(url + database + properties, user, password);
 			log.trace("Se conectó a base de datos");
 		} catch (Exception e) {
-			log.debug("Ocurrió un error y no fue posible conectarse a base de datos");
-			log.warn(e.getMessage());
+			log.info("Ocurrió un error y no fue posible conectarse a base de datos");
+			ExceptionHandler.manejarExcepcionGrave(e);
 		}
 	}
 
@@ -73,8 +74,8 @@ public class ConexionDatabase {
 			}
 			log.trace("se desconectó de base de datos");
 		} catch (SQLException e) {
-			log.debug("Ocurrió un error y no fue posible cerrar la conexion a base de datos");
-			log.warn(e.getMessage());
+			log.info("Ocurrió un error y no fue posible cerrar la conexion a base de datos");
+			ExceptionHandler.manejarExcepcionModerada(e);
 		}
 	}
 

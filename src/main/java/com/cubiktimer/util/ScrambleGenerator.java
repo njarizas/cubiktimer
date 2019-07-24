@@ -13,6 +13,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 public class ScrambleGenerator {
 
 	private static final Logger log = Logger.getLogger(ScrambleGenerator.class);
@@ -40,11 +42,13 @@ public class ScrambleGenerator {
 			// TNoodle
 		} catch (ConnectException ce) {
 			esConnectException = true;
-			log.warn(ce.getMessage());
+			ExceptionHandler.manejarExcepcionLeve(ce);
 		} catch (MalformedURLException murle) {
 			log.warn(murle.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(murle);
 		} catch (IOException ioe) {
 			log.warn(ioe.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(ioe);
 		}
 		try {
 			if (esConnectException) {
@@ -65,7 +69,7 @@ public class ScrambleGenerator {
 				}
 			}
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(e);
 		}
 		return stringBuilder.toString();
 	}
@@ -135,7 +139,7 @@ public class ScrambleGenerator {
 				}
 				retorno.append(")");
 			} catch (Exception e) {
-				log.warn(e);
+				ExceptionHandler.manejarExcepcionGrave(e);
 			}
 		} else {
 			log.warn("Se encontró una inconsistencia en el giro: " + giro);

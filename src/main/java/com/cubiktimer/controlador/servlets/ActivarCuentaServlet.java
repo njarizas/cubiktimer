@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dao.ParametroDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
@@ -91,7 +92,9 @@ public class ActivarCuentaServlet extends HttpServlet {
                         dao.update(user);
                         return "La cuenta ha sido activada";
                     } catch (Exception ex) {
+                    	ExceptionHandler.manejarExcepcionGrave(ex);
                         return "No fue posible activar la cuenta";
+                        
                     }
                 default:
                     return "No es posible activar esta cuenta";

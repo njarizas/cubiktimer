@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dto.SesionRubikDTO;
 import com.cubiktimer.util.Util;
 
@@ -162,6 +163,7 @@ public class SesionRubik implements Serializable {
 			try {
 				retorno = Util.getDf().format(new BigDecimal(acumulado).divide(new BigDecimal(solucionesValidas)));
 			} catch (ArithmeticException e) {
+				ExceptionHandler.manejarExcepcionLeve(e);
 				retorno = Util.getDf().format(acumulado.doubleValue() / solucionesValidas.doubleValue());
 			}
 		}

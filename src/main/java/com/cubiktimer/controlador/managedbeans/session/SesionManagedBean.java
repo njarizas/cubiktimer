@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dao.PermisosDAO;
 import com.cubiktimer.modelo.dto.PermisoDTO;
 import com.cubiktimer.modelo.dto.RolDTO;
@@ -75,6 +76,7 @@ public class SesionManagedBean implements Serializable {
 			FacesContext.getCurrentInstance().getExternalContext().redirect(getContextPath() + "/index.jsf");
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+			ExceptionHandler.manejarExcepcionLeve(e);
 		}
 	}
 

@@ -14,6 +14,8 @@ import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 public class Util implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(Util.class);
@@ -187,7 +189,7 @@ public class Util implements Serializable {
 						retorno.append(" ");
 					}
 				} catch (Exception e) {
-					log.warn(e);
+					ExceptionHandler.manejarExcepcionGrave(e);
 				}
 			} else {
 				log.warn("Se encontró una inconsistencia en la mezcla square1: " + string);

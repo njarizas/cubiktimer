@@ -8,6 +8,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 public class Promedio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,7 +48,7 @@ public class Promedio implements Serializable {
 			this.date = sdf.parse(fecha);
 		} catch (ParseException e) {
 			log.trace("La fecha obtenida no se pudo convertir: ");
-			log.warn(e.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(e);
 		}
 	}
 

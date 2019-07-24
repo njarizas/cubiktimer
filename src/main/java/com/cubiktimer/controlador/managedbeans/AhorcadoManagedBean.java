@@ -18,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.controlador.managedbeans.session.SesionManagedBean;
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dao.AhorcadoDAO;
 import com.cubiktimer.modelo.dto.AhorcadoDTO;
 import com.cubiktimer.util.Constantes;
@@ -78,6 +79,7 @@ public class AhorcadoManagedBean implements Serializable {
 			inicializarPalabra();
 		} catch (Exception e) {
 			log.warn(e.getMessage());
+			ExceptionHandler.manejarExcepcionModerada(e);
 		}
 		letra = "";
 		palabraVisible = palabra.toCharArray();

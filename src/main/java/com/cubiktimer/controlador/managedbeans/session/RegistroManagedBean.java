@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.controlador.facade.UsuarioFacade;
+import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dao.CredencialDAO;
 import com.cubiktimer.modelo.dao.RolDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
@@ -140,7 +141,8 @@ public class RegistroManagedBean implements Serializable {
 			usuario.setIdUsuario(usuarioFacade.create(usuario, listaRolesDefault));
 			return true;
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			log.info("ocurrio un error al intentar registrar el usuario");
+			ExceptionHandler.manejarExcepcionGrave(e);
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
 					.setText(sesionManagedBean.getRecursos().getString("OcurrioUnErrorAlIntentarRegistrarElUsuario"));

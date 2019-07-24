@@ -10,6 +10,8 @@ import java.net.URLConnection;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 public class ScrambleSolver {
 
 	private static final Logger log = Logger.getLogger(ScrambleGenerator.class);
@@ -37,11 +39,11 @@ public class ScrambleSolver {
 			// Cube Explorer
 		} catch (ConnectException ce) {
 			esConnectException = true;
-			log.warn(ce.getMessage());
+			ExceptionHandler.manejarExcepcionLeve(ce);
 		} catch (MalformedURLException murle) {
-			log.warn(murle.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(murle);
 		} catch (IOException ioe) {
-			log.warn(ioe.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(ioe);
 		}
 		try {
 			if (esConnectException) {
@@ -62,7 +64,7 @@ public class ScrambleSolver {
 				}
 			}
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(e);
 		}
 		return stringBuilder.toString().replaceAll("</HTML>", "").replaceAll("</BODY>", "").replaceAll("<HTML>", "")
 				.replaceAll("<BODY>", "");

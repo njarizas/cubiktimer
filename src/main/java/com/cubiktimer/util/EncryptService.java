@@ -10,6 +10,8 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 /**
  *
  * @author Nelson
@@ -66,6 +68,7 @@ public class EncryptService {
             digest = messageDigest.digest();
         } catch (NoSuchAlgorithmException ex) {
             log.warn("Error creando Digest" + ex);
+            ExceptionHandler.manejarExcepcionGrave(ex);
         }
         return toHexadecimal(digest);
     }

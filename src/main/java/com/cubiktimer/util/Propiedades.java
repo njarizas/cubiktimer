@@ -6,6 +6,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.cubiktimer.error.ExceptionHandler;
+
 public class Propiedades {
 
 	private static Propiedades instance;
@@ -28,8 +30,9 @@ public class Propiedades {
 		try {
 			entrada = new FileInputStream(Propiedades.rutaPropiedades);
 			properties.load(entrada);
+			log.info("cargó propiedades del archivo");
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			ExceptionHandler.manejarExcepcionGrave(e);
 		}
 	}
 
