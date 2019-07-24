@@ -31,7 +31,6 @@ public class ConfiguracionManagedBean implements Serializable {
 	private Integer idUsuario;
 	private ConfiguracionDTO tiempoInspeccion;
 	private ConfiguracionDTO tipoCubo;
-	private ConfiguracionDTO tipoCuboFewest;
 	private ConfiguracionDTO idioma;
 	private ConfiguracionDTO paginaInicial;
 	private ConfiguracionDTO estiloVisual;
@@ -48,9 +47,6 @@ public class ConfiguracionManagedBean implements Serializable {
 		this.tipoCubo = new ConfiguracionDTO();
 		this.tipoCubo.setIdTipo(22);
 		this.tipoCubo.setValorEntero(TipoCubo.CUBO_3X3X3.getId());
-		this.tipoCuboFewest = new ConfiguracionDTO();
-		this.tipoCuboFewest.setIdTipo(29);
-		this.tipoCuboFewest.setValorEntero(TipoCubo.CUBO_3X3X3_FEWEST_MOVES.getId());
 		this.idioma = new ConfiguracionDTO();
 		this.idioma.setIdTipo(19);
 		this.idioma.setValorTexto("ES");
@@ -87,12 +83,6 @@ public class ConfiguracionManagedBean implements Serializable {
 				this.tipoCubo = tipoCuboParametrizado;
 			}
 			this.tipoCubo.setIdUsuario(idUsuario);
-			ConfiguracionDTO tipoCuboFewestMovesParametrizado = configuracionFacade
-					.obtenerTipoCuboFewestMovesPreferidoPorIdUsuario(idUsuario);
-			if (tipoCuboFewestMovesParametrizado != null) {
-				this.tipoCubo = tipoCuboFewestMovesParametrizado;
-			}
-			this.tipoCubo.setIdUsuario(idUsuario);
 			ConfiguracionDTO idiomaParametrizado = configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(idUsuario);
 			if (idiomaParametrizado != null) {
 				this.idioma = idiomaParametrizado;
@@ -118,14 +108,12 @@ public class ConfiguracionManagedBean implements Serializable {
 		if (idUsuario != null) {
 			this.tiempoInspeccion.setIdUsuario(idUsuario);
 			this.tipoCubo.setIdUsuario(idUsuario);
-			this.tipoCuboFewest.setIdUsuario(idUsuario);
 			this.idioma.setIdUsuario(idUsuario);
 			this.paginaInicial.setIdUsuario(idUsuario);
 			this.estiloVisual.setIdUsuario(idUsuario);
 			List<ConfiguracionDTO> listaConfiguraciones = new ArrayList<>();
 			listaConfiguraciones.add(this.tiempoInspeccion);
 			listaConfiguraciones.add(this.tipoCubo);
-			listaConfiguraciones.add(this.tipoCuboFewest);
 			listaConfiguraciones.add(this.idioma);
 			listaConfiguraciones.add(this.paginaInicial);
 			listaConfiguraciones.add(this.estiloVisual);
@@ -164,14 +152,6 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	public void setTipoCubo(ConfiguracionDTO tipoCubo) {
 		this.tipoCubo = tipoCubo;
-	}
-
-	public ConfiguracionDTO getTipoCuboFewest() {
-		return tipoCuboFewest;
-	}
-
-	public void setTipoCuboFewest(ConfiguracionDTO tipoCuboFewest) {
-		this.tipoCuboFewest = tipoCuboFewest;
 	}
 
 	public ConfiguracionDTO getIdioma() {

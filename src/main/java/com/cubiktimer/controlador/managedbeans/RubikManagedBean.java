@@ -28,7 +28,6 @@ import com.cubiktimer.modelo.rubik.Puzzle;
 import com.cubiktimer.modelo.rubik.SesionRubik;
 import com.cubiktimer.modelo.rubik.SolucionFewestMoves;
 import com.cubiktimer.modelo.rubik.Tiempo;
-import com.cubiktimer.modelo.rubik.TipoCubo;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.ScrambleGenerator;
 import com.cubiktimer.util.Util;
@@ -74,17 +73,8 @@ public class RubikManagedBean implements Serializable {
 	private String comentario;
 
 	// Para cuando se compite por movimientos
-	private int tipoCuboFewest;
-	private Puzzle cuboFewestMoves;
-
-	private String[] mezclaFewest;
-	private String secuenciaMezclaFewest;
-
-	private Integer tiempoMilisegundosFewest;
 	private String tiempoRestanteTexto;
 	private String solucion;
-	private Boolean dnfFewest;
-	private String comentarioFewest;
 
 	public RubikManagedBean() {
 		this.tipoDAO = new TipoDAO();
@@ -99,12 +89,8 @@ public class RubikManagedBean implements Serializable {
 		this.penalizacion = false;
 		this.comentario = "";
 
-		this.secuenciaMezclaFewest = "";
-		this.tiempoMilisegundosFewest = 0;
 		this.solucion = "";
 		this.tiempoRestanteTexto = "59:59";
-		this.dnfFewest = false;
-		this.comentarioFewest = "";
 	}
 
 	@PostConstruct
@@ -117,10 +103,7 @@ public class RubikManagedBean implements Serializable {
 		this.sesionRubikActual.getSesionRubikDTO().setIp(sesionManagedBean.getIpConsultante());
 		this.tipoCubo = configuracionManagedBean.getTipoCubo().getValorEntero();
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
-		this.tipoCuboFewest = TipoCubo.CUBO_3X3X3_FEWEST_MOVES.getId();
-		this.cuboFewestMoves = RubikFactory.crearCubo(this.tipoCuboFewest);
 		mezclaAleatoria();
-		mezclaAleatoriaFewest();
 	}
 
 	public void cambioCubo(ValueChangeEvent event) {
@@ -130,27 +113,12 @@ public class RubikManagedBean implements Serializable {
 		mezclaAleatoria();
 	}
 
-	public void cambioCuboFewest(ValueChangeEvent event) {
-		this.tipoCuboFewest = Integer.parseInt(event.getNewValue().toString());
-		this.configuracionManagedBean.getTipoCuboFewest().setValorEntero(this.tipoCuboFewest);
-		this.cuboFewestMoves = RubikFactory.crearCubo(this.tipoCuboFewest);
-		mezclaAleatoriaFewest();
-	}
-
 	public List<TipoDTO> listarCubos() {
 		return tipoDAO.listarTiposDeCubo();
 	}
 
-	public List<TipoDTO> listarCubosFewest() {
-		return tipoDAO.listarTiposDeCuboFewest();
-	}
-
 	public String[] generarMezcla() {
 		return cubo.generarMezcla();
-	}
-
-	public String[] generarMezclaFewest() {
-		return cuboFewestMoves.generarMezcla();
 	}
 
 	public String resetearCubo() {
@@ -158,18 +126,10 @@ public class RubikManagedBean implements Serializable {
 		return "";
 	}
 
-	public String resetearCuboFewest() {
-		cuboFewestMoves = RubikFactory.crearCubo(this.tipoCuboFewest);
-		return "";
-	}
-
 	public String resetearTodo() {
 		resetearCubo();
-		resetearCuboFewest();
 		this.secuenciaMezcla = "";
 		this.mezcla = null;
-		this.secuenciaMezclaFewest = "";
-		this.mezclaFewest = null;
 		return "";
 	}
 
@@ -178,32 +138,30 @@ public class RubikManagedBean implements Serializable {
 		this.secuenciaMezcla = "";
 		this.mezcla = generarMezcla();
 		secuenciaMezcla = cubo.mezclar(mezcla);
-		log.info("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
-		log.trace(cubo);
-		return "";
-	}
-
-	public String mezclaAleatoriaFewest() {
-		if (cuboFewestMoves instanceof FewestMovesSolvable) {
-			resetearCuboFewest();
-			this.secuenciaMezclaFewest = "";
+		if (cubo instanceof FewestMovesSolvable && cubo.getIdTipoCubo() == 17) {
 			this.solucion = "";
-			this.mezclaFewest = generarMezclaFewest();
-			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-			log.info("secuencia mezcla aleatoria Fewest Moves (" + cuboFewestMoves.getNombre() + "): "
-					+ secuenciaMezclaFewest);
-			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
-			log.trace(cuboFewestMoves);
+			log.info("secuencia mezcla aleatoria Fewest Moves (" + cubo.getNombre() + "): " + secuenciaMezcla);
+			log.debug(((FewestMovesSolvable) cubo).faceletToString());
 		} else {
-			log.debug("El cubo: " + cuboFewestMoves.getNombre() + " no es valido para Fewest Moves");
+			log.info("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		}
+		log.trace(cubo);
 		return "";
 	}
 
 	public String mezclaPersonalizada() {
 		resetearCubo();
-		log.info("Secuencia ingresada: (" + cubo.getNombre() + "):" + secuenciaMezcla);
-		secuenciaMezcla = corregirMezcla(secuenciaMezcla);
+		if (cubo instanceof FewestMovesSolvable && cubo.getIdTipoCubo() == 17) {
+			log.info("Secuencia ingresada Fewest moves: " + secuenciaMezcla);
+			secuenciaMezcla = corregirMezclaFewest(secuenciaMezcla);
+			log.info("Secuencia corregida Fewest moves: " + cubo.getNombre() + secuenciaMezcla);
+			log.debug(((FewestMovesSolvable) cubo).faceletToString());
+		} else {
+			log.info("Secuencia ingresada: " + cubo.getNombre() + "):" + secuenciaMezcla);
+			secuenciaMezcla = corregirMezcla(secuenciaMezcla);
+			log.info("Secuencia corregida: " + cubo.getNombre() + secuenciaMezcla);
+
+		}
 		mezcla = secuenciaMezcla.split(" ");
 		secuenciaMezcla = cubo.mezclar(mezcla);
 		log.info("Secuencia aplicada (" + cubo.getNombre() + "): " + secuenciaMezcla);
@@ -235,31 +193,12 @@ public class RubikManagedBean implements Serializable {
 		return retorno;
 	}
 
-	public String mezclaPersonalizadaFewest() {
-		if (cuboFewestMoves instanceof FewestMovesSolvable) {
-			resetearCuboFewest();
-			log.info("Secuencia ingresada Fewest moves: " + secuenciaMezclaFewest);
-			secuenciaMezclaFewest = secuenciaMezclaFewest.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR),
-					" ");
-			secuenciaMezclaFewest = corregirMezclaFewest(secuenciaMezclaFewest);
-			log.info("Secuencia corregida Fewest moves: " + secuenciaMezclaFewest);
-			mezclaFewest = secuenciaMezclaFewest.split(" ");
-			secuenciaMezclaFewest = cuboFewestMoves.mezclar(mezclaFewest);
-			log.info("secuencia aplicada Fewest Moves (" + cuboFewestMoves.getNombre() + "): " + secuenciaMezclaFewest);
-			log.debug(((FewestMovesSolvable) cuboFewestMoves).faceletToString());
-			log.trace(cuboFewestMoves);
-		} else {
-			log.debug("El cubo " + cuboFewestMoves.getNombre() + " no se soluciona en Fewest Moves");
-		}
-		return "";
-	}
-
 	private String corregirMezclaFewest(String mezcla) {
-		return mezcla.toUpperCase().replaceAll(" ", "").replace("F", " F").replace("B", " B").replace("R", " R")
-				.replace("L", " L").replace("U", " U").replace("D", " D").replace("X", " X").replace("Y", " Y")
-				.replace("Z", " Z").replaceAll("\\[ ", " [").replaceAll("\\[B", " [b").replaceAll("\\[R", " [r")
-				.replaceAll("\\[D", " [d").replaceAll("\\[F", " [f").replaceAll("\\[L", " [l").replaceAll("\\[U", " [u")
-				.trim();
+		return mezcla.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ").toUpperCase().replaceAll(" ", "")
+				.replace("F", " F").replace("B", " B").replace("R", " R").replace("L", " L").replace("U", " U")
+				.replace("D", " D").replace("X", " X").replace("Y", " Y").replace("Z", " Z").replaceAll("\\[ ", " [")
+				.replaceAll("\\[B", " [b").replaceAll("\\[R", " [r").replaceAll("\\[D", " [d").replaceAll("\\[F", " [f")
+				.replaceAll("\\[L", " [l").replaceAll("\\[U", " [u").trim();
 	}
 
 	public String agregarTiempo() {
@@ -273,25 +212,25 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String agregarSolucion() {
-		if (cuboFewestMoves instanceof Comprobable) {
+		if (cubo instanceof Comprobable) {
 			solucion = solucion.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ");
 			solucion = corregirMezclaFewest(solucion);
 			log.info("Mezcla de solucion ingresada: " + solucion);
 			String[] giros = solucion.trim().split(" ");
-			cuboFewestMoves.mezclar(giros);
-			FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cuboFewestMoves.getIdTipoCubo(), secuenciaMezclaFewest,
-					tiempoMilisegundosFewest, tiempoRestanteTexto, solucion, dnfFewest, comentarioFewest);
+			cubo.mezclar(giros);
+			FewestMovesDTO fewestMovesDTO = new FewestMovesDTO(cubo.getIdTipoCubo(), secuenciaMezcla,
+					tiempoMilisegundos, tiempoRestanteTexto, solucion, dnf, comentario);
 			fewestMovesDTO.setLongitudSolucion((int) contarGiros(giros));
-			if (((Comprobable) cuboFewestMoves).estaResuelto() && !ScrambleGenerator
-					.generarSecuenciaMezclaInversa(secuenciaMezclaFewest).trim().equals(solucion.trim())) {
+			if (((Comprobable) cubo).estaResuelto() && !ScrambleGenerator.generarSecuenciaMezclaInversa(secuenciaMezcla)
+					.trim().equals(solucion.trim())) {
 				fewestMovesDTO.setSolucionValida(true);
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 				sesionManagedBean.getMensaje()
 						.setText(sesionManagedBean.getRecursos().getString("MensajePuzzleSolucionado"));
 				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
-			} else if (((Comprobable) cuboFewestMoves).estaResuelto() && ScrambleGenerator
-					.generarSecuenciaMezclaInversa(secuenciaMezclaFewest).trim().equals(solucion.trim())) {
+			} else if (((Comprobable) cubo).estaResuelto() && ScrambleGenerator
+					.generarSecuenciaMezclaInversa(secuenciaMezcla).trim().equals(solucion.trim())) {
 				fewestMovesDTO.setSolucionValida(false);
 				fewestMovesDTO.setDnf(true);
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
@@ -308,11 +247,11 @@ public class RubikManagedBean implements Serializable {
 				sesionManagedBean.getMensaje().setType(Constantes.ERROR);
 				sesionManagedBean.getMensaje().setMensajePendiente(true);
 			}
-			SolucionFewestMoves s = new SolucionFewestMoves(cuboFewestMoves, fewestMovesDTO);
+			SolucionFewestMoves s = new SolucionFewestMoves(cubo, fewestMovesDTO);
 			sesionRubikActual.getSoluciones().add(s);
-			mezclaAleatoriaFewest();
+			mezclaAleatoria();
 		} else {
-			log.debug("El cubo " + cuboFewestMoves.getNombre() + " no se soluciona en Fewest Moves");
+			log.debug("El cubo " + cubo.getNombre() + " no se soluciona en Fewest Moves");
 		}
 		return "";
 	}
@@ -375,6 +314,12 @@ public class RubikManagedBean implements Serializable {
 
 	public String limpiarSoluciones() {
 		sesionRubikActual.setSoluciones(new ArrayList<SolucionFewestMoves>());
+		return "";
+	}
+
+	public String limpiarTodo() {
+		limpiarTiempos();
+		limpiarSoluciones();
 		return "";
 	}
 
@@ -478,10 +423,6 @@ public class RubikManagedBean implements Serializable {
 		return Util.traducirSecuenciaWCA(this.tipoCubo, this.secuenciaMezcla);
 	}
 
-	public String mezclaTraducidaFewest() {
-		return Util.traducirSecuenciaWCA(this.tipoCuboFewest, this.secuenciaMezclaFewest);
-	}
-
 	public Puzzle getCubo() {
 		return cubo;
 	}
@@ -578,46 +519,6 @@ public class RubikManagedBean implements Serializable {
 		this.tipoCubo = tipoCubo;
 	}
 
-	public int getTipoCuboFewest() {
-		return tipoCuboFewest;
-	}
-
-	public void setTipoCuboFewest(int tipoCuboFewest) {
-		this.tipoCuboFewest = tipoCuboFewest;
-	}
-
-	public Puzzle getCuboFewestMoves() {
-		return cuboFewestMoves;
-	}
-
-	public void setCuboFewestMoves(Puzzle cuboFewestMoves) {
-		this.cuboFewestMoves = cuboFewestMoves;
-	}
-
-	public String[] getMezclaFewest() {
-		return mezclaFewest;
-	}
-
-	public void setMezclaFewest(String[] mezclaFewest) {
-		this.mezclaFewest = mezclaFewest;
-	}
-
-	public String getSecuenciaMezclaFewest() {
-		return secuenciaMezclaFewest;
-	}
-
-	public void setSecuenciaMezclaFewest(String secuenciaMezclaFewest) {
-		this.secuenciaMezclaFewest = secuenciaMezclaFewest;
-	}
-
-	public Integer getTiempoMilisegundosFewest() {
-		return tiempoMilisegundosFewest;
-	}
-
-	public void setTiempoMilisegundosFewest(Integer tiempoMilisegundosFewest) {
-		this.tiempoMilisegundosFewest = tiempoMilisegundosFewest;
-	}
-
 	public String getTiempoRestanteTexto() {
 		return tiempoRestanteTexto;
 	}
@@ -632,22 +533,6 @@ public class RubikManagedBean implements Serializable {
 
 	public void setSolucion(String solucion) {
 		this.solucion = solucion;
-	}
-
-	public Boolean getDnfFewest() {
-		return dnfFewest;
-	}
-
-	public void setDnfFewest(Boolean dnfFewest) {
-		this.dnfFewest = dnfFewest;
-	}
-
-	public String getComentarioFewest() {
-		return comentarioFewest;
-	}
-
-	public void setComentarioFewest(String comentarioFewest) {
-		this.comentarioFewest = comentarioFewest;
 	}
 
 	public List<SesionRubik> getListaSesiones() {

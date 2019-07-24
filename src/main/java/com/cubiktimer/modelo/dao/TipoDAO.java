@@ -116,7 +116,16 @@ public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 	}
 
 	public List<TipoDTO> listarTiposDeCubo() {
-		return listarTiposDeCuboPorEstado(1);
+		List<TipoDTO> lista = new ArrayList<>();
+		log.trace("inicio listarTiposDeCubo");
+		String sql = "SELECT * FROM tipos WHERE id_padre=2 AND estado!=0";
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			lista = findList(ps);
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+		}
+		log.trace("fin listarTiposDeCubo");
+		return lista;
 	}
 
 	public List<TipoDTO> listarTiposDeCuboFewest() {

@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="col-xs-12 col-md-10 col-md-offset-1">
+		<h:form id="form">
+			<!-- <h2 class="text-center">#{texto.CronometroRubik}
+					#{rubikManagedBean.cubo.nombre}</h2> -->
+			<div class="row">
+				<h5 class="text-center" id="secuencia">#{rubikManagedBean.secuenciaMezcla}</h5>
+			</div>
+			<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9"
+				id="lateralIzquierdo" style="float: left;">
+				<div style="padding-right: 20px; padding-left: 20px;">
+					<span class="help-block hidden-xs"></span>
+					<div class="row">
+						<div class="alert alert-info hidden-xs" role="alert">
+							#{texto.Pulsa} <strong>[#{texto.BarraEspaciadora}]</strong>
+							#{texto.ParaIniciar}, #{texto.PulsaCualquierTeclaParaDetener}.
+						</div>
+						<h:commandButton id="guardarTiempo" styleClass="hidden"
+							value="Guardar Tiempo"
+							action="#{rubikManagedBean.agregarTiempo()}" />
+					</div>
+					<div class="row">
+						<div id="timer" class="col-xs-12">
+							<div id="lblTiempo">#{rubikManagedBean.duracion}</div>
+						</div>
+					</div>
+					<div>
+						<div id="oculto" class="hidden">
+							<script>
+									#{rubikManagedBean.setTiempoInspeccionSegundos(configuracionManagedBean.tiempoInspeccion.valorEntero)};
+									</script>
+							<table class="table table-bordered">
+								<tr>
+									<td>tiempo_inspeccion_segundos</td>
+									<td><h:inputText id="txtTiempoInspeccionSegundos"
+											value="#{rubikManagedBean.tiempoInspeccionSegundos}" /></td>
+								</tr>
+								<tr>
+									<td>tiempo_inspeccion_usado_milisegundos</td>
+									<td><h:inputText id="txtTiempoInspeccionUsadoMilisegundos"
+											value="#{rubikManagedBean.tiempoInspeccionUsadoMilisegundos}" /></td>
+								</tr>
+								<tr>
+									<td>tiempo_inspeccion_usado_texto</td>
+									<td><h:inputText id="txtTiempoInspeccionUsadoTexto"
+											value="#{rubikManagedBean.tiempoInspeccionUsadoTexto}" /></td>
+								</tr>
+								<tr>
+									<td>tiempo_milisegundos</td>
+									<td><h:inputText id="txtTiempoMilisegundos"
+											value="#{rubikManagedBean.tiempoMilisegundos}" /></td>
+								</tr>
+								<tr>
+									<td>tiempo_texto</td>
+									<td><h:inputText id="txtTiempo"
+											value="#{rubikManagedBean.duracion}" /></td>
+								</tr>
+								<tr>
+									<td>penalizacion</td>
+									<td><h:inputText id="txtPenalizacion"
+											value="#{rubikManagedBean.penalizacion}" /></td>
+								</tr>
+								<tr>
+									<td>dnf</td>
+									<td><h:inputText id="txtDnf"
+											value="#{rubikManagedBean.dnf}" /></td>
+								</tr>
+								<tr>
+									<td>comentario</td>
+									<td><h:inputText id="txtComentario"
+											value="#{rubikManagedBean.comentario}" /></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><h6 id="lbl-comenzar">Comenzar</h6></td>
+								</tr>
+							</table>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<table id="table" class="table table-condensed table-bordered"
+						data-toggle="table" data-pagination="true" data-sort-name="#"
+						data-sort-order="desc" data-show-toggle="true"
+						data-show-columns="true" data-search="false" data-page-size="5"
+						data-page-list="[5,10,15,20,Todos]">
+						<caption style="text-align: center">#{texto.Tiempos}</caption>
+						<thead>
+							<tr>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="#"><strong>#</strong></th>
+								<th class="hidden-xs hidden-sm" data-halign="right"
+									data-align="center" data-sortable="true" data-field="cubo"><strong>#{texto.Cubo}:</strong></th>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="secuencia"><strong>#{texto.Secuencia}:</strong></th>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="tiempo"><strong>#{texto.Tiempo}:</strong></th>
+								<th style="min-width: 140px;" data-halign="right"
+									data-align="center" data-field="acciones"><strong>#{texto.Acciones}:</strong></th>
+							</tr>
+						</thead>
+						<c:forEach items="#{rubikManagedBean.sesionRubikActual.tiempos}"
+							var="tiempo" varStatus="i">
+							<tr>
+								<td>#{i.index+1}</td>
+								<td class="hidden-xs hidden-sm">#{tiempo.cubo.nombre}</td>
+								<td>#{tiempo.tiempoRubikDTO.mezcla}</td>
+								<td>#{tiempo.tiempoRubikDTO.tiempoTexto}</td>
+								<td><h:commandButton
+										action="#{rubikManagedBean.mostrarDNF(tiempo)}"
+										styleClass="btn btn-sm #{(tiempo.tiempoRubikDTO.dnf)?'btn-info':'btn-default'}"
+										value="DNF"></h:commandButton> <h:commandButton
+										action="#{rubikManagedBean.mostrarPenalizacion(tiempo)}"
+										styleClass="btn btn-sm #{(tiempo.tiempoRubikDTO.penalizacion)?'btn-info':'btn-default'}"
+										style="margin-left: 4px;" value="+2"></h:commandButton> <h:commandButton
+										action="#{rubikManagedBean.eliminarTiempo(tiempo)}"
+										styleClass="btn btn-sm btn-danger" style="margin-left: 4px;"
+										value="X"></h:commandButton></td>
+							</tr>
+						</c:forEach>
+					</table>
+					<h:panelGroup
+						rendered="#{rubikManagedBean.sesionRubikActual.soluciones.size() > 0}">
+						<table id="table2" class="table table-condensed table-bordered"
+							data-toggle="table" data-pagination="true" data-sort-name="#"
+							data-sort-order="desc" data-show-toggle="true"
+							data-show-columns="true" data-search="false" data-page-size="5"
+							data-page-list="[5,10,15,20,Todos]">
+							<caption style="text-align: center">#{texto.Soluciones}</caption>
+							<thead>
+								<tr>
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="#"><strong>#</strong></th>
+									<th class="hidden-xs hidden-sm" data-halign="right"
+										data-align="center" data-sortable="true" data-field="cubo"><strong>#{texto.Cubo}:</strong></th>
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="secuencia"><strong>#{texto.Secuencia}:</strong></th>
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="solucion"><strong>#{texto.Solucion}:</strong></th>
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="longitudSolucion"><strong>#{texto.LongitudSolucion}:</strong></th>
+									<th data-halign="right" data-align="center"
+										data-sortable="true" data-field="solucionValida"><strong>#{texto.SolucionValida}:</strong></th>
+									<th style="min-width: 140px;" data-halign="right"
+										data-align="center" data-field="acciones"><strong>#{texto.Acciones}:</strong></th>
+								</tr>
+							</thead>
+							<c:forEach
+								items="#{rubikManagedBean.sesionRubikActual.soluciones}"
+								var="solucion" varStatus="i">
+								<tr>
+									<td>#{i.index+1}</td>
+									<td class="hidden-xs hidden-sm">#{solucion.cubo.nombre}</td>
+									<td>#{solucion.fewestMoveDTO.mezcla}</td>
+									<td>#{solucion.fewestMoveDTO.solucion}</td>
+									<td>#{solucion.fewestMoveDTO.longitudSolucion}</td>
+									<td>#{solucion.fewestMoveDTO.solucionValida}</td>
+									<td><h:commandButton
+											action="#{rubikManagedBean.mostrarDNF(solucion)}"
+											styleClass="btn btn-sm #{(solucion.fewestMoveDTO.dnf)?'btn-info':'btn-default'}"
+											value="DNF"></h:commandButton> <h:commandButton
+											action="#{rubikManagedBean.eliminarSolucion(solucion)}"
+											styleClass="btn btn-sm btn-danger" style="margin-left: 4px;"
+											value="X"></h:commandButton></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</h:panelGroup>
+				</div>
+			</div>
+			<div id="lateralDerecho">
+				<h:panelGroup layout="block" id="imagenCubo2x2"
+					rendered="#{rubikManagedBean.tipoCubo==5}">
+					<ui:include src="/WEB-INF/includes/2x2.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo3x3"
+					rendered="#{rubikManagedBean.tipoCubo==6 || rubikManagedBean.tipoCubo==11 || rubikManagedBean.tipoCubo==12 || rubikManagedBean.tipoCubo==13}">
+					<ui:include src="/WEB-INF/includes/3x3.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo4x4"
+					rendered="#{rubikManagedBean.tipoCubo==7 || rubikManagedBean.tipoCubo==14}">
+					<ui:include src="/WEB-INF/includes/4x4.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo5x5"
+					rendered="#{rubikManagedBean.tipoCubo==8 || rubikManagedBean.tipoCubo==15}">
+					<ui:include src="/WEB-INF/includes/5x5.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo6x6"
+					rendered="#{rubikManagedBean.tipoCubo==9}">
+					<ui:include src="/WEB-INF/includes/6x6.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo7x7"
+					rendered="#{rubikManagedBean.tipoCubo==10}">
+					<ui:include src="/WEB-INF/includes/7x7.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenSkewb"
+					rendered="#{rubikManagedBean.tipoCubo==24}">
+					<ui:include src="/WEB-INF/includes/skewb.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenMegaminx"
+					rendered="#{rubikManagedBean.tipoCubo==25}">
+					<ui:include src="/WEB-INF/includes/megaminx.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenPyraminx"
+					rendered="#{rubikManagedBean.tipoCubo==26}">
+					<ui:include src="/WEB-INF/includes/pyraminx.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenSquare1"
+					rendered="#{rubikManagedBean.tipoCubo==27}">
+					<ui:include src="/WEB-INF/includes/square1.xhtml" />
+				</h:panelGroup>
+				<div id="estadisticasYBotones">
+					<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center"
+						id="estadisticas">
+						<div id="lblMejorTiempo" style="color: green;">#{texto.Mejor}:
+							#{rubikManagedBean.sesionRubikActual.mejor()}</div>
+						<div id="lblMejorTiempo" style="color: red;">#{texto.Peor}:
+							#{rubikManagedBean.sesionRubikActual.peor()}</div>
+						<div id="lblPeorTiempo">#{texto.Media}:
+							#{rubikManagedBean.sesionRubikActual.media()}</div>
+						<div id="lblMo3Tiempo">Mo3:
+							#{rubikManagedBean.sesionRubikActual.mo3actual()}</div>
+						<div id="lblAo5Tiempo">Ao5:
+							#{rubikManagedBean.sesionRubikActual.ao5actual()}</div>
+						<div id="lblAo12Tiempo">Ao12:
+							#{rubikManagedBean.sesionRubikActual.ao12actual()}</div>
+					</div>
+					<span class="help-block"></span>
+					<div
+						class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center pull-right"
+						id="botones" style="margin-bottom: 5px;">
+						<h:commandButton action="#{rubikManagedBean.limpiarTiempos()}"
+							rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0}"
+							styleClass="btn btn btn-sm btn-primary col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.LimpiarTiempos}"></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.limpiarSoluciones()}"
+							rendered="#{rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
+							styleClass="btn btn-sm btn-warning col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.LimpiarSoluciones}"></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.limpiarTodo()}"
+							rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0 and rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
+							styleClass="btn btn-sm btn-danger col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.LimpiarTodo}"></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.guardarSesionRubik()}"
+							rendered="#{not empty sesionManagedBean.usuarioLogueado and (rubikManagedBean.sesionRubikActual.tiempos.size() > 0 or rubikManagedBean.sesionRubikActual.soluciones.size() > 0)}"
+							styleClass="btn btn-sm btn-success col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.GuardarTodo}"></h:commandButton>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</div>
+	<!-- Button trigger modal -->
+	<!-- Modal -->
+	<h:form id="formMezclaPersonalizada">
+		<div class="modal fade" id="mezclaPersonalizada" tabindex="-1"
+			role="dialog" aria-labelledby="mezclaPersonalizadaLabel"
+			style="background-color: rgba(0, 0, 0, 0.5);">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" style="color: black;"
+							id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
+					</div>
+					<div class="modal-body">
+						<h:inputTextarea styleClass="form-control"
+							value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
+					</div>
+					<div class="modal-footer">
+						<h:commandButton styleClass="btn btn-success"
+							action="#{rubikManagedBean.mezclaPersonalizada()}"
+							value="#{texto.Mezclar}"></h:commandButton>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>

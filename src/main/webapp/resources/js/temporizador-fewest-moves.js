@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	$("#form\\:solucion").hide();
+	$("#formulario-fewest\\:solucion").hide();
 	
 	var cinco = new Audio("resources/audio/cincominutos.mp3");
 	var cincoMinutos = true; 
@@ -28,16 +28,16 @@ $(document).ready(function () {
 
 	$("#lbl-comenzar").click(function() {
 			if ($('#lbl-comenzar').text() === 'Detener' && estado===2) {//si el cronometro esta corriendo lo detiene
-				$("#form\\:solucion").hide();
+				$("#formulario-fewest\\:solucion").hide();
 				estado = 3;
 				mostrarTiempo();
 				if (tiempo.dnf){
-					document.getElementById('form:txtTiempo').value = "DNF";
+					document.getElementById('formulario-fewest:txtTiempo').value = "DNF";
 				} else{
-					document.getElementById('form:txtTiempo').value = $('#lblTiempo').text();
+					document.getElementById('formulario-fewest:txtTiempo').value = $('#lblTiempo').text();
 				}
-				document.getElementById('form:txtTiempoMilisegundos').value = actual - inicio;
-				document.getElementById('form:txtDnf').value = tiempo.dnf;
+				document.getElementById('formulario-fewest:txtTiempoMilisegundos').value = actual - inicio;
+				document.getElementById('formulario-fewest:txtDnf').value = tiempo.dnf;
 				clearInterval(tiempo_corriendo);
 				tiempo.minuto = 0;
 				tiempo.segundo = 0;
@@ -46,9 +46,9 @@ $(document).ready(function () {
 				transcurrido = 0; 
 				actual = 0;
 				$('#lbl-comenzar').text('Comenzar');
-				document.getElementById('form:guardarSolucion').click();
+				document.getElementById('formulario-fewest:guardarSolucion').click();
 			} else { // el cronometro esta detenido entonces lo pone a andar
-				$("#form\\:solucion").show();
+				$("#formulario-fewest\\:solucion").show();
 				inicio = new Date().getTime();
 				estado = 2;
 				$('#lbl-comenzar').text('Detener');

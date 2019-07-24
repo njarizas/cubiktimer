@@ -1,134 +1,120 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<ui:composition template="/WEB-INF/templates/template-externo.xhtml">
-	<ui:define name="title">cubiktimer</ui:define>
-	<ui:define name="head">
-		<link href="#{sesionManagedBean.contextPath}/resources/css/style.css"
-			rel="stylesheet" type="text/css" />
-		<link
-			href="#{sesionManagedBean.contextPath}/resources/css/modificaciones-bootstrap.css"
-			rel="stylesheet" type="text/css" />
-		<script
-			src="#{sesionManagedBean.contextPath}/resources/js/twistysim_mod.js"></script>
-		<style>
-body {
-	min-width: 360px;
-}
-
-ul.dropdown-menu strong {
-	color: black;
-}
-</style>
-	</ui:define>
-	<ui:define name="body">
-		<div class="col-xs-12">
-			<h:form id="formularioMenuRubik">
-				<nav
-					class="navbar #{configuracionManagedBean.estiloVisual.valorEntero==1?'navbar-inverse':'navbar-default'} menu"
-					style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header col-xs-12">
-					<div class="navbar-brand" style="padding: 9px !important;">
-						<h:selectOneMenu styleClass="form-control input-sm"
-							id="seleccionPuzzle" style="display:inline; max-width: 100px;"
-							value="#{rubikManagedBean.tipoCuboFewest}" onchange="submit()"
-							valueChangeListener="#{rubikManagedBean.cambioCuboFewest}">
-							<!-- 						<f:selectItem itemValue="5" itemLabel="2X2X2"></f:selectItem> -->
-							<!-- 						<f:selectItem itemValue="6" itemLabel="3X3X3"></f:selectItem> -->
-							<f:selectItems value="#{rubikManagedBean.listarCubosFewest()}"
-								var="l" id="puzzle_#{l.idTipo}" itemValue="#{l.idTipo}"
-								itemLabel="#{l.nombreTipo}"></f:selectItems>
-						</h:selectOneMenu>
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div class="col-xs-12 col-md-10 col-md-offset-1">
+		<h:form id="formulario-fewest">
+			<!-- <h2 class="text-center">#{texto.CronometroRubik}
+					#{rubikManagedBean.cubo.nombre}</h2> -->
+			<div class="row">
+				<h5 class="text-center" id="secuencia">#{rubikManagedBean.secuenciaMezcla}</h5>
+			</div>
+			<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9"
+				id="lateralIzquierdo" style="float: left;">
+				<div style="padding-right: 20px; padding-left: 20px;">
+					<span class="help-block hidden-xs"></span>
+					<div class="row">
+						<div class="alert alert-info hidden-xs" role="alert">
+							#{texto.MovimientosValidos} <br /> <strong>#{texto.ListaMovimientosValidos}</strong>
+						</div>
+						<h:commandButton id="guardarSolucion" styleClass="hidden"
+							value="Guardar Solucion"
+							action="#{rubikManagedBean.agregarSolucion()}" />
 					</div>
-					<div class="nav navbar-nav navbar-right" style="margin: 0;">
-						<ul class="nav navbar-nav navbar-right">
-							<li><h:commandLink id="mezclaAleatoria"
-									styleClass="btn btn-default navbar-brand"
-									action="#{rubikManagedBean.mezclaAleatoriaFewest()}"
-									title="#{texto.MezclaAleatoria}">
-									<span class="glyphicon glyphicon-random"></span>
-								</h:commandLink></li>
-							<li>
-								<button id="mezcla" class="btn btn-default navbar-brand"
-									type="button" data-toggle="modal"
-									data-target="#mezclaPersonalizada"
-									title="#{texto.MezclaPersonalizada}">
-									<span class="fa fa-pencil"></span>
-								</button>
-							</li>
-						</ul>
+					<div class="row">
+						<div id="timer" class="col-xs-12">
+							<div id="lblTiempo">#{rubikManagedBean.tiempoRestanteTexto}</div>
+						</div>
+					</div>
+					<div>
+						<div id="oculto" class="hidden">
+							<table class="table table-bordered">
+								<tr>
+									<td>tiempo_milisegundos</td>
+									<td><h:inputText id="txtTiempoMilisegundos"
+											value="#{rubikManagedBean.tiempoMilisegundos}" /></td>
+								</tr>
+								<tr>
+									<td>tiempo_texto</td>
+									<td><h:inputText id="txtTiempo"
+											value="#{rubikManagedBean.tiempoRestanteTexto}" /></td>
+								</tr>
+								<tr>
+									<td>dnf</td>
+									<td><h:inputText id="txtDnf"
+											value="#{rubikManagedBean.dnf}" /></td>
+								</tr>
+								<tr>
+									<td>comentario</td>
+									<td><h:inputText id="txtComentario"
+											value="#{rubikManagedBean.comentario}" /></td>
+								</tr>
+							</table>
+						</div>
+						<h:inputTextarea class="form-control" id="solucion"
+							style="resize: none;"
+							pt:placeholder="Ingrese aquí la mezcla de solución"
+							value="#{rubikManagedBean.solucion}"></h:inputTextarea>
+						<div class="btn btn-primary pull-right" id="lbl-comenzar"
+							style="margin-top: 5px;">Comenzar</div>
 					</div>
 				</div>
-				</nav>
-			</h:form>
-		</div>
-		<div class="col-xs-12 col-md-10 col-md-offset-1">
-			<h:form id="form">
-				<!-- <h2 class="text-center">#{texto.CronometroRubik}
-					#{rubikManagedBean.cuboFewestMoves.nombre}</h2> -->
-				<div class="row">
-					<h5 class="text-center" id="secuencia">#{rubikManagedBean.secuenciaMezclaFewest}</h5>
-				</div>
-				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9"
-					id="lateralIzquierdo" style="float: left;">
-					<div style="padding-right: 20px; padding-left: 20px;">
-						<span class="help-block hidden-xs"></span>
-						<div class="row">
-							<div class="alert alert-info hidden-xs" role="alert">
-								#{texto.MovimientosValidos} <br /> <strong>#{texto.ListaMovimientosValidos}</strong>
-							</div>
-							<h:commandButton id="guardarSolucion" styleClass="hidden"
-								value="Guardar Solucion"
-								action="#{rubikManagedBean.agregarSolucion()}" />
-						</div>
-						<div class="row">
-							<div id="timer" class="col-xs-12">
-								<div id="lblTiempo">#{rubikManagedBean.tiempoRestanteTexto}</div>
-							</div>
-						</div>
-						<div>
-							<div id="oculto" class="hidden">
-								<table class="table table-bordered">
-									<tr>
-										<td>tiempo_milisegundos</td>
-										<td><h:inputText id="txtTiempoMilisegundos"
-												value="#{rubikManagedBean.tiempoMilisegundosFewest}" /></td>
-									</tr>
-									<tr>
-										<td>tiempo_texto</td>
-										<td><h:inputText id="txtTiempo"
-												value="#{rubikManagedBean.tiempoRestanteTexto}" /></td>
-									</tr>
-									<tr>
-										<td>dnf</td>
-										<td><h:inputText id="txtDnf"
-												value="#{rubikManagedBean.dnfFewest}" /></td>
-									</tr>
-									<tr>
-										<td>comentario</td>
-										<td><h:inputText id="txtComentario"
-												value="#{rubikManagedBean.comentarioFewest}" /></td>
-									</tr>
-								</table>
-							</div>
-							<h:inputTextarea class="form-control" id="solucion"
-								style="resize: none;"
-								pt:placeholder="Ingrese aquí la mezcla de solución"
-								value="#{rubikManagedBean.solucion}"></h:inputTextarea>
-							<div class="btn btn-primary pull-right" id="lbl-comenzar"
-								style="margin-top: 5px;">Comenzar</div>
-						</div>
-					</div>
-					<div class="col-xs-12">
-						<table id="table" class="table table-condensed table-bordered"
+				<div class="col-xs-12">
+					<table id="table" class="table table-condensed table-bordered"
+						data-toggle="table" data-pagination="true" data-sort-name="#"
+						data-sort-order="desc" data-show-toggle="true"
+						data-show-columns="true" data-search="false" data-page-size="5"
+						data-page-list="[5,10,15,20,Todos]">
+						<caption style="text-align: center">#{texto.Soluciones}</caption>
+						<thead>
+							<tr>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="#"><strong>#</strong></th>
+								<th class="hidden-xs hidden-sm" data-halign="right"
+									data-align="center" data-sortable="true" data-field="cubo"><strong>#{texto.Cubo}:</strong></th>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="secuencia"><strong>#{texto.Secuencia}:</strong></th>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="solucion"><strong>#{texto.Solucion}:</strong></th>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="longitudSolucion"><strong>#{texto.LongitudSolucion}:</strong></th>
+								<th data-halign="right" data-align="center" data-sortable="true"
+									data-field="solucionValida"><strong>#{texto.SolucionValida}:</strong></th>
+								<th style="min-width: 140px;" data-halign="right"
+									data-align="center" data-field="acciones"><strong>#{texto.Acciones}:</strong></th>
+							</tr>
+						</thead>
+						<c:forEach
+							items="#{rubikManagedBean.sesionRubikActual.soluciones}"
+							var="solucion" varStatus="i">
+							<tr>
+								<td>#{i.index+1}</td>
+								<td class="hidden-xs hidden-sm">#{solucion.cubo.nombre}</td>
+								<td>#{solucion.fewestMoveDTO.mezcla}</td>
+								<td>#{solucion.fewestMoveDTO.solucion}</td>
+								<td>#{solucion.fewestMoveDTO.longitudSolucion}</td>
+								<td>#{solucion.fewestMoveDTO.solucionValida}</td>
+								<td><h:commandButton
+										action="#{rubikManagedBean.mostrarDNF(solucion)}"
+										styleClass="btn btn-sm #{(solucion.fewestMoveDTO.dnf)?'btn-info':'btn-default'}"
+										value="DNF"></h:commandButton> <h:commandButton
+										action="#{rubikManagedBean.eliminarSolucion(solucion)}"
+										styleClass="btn btn-sm btn-danger" style="margin-left: 4px;"
+										value="X"></h:commandButton></td>
+							</tr>
+						</c:forEach>
+					</table>
+					<h:panelGroup
+						rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0}">
+						<table id="table2" class="table table-condensed table-bordered"
 							data-toggle="table" data-pagination="true" data-sort-name="#"
 							data-sort-order="desc" data-show-toggle="true"
 							data-show-columns="true" data-search="false" data-page-size="5"
 							data-page-list="[5,10,15,20,Todos]">
+							<caption style="text-align: center">#{texto.Tiempos}</caption>
 							<thead>
 								<tr>
 									<th data-halign="right" data-align="center"
@@ -138,161 +124,143 @@ ul.dropdown-menu strong {
 									<th data-halign="right" data-align="center"
 										data-sortable="true" data-field="secuencia"><strong>#{texto.Secuencia}:</strong></th>
 									<th data-halign="right" data-align="center"
-										data-sortable="true" data-field="solucion"><strong>#{texto.Solucion}:</strong></th>
-									<th data-halign="right" data-align="center"
-										data-sortable="true" data-field="longitudSolucion"><strong>#{texto.LongitudSolucion}:</strong></th>
-									<th data-halign="right" data-align="center"
-										data-sortable="true" data-field="solucionValida"><strong>#{texto.SolucionValida}:</strong></th>
-									<!-- <th data-halign="right" data-align="center" -->
-									<!-- data-visible="false" data-sortable="true" data-field="tiempo"><strong>#{texto.Tiempo}:</strong></th> -->
+										data-sortable="true" data-field="tiempo"><strong>#{texto.Tiempo}:</strong></th>
 									<th style="min-width: 140px;" data-halign="right"
 										data-align="center" data-field="acciones"><strong>#{texto.Acciones}:</strong></th>
 								</tr>
 							</thead>
-							<c:forEach
-								items="#{rubikManagedBean.sesionRubikActual.soluciones}"
-								var="solucion" varStatus="i">
+							<c:forEach items="#{rubikManagedBean.sesionRubikActual.tiempos}"
+								var="tiempo" varStatus="i">
 								<tr>
 									<td>#{i.index+1}</td>
-									<td class="hidden-xs hidden-sm">#{solucion.cubo.nombre}</td>
-									<td>#{solucion.fewestMoveDTO.mezcla}</td>
-									<td>#{solucion.fewestMoveDTO.solucion}</td>
-									<td>#{solucion.fewestMoveDTO.longitudSolucion}</td>
-									<td>#{solucion.fewestMoveDTO.solucionValida}</td>
-									<!-- <td>#{solucion.fewestMoveDTO.tiempoRestanteTexto}</td> -->
+									<td class="hidden-xs hidden-sm">#{tiempo.cubo.nombre}</td>
+									<td>#{tiempo.tiempoRubikDTO.mezcla}</td>
+									<td>#{tiempo.tiempoRubikDTO.tiempoTexto}</td>
 									<td><h:commandButton
-											action="#{rubikManagedBean.mostrarDNF(solucion)}"
-											styleClass="btn btn-sm #{(solucion.fewestMoveDTO.dnf)?'btn-info':'btn-default'}"
+											action="#{rubikManagedBean.mostrarDNF(tiempo)}"
+											styleClass="btn btn-sm #{(tiempo.tiempoRubikDTO.dnf)?'btn-info':'btn-default'}"
 											value="DNF"></h:commandButton> <h:commandButton
-											action="#{rubikManagedBean.eliminarSolucion(solucion)}"
+											action="#{rubikManagedBean.mostrarPenalizacion(tiempo)}"
+											styleClass="btn btn-sm #{(tiempo.tiempoRubikDTO.penalizacion)?'btn-info':'btn-default'}"
+											style="margin-left: 4px;" value="+2"></h:commandButton> <h:commandButton
+											action="#{rubikManagedBean.eliminarTiempo(tiempo)}"
 											styleClass="btn btn-sm btn-danger" style="margin-left: 4px;"
 											value="X"></h:commandButton></td>
 								</tr>
 							</c:forEach>
 						</table>
-					</div>
-				</div>
-				<div id="lateralDerecho">
-					<h:panelGroup layout="block" id="imagenCubo2x2"
-						rendered="#{rubikManagedBean.tipoCuboFewest==5}">
-						<ui:include src="/WEB-INF/includes/2x2.xhtml" />
 					</h:panelGroup>
-					<h:panelGroup layout="block" id="imagenCubo3x3"
-						rendered="#{rubikManagedBean.tipoCuboFewest==6 || rubikManagedBean.tipoCuboFewest==11 || rubikManagedBean.tipoCuboFewest==12 || rubikManagedBean.tipoCuboFewest==13 || rubikManagedBean.tipoCuboFewest==17}">
-						<div id="cubo3"
-							class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
-							<script>
-								TTk
-										.AlgorithmPuzzle(3)
-										.alg(
-												"#{rubikManagedBean.mezclaTraducidaFewest()}")
-										.size({
-											width : 240,
-											height : 280
-										}).controls(true).showAlg(false)
-										// 	.hoverButtons(false)
-										// 	.hoverAlg(false)
-										('#cubo3');
-							</script>
-						</div>
-					</h:panelGroup>
-					<!-- 					<h:panelGroup layout="block" id="imagenCubo4x4" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==7 || rubikManagedBean.tipoCuboFewest==14}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/4x4.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenCubo5x5" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==8 || rubikManagedBean.tipoCuboFewest==15}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/5x5.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenCubo6x6" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==9}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/6x6.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenCubo7x7" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==10}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/7x7.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenSkewb" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==24}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/skewb.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenMegaminx" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==25}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/megaminx.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenPyraminx" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==26}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/pyraminx.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<!-- 					<h:panelGroup layout="block" id="imagenSquare1" -->
-					<!-- 						rendered="#{rubikManagedBean.tipoCuboFewest==27}"> -->
-					<!-- 						<ui:include src="/WEB-INF/includes/square1.xhtml" /> -->
-					<!-- 					</h:panelGroup> -->
-					<div id="estadisticasYBotones">
-						<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center"
-							id="estadisticas">
-							<div id="lblMejorTiempo" style="color: green;">#{texto.Mejor}:
-								#{rubikManagedBean.sesionRubikActual.mejorFewest()}</div>
-							<div id="lblMejorTiempo" style="color: red;">#{texto.Peor}:
-								#{rubikManagedBean.sesionRubikActual.peorFewest()}</div>
-							<div id="lblPeorTiempo">#{texto.Media}:
-								#{rubikManagedBean.sesionRubikActual.mediaFewest()}</div>
-							<div id="lblMo3Tiempo">Mo3:
-								#{rubikManagedBean.sesionRubikActual.mo3FewestActual()}</div>
-						</div>
-						<span class="help-block"></span>
-						<div
-							class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center pull-right"
-							id="botones" style="margin-bottom: 5px;">
-							<h:commandButton action="#{rubikManagedBean.limpiarSoluciones()}"
-								rendered="#{rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
-								styleClass="btn btn-sm btn-danger pull-right"
-								style="margin-left: 4px; margin-top:8px;"
-								value="#{texto.LimpiarSoluciones}"></h:commandButton>
-							<h:commandButton
-								action="#{rubikManagedBean.guardarSesionRubik()}"
-								rendered="#{not empty sesionManagedBean.usuarioLogueado and rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
-								styleClass="btn btn-sm btn-success pull-right"
-								style="margin-left: 4px; margin-top:8px;"
-								value="#{texto.GuardarSoluciones}"></h:commandButton>
-						</div>
-					</div>
 				</div>
-			</h:form>
-		</div>
-		<!-- Button trigger modal -->
-		<!-- Modal -->
-		<h:form id="formMezclaPersonalizada">
-			<div class="modal fade" id="mezclaPersonalizada" tabindex="-1"
-				role="dialog" aria-labelledby="mezclaPersonalizadaLabel"
-				style="background-color: rgba(0, 0, 0, 0.5);">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title" style="color: black;"
-								id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
-						</div>
-						<div class="modal-body">
-							<h:inputTextarea styleClass="form-control"
-								value="#{rubikManagedBean.secuenciaMezclaFewest}"></h:inputTextarea>
-						</div>
-						<div class="modal-footer">
-							<h:commandButton styleClass="btn btn-success"
-								action="#{rubikManagedBean.mezclaPersonalizadaFewest()}"
-								value="#{texto.Mezclar}"></h:commandButton>
-						</div>
+			</div>
+			<div id="lateralDerecho">
+				<h:panelGroup layout="block" id="imagenCubo2x2"
+					rendered="#{rubikManagedBean.tipoCubo==5}">
+					<ui:include src="/WEB-INF/includes/2x2.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo3x3"
+					rendered="#{rubikManagedBean.tipoCubo==6 || rubikManagedBean.tipoCubo==11 || rubikManagedBean.tipoCubo==12 || rubikManagedBean.tipoCubo==13 || rubikManagedBean.tipoCubo==17}">
+					<ui:include src="/WEB-INF/includes/3x3.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo4x4"
+					rendered="#{rubikManagedBean.tipoCubo==7 || rubikManagedBean.tipoCubo==14}">
+					<ui:include src="/WEB-INF/includes/4x4.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo5x5"
+					rendered="#{rubikManagedBean.tipoCubo==8 || rubikManagedBean.tipoCubo==15}">
+					<ui:include src="/WEB-INF/includes/5x5.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo6x6"
+					rendered="#{rubikManagedBean.tipoCubo==9}">
+					<ui:include src="/WEB-INF/includes/6x6.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenCubo7x7"
+					rendered="#{rubikManagedBean.tipoCubo==10}">
+					<ui:include src="/WEB-INF/includes/7x7.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenSkewb"
+					rendered="#{rubikManagedBean.tipoCubo==24}">
+					<ui:include src="/WEB-INF/includes/skewb.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenMegaminx"
+					rendered="#{rubikManagedBean.tipoCubo==25}">
+					<ui:include src="/WEB-INF/includes/megaminx.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenPyraminx"
+					rendered="#{rubikManagedBean.tipoCubo==26}">
+					<ui:include src="/WEB-INF/includes/pyraminx.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="imagenSquare1"
+					rendered="#{rubikManagedBean.tipoCubo==27}">
+					<ui:include src="/WEB-INF/includes/square1.xhtml" />
+				</h:panelGroup>
+				<div id="estadisticasYBotones">
+					<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center"
+						id="estadisticas">
+						<div id="lblMejorTiempo" style="color: green;">#{texto.Mejor}:
+							#{rubikManagedBean.sesionRubikActual.mejorFewest()}</div>
+						<div id="lblMejorTiempo" style="color: red;">#{texto.Peor}:
+							#{rubikManagedBean.sesionRubikActual.peorFewest()}</div>
+						<div id="lblPeorTiempo">#{texto.Media}:
+							#{rubikManagedBean.sesionRubikActual.mediaFewest()}</div>
+						<div id="lblMo3Tiempo">Mo3:
+							#{rubikManagedBean.sesionRubikActual.mo3FewestActual()}</div>
+					</div>
+					<span class="help-block"></span>
+					<div
+						class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center pull-right"
+						id="botones" style="margin-bottom: 5px;">
+						<h:commandButton action="#{rubikManagedBean.limpiarSoluciones()}"
+							rendered="#{rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
+							styleClass="btn btn-sm btn-primary col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.LimpiarSoluciones}"></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.limpiarTiempos()}"
+							rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0}"
+							styleClass="btn btn-sm btn-warning col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.LimpiarTiempos}"></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.limpiarTodo()}"
+							rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0 and rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
+							styleClass="btn btn-sm btn-danger col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.LimpiarTodo}"></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.guardarSesionRubik()}"
+							rendered="#{not empty sesionManagedBean.usuarioLogueado and (rubikManagedBean.sesionRubikActual.tiempos.size() > 0 or rubikManagedBean.sesionRubikActual.soluciones.size() > 0)}"
+							styleClass="btn btn-sm btn-success col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.GuardarTodo}"></h:commandButton>
 					</div>
 				</div>
 			</div>
 		</h:form>
-	</ui:define>
-	<ui:define name="foot">
-		<script
-			src="#{sesionManagedBean.contextPath}/resources/js/temporizador-fewest-moves.js"></script>
-	</ui:define>
+	</div>
+	<!-- Button trigger modal -->
+	<!-- Modal -->
+	<h:form id="formMezclaPersonalizada-fewest">
+		<div class="modal fade" id="mezclaPersonalizada" tabindex="-1"
+			role="dialog" aria-labelledby="mezclaPersonalizadaLabel"
+			style="background-color: rgba(0, 0, 0, 0.5);">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" style="color: black;"
+							id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
+					</div>
+					<div class="modal-body">
+						<h:inputTextarea styleClass="form-control"
+							value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
+					</div>
+					<div class="modal-footer">
+						<h:commandButton styleClass="btn btn-success"
+							action="#{rubikManagedBean.mezclaPersonalizada()}"
+							value="#{texto.Mezclar}"></h:commandButton>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 </ui:composition>
-</html>
