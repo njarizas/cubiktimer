@@ -3,7 +3,6 @@ package com.cubiktimer.config;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Propiedades;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -19,7 +18,6 @@ public class CubikTimerDataSource {
 	private static String password;
 
 	static {
-		Propiedades.configurarPropiedades(Constantes.PATH_CUBIKTIMER + "conexion.properties");
 		Propiedades propiedades = Propiedades.getInstance();
 		url = propiedades.obtenerPropiedad("conexion.url");
 		database = propiedades.obtenerPropiedad("conexion.database");

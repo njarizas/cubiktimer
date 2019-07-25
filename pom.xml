@@ -122,7 +122,7 @@
 			<artifactId>junit-tools</artifactId>
 			<version>0.1.0</version>
 			<scope>system</scope>
-			<systemPath>D:/eclipse_workspace/cubiktimer/src/lib/junit-tools.jar</systemPath>
+			<systemPath>C:\Nelson\eclipse-workspace\cubiktimer\src\lib\junit-tools.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>

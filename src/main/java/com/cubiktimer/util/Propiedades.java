@@ -12,7 +12,7 @@ public class Propiedades {
 
 	private static Propiedades instance;
 	private static Properties properties = new Properties();
-	private static String rutaPropiedades;
+	private static String rutaPropiedades = Constantes.PATH_CUBIKTIMER + Constantes.CUBIKTIMER_PROPERTIES_FILENAME;
 	private static final Logger log = Logger.getLogger(Propiedades.class);
 
 	/**
@@ -36,14 +36,9 @@ public class Propiedades {
 		}
 	}
 
-	/**
-	 * Realiza el almacenamiento de la ruta donde se encuentra el archivo de
-	 * propiedades del sistema
-	 * 
-	 * @param rutaPropiedades
-	 */
-	public static void configurarPropiedades(String rutaPropiedades) {
-		Propiedades.rutaPropiedades = rutaPropiedades;
+	public static void main(String[] args) {
+		Propiedades propiedades = Propiedades.getInstance();
+		System.out.println(propiedades.obtenerPropiedad("conexion.user"));
 	}
 
 	/**

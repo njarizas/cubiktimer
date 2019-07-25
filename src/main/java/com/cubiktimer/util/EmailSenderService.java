@@ -39,7 +39,6 @@ public class EmailSenderService implements EmailSenderInterface {
 	private transient MimeMessage mimeMessage;
 
 	public EmailSenderService() {
-		Propiedades.configurarPropiedades("C:\\cubiktimer\\conexion.properties");
 		Propiedades propiedades = Propiedades.getInstance();
 		this.emailRemitente = propiedades.obtenerPropiedad("correo.user");
 		this.passRemitente = propiedades.obtenerPropiedad("correo.password");

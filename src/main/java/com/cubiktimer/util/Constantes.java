@@ -8,6 +8,7 @@ public class Constantes {
 
 	// ruta de la aplicación
 	public static final String PATH_CUBIKTIMER = "C:\\cubiktimer\\";
+	public static final String CUBIKTIMER_PROPERTIES_FILENAME = "cubiktimer.properties";
 	public static final String LINE_SEPARATOR = "line.separator";
 	public static final String TIPO_CONEXION = "pool";//["pool","singleton"]
 

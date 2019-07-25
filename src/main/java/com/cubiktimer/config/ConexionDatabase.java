@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
-import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Propiedades;
 
 /**
@@ -28,7 +27,6 @@ public class ConexionDatabase {
 	private static String password;
 
 	static {
-		Propiedades.configurarPropiedades(Constantes.PATH_CUBIKTIMER+"conexion.properties");
 		Propiedades propiedades = Propiedades.getInstance();
 		url = propiedades.obtenerPropiedad("conexion.url");
 		database = propiedades.obtenerPropiedad("conexion.database");
