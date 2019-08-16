@@ -1,22 +1,9 @@
-.alert {
-	padding: 5px;
-	margin-bottom: 2px;
-}
+.alert{padding:5px; margin-bottom:2px}
 
-.btn-group-sm>.btn, .btn-sm {
-	padding: 2px 5px;
-}
+.btn-group-sm>.btn, .btn-sm{padding:2px 5px}
 
-.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner
-	{
-	text-align: center;
-	padding: 8px;
-	padding-right: 8px;
-	line-height: 12px;
-}
+.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{text-align:center; padding:8px; padding-right:8px; line-height:12px}
 
-.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th,
-	.table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th,
-	.table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
-	padding: 1px;
-}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, 
+.table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, 
+.table-condensed>thead>tr>td, .table-condensed>thead>tr>th{padding:1px}

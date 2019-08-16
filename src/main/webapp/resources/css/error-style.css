@@ -1,93 +1,31 @@
-@charset "ISO-8859-1";
+@charset "ISO-8859-1"; 
 
-* {
-	margin: 0;
+*{margin:0}
+
+html, body{height:100%}
+
+.error-number{text-align:center; display:block; color:#111; font-size:200px; font-family:sans-serif; font-weight:400; text-shadow:6px 5px 0 rgba(200,200,200,0.2)}
+
+.error-bigtitle{text-align:center; display:block; color:#111; font-size:60px; font-family:sans-serif; font-weight:400; text-shadow:6px 5px 0 rgba(200,200,200,0.2)}
+
+.error-link{color:blue; text-decoration:none; font-weight:bold}
+
+.error-link:hover{color:black}
+
+.error-text{font-size:16px; font-weight:300; line-height:32px; color:#222; margin-top:30px}
+
+.error-title{text-align:center; display:block; color:#000; font-size:20px; font-family:sans-serif; font-weight:bold; text-shadow:3px 2px 0 rgba(255,255,255,0.2); margin-bottom:5px}
+
+.text-center{text-align:center}
+
+.text-justify{text-align:justify}
+
+.wrapper{min-height:100%; height:auto !important; height:100%; margin:0 auto -20px}
+
+@media ( min-width:1400px){.error-number{font-size:250px}
+
+.error-bigtitle{font-size:80px}
+
+.error-title{font-size:30px; margin-bottom:15px}
+.error-text{font-size:22px; margin-bottom:10px}
 }
-
-html, body {
-	height: 100%;
-}
-
-.error-number {
-	text-align: center;
-	display: block;
-	color: #111;
-	font-size: 200px;
-	font-family: sans-serif;
-	font-weight: 400;
-	text-shadow: 6px 5px 0 rgba(200, 200, 200, 0.2);
-}
-
-.error-bigtitle {
-	text-align: center;
-	display: block;
-	color: #111;
-	font-size: 60px;
-	font-family: sans-serif;
-	font-weight: 400;
-	text-shadow: 6px 5px 0 rgba(200, 200, 200, 0.2);
-}
-
-.error-link {
-	color: blue;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.error-link:hover {
-	color: black;
-}
-
-.error-text {
-	font-size: 16px;
-	font-weight: 300;
-	line-height: 32px;
-	color: #222;
-	margin-top: 30px;
-}
-
-.error-title {
-	text-align: center;
-	display: block;
-	color: #000;
-	font-size: 20px;
-	font-family: sans-serif;
-	font-weight: bold;
-	text-shadow: 3px 2px 0 rgba(255, 255, 255, 0.2);
-	margin-bottom: 5px;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.text-justify {
-	text-align: justify;
-}
-
-.wrapper {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -20px;
-}
-
-@media ( min-width : 1400px) {
-	.error-number {
-		font-size: 250px;
-	}
-	
-	.error-bigtitle {
-		font-size: 80px;
-	}
-	
-	.error-title {
-		font-size: 30px;
-		margin-bottom: 15px;
-	}
-	.error-text {
-		font-size: 22px;
-		margin-bottom: 10px;
-	}
-}
-
