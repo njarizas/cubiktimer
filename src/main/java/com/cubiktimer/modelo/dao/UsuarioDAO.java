@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
@@ -89,7 +90,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
 		} catch (Exception e) {
-			log.warn(e.getMessage());
+			log.warn(ExceptionUtils.getMessage(e));
 		} finally {
 			log.trace("fin update");
 		}
