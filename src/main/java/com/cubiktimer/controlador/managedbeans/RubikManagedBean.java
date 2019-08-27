@@ -155,16 +155,17 @@ public class RubikManagedBean implements Serializable {
 			log.info("Secuencia ingresada Fewest moves: " + secuenciaMezcla);
 			secuenciaMezcla = corregirMezclaFewest(secuenciaMezcla);
 			log.info("Secuencia corregida Fewest moves: " + cubo.getNombre() + secuenciaMezcla);
+			mezcla = secuenciaMezcla.split(" ");
+			secuenciaMezcla = cubo.mezclar(mezcla);
 			log.debug(((FewestMovesSolvable) cubo).faceletToString());
 		} else {
-			log.info("Secuencia ingresada: " + cubo.getNombre() + "):" + secuenciaMezcla);
+			log.info("Secuencia ingresada (" + cubo.getNombre() + "): " + secuenciaMezcla);
 			secuenciaMezcla = corregirMezcla(secuenciaMezcla);
-			log.info("Secuencia corregida: " + cubo.getNombre() + secuenciaMezcla);
-
+			log.info("Secuencia corregida (" + cubo.getNombre() + "): " + secuenciaMezcla);
+			mezcla = secuenciaMezcla.split(" ");
+			secuenciaMezcla = cubo.mezclar(mezcla);
 		}
-		mezcla = secuenciaMezcla.split(" ");
-		secuenciaMezcla = cubo.mezclar(mezcla);
-		log.info("Secuencia aplicada (" + cubo.getNombre() + "): " + secuenciaMezcla);
+		log.info("Secuencia aplicada (" + cubo.getNombre() + "):  " + secuenciaMezcla);
 		log.trace(cubo);
 		return "";
 	}
@@ -177,14 +178,19 @@ public class RubikManagedBean implements Serializable {
 	 */
 	private String corregirMezcla(String secuencia) {
 		String retorno = secuencia.replaceAll(System.getProperty(Constantes.LINE_SEPARATOR), " ").replaceAll(" ", "");
-		if (tipoCubo != 26) {// Diferente a Pyraminx
+		if (tipoCubo == 26) { // Pyramix
+			retorno = retorno.replace("F", " F ").replace("B", " B ").replace("R", " R ").replace("L", " L ")
+					.replace("U", " U ").replace("D", " D ");
+		} else {// Diferente a Pyraminx
 			retorno = retorno.toLowerCase();
 		}
 		retorno = retorno.replace("f", " f ").replace("b", " b ").replace("r", " r ").replace("l", " l ")
 				.replace("u", " u ").replace("d", " d ").replace("x", " x ").replace("y", " y ").replace("z", " z ")
 				.replace("3 b", " 3b ").replace("3 d", " 3d ").replace("3 f", " 3f ").replace("3 l", " 3l ")
-				.replace("3 r", " 3r ").replace("3 u", " 3u ").replaceAll(" '", "' ").replaceAll(" 2", "2 ")
+				.replace("3 r", " 3r ").replace("3 u", " 3u ").replace(" '", "' ").replace(" 2", "2 ")
 				.replaceAll("\\[ ", " [");
+		retorno = retorno.replace("  ", " ");
+		retorno = retorno.replace(" w", "w").replace(" ++", "++").replace(" --", "--");
 		if (tipoCubo == 27) {// Square 1
 			retorno = retorno.replace(" ", "").replace("/", " / ");
 		}
