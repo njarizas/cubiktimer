@@ -47,7 +47,7 @@ public class ActivarCuentaServlet extends HttpServlet {
         		"    <head>\r\n" + 
         		"        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\r\n" + 
         		"        <title>Gracias por regitrarte en CubikTimer</title>\r\n" + 
-        		"        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\r\n" + 
+        		"        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>\r\n" + 
         		"        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\"></link>\r\n" + 
         		"<style>\r\n" + 
         		"            a:hover{\r\n" + 
