@@ -37,10 +37,7 @@ public class ActivarCuentaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	ParametroDAO dao = new ParametroDAO();
-        int u = request.getParameter("u") != null ? Integer.parseInt(request.getParameter("u")) : 0;
-        String t = request.getParameter("t") != null ? request.getParameter("t") : "";
-        StringBuilder stringBuilder = new StringBuilder(t);
-        String nekot = stringBuilder.reverse().toString();
+        String token = request.getParameter("t") != null ? request.getParameter("t") : "";
         PrintWriter print = response.getWriter();
         print.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n" + 
         		"<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n" + 
@@ -68,7 +65,7 @@ public class ActivarCuentaServlet extends HttpServlet {
         		"                <td bgcolor=\"#ffffff\" style=\"padding: 40px 30px 40px 30px;\">\r\n" + 
         		"                    \r\n" + 
         		"                            <div style=\"color: #153643; font-family: Arial, sans-serif; font-size: 24px;\">\r\n");
-        print.println("<b>" + activarUsuario(u, nekot) + "</b><br>");
+        print.println("<b>" + activarUsuario(token) + "</b><br>");
         print.println("<a href=\" "+ dao.obtenerValorParametro("host_cubiktimer") +"\">Haz clic aqui para ir al inicio de sesion de Cubik Timer</a>");
         print.println("</div>\r\n" + 
         		"                </td>\r\n" + 
@@ -78,9 +75,9 @@ public class ActivarCuentaServlet extends HttpServlet {
         		"</html>");
     }
 
-    private String activarUsuario(Integer idUsuario, String clave) {
+    private String activarUsuario(String token) {
     	UsuarioDAO dao = new UsuarioDAO();
-        List<UsuarioDTO> results = dao.consultarUsuarioPorIdUsuarioYClave(idUsuario, clave);
+        List<UsuarioDTO> results = dao.consultarUsuarioPorToken(token);
         if (results.size() == 1) {
             switch (results.get(0).getEstado()) {
                 case 1:

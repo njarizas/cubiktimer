@@ -35,20 +35,21 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setString(2, dto.getCorreo());
 			ps.setString(3, dto.getSal());
 			ps.setString(4, dto.getClave());
-			ps.setString(5, dto.getNombres());
-			ps.setString(6, dto.getApellidos());
-			ps.setString(7, String.valueOf(dto.getSexo()));
-			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
-			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
-			ps.setString(10, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
-			ps.setObject(11, dto.getEstado());
+			ps.setString(5, dto.getToken());
+			ps.setString(6, dto.getNombres());
+			ps.setString(7, dto.getApellidos());
+			ps.setString(8, String.valueOf(dto.getSexo()));
+			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
+			ps.setString(10, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
+			ps.setString(11, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
+			ps.setObject(12, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
@@ -73,20 +74,21 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		String sql = "UPDATE usuarios SET correo = ?, sal=?, clave = ?, nombres = ?, apellidos = ?, sexo = ?,"
+		String sql = "UPDATE usuarios SET correo = ?, sal=?, clave = ?, token = ?, nombres = ?, apellidos = ?, sexo = ?,"
 				+ " fecha_nacimiento = ?, fecha_creacion = ?, fecha_modificacion = ?, estado = ? WHERE id_usuario = ?";
 		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, dto.getCorreo());
 			ps.setString(2, dto.getSal());
 			ps.setString(3, dto.getClave());
-			ps.setString(4, dto.getNombres());
-			ps.setString(5, dto.getApellidos());
-			ps.setString(6, String.valueOf(dto.getSexo()));
-			ps.setString(7, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
-			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
-			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
-			ps.setObject(10, dto.getEstado());
-			ps.setObject(11, dto.getIdUsuario());
+			ps.setString(4, dto.getToken());
+			ps.setString(5, dto.getNombres());
+			ps.setString(6, dto.getApellidos());
+			ps.setString(7, String.valueOf(dto.getSexo()));
+			ps.setString(8, util.getFechaHoraMysql().format(dto.getFechaNacimiento()));
+			ps.setString(9, util.getFechaHoraMysql().format(dto.getFechaCreacion()));
+			ps.setString(10, util.getFechaHoraMysql().format(dto.getFechaModificacion()));
+			ps.setObject(11, dto.getEstado());
+			ps.setObject(12, dto.getIdUsuario());
 			ps.executeUpdate();
 			retorno = dto.getIdUsuario();
 		} catch (Exception e) {
@@ -155,6 +157,20 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			log.warn(sqle.getMessage());
 		}
 		log.trace("fin consultarUsuarioPorIdUsuarioYClave");
+		return lista;
+	}
+	
+	public List<UsuarioDTO> consultarUsuarioPorToken(String token) {
+		log.trace("inicio consultarUsuarioPorToken");
+		List<UsuarioDTO> lista = new ArrayList<>();
+		String sql = "SELECT * FROM usuarios WHERE token = ?";
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, token);
+			lista = findList(ps);
+		} catch (SQLException sqle) {
+			log.warn(sqle.getMessage());
+		}
+		log.trace("fin consultarUsuarioPorToken");
 		return lista;
 	}
 
@@ -301,6 +317,7 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			u.setCorreo(rs.getString("correo"));
 			u.setSal(rs.getString("sal"));
 			u.setClave(rs.getString("clave"));
+			u.setToken(rs.getString("token"));
 			u.setNombres(rs.getString("nombres"));
 			u.setApellidos(rs.getString("apellidos"));
 			u.setSexo(rs.getString("sexo").charAt(0));

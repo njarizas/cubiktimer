@@ -10,6 +10,7 @@ public class UsuarioDTO implements Serializable {
 	private String correo;
 	private String sal;
 	private String clave;
+	private String token;
 	private String nombres;
 	private String apellidos;
 	private Character sexo;
@@ -78,6 +79,14 @@ public class UsuarioDTO implements Serializable {
 
 	public void setClave(String clave) {
 		this.clave = clave;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public String getNombres() {

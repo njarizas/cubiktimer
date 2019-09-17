@@ -114,8 +114,7 @@ public class EmailSenderService implements EmailSenderInterface {
 		ParametroDAO dao = new ParametroDAO();
 		try {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
-			StringBuilder stringBuilder = new StringBuilder(usuario.getClave());
-			String nekot = stringBuilder.reverse().toString();
+			String token = usuario.getToken();
 			StringBuilder msg = new StringBuilder("");
 			String cadena = "";
 			String ruta = obtenerRutaPlantillasHTML();
@@ -128,11 +127,9 @@ public class EmailSenderService implements EmailSenderInterface {
 			String mensaje = msg.toString();
 			Map<String, String> map = new HashMap<>();
 			map.put("~:nombreUsuario~", usuario.getNombres());
-			map.put("~:idUsuario~", usuario.getIdUsuario().toString());
-			map.put("~:token~", nekot);
+			map.put("~:token~", token);
 			map.put("~:host_cubiktimer~", dao.obtenerValorParametro("host_cubiktimer"));
 			mensaje = aplicarPlantilla(mensaje, map);
-
 			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en www.cubiktimer.com", mensaje);
 		} catch (Exception e) {
 			ExceptionHandler.manejarExcepcionGrave(e);

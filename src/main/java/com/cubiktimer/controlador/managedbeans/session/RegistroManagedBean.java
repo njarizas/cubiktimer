@@ -58,6 +58,7 @@ public class RegistroManagedBean implements Serializable {
 			String sal = Util.generarSal();
 			usuario.setClave(EncryptService.encriptarClave(clave + sal));
 			usuario.setSal(sal);
+			usuario.setToken(EncryptService.encriptarClave(sal+new Date().toString()));
 			usuario.setFechaCreacion(new Date());
 			usuario.setFechaModificacion(new Date());
 			if (persistirUsuario()) {
