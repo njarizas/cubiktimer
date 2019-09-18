@@ -127,6 +127,7 @@ public class TestUsuarioDAO {
 		dto.setCorreo("setCorreo");
 		dto.setSal("setSal");
 		dto.setClave("setClave");
+		dto.setToken("setToken");
 		dto.setNombres("setNombres");
 		dto.setApellidos("setApellidos");
 		dto.setSexo('M');
@@ -151,6 +152,7 @@ public class TestUsuarioDAO {
 		dto.setCorreo("Correo");
 		dto.setSal("Sal");
 		dto.setClave("Clave");
+		dto.setToken("Token");
 		dto.setNombres("Nombres");
 		dto.setApellidos("Apellidos");
 		dto.setSexo('M');
