@@ -25,7 +25,7 @@
 		<session-timeout>60</session-timeout>
 	</session-config>
 	<welcome-file-list>
-		<welcome-file>index.jsf</welcome-file>
+		<welcome-file>rubik.jsf</welcome-file>
 	</welcome-file-list>
 	<error-page>
 		<error-code>404</error-code>

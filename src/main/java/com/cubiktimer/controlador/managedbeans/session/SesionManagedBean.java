@@ -73,7 +73,7 @@ public class SesionManagedBean implements Serializable {
 
 	public void goToIndex() {
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect(getContextPath() + "/index.jsf");
+			FacesContext.getCurrentInstance().getExternalContext().redirect(getContextPath() + "/iniciar-sesion.jsf");
 		} catch (Exception e) {
 			log.warn(e.getMessage());
 			ExceptionHandler.manejarExcepcionLeve(e);

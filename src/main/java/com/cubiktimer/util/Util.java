@@ -22,6 +22,7 @@ public class Util implements Serializable {
 
 	private SimpleDateFormat fechaHoraMysql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private SimpleDateFormat fechaMysql = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat formatoFechaCorta = new SimpleDateFormat("dd/MM/yyyy");
 	private SimpleDateFormat formatoFechaLarga = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
 	private static final DecimalFormat DF = new DecimalFormat("0.00");
 	private static Util util;
@@ -49,9 +50,9 @@ public class Util implements Serializable {
 			BigDecimal min;
 			BigDecimal seg = BigDecimal.valueOf(Double.parseDouble(string.substring(3)));
 			min = new BigDecimal(string.substring(0, 2));
-			return min.multiply(new BigDecimal(60)).add(seg);
+			return min.multiply(BigDecimal.valueOf(60)).add(seg);
 		}
-		return BigDecimal.valueOf(0.0);
+		return new BigDecimal("0.0");
 	}
 
 	/**
@@ -263,6 +264,10 @@ public class Util implements Serializable {
 
 	public SimpleDateFormat getFormatoFechaLarga() {
 		return formatoFechaLarga;
+	}
+
+	public SimpleDateFormat getFormatoFechaCorta() {
+		return formatoFechaCorta;
 	}
 
 	public static DecimalFormat getDf() {

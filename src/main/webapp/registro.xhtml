@@ -129,7 +129,7 @@
 								value="#{registroManagedBean.usuario.fechaNacimiento}"
 								navigator="true" yearRange="c-70:c+70"
 								locale="#{sesionManagedBean.locale.toString()}"
-								maxdate="#{utilSigolf.hoyFormatoFechaCorta}"
+								maxdate="#{utilBean.hoyFormatoFechaCorta}"
 								pattern="dd/MM/yyyy">
 								<p:ajax event="dateSelect"
 									oncomplete="$('#formulario_de_registro')
@@ -259,7 +259,7 @@
 	                     },
 	                     date: {
 	                         format: 'DD/MM/YYYY',
-	                         max: '#{utilSigolf.hoyFormatoFechaCorta}',
+	                         max: '#{utilBean.hoyFormatoFechaCorta}',
 	                         message: '#{texto.PorFavorIngreseSuFechaDeNacimientoConFormato} #{texto.FormatoFechaCorta}'
 	                     }
 	                 }
