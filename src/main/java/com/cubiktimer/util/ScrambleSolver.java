@@ -49,8 +49,8 @@ public class ScrambleSolver {
 			if (esConnectException) {
 				// se trata de ejecutar el TNoodle
 				log.trace("Se hace el llamado para que se ejecute el " + Constantes.PATH_CUBIKTIMER
-						+ "cube513/cube513htm.exe");
-				Runtime.getRuntime().exec(Constantes.PATH_CUBIKTIMER + "cube513/cube513htm.exe");
+						+ "cube514/cube514htm.exe");
+				Runtime.getRuntime().exec(Constantes.PATH_CUBIKTIMER + "cube514/cube514htm.exe");
 				// Creando un objeto URL
 				url = new URL("http://localhost:8081/?" + parametro);
 				// Realizando la petición GET
