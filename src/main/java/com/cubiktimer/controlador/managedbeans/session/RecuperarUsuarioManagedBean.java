@@ -1,6 +1,7 @@
 package com.cubiktimer.controlador.managedbeans.session;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -62,6 +63,7 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		} else {
 			UsuarioDTO u = lu.get(0);
+			insertarCredencial(u);
 			EmailSenderInterface emailSender = new EmailSenderService();
 			String nuevaClave = Util.generarClaveAleatoria();
 			if (emailSender.enviarMensajeDeRecuperacionDeClave(lu.get(0), nuevaClave)) {
@@ -81,6 +83,24 @@ public class RecuperarUsuarioManagedBean implements Serializable {
 			}
 		}
 		return retorno;
+	}
+	
+	public void insertarCredencial(UsuarioDTO u) {
+		CredencialDTO credencial = new CredencialDTO();
+		credencial.setIdUsuario(u.getIdUsuario());
+		credencial.setCorreo(u.getCorreo());
+		credencial.setClave(u.getClave());
+		credencial.setFechaFin(new Date());
+		credencial.setEstado(1);
+		Date fechaUltimoCambio = u.getFechaCreacion();
+		Date f = credencialDAO.obtenerFechaUltimaCredencial(u.getIdUsuario());
+		if (f != null) {
+			fechaUltimoCambio = f;
+		}
+		credencial.setFechaInicio(fechaUltimoCambio);
+		if (credencialDAO.create(credencial) > 0) {
+			log.trace("Creo credencial " + credencial.getCorreo());
+		}
 	}
 
 	public String recuperarUsuario() {
