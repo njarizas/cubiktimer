@@ -278,11 +278,11 @@
 							id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
 					</div>
 					<div class="modal-body">
-						<h:inputTextarea styleClass="form-control"
+						<h:inputTextarea id="texto-secuencia-mezcla" styleClass="form-control"
 							value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
 					</div>
 					<div class="modal-footer">
-						<h:commandButton styleClass="btn btn-success"
+						<h:commandButton id="boton-mezcla-personalizada" styleClass="btn btn-success"
 							action="#{rubikManagedBean.mezclaPersonalizada()}"
 							value="#{texto.Mezclar}"></h:commandButton>
 					</div>

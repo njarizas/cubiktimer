@@ -31,9 +31,10 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
-						<!-- 						<li><h:link outcome="/ahorcado" -->
-						<!-- 								value="#{texto.JuegoDeAhorcado}"></h:link></li> -->
-						<li><h:link outcome="/rubik" value="#{texto.CronometroRubik}"></h:link></li>
+<!-- 						<li><h:link outcome="/ahorcado" -->
+<!-- 								value="#{texto.JuegoDeAhorcado}"></h:link></li> -->
+						<li><h:link id="link-rubik" outcome="/rubik"
+								value="#{texto.CronometroRubik}"></h:link></li>
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
@@ -41,12 +42,12 @@
 							var="permiso">
 							<c:if
 								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)==0}">
-								<li><h:link outcome="#{permiso.url}?faces-redirect=true"
+								<li><h:link id="link-#{permiso.idPermiso}" outcome="#{permiso.url}?faces-redirect=true"
 										value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}" /></li>
 							</c:if>
 							<c:if
 								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)!=0}">
-								<li class="dropdown"><a class="dropdown-toggle"
+								<li class="dropdown"><a id="link-#{permiso.idPermiso}" class="dropdown-toggle"
 									data-toggle="dropdown" href="#">
 										#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}
 										<span class="caret"></span>
@@ -55,7 +56,7 @@
 										<c:forEach
 											items="#{sesionManagedBean.consultarPermisosPorIdPadre(permiso.idPermiso)}"
 											var="subItem">
-											<li><h:link outcome="#{subItem.url}?faces-redirect=true"
+											<li><h:link id="link-#{subItem.idPermiso}" outcome="#{subItem.url}?faces-redirect=true"
 													value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?subItem.nombrePermiso:subItem.namePermiso}" /></li>
 										</c:forEach>
 									</ul></li>
@@ -65,25 +66,26 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
-						<li><h:link outcome="/iniciar-sesion" value="#{texto.IniciarSesion} ">
+						<li><h:link id="link-iniciar-sesion" outcome="/iniciar-sesion"
+								value="#{texto.IniciarSesion} ">
 								<span class="glyphicon glyphicon-log-in"></span>
 							</h:link></li>
-						<li><h:link outcome="/registro"
+						<li><h:link id="link-registro" outcome="/registro"
 								value="#{texto.RegistrarUsuario} ">
 								<span class="glyphicon glyphicon-user"></span>
 							</h:link></li>
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown"><a id="link-cuenta" href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false">#{sesionManagedBean.usuarioLogueado.correo}
 								<span class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
-								<li><h:link outcome="cambiar-clave"
+								<li><h:link id="link-cambiar-clave" outcome="cambiar-clave"
 										value="#{texto.CambiarContraseña}"></h:link></li>
-								<li><h:link outcome="cambiar-correo"
+								<li><h:link id="link-cambiar-correo" outcome="cambiar-correo"
 										value="#{texto.CambiarCorreo}"></h:link></li>
 							</ul></li>
 						<li><h:commandLink id="configuracion"
