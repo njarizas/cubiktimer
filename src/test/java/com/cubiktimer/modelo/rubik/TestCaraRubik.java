@@ -2,8 +2,6 @@ package com.cubiktimer.modelo.rubik;
 
 import org.junit.Test;
 
-import com.cubiktimer.modelo.rubik.CaraRubik;
-import com.cubiktimer.modelo.rubik.Celda;
 import com.cubiktimer.util.Constantes;
 
 import junit.framework.TestCase;

@@ -8,9 +8,6 @@ import org.junit.Test;
 
 import com.cubiktimer.controlador.factories.RubikFactory;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
-import com.cubiktimer.modelo.rubik.SesionRubik;
-import com.cubiktimer.modelo.rubik.Tiempo;
-import com.cubiktimer.modelo.rubik.TipoCubo;
 
 import junit.framework.TestCase;
 

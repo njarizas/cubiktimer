@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.cubiktimer.controlador.factories.RubikFactory;
-import com.cubiktimer.modelo.rubik.Puzzle;
-import com.cubiktimer.modelo.rubik.TipoCubo;
 import com.cubiktimer.util.ScrambleGenerator;
 
 public class TestPyraminx {
