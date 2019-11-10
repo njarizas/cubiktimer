@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.cubiktimer.controlador.factories.RubikFactory;
 import com.cubiktimer.modelo.rubik.CuboRubik2x2;
 import com.cubiktimer.modelo.rubik.CuboRubik3x3;
 import com.cubiktimer.modelo.rubik.CuboRubik4x4;

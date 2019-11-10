@@ -4,9 +4,6 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
-import com.cubiktimer.util.EncryptService;
-import com.cubiktimer.util.Util;
-
 import junit.framework.TestCase;
 
 public class TestEncriptService extends TestCase{
