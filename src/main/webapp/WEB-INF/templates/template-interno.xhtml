@@ -32,10 +32,6 @@
 		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
 		rel="stylesheet" />
 	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
-	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"></script>
 	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js"></script>
@@ -60,6 +56,10 @@
 	<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
             #{sesionManagedBean.goToIndex()}
 </h:panelGroup>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
 	<ui:insert name="foot"></ui:insert>
 </h:body>
 </html>
