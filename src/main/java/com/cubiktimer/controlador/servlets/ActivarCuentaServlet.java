@@ -58,7 +58,7 @@ public class ActivarCuentaServlet extends HttpServlet {
         		"         <table align=\"center\" style=\"border: solid #cccccc; border-radius: 8px; width: 70%; min-width: 480px; margin-top: 20px;\">\r\n" + 
         		"            <tr>\r\n" + 
         		"                <td align=\"center\" style=\" font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;\">\r\n" + 
-        		"                    <img src=\"http://www.cubiktimer.com/resources/images/LU2R2F2R'F2U2RB2RDF2UL'B'F'LD2R2D'.png\" alt=\"cubo rubik\" width=\"240\" align=\"center\"/>\r\n" + 
+        		"                    <img src=\"http://www.cubiktimer.com/resources/images/logo_cubiktimer.png\" alt=\"cubo rubik\" width=\"240\" align=\"center\"/>\r\n" + 
         		"                </td>\r\n" + 
         		"            </tr>\r\n" + 
         		"            <tr>\r\n" + 
