@@ -155,20 +155,17 @@ public class EditarInformacionCuentaManagedBean implements Serializable {
 			return "";
 		}
 		List<CredencialDTO> lia = credencialDAO.consultarCredencialPorCorreo(correo);
-		if (!lia.isEmpty()) {
+		boolean esMismoUsuario = true;
+		for (CredencialDTO credencialDTO : lia) {
+			if (credencialDTO.getIdUsuario().compareTo(sesionManagedBean.getUsuarioLogueado().getIdUsuario())!=0) {
+				esMismoUsuario = false;
+				break;
+			}
+		}
+		if (!lia.isEmpty() && !esMismoUsuario) {
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo")
 					+ " " + correo + " " + sesionManagedBean.getRecursos().getString("PorQueYaHaSidoUsadoPorAlguien"));
-			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
-			sesionManagedBean.getMensaje().setMensajePendiente(true);
-			return "";
-		}
-		List<UsuarioDTO> l2 = usuarioDAO.consultarUsuarioPorCorreo(correo);
-		List<CredencialDTO> lia2 = credencialDAO.consultarCredencialPorCorreo(correo);
-		if (!l2.isEmpty() || !lia2.isEmpty()) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
-			sesionManagedBean.getMensaje()
-					.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCambiarElCorreo") + " " + correo);
 			sesionManagedBean.getMensaje().setType(Constantes.WARNING);
 			sesionManagedBean.getMensaje().setMensajePendiente(true);
 			return "";
