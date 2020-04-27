@@ -1,3 +1,7 @@
+/*
+ * SweetAlert
+ * Copyright (c) 2014-present Tristan Edwards
+ * Licensed under MIT (https://github.com/t4t5/sweetalert/blob/master/LICENSE.md) */
 body.stop-scrolling {
   height: 100%;
   overflow: hidden; }
