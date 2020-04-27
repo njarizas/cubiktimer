@@ -31,6 +31,16 @@
 						</div>
 					</div>
 					<div>
+						<div id="oculto2" class="hidden">
+							<label for="dispositivosDeAudio">Micrófono:</label><select
+								name="dispositivosDeAudio" id="dispositivosDeAudio"></select><br />
+							<label for="dispositivosDeVideo">Cámara:</label> <select
+								name="dispositivosDeVideo" id="dispositivosDeVideo"></select> <br />
+							<video muted="muted" id="video"></video>
+							<p id="duracion"></p>
+							<label id="btnComenzarGrabacion" class="btn btn-primary">grabar</label> <label
+								id="btnDetenerGrabacion" class="btn btn-danger">detener</label>
+						</div>
 						<div id="oculto" class="hidden">
 							<script>
 									#{rubikManagedBean.setTiempoInspeccionSegundos(configuracionManagedBean.tiempoInspeccion.valorEntero)};
@@ -278,11 +288,13 @@
 							id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
 					</div>
 					<div class="modal-body">
-						<h:inputTextarea id="texto-secuencia-mezcla" styleClass="form-control"
+						<h:inputTextarea id="texto-secuencia-mezcla"
+							styleClass="form-control"
 							value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
 					</div>
 					<div class="modal-footer">
-						<h:commandButton id="boton-mezcla-personalizada" styleClass="btn btn-success"
+						<h:commandButton id="boton-mezcla-personalizada"
+							styleClass="btn btn-success"
 							action="#{rubikManagedBean.mezclaPersonalizada()}"
 							value="#{texto.Mezclar}"></h:commandButton>
 					</div>

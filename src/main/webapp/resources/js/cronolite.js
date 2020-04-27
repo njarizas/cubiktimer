@@ -72,12 +72,17 @@ $(document).ready(function () {
 		keyUp(tecla.keyCode)
 	});
 	
+	function clics(){
+		document.getElementById('form:guardarTiempo').click();
+	}
+	
 	function keyUp(keyCode){
 		if (keyCode !== 116 && $('#mezclaPersonalizada').is(':hidden')) {
 			if ($('#lbl-comenzar').text() === 'Detener' && estado===3)//Entra aca si acaba de detener el cronometro
 			{
 				$('#lbl-comenzar').text('Comenzar');
-				document.getElementById('form:guardarTiempo').click();
+				document.getElementById('btnDetenerGrabacion').click();
+				setTimeout(clics, 1000);
 			} else {
 				if (keyCode === 32) {//para inspeccionar o poner a andar el cronometro solo se puede con [Espacio]
 					if ($('#lblTiempoInspeccion').text()==='0'){ //si no tiene tiempo de inspeccion se quitan penalizaciones
@@ -97,6 +102,7 @@ $(document).ready(function () {
 						if($('#lblTiempoInspeccion').text()!=='0'){
 							tiempo.segundo = ($('#lblTiempoInspeccion').text());	
 						}
+						document.getElementById('btnComenzarGrabacion').click();
 					} else if ($('#lbl-comenzar').text() === 'Inspeccionando' && estado===1) { //Si ya estaba inspeccionando se pone a andar el cronometro
 						estado = 2;
 						if ($('#lblTiempoInspeccion').text()!=='0'){
