@@ -7,6 +7,9 @@
  * @see https://parzibyte.me/blog
  */
 const init = () => {
+	
+    var grabarVideo = document.getElementById('form:grabarVideo').value;
+    var capturaPantalla = document.getElementById('form:capturarPantalla').value;
     const tieneSoporteUserMedia = () =>
         !!(navigator.mediaDevices.getUserMedia)
 
@@ -60,14 +63,16 @@ const init = () => {
                 dispositivos.forEach((dispositivo, indice) => {
                     if (dispositivo.kind === "audioinput") {
                         const $opcion = document.createElement("option");
-                        // Firefox no trae nada con label, que viva la privacidad
+                        // Firefox no trae nada con label, que viva la
+						// privacidad
                         // y que muera la compatibilidad
                         $opcion.text = dispositivo.label || `Micrófono ${indice + 1}`;
                         $opcion.value = dispositivo.deviceId;
                         $dispositivosDeAudio.appendChild($opcion);
                     } else if (dispositivo.kind === "videoinput") {
                         const $opcion = document.createElement("option");
-                        // Firefox no trae nada con label, que viva la privacidad
+                        // Firefox no trae nada con label, que viva la
+						// privacidad
                         // y que muera la compatibilidad
                         $opcion.text = dispositivo.label || `Cámara ${indice + 1}`;
                         $opcion.value = dispositivo.deviceId;
@@ -84,64 +89,68 @@ const init = () => {
 
     // Comienza a grabar el audio con el dispositivo seleccionado
     const comenzarAGrabar = () => {
-        if (!$dispositivosDeAudio.options.length) return alert("No hay micrófono");
-        if (!$dispositivosDeVideo.options.length) return alert("No hay cámara");
-        // No permitir que se grabe doblemente
-        if (mediaRecorder) return alert("Ya se está grabando");
-
-        navigator.mediaDevices.getUserMedia({
-                audio: {
-                    deviceId: $dispositivosDeAudio.value, // Indicar dispositivo de audio
-                },
-                video: {
-                    deviceId: $dispositivosDeAudio.value, // Indicar dispositivo de vídeo
-                }
-            })
-            .then(stream => {
-                // Poner stream en vídeo
-                $video.srcObject = stream;
-                $video.play();
-                // Comenzar a grabar con el stream
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.start();
-                comenzarAContar();
-                // En el arreglo pondremos los datos que traiga el evento dataavailable
-                const fragmentosDeAudio = [];
-                // Escuchar cuando haya datos disponibles
-                mediaRecorder.addEventListener("dataavailable", evento => {
-                    // Y agregarlos a los fragmentos
-                    fragmentosDeAudio.push(evento.data);
-                });
-                // Cuando se detenga (haciendo click en el botón) se ejecuta esto
-                mediaRecorder.addEventListener("stop", () => {
-                    // Pausar vídeo
-                    $video.pause();
-                    // Detener el stream
-                    stream.getTracks().forEach(track => track.stop());
-                    // Detener la cuenta regresiva
-                    detenerConteo();
-                    // Convertir los fragmentos a un objeto binario
-                    const blobVideo = new Blob(fragmentosDeAudio);
-                    var hoy = new Date();
-                    var fecha = '' + hoy.getFullYear() + ' ' + (hoy.getMonth() + 1) + ' ' + hoy.getDate() + '_' + hoy.getHours() + ' ' + hoy.getMinutes() + ' ' + hoy.getSeconds();
-                    // Crear una URL o enlace para descargar
-                    const urlParaDescargar = URL.createObjectURL(blobVideo);
-                    // Crear un elemento <a> invisible para descargar el audio
-                    let a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    a.href = urlParaDescargar;
-                    a.download = "video_" + fecha + ".webm";
-                    // Hacer click en el enlace
-                    a.click();
-                    // Y remover el objeto
-                    window.URL.revokeObjectURL(urlParaDescargar);
-                });
-            })
-            .catch(error => {
-                // Aquí maneja el error, tal vez no dieron permiso
-                console.log(error)
-            });
+    	if (grabarVideo=='true') {
+	        if (!$dispositivosDeAudio.options.length) return alert("No hay micrófono");
+	        if (!$dispositivosDeVideo.options.length) return alert("No hay cámara");
+	        // No permitir que se grabe doblemente
+	        if (mediaRecorder) return alert("Ya se está grabando");
+	
+	        navigator.mediaDevices.getUserMedia({
+	                audio: {
+	                    deviceId: $dispositivosDeAudio.value, // Indicar dispositivo de audio
+	                },
+	                video: {
+	                    deviceId: $dispositivosDeAudio.value, // Indicar dispositivo de vídeo
+	                }
+	            })
+	            .then(stream => {
+	                // Poner stream en vídeo
+	                $video.srcObject = stream;
+	                $video.play();
+	                // Comenzar a grabar con el stream
+	                mediaRecorder = new MediaRecorder(stream);
+	                mediaRecorder.start();
+	                comenzarAContar();
+	                // En el arreglo pondremos los datos que traiga el evento
+					// dataavailable
+	                const fragmentosDeAudio = [];
+	                // Escuchar cuando haya datos disponibles
+	                mediaRecorder.addEventListener("dataavailable", evento => {
+	                    // Y agregarlos a los fragmentos
+	                    fragmentosDeAudio.push(evento.data);
+	                });
+	                // Cuando se detenga (haciendo click en el botón) se ejecuta
+					// esto
+	                mediaRecorder.addEventListener("stop", () => {
+	                    // Pausar vídeo
+	                    $video.pause();
+	                    // Detener el stream
+	                    stream.getTracks().forEach(track => track.stop());
+	                    // Detener la cuenta regresiva
+	                    detenerConteo();
+	                    // Convertir los fragmentos a un objeto binario
+	                    const blobVideo = new Blob(fragmentosDeAudio);
+	                    var hoy = new Date();
+	                    var fecha = '' + hoy.getFullYear() + ' ' + (hoy.getMonth() + 1) + ' ' + hoy.getDate() + '_' + hoy.getHours() + ' ' + hoy.getMinutes() + ' ' + hoy.getSeconds();
+	                    // Crear una URL o enlace para descargar
+	                    const urlParaDescargar = URL.createObjectURL(blobVideo);
+	                    // Crear un elemento <a> invisible para descargar el audio
+	                    let a = document.createElement("a");
+	                    document.body.appendChild(a);
+	                    a.style = "display: none";
+	                    a.href = urlParaDescargar;
+	                    a.download = "video_" + fecha + ".webm";
+	                    // Hacer click en el enlace
+	                    a.click();
+	                    // Y remover el objeto
+	                    window.URL.revokeObjectURL(urlParaDescargar);
+	                });
+	            })
+	            .catch(error => {
+	                // Aquí maneja el error, tal vez no dieron permiso
+	                console.log(error)
+	            });
+    	}
     };
 
 
@@ -152,10 +161,14 @@ const init = () => {
     }
 
     const detenerGrabacion = () => {
-        if (!mediaRecorder) return alert("No se está grabando");
-        mediaRecorder.stop();
-        mediaRecorder = null;
-        capturarPantalla();
+    	if (grabarVideo=='true') {
+	        if (!mediaRecorder) return alert("No se está grabando");
+	        mediaRecorder.stop();
+	        mediaRecorder = null;
+    	}
+        if(capturaPantalla=='true'){
+        	capturarPantalla();
+        } 
     };
 
     const capturarPantalla = () => html2canvas(document.querySelector("#capture")).then(canvas => {

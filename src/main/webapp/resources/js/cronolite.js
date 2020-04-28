@@ -81,6 +81,7 @@ $(document).ready(function () {
 			if ($('#lbl-comenzar').text() === 'Detener' && estado===3)//Entra aca si acaba de detener el cronometro
 			{
 				$('#lbl-comenzar').text('Comenzar');
+				$("#secuencia").removeClass("hidden");
 				document.getElementById('btnDetenerGrabacion').click();
 				setTimeout(clics, 1000);
 			} else {

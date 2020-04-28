@@ -38,8 +38,12 @@
 								name="dispositivosDeVideo" id="dispositivosDeVideo"></select> <br />
 							<video muted="muted" id="video"></video>
 							<p id="duracion"></p>
-							<label id="btnComenzarGrabacion" class="btn btn-primary">grabar</label> <label
-								id="btnDetenerGrabacion" class="btn btn-danger">detener</label>
+							<label id="btnComenzarGrabacion" class="btn btn-primary">grabar</label>
+							<label id="btnDetenerGrabacion" class="btn btn-danger">detener</label>
+							<h:inputText id="grabarVideo"
+								value="#{configuracionManagedBean.grabarVideo.valorBooleano}" />
+							<h:inputText id="capturarPantalla"
+								value="#{configuracionManagedBean.capturarPantalla.valorBooleano}" />
 						</div>
 						<div id="oculto" class="hidden">
 							<script>
