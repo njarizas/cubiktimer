@@ -88,6 +88,34 @@ public class ConfiguracionFacade implements Serializable {
 		}
 		return lista.get(0);
 	}
+	
+	public ConfiguracionDTO obtenerParametroGrabarVideoPorIdUsuario(Integer idUsuario) {
+		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 30,
+				1);
+		if (lista.isEmpty()) {
+			log.trace(
+					"El usuario con idUsuario " + idUsuario + " no tiene configurada un parametro de grabar video (idTipo : 30)");
+			return null;
+		} else if (lista.size() > 1) {
+			log.trace("El usuario con idUsuario " + idUsuario
+					+ " tiene configurado mas de un parametro de grabar video (idTipo : 30)");
+		}
+		return lista.get(0);
+	}
+	
+	public ConfiguracionDTO obtenerParametroCapturarPantallaPorIdUsuario(Integer idUsuario) {
+		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 31,
+				1);
+		if (lista.isEmpty()) {
+			log.trace(
+					"El usuario con idUsuario " + idUsuario + " no tiene configurada un parametro de grabar video (idTipo : 31)");
+			return null;
+		} else if (lista.size() > 1) {
+			log.trace("El usuario con idUsuario " + idUsuario
+					+ " tiene configurado mas de un parametro de grabar video (idTipo : 31)");
+		}
+		return lista.get(0);
+	}
 
 	public void guardar(List<ConfiguracionDTO> listaConfiguraciones) {
 		for (ConfiguracionDTO configuracionDTO : listaConfiguraciones) {

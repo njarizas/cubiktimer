@@ -34,7 +34,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		log.trace("inicio create");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		String sql = "INSERT INTO configuracion VALUES (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO configuracion VALUES (?,?,?,?,?,?,?,?,?)";
 		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
@@ -48,7 +48,8 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			} else {
 				ps.setNull(7, java.sql.Types.DATE);
 			}
-			ps.setObject(8, 1);
+			ps.setObject(8, dto.getValorBooleano());
+			ps.setObject(9, 1);
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
@@ -73,8 +74,8 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		String sql = "UPDATE configuracion" + " SET id_usuario=?,id_tipo=?,valor_texto=?,valor_entero=?,"
-				+ " valor_decimal=?,valor_fecha=?,estado=?" + " WHERE id_configuracion=?";
+		String sql = "UPDATE configuracion SET id_usuario=?, id_tipo=?, valor_texto=?, valor_entero=?, valor_decimal=?, valor_fecha=?, valor_booleano=?, estado=?"
+				+ " WHERE id_configuracion=?";
 		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdUsuario());
 			ps.setObject(2, dto.getIdTipo());
@@ -86,8 +87,9 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 			} else {
 				ps.setNull(6, java.sql.Types.DATE);
 			}
-			ps.setObject(7, dto.getEstado());
-			ps.setObject(8, dto.getIdConfiguracion());
+			ps.setObject(7, dto.getValorBooleano());
+			ps.setObject(8, dto.getEstado());
+			ps.setObject(9, dto.getIdConfiguracion());
 			ps.executeUpdate();
 			retorno = dto.getIdConfiguracion();
 		} catch (Exception e) {
@@ -182,6 +184,7 @@ public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements 
 				log.trace("La fecha de la configuracion no tiene el formato esperado: ConfiguracionDAO");
 				log.warn(pe.getMessage() + ": " + pe.getStackTrace());
 			}
+			c.setValorBooleano((Boolean) rs.getObject("valor_booleano"));
 			c.setEstado((Integer) rs.getObject("estado"));
 			lista.add(c);
 		}

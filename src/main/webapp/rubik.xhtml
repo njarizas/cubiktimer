@@ -3,7 +3,8 @@
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" template="/WEB-INF/templates/template-externo.xhtml">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/template-externo.xhtml">
 	<ui:define name="title">Cronómetro para speedcubing online</ui:define>
 	<ui:define name="head">
 		<link href="#{sesionManagedBean.contextPath}/resources/css/style.css"
@@ -28,45 +29,46 @@ ul.dropdown-menu strong {
 			<h:form id="formularioMenuRubik">
 				<nav
 					class="navbar #{configuracionManagedBean.estiloVisual.valorEntero==1?'navbar-inverse':'navbar-default'} menu"
-					style="margin:0;"> <!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header col-xs-12">
-					<div class="navbar-brand" style="padding: 9px !important;">
-						<h:selectOneMenu styleClass="form-control input-sm"
-							id="seleccionPuzzle" style="display:inline; max-width: 100px;"
-							value="#{rubikManagedBean.tipoCubo}" onchange="submit()"
-							valueChangeListener="#{rubikManagedBean.cambioCubo}">
-							<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l"
-								id="puzzle_#{l.idTipo}" itemValue="#{l.idTipo}"
-								itemLabel="#{l.nombreTipo}"></f:selectItems>
-						</h:selectOneMenu>
-					</div>
-					<h:panelGroup layout="block" id="cronometro"
-						rendered="#{rubikManagedBean.tipoCubo!=17}">
-						<div class="navbar-brand hidden-xs hidden-sm">
-							#{texto.Inspeccion}:
-							<div id="lblTiempoInspeccion" style="display: inline;">#{configuracionManagedBean.tiempoInspeccion.valorEntero}</div>
-							#{texto.Segundos}.
+					style="margin: 0;">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header col-xs-12">
+						<div class="navbar-brand" style="padding: 9px !important;">
+							<h:selectOneMenu styleClass="form-control input-sm"
+								id="seleccionPuzzle" style="display:inline; max-width: 100px;"
+								value="#{rubikManagedBean.tipoCubo}" onchange="submit()"
+								valueChangeListener="#{rubikManagedBean.cambioCubo}">
+								<f:selectItems value="#{rubikManagedBean.listarCubos()}" var="l"
+									id="puzzle_#{l.idTipo}" itemValue="#{l.idTipo}"
+									itemLabel="#{l.nombreTipo}"></f:selectItems>
+							</h:selectOneMenu>
 						</div>
-					</h:panelGroup>
-					<div class="nav navbar-nav navbar-right" style="margin: 0;">
-						<ul class="nav navbar-nav navbar-right">
-							<li><h:commandLink id="mezclaAleatoria"
-									styleClass="btn btn-default navbar-brand"
-									action="#{rubikManagedBean.mezclaAleatoria()}"
-									title="#{texto.MezclaAleatoria}">
-									<span class="glyphicon glyphicon-random"></span>
-								</h:commandLink></li>
-							<li>
-								<button id="mezcla" class="btn btn-default navbar-brand"
-									type="button" data-toggle="modal"
-									data-target="#mezclaPersonalizada"
-									title="#{texto.MezclaPersonalizada}">
-									<span class="fa fa-pencil"></span>
-								</button>
-							</li>
-						</ul>
+						<h:panelGroup layout="block" id="cronometro"
+							rendered="#{rubikManagedBean.tipoCubo!=17}">
+							<div class="navbar-brand hidden-xs hidden-sm">
+								#{texto.Inspeccion}:
+								<div id="lblTiempoInspeccion" style="display: inline;">#{configuracionManagedBean.tiempoInspeccion.valorEntero}</div>
+								#{texto.Segundos}.
+							</div>
+						</h:panelGroup>
+						<div class="nav navbar-nav navbar-right" style="margin: 0;">
+							<ul class="nav navbar-nav navbar-right">
+								<li><h:commandLink id="mezclaAleatoria"
+										styleClass="btn btn-default navbar-brand"
+										action="#{rubikManagedBean.mezclaAleatoria()}"
+										title="#{texto.MezclaAleatoria}">
+										<span class="glyphicon glyphicon-random"></span>
+									</h:commandLink></li>
+								<li>
+									<button id="mezcla" class="btn btn-default navbar-brand"
+										type="button" data-toggle="modal"
+										data-target="#mezclaPersonalizada"
+										title="#{texto.MezclaPersonalizada}">
+										<span class="fa fa-pencil"></span>
+									</button>
+								</li>
+							</ul>
+						</div>
 					</div>
-				</div>
 				</nav>
 			</h:form>
 		</div>
@@ -83,7 +85,10 @@ ul.dropdown-menu strong {
 		<h:panelGroup layout="block" id="script_cronometro"
 			rendered="#{rubikManagedBean.tipoCubo!=17}">
 			<script
+				src="#{sesionManagedBean.contextPath}/resources/js/html2canvas.min.js"></script>
+			<script
 				src="#{sesionManagedBean.contextPath}/resources/js/cronolite.js"></script>
+			<script src="#{sesionManagedBean.contextPath}/resources/js/grabar.js"></script>
 		</h:panelGroup>
 		<h:panelGroup layout="block" id="script_fewest-moves"
 			rendered="#{rubikManagedBean.tipoCubo==17}">

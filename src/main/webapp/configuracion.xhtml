@@ -10,18 +10,24 @@
 <h:head>
 	<title>#{texto.Configuraciones}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"
-		type="text/css" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
-		type="text/css" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css" rel="stylesheet"
-		type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
+		rel="stylesheet" type="text/css" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
 		rel="stylesheet" />
-	<script src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js" type="text/javascript"></script>
-	<link href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css" rel="stylesheet"
-		type="text/css" />
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"
+		type="text/javascript"></script>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css"
+		rel="stylesheet" type="text/css" />
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<style>
 #formulario {
@@ -54,7 +60,7 @@
 						<span class="help-block"></span>
 						<h:outputLabel value="#{texto.EstiloVisual}:"></h:outputLabel>
 						<div class="col-xs-12 input-group">
-							<h:selectOneMenu class="form-control"
+							<h:selectOneMenu id="estiloVisual" styleClass="form-control"
 								value="#{configuracionManagedBean.estiloVisual.valorEntero}">
 								<f:selectItem itemValue="0" itemLabel="#{texto.Claro}" />
 								<f:selectItem itemValue="1" itemLabel="#{texto.Oscuro}" />
@@ -72,7 +78,7 @@
 						<span class="help-block"></span>
 						<h:outputLabel value="#{texto.IdiomaPreferido}:"></h:outputLabel>
 						<div class="col-xs-12 input-group">
-							<h:selectOneMenu class="form-control"
+							<h:selectOneMenu id="idiomaPreferido" styleClass="form-control"
 								value="#{configuracionManagedBean.idioma.valorTexto}">
 								<f:selectItems value="#{sesionManagedBean.listaIdiomas}"></f:selectItems>
 							</h:selectOneMenu>
@@ -80,7 +86,7 @@
 						<span class="help-block"></span>
 						<h:outputLabel value="#{texto.PaginaInicial}:"></h:outputLabel>
 						<div class="col-xs-12 input-group">
-							<h:selectOneMenu class="form-control"
+							<h:selectOneMenu id="paginaInicial" styleClass="form-control"
 								value="#{configuracionManagedBean.paginaInicial.valorTexto}">
 								<f:selectItems value="#{sesionManagedBean.listarPaginas()}"
 									var="permiso" itemValue="#{permiso.url}"
@@ -91,6 +97,16 @@
 									itemLabel="#{texto.CambiarCorreo}" />
 							</h:selectOneMenu>
 						</div>
+						<span class="help-block"></span>
+						<h:selectBooleanCheckbox id="grabarVideo"
+							value="#{configuracionManagedBean.grabarVideo.valorBooleano}">
+							<strong>#{texto.GrabarVideo}: </strong>
+						</h:selectBooleanCheckbox>
+						<span class="help-block"></span>
+						<h:selectBooleanCheckbox id="capturarPantalla"
+							value="#{configuracionManagedBean.capturarPantalla.valorBooleano}">
+							<strong>#{texto.CapturarPantalla}: </strong>
+						</h:selectBooleanCheckbox>
 						<span class="help-block"></span>
 						<div class="form-group text-center">
 							<h:commandButton styleClass="btn btn-success"
@@ -108,10 +124,14 @@
             </script>
 		</c:if>
 	</div>
-	<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.min.js"
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.min.js"
 		type="text/javascript"></script>
-	<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js" type="text/javascript"></script>
-	<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.js"
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js"
+		type="text/javascript"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.js"
 		type="text/javascript"></script>
 </h:body>
 </html>

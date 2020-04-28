@@ -34,6 +34,8 @@ public class ConfiguracionManagedBean implements Serializable {
 	private ConfiguracionDTO idioma;
 	private ConfiguracionDTO paginaInicial;
 	private ConfiguracionDTO estiloVisual;
+	private ConfiguracionDTO grabarVideo;
+	private ConfiguracionDTO capturarPantalla;
 
 	private ConfiguracionFacade configuracionFacade;
 
@@ -56,6 +58,13 @@ public class ConfiguracionManagedBean implements Serializable {
 		this.estiloVisual = new ConfiguracionDTO();
 		this.estiloVisual.setIdTipo(28);
 		this.estiloVisual.setValorEntero(0);
+
+		this.grabarVideo = new ConfiguracionDTO();
+		this.grabarVideo.setIdTipo(30);
+		this.grabarVideo.setValorBooleano(new Boolean("false"));
+		this.capturarPantalla = new ConfiguracionDTO();
+		this.capturarPantalla.setIdTipo(31);
+		this.capturarPantalla.setValorBooleano(new Boolean("false"));
 		FacesContext fc = FacesContext.getCurrentInstance();
 		idUsuario = (Integer) fc.getExternalContext().getSessionMap().get("idUsuario");
 		configuracionFacade = new ConfiguracionFacade();
@@ -93,6 +102,17 @@ public class ConfiguracionManagedBean implements Serializable {
 			if (paginaInicialParametrizada != null) {
 				this.paginaInicial = paginaInicialParametrizada;
 			}
+
+			ConfiguracionDTO grabarVideoParametrizado = configuracionFacade
+					.obtenerParametroGrabarVideoPorIdUsuario(idUsuario);
+			if (grabarVideoParametrizado != null) {
+				this.grabarVideo = grabarVideoParametrizado;
+			}
+			ConfiguracionDTO capturarPantallaParametrizado = configuracionFacade
+					.obtenerParametroCapturarPantallaPorIdUsuario(idUsuario);
+			if (capturarPantallaParametrizado != null) {
+				this.capturarPantalla = capturarPantallaParametrizado;
+			}
 			this.paginaInicial.setIdUsuario(idUsuario);
 		}
 		log.debug("fin cargarConfiguracion, idUsuario: " + idUsuario + ".");
@@ -111,13 +131,18 @@ public class ConfiguracionManagedBean implements Serializable {
 			this.idioma.setIdUsuario(idUsuario);
 			this.paginaInicial.setIdUsuario(idUsuario);
 			this.estiloVisual.setIdUsuario(idUsuario);
+			this.grabarVideo.setIdUsuario(idUsuario);
+			this.capturarPantalla.setIdUsuario(idUsuario);
 			List<ConfiguracionDTO> listaConfiguraciones = new ArrayList<>();
 			listaConfiguraciones.add(this.tiempoInspeccion);
 			listaConfiguraciones.add(this.tipoCubo);
 			listaConfiguraciones.add(this.idioma);
 			listaConfiguraciones.add(this.paginaInicial);
 			listaConfiguraciones.add(this.estiloVisual);
+			listaConfiguraciones.add(this.grabarVideo);
+			listaConfiguraciones.add(this.capturarPantalla);
 			configuracionFacade.guardar(listaConfiguraciones);
+			log.debug("grabar video: " + this.grabarVideo.getValorBooleano());
 			log.debug("Se guarda configuración de usuario: " + idUsuario);
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
@@ -176,6 +201,22 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	public void setEstiloVisual(ConfiguracionDTO estiloVisual) {
 		this.estiloVisual = estiloVisual;
+	}
+
+	public ConfiguracionDTO getGrabarVideo() {
+		return grabarVideo;
+	}
+
+	public void setGrabarVideo(ConfiguracionDTO grabarVideo) {
+		this.grabarVideo = grabarVideo;
+	}
+
+	public ConfiguracionDTO getCapturarPantalla() {
+		return capturarPantalla;
+	}
+
+	public void setCapturarPantalla(ConfiguracionDTO capturarPantalla) {
+		this.capturarPantalla = capturarPantalla;
 	}
 
 	public SesionManagedBean getSesionManagedBean() {

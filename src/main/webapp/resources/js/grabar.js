@@ -1,8 +1,7 @@
 /**
- * Grabar vídeo y audio obtenido del micrófono y cámara web
- * con JavaScript, seleccionando el dispositivo de grabación de audio
- * y el dispositivo de vídeo (cámara web) de una lista; 
- * usando MediaRecorder y getUserMedia
+ * Grabar vídeo y audio obtenido del micrófono y cámara web con JavaScript,
+ * seleccionando el dispositivo de grabación de audio y el dispositivo de vídeo
+ * (cámara web) de una lista; usando MediaRecorder y getUserMedia
  * 
  * @author parzibyte
  * @see https://parzibyte.me/blog
@@ -124,7 +123,7 @@ const init = () => {
                     // Convertir los fragmentos a un objeto binario
                     const blobVideo = new Blob(fragmentosDeAudio);
                     var hoy = new Date();
-                    var fecha = '' + hoy.getFullYear() + ' ' + ( hoy.getMonth() + 1 ) + ' ' + hoy.getDate() + '_' + hoy.getHours() + ' ' + hoy.getMinutes() + ' ' + hoy.getSeconds();
+                    var fecha = '' + hoy.getFullYear() + ' ' + (hoy.getMonth() + 1) + ' ' + hoy.getDate() + '_' + hoy.getHours() + ' ' + hoy.getMinutes() + ' ' + hoy.getSeconds();
                     // Crear una URL o enlace para descargar
                     const urlParaDescargar = URL.createObjectURL(blobVideo);
                     // Crear un elemento <a> invisible para descargar el audio
@@ -132,7 +131,7 @@ const init = () => {
                     document.body.appendChild(a);
                     a.style = "display: none";
                     a.href = urlParaDescargar;
-                    a.download = "video_"+fecha+".webm";
+                    a.download = "video_" + fecha + ".webm";
                     // Hacer click en el enlace
                     a.click();
                     // Y remover el objeto
@@ -156,8 +155,20 @@ const init = () => {
         if (!mediaRecorder) return alert("No se está grabando");
         mediaRecorder.stop();
         mediaRecorder = null;
+        capturarPantalla();
     };
 
+    const capturarPantalla = () => html2canvas(document.querySelector("#capture")).then(canvas => {
+        var link = document.createElement("a");
+        document.body.appendChild(link);
+        var image = canvas.toDataURL();
+        link.href = image;
+        var hoy = new Date();
+        var fecha = '' + hoy.getFullYear() + ' ' + (hoy.getMonth() + 1) + ' ' + hoy.getDate() + '_' + hoy.getHours() + ' ' + hoy.getMinutes() + ' ' + hoy.getSeconds();
+        link.download = 'imagen_' + fecha + '.png';
+        link.click();
+        window.URL.revokeObjectURL(image);
+    });
 
     $btnComenzarGrabacion.addEventListener("click", comenzarAGrabar);
     $btnDetenerGrabacion.addEventListener("click", detenerGrabacion);
