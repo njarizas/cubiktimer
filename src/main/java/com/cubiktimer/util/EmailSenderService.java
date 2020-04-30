@@ -49,7 +49,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			Properties propiedades = new Properties();
 			propiedades.setProperty("mail.smtp.host", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.starttls.enable", "true");
-			propiedades.setProperty("mail.smtp.port", "25");// 587-25-465
+			propiedades.setProperty("mail.smtp.port", "587");// 587-25-465
 			propiedades.setProperty("mail.smtp.ssl.trust", HOST_EMAIL_GMAIL);
 			propiedades.setProperty("mail.smtp.user", this.emailRemitente);
 			propiedades.setProperty("mail.smtp.auth", "true");

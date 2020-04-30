@@ -75,6 +75,7 @@ public class Constantes {
 	public static final String TABLA_TIEMPOS_RUBIK_IMPORTADOS = "tiempos_rubik_importados";
 	public static final String TABLA_TIPOS = "tipos";
 	public static final String TABLA_USUARIOS = "usuarios";
+	public static final String TABLA_USUARIOS_REDES_SOCIALES = "usuarios_redes_sociales";
 	public static final String TABLA_USUARIOS_ROLES = "usuarios_roles";
 
 	// nombres de las llaves primarias
@@ -92,5 +93,6 @@ public class Constantes {
 	public static final String PK_TABLA_TIEMPOS_RUBIK_IMPORTADOS = "id_tiempo";
 	public static final String PK_TABLA_TIPOS = "id_tipo";
 	public static final String PK_TABLA_USUARIOS = "id_usuario";
+	public static final String PK_TABLA_USUARIOS_REDES_SOCIALES = "id_registro";
 
 }

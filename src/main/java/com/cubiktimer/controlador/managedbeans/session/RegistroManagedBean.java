@@ -117,38 +117,12 @@ public class RegistroManagedBean implements Serializable {
 	 */
 	public boolean persistirUsuario() {
 		try {
-			List<UsuarioDTO> l = usuarioDAO.consultarUsuarioPorCorreoYEstado(usuario.getCorreo().trim(), 1);
-			List<CredencialDTO> lia = credencialDAO.consultarCredencialPorCorreoYEstado(usuario.getCorreo().trim(), 1);
-			if (!l.isEmpty()) {
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
-				sesionManagedBean.getMensaje()
-						.setText(sesionManagedBean.getRecursos().getString("YaExisteUnUsuarioRegistradoConCorreo")
-								+ ": " + usuario.getCorreo());
-				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
-				sesionManagedBean.getMensaje().setMensajePendiente(true);
-				return false;
-			}
-			if (!lia.isEmpty()) {
-				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
-				sesionManagedBean.getMensaje()
-						.setText(sesionManagedBean.getRecursos().getString("NoSePuedeCrearUnUsuarioConCorreo") + ": "
-								+ usuario.getCorreo() + " "
-								+ sesionManagedBean.getRecursos().getString("PorQueYaHaSidoUsadoPorAlguien"));
-				sesionManagedBean.getMensaje().setType(Constantes.WARNING);
-				sesionManagedBean.getMensaje().setMensajePendiente(true);
-				return false;
-			}
 			List<RolDTO> listaRolesDefault = rolDAO.findById(Constantes.ROL_POR_DEFECTO);
-			usuario.setIdUsuario(usuarioFacade.create(usuario, listaRolesDefault));
+			usuario.setIdUsuario(usuarioFacade.create(usuario, listaRolesDefault, null));
 			return true;
 		} catch (Exception e) {
 			log.info("ocurrio un error al intentar registrar el usuario");
 			ExceptionHandler.manejarExcepcionGrave(e);
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
-			sesionManagedBean.getMensaje()
-					.setText(sesionManagedBean.getRecursos().getString("OcurrioUnErrorAlIntentarRegistrarElUsuario"));
-			sesionManagedBean.getMensaje().setType(Constantes.ERROR);
-			sesionManagedBean.getMensaje().setMensajePendiente(true);
 		}
 		return false;
 	}

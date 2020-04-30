@@ -7,10 +7,12 @@ import org.apache.log4j.Logger;
 
 import com.cubiktimer.modelo.dao.CredencialDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
+import com.cubiktimer.modelo.dao.UsuarioRedSocialDAO;
 import com.cubiktimer.modelo.dao.UsuarioRolDAO;
 import com.cubiktimer.modelo.dto.CredencialDTO;
 import com.cubiktimer.modelo.dto.RolDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.modelo.dto.UsuarioRedSocialDTO;
 import com.cubiktimer.modelo.dto.UsuarioRolDTO;
 import com.cubiktimer.modelo.dto.UsuarioRolPK;
 
@@ -22,12 +24,14 @@ public class UsuarioFacade implements Serializable {
 	UsuarioDAO usuarioDAO;
 	CredencialDAO credencialDAO;
 	UsuarioRolDAO usuarioRolDAO;
+	UsuarioRedSocialDAO usuarioRedSocialDAO;
 
 	public UsuarioFacade() {
 		super();
 		usuarioDAO = new UsuarioDAO();
 		credencialDAO = new CredencialDAO();
 		usuarioRolDAO = new UsuarioRolDAO();
+		usuarioRedSocialDAO = new UsuarioRedSocialDAO();
 	}
 
 	public String consultarCorreoActualPorCorreoAntiguo(String correoAntiguo) {
@@ -48,18 +52,29 @@ public class UsuarioFacade implements Serializable {
 		return correoActual;
 	}
 
-	public int create(UsuarioDTO dto, List<RolDTO> listaRoles) {
+	public int create(UsuarioDTO dto, List<RolDTO> listaRoles, UsuarioRedSocialDTO ursDTO) {
 		if (dto == null || listaRoles == null) {
 			return 0;
 		}
 		log.debug("inicio create");
 		Integer idUsuario = usuarioDAO.merge(dto);
-		for (RolDTO rol : listaRoles) {
-			UsuarioRolDTO usuarioRolDTO = new UsuarioRolDTO();
-			UsuarioRolPK pk = new UsuarioRolPK(idUsuario, rol.getIdRol());
-			usuarioRolDTO.setUsuarioRolPK(pk);
-			usuarioRolDTO.setEstado(1);
-			usuarioRolDAO.create(usuarioRolDTO);
+		if (idUsuario != 0) {
+			for (RolDTO rol : listaRoles) {
+				UsuarioRolDTO usuarioRolDTO = new UsuarioRolDTO();
+				UsuarioRolPK pk = new UsuarioRolPK(idUsuario, rol.getIdRol());
+				usuarioRolDTO.setUsuarioRolPK(pk);
+				usuarioRolDTO.setEstado(1);
+				usuarioRolDAO.create(usuarioRolDTO);
+			}
+			if (ursDTO != null) {
+				ursDTO.setIdUsuario(idUsuario);
+				Integer idRegistro = usuarioRedSocialDAO.create(ursDTO);
+				if (idRegistro == 0) {
+					log.warn("falló al crear o actualizar el usuario de red social:\n" + ursDTO);
+				}
+			}
+		} else {
+			log.warn("falló al crear o actualizar el usuario:\n" + dto);
 		}
 		log.debug("fin create");
 		return idUsuario.intValue();

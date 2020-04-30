@@ -45,11 +45,41 @@ public class UsuarioDTO implements Serializable {
 		if (correo != null) {
 			builder.append("<correo>").append(correo).append("</correo>");
 		}
+		if (sal != null) {
+			builder.append("<sal>").append(sal).append("</sal>");
+		}
+		if (clave != null) {
+			builder.append("<clave>").append(clave).append("</clave>");
+		}
+		if (token != null) {
+			builder.append("<token>").append(token).append("</token>");
+		}
+		if (nombres != null) {
+			builder.append("<nombres>").append(nombres).append("</nombres>");
+		}
+		if (apellidos != null) {
+			builder.append("<apellidos>").append(apellidos).append("</apellidos>");
+		}
+		if (sexo != null) {
+			builder.append("<sexo>").append(sexo).append("</sexo>");
+		}
+		if (fechaNacimiento != null) {
+			builder.append("<fechaNacimiento>").append(fechaNacimiento).append("</fechaNacimiento>");
+		}
+		if (fechaCreacion != null) {
+			builder.append("<fechaCreacion>").append(fechaCreacion).append("</fechaCreacion>");
+		}
+		if (fechaModificacion != null) {
+			builder.append("<fechaModificacion>").append(fechaModificacion).append("</fechaModificacion>");
+		}
+		if (estado != null) {
+			builder.append("<estado>").append(estado).append("</estado>");
+		}
 		builder.append("</UsuarioDTO>");
 		return builder.toString();
 	}
-
-	public Integer getIdUsuario() {
+	
+		public Integer getIdUsuario() {
 		return idUsuario;
 	}
 
