@@ -44,43 +44,43 @@
 </h:head>
 <h:body>
 	<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '713798532706769',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v6.0'
-    });
+//   	window.fbAsyncInit = function() {
+//     FB.init({
+//       appId      : '713798532706769',
+//       cookie     : true,
+//       xfbml      : true,
+//       version    : 'v6.0'
+//     });
       
-    FB.AppEvents.logPageView();   
+//     FB.AppEvents.logPageView();   
       
-  };
+//   };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+//   (function(d, s, id){
+//      var js, fjs = d.getElementsByTagName(s)[0];
+//      if (d.getElementById(id)) {return;}
+//      js = d.createElement(s); js.id = id;
+//      js.src = "https://connect.facebook.net/en_US/sdk.js";
+//      fjs.parentNode.insertBefore(js, fjs);
+//    }(document, 'script', 'facebook-jssdk'));
   
-  function checkLoginState() {
-	  FB.getLoginStatus(function(response) {
-	    statusChangeCallback(response);
-	  });
-	}
+//   function checkLoginState() {
+// 	  FB.getLoginStatus(function(response) {
+// 	    statusChangeCallback(response);
+// 	  });
+// 	}
   
-  function statusChangeCallback(response) {
-	  if (response.status=='connected') {
-		  FB.api('/me?fields=id, name, email', function(response) {
-			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialId').value=response.id;
-			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialEmail').value=response.email;
-			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialName').value=response.name;
-			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialSistem').value='facebook';
-			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialIniciarSesion').click();
-			});
-	  }
-  }
+//   function statusChangeCallback(response) {
+// 	  if (response.status=='connected') {
+// 		  FB.api('/me?fields=id, name, email', function(response) {
+// 			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialId').value=response.id;
+// 			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialEmail').value=response.email;
+// 			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialName').value=response.name;
+// 			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialSistem').value='facebook';
+// 			  document.getElementById('formulario_de_inicio_de_sesion_facebook:socialIniciarSesion').click();
+// 			});
+// 	  }
+//   }
 </script>
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
 	<div class="text-center  col-xs-12">
@@ -127,22 +127,22 @@
 					value="#{texto.Registrarse}">
 				</h:link>
 				<span class="help-block"></span>
-				<div class="fb-login-button" data-size="medium"
-					data-scope="email,public_profile" style="margin-top: 10px;"
-					data-button-type="login_with" data-layout="default"
-					data-auto-logout-link="true" data-use-continue-as="false"
-					data-width="233" data-onlogin="checkLoginState();"></div>
+<!-- 				<div class="fb-login-button" data-size="medium" -->
+<!-- 					data-scope="email,public_profile" style="margin-top: 10px;" -->
+<!-- 					data-button-type="login_with" data-layout="default" -->
+<!-- 					data-auto-logout-link="true" data-use-continue-as="false" -->
+<!-- 					data-width="233" data-onlogin="checkLoginState();"></div> -->
 			</div>
 		</h:form>
-		<h:form id="formulario_de_inicio_de_sesion_facebook" styleClass="hidden">
-			<h:inputHidden id="socialId" value="#{redSocialManagedBean.id}"></h:inputHidden>
-			<h:inputHidden id="socialEmail" value="#{redSocialManagedBean.email}"></h:inputHidden>
-			<h:inputHidden id="socialName" value="#{redSocialManagedBean.name}"></h:inputHidden>
-			<h:inputHidden id="socialSistem" value="#{redSocialManagedBean.sistema}"></h:inputHidden>
-			<h:commandButton id="socialIniciarSesion"
-				action="#{redSocialManagedBean.iniciarSesionRedSocial}">
-			</h:commandButton>
-		</h:form>
+<!-- 		<h:form id="formulario_de_inicio_de_sesion_facebook" styleClass="hidden"> -->
+<!-- 			<h:inputHidden id="socialId" value="#{redSocialManagedBean.id}"></h:inputHidden> -->
+<!-- 			<h:inputHidden id="socialEmail" value="#{redSocialManagedBean.email}"></h:inputHidden> -->
+<!-- 			<h:inputHidden id="socialName" value="#{redSocialManagedBean.name}"></h:inputHidden> -->
+<!-- 			<h:inputHidden id="socialSistem" value="#{redSocialManagedBean.sistema}"></h:inputHidden> -->
+<!-- 			<h:commandButton id="socialIniciarSesion" -->
+<!-- 				action="#{redSocialManagedBean.iniciarSesionRedSocial}"> -->
+<!-- 			</h:commandButton> -->
+<!-- 		</h:form> -->
 	</div>
 	<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
 		<script>
