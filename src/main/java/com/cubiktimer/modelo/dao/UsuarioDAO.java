@@ -324,8 +324,8 @@ public class UsuarioDAO extends DAO<Integer, UsuarioDTO> implements Serializable
 			u.setSexo(rs.getString("sexo").charAt(0));
 			try {
 				u.setFechaNacimiento(rs.getString("fecha_nacimiento")==null?null:util.getFechaMysql().parse(rs.getString("fecha_nacimiento")));
-				u.setFechaNacimiento(rs.getString("fecha_creacion")==null?null:util.getFechaHoraMysql().parse(rs.getString("fecha_creacion")));
-				u.setFechaNacimiento(rs.getString("fecha_modificacion")==null?null:util.getFechaHoraMysql().parse(rs.getString("fecha_modificacion")));
+				u.setFechaCreacion(rs.getString("fecha_creacion")==null?null:util.getFechaHoraMysql().parse(rs.getString("fecha_creacion")));
+				u.setFechaModificacion(rs.getString("fecha_modificacion")==null?null:util.getFechaHoraMysql().parse(rs.getString("fecha_modificacion")));
 			} catch (ParseException e) {
 				log.warn(e.getMessage());
 			}
