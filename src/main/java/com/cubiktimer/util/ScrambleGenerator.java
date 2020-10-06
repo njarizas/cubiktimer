@@ -53,9 +53,10 @@ public class ScrambleGenerator {
 		try {
 			if (esConnectException) {
 				// se trata de ejecutar el TNoodle
+				Propiedades propiedades = Propiedades.getInstance();
 				log.trace("Se hace el llamado para que se ejecute el jar java -jar " + Constantes.PATH_CUBIKTIMER
-						+ "TNoodle-WCA-0.15.1.jar");
-				Runtime.getRuntime().exec("java -jar " + Constantes.PATH_CUBIKTIMER + "TNoodle-WCA-0.15.1.jar");
+						+ propiedades.obtenerPropiedad("TNoodle.jar"));
+				Runtime.getRuntime().exec("java -jar " + Constantes.PATH_CUBIKTIMER + propiedades.obtenerPropiedad("TNoodle.jar"));
 				// Creando un objeto URL
 				url = new URL("http://localhost:2014/scramble/.txt?=" + parametro);
 				// Realizando la petición GET

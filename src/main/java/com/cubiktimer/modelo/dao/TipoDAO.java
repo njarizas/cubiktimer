@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import org.apache.log4j.Logger;
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.TipoDTO;
 import com.cubiktimer.util.Constantes;
-import com.mysql.jdbc.Statement;
 
 public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 

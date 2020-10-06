@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,6 @@ import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.FewestMovesDTO;
 import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Util;
-import com.mysql.jdbc.Statement;
 
 public class FewestMovesDAO extends DAO<Integer, FewestMovesDTO> implements Serializable {
 

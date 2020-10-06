@@ -16,7 +16,7 @@ import com.cubiktimer.util.Propiedades;
  */
 public class ConexionDatabase {
 
-	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final Logger log = Logger.getLogger(ConexionDatabase.class);
 	private static Connection conn;
 
