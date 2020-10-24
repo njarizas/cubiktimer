@@ -109,7 +109,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -125,11 +125,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.praqma</groupId>
+			<groupId>org.junit-tools</groupId>
 			<artifactId>junit-tools</artifactId>
 			<version>0.1.0</version>
-			<scope>system</scope>
-			<systemPath>C:\Nelson\eclipse-workspace\cubiktimer\src\main\webapp\WEB-INF\lib\junit-tools.jar</systemPath>
+<!-- 			<scope>system</scope> -->
+<!-- 			<systemPath>D:\eclipse-workspace\cubiktimer\src\main\webapp\WEB-INF\lib\junit-tools.jar</systemPath> -->
+<!-- 			Comando: mvn install:install-file -Dfile=D:\Descargas\junit-tools-libraries\junit-tools.jar -DgroupId=org.junit-tools -DartifactId=junit-tools -Dversion=0.1.0 -Dpackaging=jar -->
 		</dependency>
 	</dependencies>
 </project>
