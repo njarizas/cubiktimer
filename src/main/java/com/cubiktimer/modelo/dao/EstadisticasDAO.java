@@ -128,6 +128,56 @@ public class EstadisticasDAO implements Serializable {
 		log.trace("fin obtenerListaPromediosCategoria");
 		return lista;
 	}
+	
+	/**
+	 * Método que retorna la lista de averages (Ao5) de un tipo de cubo, se usa para hacer una gráfica de línea
+	 * 
+	 * @param idUsuario
+	 * @param idTipoCubo
+	 * @return
+	 */
+	public List<Promedio> obtenerListaAveragesCategoria(Integer idUsuario, Integer idTipoCubo) {
+		log.trace("inicio obtenerListaAveragesCategoria");
+		List<Promedio> lista = new ArrayList<>();
+		String sql = "SELECT a.ao5, t.nombre_tipo tipo_cubo," + 
+				" DATE_FORMAT(sr.fecha,\"%d/%m/%Y\") fecha" + 
+				" FROM averages a" + 
+				" LEFT JOIN tiempos tr" + 
+				" ON a.id_average = tr.id_average" + 
+				" INNER JOIN sesiones_rubik sr" + 
+				" ON tr.id_sesion = sr.id_sesion" + 
+				" INNER JOIN tipos t" + 
+				" ON tr.id_tipo_cubo = t.id_tipo" + 
+				" WHERE sr.id_usuario=?" + 
+				" AND tr.id_tipo_cubo=?" + 
+				" AND tr.estado=1" + 
+				" AND sr.estado=1" + 
+				" AND tr.id_average IS NOT NULL" + 
+				" AND tr.dnf=0" + 
+				" AND a.ao5!='DNF'" + 
+				" GROUP BY t.nombre_tipo,a.id_average" + 
+				" ORDER BY sr.fecha, a.id_average";
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idUsuario);
+			ps.setInt(2, idTipoCubo);
+			ResultSet rs = ps.executeQuery();
+			try {
+				while (rs.next()) {
+					Promedio promedio = new Promedio();
+					promedio.setProm(rs.getInt("ao5"));
+					promedio.setTipoCubo(rs.getString("tipo_cubo"));
+					promedio.setFecha(rs.getString("fecha"));
+					lista.add(promedio);
+				}
+			} finally {
+				rs.close();
+			}
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		log.trace("fin obtenerListaAveragesCategoria");
+		return lista;
+	}
 
 	/**
 	 * Método que retorna la lista de promedios de un tipo de cubo agrupando por
@@ -197,6 +247,40 @@ public class EstadisticasDAO implements Serializable {
 		log.trace("fin obtenerIdCategoriasRegistradas");
 		return lista;
 	}
+	
+	/**
+	 * Metodo que retorna una lista con los id de las categorias en las que el usuario ha registrado ao5
+	 * 
+	 * @param idUsuario
+	 * @return
+	 */
+	public List<Integer> obtenerIdCategoriasRegistradasAo5(Integer idUsuario) {
+		log.trace("inicio obtenerIdCategoriasRegistradasAo5");
+		List<Integer> lista = new ArrayList<>();
+		String sql = "SELECT DISTINCT(tr.id_tipo_cubo)" + 
+				" FROM tiempos tr" + 
+				" INNER JOIN sesiones_rubik sr" + 
+				" ON tr.id_sesion=sr.id_sesion" + 
+				" WHERE sr.id_usuario=?" + 
+				" AND tr.estado=1" + 
+				" AND sr.estado=1" + 
+				" AND tr.id_average IS NOT NULL";
+		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
+			try {
+				while (rs.next()) {
+					lista.add(rs.getInt("id_tipo_cubo"));
+				}
+			} finally {
+				rs.close();
+			}
+		} catch (Exception e) {
+			log.warn(e.getMessage());
+		}
+		log.trace("fin obtenerIdCategoriasRegistradasAo5");
+		return lista;
+	}
 
 	public List<ListaPromedioCategoria> obtenerListaPromediosTotales(Integer idUsuario) {
 		log.trace("inicio obtenerListaPromediosTotales");
@@ -210,6 +294,20 @@ public class EstadisticasDAO implements Serializable {
 		}
 		log.trace("fin obtenerListaPromediosTotales");
 		return listaPromediosTotales;
+	}
+	
+	public List<ListaPromedioCategoria> obtenerListaAverages(Integer idUsuario) {
+		log.trace("inicio obtenerListaAverages");
+		List<ListaPromedioCategoria> listaAverages = new ArrayList<>();
+		List<Integer> listaCategorias = obtenerIdCategoriasRegistradasAo5(idUsuario);
+		for (Integer idTipoCubo : listaCategorias) {
+			List<Promedio> listaAverage = obtenerListaAveragesCategoria(idUsuario, idTipoCubo);
+			ListaPromedioCategoria listaAveragesCategoria = new ListaPromedioCategoria();
+			listaAveragesCategoria.setLista(listaAverage);
+			listaAverages.add(listaAveragesCategoria);
+		}
+		log.trace("fin obtenerListaAverages");
+		return listaAverages;
 	}
 
 	public List<ListaPromedioCategoria> obtenerListaPromediosComparacion(Integer idUsuario, Integer idAmigo) {

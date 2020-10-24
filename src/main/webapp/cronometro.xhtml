@@ -252,20 +252,25 @@
 						id="botones" style="margin-bottom: 5px;">
 						<h:commandButton action="#{rubikManagedBean.limpiarTiempos()}"
 							rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0}"
-							styleClass="btn btn btn-sm btn-primary col-xs-3 col-sm-12 pull-left"
+							styleClass="btn btn btn-sm btn-default col-xs-3 col-sm-12 pull-left"
 							style="margin-left: 4px; margin-top:8px;"
 							value="#{texto.LimpiarTiempos}"></h:commandButton>
 						<h:commandButton action="#{rubikManagedBean.limpiarSoluciones()}"
 							rendered="#{rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
-							styleClass="btn btn-sm btn-warning col-xs-3 col-sm-12 pull-left"
+							styleClass="btn btn-sm btn-default col-xs-3 col-sm-12 pull-left"
 							style="margin-left: 4px; margin-top:8px;"
 							value="#{texto.LimpiarSoluciones}"></h:commandButton>
 						<h:commandButton action="#{rubikManagedBean.limpiarTodo()}"
 							rendered="#{rubikManagedBean.sesionRubikActual.tiempos.size() > 0 and rubikManagedBean.sesionRubikActual.soluciones.size() > 0}"
-							styleClass="btn btn-sm btn-danger col-xs-3 col-sm-12 pull-left"
+							styleClass="btn btn-sm btn-default col-xs-3 col-sm-12 pull-left"
 							style="margin-left: 4px; margin-top:8px;"
 							value="#{texto.LimpiarTodo}"></h:commandButton>
-						<h:commandButton action="#{rubikManagedBean.guardarSesionRubik()}"
+						<h:commandButton action="#{rubikManagedBean.guardarAO5()}"
+							rendered="#{not empty sesionManagedBean.usuarioLogueado and rubikManagedBean.validoParaAO5 == true and rubikManagedBean.sesionRubikActual.tiempos.size() == 5}"
+							styleClass="btn btn-sm btn-primary col-xs-3 col-sm-12 pull-left"
+							style="margin-left: 4px; margin-top:8px;"
+							value="#{texto.Guardar} AO5" ></h:commandButton>
+						<h:commandButton action="#{rubikManagedBean.guardarNormal()}"
 							rendered="#{not empty sesionManagedBean.usuarioLogueado and (rubikManagedBean.sesionRubikActual.tiempos.size() > 0 or rubikManagedBean.sesionRubikActual.soluciones.size() > 0)}"
 							styleClass="btn btn-sm btn-success col-xs-3 col-sm-12 pull-left"
 							style="margin-left: 4px; margin-top:8px;"

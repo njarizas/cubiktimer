@@ -11,6 +11,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 
 	private Integer idTiempo;
 	private Integer idSesion;
+	private Integer idAverage;
 	private Integer idTipoCubo;
 	private String mezcla;
 	private Integer tiempoInspeccionSegundos;
@@ -129,6 +130,14 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 
 	public void setIdSesion(Integer idSesion) {
 		this.idSesion = idSesion;
+	}
+
+	public Integer getIdAverage() {
+		return idAverage;
+	}
+
+	public void setIdAverage(Integer idAverage) {
+		this.idAverage = idAverage;
 	}
 
 	public Integer getIdTipoCubo() {
