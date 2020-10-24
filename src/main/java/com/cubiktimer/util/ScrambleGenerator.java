@@ -25,13 +25,14 @@ public class ScrambleGenerator {
 
 	public static String generarSecuenciaMezcla(String parametro) {
 		log.trace("Va a generar la mezcla con el Software oficial de la WCA");
+		Propiedades propiedades = Propiedades.getInstance();
 		URL url;
 		String linea;
 		StringBuilder stringBuilder = new StringBuilder();
 		boolean esConnectException = false;
 		try {
 			// se intenta obtener la conexion por metodo get
-			url = new URL("http://localhost:2014/scramble/.txt?=" + parametro);
+			url = new URL(propiedades.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_TNOODLE_SERVICE) + parametro);
 			URLConnection con = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			while ((linea = in.readLine()) != null) {
@@ -53,12 +54,11 @@ public class ScrambleGenerator {
 		try {
 			if (esConnectException) {
 				// se trata de ejecutar el TNoodle
-				Propiedades propiedades = Propiedades.getInstance();
 				log.trace("Se hace el llamado para que se ejecute el jar java -jar " + Constantes.PATH_CUBIKTIMER
-						+ propiedades.obtenerPropiedad("TNoodle.jar"));
-				Runtime.getRuntime().exec("java -jar " + Constantes.PATH_CUBIKTIMER + propiedades.obtenerPropiedad("TNoodle.jar"));
+						+ propiedades.obtenerPropiedad(Constantes.LLAVE_RUTA_PROGRAMA_TNOODLE));
+				Runtime.getRuntime().exec("java -jar " + Constantes.PATH_CUBIKTIMER + propiedades.obtenerPropiedad(Constantes.LLAVE_RUTA_PROGRAMA_TNOODLE));
 				// Creando un objeto URL
-				url = new URL("http://localhost:2014/scramble/.txt?=" + parametro);
+				url = new URL(propiedades.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_TNOODLE_SERVICE) + parametro);
 				// Realizando la petición GET
 				URLConnection con = url.openConnection();
 				// Leyendo el resultado

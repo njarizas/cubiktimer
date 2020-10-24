@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Propiedades;
 
 /**
@@ -16,7 +17,6 @@ import com.cubiktimer.util.Propiedades;
  */
 public class ConexionDatabase {
 
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final Logger log = Logger.getLogger(ConexionDatabase.class);
 	private static Connection conn;
 
@@ -28,11 +28,11 @@ public class ConexionDatabase {
 
 	static {
 		Propiedades propiedades = Propiedades.getInstance();
-		url = propiedades.obtenerPropiedad("conexion.url");
-		database = propiedades.obtenerPropiedad("conexion.database");
-		properties = propiedades.obtenerPropiedad("conexion.properties");
-		user = propiedades.obtenerPropiedad("conexion.user");
-		password = propiedades.obtenerPropiedad("conexion.password");
+		url = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_URL);
+		database = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_DATABASE);
+		properties = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_PROPIEDADES);
+		user = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_USUARIO);
+		password = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_CLAVE);
 	}
 
 	private ConexionDatabase() {
@@ -41,7 +41,7 @@ public class ConexionDatabase {
 
 	private static void connect() {
 		try {
-			Class.forName(DRIVER).newInstance();
+			Class.forName(Constantes.DRIVER_MYSQL).newInstance();
 			conn = DriverManager.getConnection(url + database + properties, user, password);
 			log.trace("Se conectó a base de datos");
 		} catch (Exception e) {

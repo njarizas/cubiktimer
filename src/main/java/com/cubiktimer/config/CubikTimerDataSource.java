@@ -3,6 +3,7 @@ package com.cubiktimer.config;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Propiedades;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -20,16 +21,16 @@ public class CubikTimerDataSource {
 
 	static {
 		Propiedades propiedades = Propiedades.getInstance();
-		url = propiedades.obtenerPropiedad("conexion.url");
-		database = propiedades.obtenerPropiedad("conexion.database");
-		properties = propiedades.obtenerPropiedad("conexion.properties");
-		user = propiedades.obtenerPropiedad("conexion.user");
-		password = propiedades.obtenerPropiedad("conexion.password");
+		url = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_URL);
+		database = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_DATABASE);
+		properties = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_PROPIEDADES);
+		user = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_USUARIO);
+		password = propiedades.obtenerPropiedad(Constantes.LLAVE_CONEXION_CLAVE);
 		config = new HikariConfig();
 		config.setJdbcUrl(url + database + properties);
 		config.setUsername(user);
 		config.setPassword(password);
-		config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		config.setDriverClassName(Constantes.DRIVER_MYSQL);
 		config.addDataSourceProperty("cachePrepStmts", "true");
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

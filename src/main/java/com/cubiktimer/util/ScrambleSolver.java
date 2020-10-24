@@ -21,6 +21,7 @@ public class ScrambleSolver {
 	}
 
 	public static String generarSecuenciaSolucion(String parametro) {
+		Propiedades prop = Propiedades.getInstance();
 		log.trace("Va a generar la solucion con el Software Cube Explorer de Herbert Kociemba");
 		URL url;
 		String linea;
@@ -28,7 +29,7 @@ public class ScrambleSolver {
 		boolean esConnectException = false;
 		try {
 			// se intenta obtener la conexion por metodo get
-			url = new URL("http://localhost:8081/?" + parametro);
+			url = new URL(prop.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_TNOODLE_SERVICE) + parametro);
 			URLConnection con = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			while ((linea = in.readLine()) != null) {
@@ -49,10 +50,10 @@ public class ScrambleSolver {
 			if (esConnectException) {
 				// se trata de ejecutar el TNoodle
 				log.trace("Se hace el llamado para que se ejecute el " + Constantes.PATH_CUBIKTIMER
-						+ "cube514/cube514htm.exe");
-				Runtime.getRuntime().exec(Constantes.PATH_CUBIKTIMER + "cube514/cube514htm.exe");
+						+ prop.obtenerPropiedad(Constantes.LLAVE_RUTA_PROGRAMA_CUBE_EXPLORER));
+				Runtime.getRuntime().exec(Constantes.PATH_CUBIKTIMER + prop.obtenerPropiedad(Constantes.LLAVE_RUTA_PROGRAMA_CUBE_EXPLORER));
 				// Creando un objeto URL
-				url = new URL("http://localhost:8081/?" + parametro);
+				url = new URL(prop.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_TNOODLE_SERVICE) + parametro);
 				// Realizando la petición GET
 				URLConnection con = url.openConnection();
 				// Leyendo el resultado

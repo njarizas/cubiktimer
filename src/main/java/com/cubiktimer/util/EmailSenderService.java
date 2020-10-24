@@ -40,8 +40,8 @@ public class EmailSenderService implements EmailSenderInterface {
 
 	public EmailSenderService() {
 		Propiedades propiedades = Propiedades.getInstance();
-		this.emailRemitente = propiedades.obtenerPropiedad("correo.user");
-		this.passRemitente = propiedades.obtenerPropiedad("correo.password");
+		this.emailRemitente = propiedades.obtenerPropiedad(Constantes.LLAVE_CORREO_USUARIO);
+		this.passRemitente = propiedades.obtenerPropiedad(Constantes.LLAVE_CORREO_CLAVE);
 	}
 
 	private void init() {

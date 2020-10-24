@@ -11,6 +11,22 @@ public class Constantes {
 	public static final String CUBIKTIMER_PROPERTIES_FILENAME = "cubiktimer.properties";
 	public static final String LINE_SEPARATOR = "line.separator";
 	public static final String TIPO_CONEXION = "pool";//["pool","singleton"]
+	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
+	
+	//Propiedades de cubiktimer.propiedades
+	public static final String LLAVE_CONEXION_URL	= "conexion.url";
+	public static final String LLAVE_CONEXION_DATABASE = "conexion.database";
+	public static final String LLAVE_CONEXION_USUARIO = "conexion.user";
+	public static final String LLAVE_CONEXION_CLAVE = "conexion.password";
+	public static final String LLAVE_CONEXION_PROPIEDADES = "conexion.properties";
+	
+	public static final String LLAVE_CORREO_USUARIO = "correo.user";
+	public static final String LLAVE_CORREO_CLAVE = "correo.password";	
+	
+	public static final String LLAVE_RUTA_PROGRAMA_TNOODLE = "ruta.programa.tnoodle";
+	public static final String LLAVE_ENDPOINT_TNOODLE_SERVICE = "endpoint.tnoodle.service";
+	public static final String LLAVE_RUTA_PROGRAMA_CUBE_EXPLORER = "ruta.programa.cube-explorer";
+	public static final String LLAVE_ENDPOINT_CUBE_EXPLORER_SERVICE = "endpoint.cube-explorer.ervice";
 
 	// colores del cubo de rubik
 	public static final String COLOR_BLANCO = "white";
