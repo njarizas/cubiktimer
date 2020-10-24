@@ -36,26 +36,27 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 		int retorno = 0;
 		Util util = Util.getInstance();
 		String sql = "INSERT INTO tiempos_rubik"
-				+ " (id_tiempo,id_sesion,id_tipo_cubo,mezcla,tiempo_inspeccion_segundos,"
+				+ " (id_tiempo,id_sesion,id_average,id_tipo_cubo,mezcla,tiempo_inspeccion_segundos,"
 				+ " tiempo_inspeccion_usado_milisegundos,tiempo_inspeccion_usado_texto,"
 				+ " tiempo_milisegundos,tiempo_texto,dnf,penalizacion,comentario,fecha,estado)"
-				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setObject(1, null);
 			ps.setObject(2, dto.getIdSesion());
-			ps.setObject(3, dto.getIdTipoCubo());
-			ps.setString(4, dto.getMezcla());
-			ps.setObject(5, dto.getTiempoInspeccionSegundos());
-			ps.setObject(6, dto.getTiempoInspeccionUsadoMilisegundos());
-			ps.setString(7, dto.getTiempoInspeccionUsadoTexto());
-			ps.setObject(8, dto.getTiempoMilisegundos());
-			ps.setString(9, dto.getTiempoTexto());
-			ps.setBoolean(10, dto.getDnf());
-			ps.setBoolean(11, dto.getPenalizacion());
-			ps.setString(12, dto.getComentario());
-			ps.setString(13, util.getFechaHoraMysql().format(dto.getFecha()));
-			ps.setObject(14, dto.getEstado());
+			ps.setObject(3, dto.getIdAverage());
+			ps.setObject(4, dto.getIdTipoCubo());
+			ps.setString(5, dto.getMezcla());
+			ps.setObject(6, dto.getTiempoInspeccionSegundos());
+			ps.setObject(7, dto.getTiempoInspeccionUsadoMilisegundos());
+			ps.setString(8, dto.getTiempoInspeccionUsadoTexto());
+			ps.setObject(9, dto.getTiempoMilisegundos());
+			ps.setString(10, dto.getTiempoTexto());
+			ps.setBoolean(11, dto.getDnf());
+			ps.setBoolean(12, dto.getPenalizacion());
+			ps.setString(13, dto.getComentario());
+			ps.setString(14, util.getFechaHoraMysql().format(dto.getFecha()));
+			ps.setObject(15, dto.getEstado());
 			retorno = ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
 			try {
@@ -80,25 +81,26 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 		log.trace("inicio update");
 		int retorno = 0;
 		Util util = Util.getInstance();
-		String sql = "UPDATE tiempos_rubik" + " SET id_sesion=?,id_tipo_cubo=?,mezcla=?,tiempo_inspeccion_segundos=?,"
+		String sql = "UPDATE tiempos_rubik" + " SET id_sesion=?,id_average=?,id_tipo_cubo=?,mezcla=?,tiempo_inspeccion_segundos=?,"
 				+ " tiempo_inspeccion_usado_milisegundos=?,tiempo_inspeccion_usado_texto=?,"
 				+ " tiempo_milisegundos=?,tiempo_texto=?,dnf=?,penalizacion=?,comentario=?,fecha=?,estado=?"
 				+ " WHERE id_tiempo=?";
 		try (Connection con = ConnectionFactory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setObject(1, dto.getIdSesion());
-			ps.setObject(2, dto.getIdTipoCubo());
-			ps.setString(3, dto.getMezcla());
-			ps.setObject(4, dto.getTiempoInspeccionSegundos());
-			ps.setObject(5, dto.getTiempoInspeccionUsadoMilisegundos());
-			ps.setString(6, dto.getTiempoInspeccionUsadoTexto());
-			ps.setObject(7, dto.getTiempoMilisegundos());
-			ps.setString(8, dto.getTiempoTexto());
-			ps.setBoolean(9, dto.getDnf());
-			ps.setBoolean(10, dto.getPenalizacion());
-			ps.setString(11, dto.getComentario());
-			ps.setString(12, util.getFechaHoraMysql().format(dto.getFecha()));
-			ps.setObject(13, dto.getEstado());
-			ps.setObject(14, dto.getIdTiempo());
+			ps.setObject(2, dto.getIdAverage());
+			ps.setObject(3, dto.getIdTipoCubo());
+			ps.setString(4, dto.getMezcla());
+			ps.setObject(5, dto.getTiempoInspeccionSegundos());
+			ps.setObject(6, dto.getTiempoInspeccionUsadoMilisegundos());
+			ps.setString(7, dto.getTiempoInspeccionUsadoTexto());
+			ps.setObject(8, dto.getTiempoMilisegundos());
+			ps.setString(9, dto.getTiempoTexto());
+			ps.setBoolean(10, dto.getDnf());
+			ps.setBoolean(11, dto.getPenalizacion());
+			ps.setString(12, dto.getComentario());
+			ps.setString(13, util.getFechaHoraMysql().format(dto.getFecha()));
+			ps.setObject(14, dto.getEstado());
+			ps.setObject(15, dto.getIdTiempo());
 			ps.executeUpdate();
 			retorno = dto.getIdTiempo();
 		} catch (Exception e) {
@@ -137,6 +139,7 @@ public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Seri
 			TiempoRubikDTO t = new TiempoRubikDTO();
 			t.setIdTiempo((Integer) rs.getObject("id_tiempo"));
 			t.setIdSesion((Integer) rs.getObject("id_sesion"));
+			t.setIdAverage((Integer) rs.getObject("id_average"));
 			t.setIdTipoCubo((Integer) rs.getObject("id_tipo_cubo"));
 			t.setMezcla(rs.getString("mezcla"));
 			t.setTiempoInspeccionSegundos((Integer) rs.getObject("tiempo_inspeccion_segundos"));

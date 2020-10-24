@@ -38,6 +38,7 @@ public class EstadisticasManagedBean implements Serializable {
 	private ListaRecords listaRecords;
 	private ListaPromedioCategoria listaPromedioCategoria;
 	private ListaPromedios listaPromedios;
+	private ListaPromedios listaAverages;
 
 	public EstadisticasManagedBean() {
 		estadisticasDAO = new EstadisticasDAO();
@@ -45,6 +46,7 @@ public class EstadisticasManagedBean implements Serializable {
 		listaRecords = new ListaRecords();
 		listaPromedioCategoria = new ListaPromedioCategoria();
 		listaPromedios = new ListaPromedios();
+		listaAverages = new ListaPromedios();
 		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		if (session.getAttribute("idUsuario") != null) {
 			idUsuario = Integer.parseInt(session.getAttribute("idUsuario").toString());
@@ -59,6 +61,7 @@ public class EstadisticasManagedBean implements Serializable {
 			listaPromedioCategoria.setLista(estadisticasDAO.obtenerListaPromediosCategoria(idUsuario,
 					estadisticasDAO.consultarIdPuzzleMasPracticado(idUsuario)));
 			listaPromedios.setLista(estadisticasDAO.obtenerListaPromediosTotales(idUsuario));
+			listaAverages.setLista(estadisticasDAO.obtenerListaAverages(idUsuario));
 		}
 	}
 
@@ -112,6 +115,14 @@ public class EstadisticasManagedBean implements Serializable {
 
 	public void setListaPromedios(ListaPromedios listaPromedios) {
 		this.listaPromedios = listaPromedios;
+	}
+
+	public ListaPromedios getListaAverages() {
+		return listaAverages;
+	}
+
+	public void setListaAverages(ListaPromedios listaAverages) {
+		this.listaAverages = listaAverages;
 	}
 
 	public ConfiguracionManagedBean getConfiguracionManagedBean() {

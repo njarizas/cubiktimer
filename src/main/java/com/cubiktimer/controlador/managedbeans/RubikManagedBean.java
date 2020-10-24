@@ -19,6 +19,7 @@ import com.cubiktimer.controlador.factories.RubikFactory;
 import com.cubiktimer.controlador.managedbeans.session.ConfiguracionManagedBean;
 import com.cubiktimer.controlador.managedbeans.session.SesionManagedBean;
 import com.cubiktimer.modelo.dao.TipoDAO;
+import com.cubiktimer.modelo.dto.AverageDTO;
 import com.cubiktimer.modelo.dto.FewestMovesDTO;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
 import com.cubiktimer.modelo.dto.TipoDTO;
@@ -72,6 +73,8 @@ public class RubikManagedBean implements Serializable {
 	private Boolean penalizacion;
 	private String comentario;
 
+	private boolean validoParaAO5;
+
 	// Para cuando se compite por movimientos
 	private String tiempoRestanteTexto;
 	private String solucion;
@@ -91,6 +94,8 @@ public class RubikManagedBean implements Serializable {
 
 		this.solucion = "";
 		this.tiempoRestanteTexto = "59:59";
+		
+		this.validoParaAO5 = true;//empieza en verdadero y se vuelve falso al borrar algun tiempo
 	}
 
 	@PostConstruct
@@ -111,6 +116,9 @@ public class RubikManagedBean implements Serializable {
 		this.configuracionManagedBean.getTipoCubo().setValorEntero(this.tipoCubo);
 		this.cubo = RubikFactory.crearCubo(this.tipoCubo);
 		mezclaAleatoria();
+		if (!this.sesionRubikActual.getTiempos().isEmpty()) {
+			this.validoParaAO5 = false;
+		}
 	}
 
 	public List<TipoDTO> listarCubos() {
@@ -167,6 +175,7 @@ public class RubikManagedBean implements Serializable {
 		}
 		log.info("Secuencia aplicada (" + cubo.getNombre() + "):  " + secuenciaMezcla);
 		log.trace(cubo);
+		this.validoParaAO5 = false;
 		return "";
 	}
 
@@ -267,12 +276,26 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	/**
+	 * Método que se encarga de guardar los Average of 5 es básicamente guardar
+	 * cinco tiempos con un identificador que los agrupa
+	 * 
+	 * @return
+	 */
+	public String guardarAO5() {
+		return guardarSesionRubik(true);
+	}
+	
+	public String guardarNormal() {
+		return guardarSesionRubik(false);
+	}
+
+	/**
 	 * Método que se encarga de guardar los tiempos empleados para solucionar el
 	 * cubo de rubik en la sesión actual
 	 * 
 	 * @return
 	 */
-	public String guardarSesionRubik() {
+	public String guardarSesionRubik(boolean guardarAverages) {
 		// Si tiene sesion iniciada se verifica que el id de usuario se encuentre
 		// asignado correctamente
 		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario() == null
@@ -283,6 +306,20 @@ public class RubikManagedBean implements Serializable {
 		// si el usuario se encuentra logueado tiene sentido guardar los tiempos, de lo
 		// contrario no
 		if (sesionRubikActual.getSesionRubikDTO().getIdUsuario() != null) {
+			if (guardarAverages) {
+				AverageDTO averageDTO = new AverageDTO();
+				averageDTO.setMejor(Util.calcularMilesimasDeSegundos(sesionRubikActual.mejor()));
+				averageDTO.setMejorTexto(sesionRubikActual.mejor());
+				averageDTO.setPeor(Util.calcularMilesimasDeSegundos(sesionRubikActual.peor()));
+				averageDTO.setPeorTexto(sesionRubikActual.peor());
+				averageDTO.setMedia(Util.calcularMilesimasDeSegundos(sesionRubikActual.media()));
+				averageDTO.setMediaTexto(sesionRubikActual.media());
+				averageDTO.setAo5(Util.calcularMilesimasDeSegundos(sesionRubikActual.ao5actual()));
+				averageDTO.setAo5Texto(sesionRubikActual.ao5actual());
+				if (rubikFacade.guardarAO5(averageDTO, sesionRubikActual.getTiempos()) > 0) {
+					validoParaAO5 = false;
+				}
+			}
 			if (rubikFacade.guardarRubik(sesionRubikActual.getSesionRubikDTO(), sesionRubikActual.getTiempos(),
 					sesionRubikActual.getSoluciones()) > 0) {
 				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString("Informacion"));
@@ -315,6 +352,7 @@ public class RubikManagedBean implements Serializable {
 
 	public String limpiarTiempos() {
 		sesionRubikActual.setTiempos(new ArrayList<Tiempo>());
+		this.validoParaAO5 = true;
 		return "";
 	}
 
@@ -331,6 +369,7 @@ public class RubikManagedBean implements Serializable {
 
 	public String eliminarTiempo(Tiempo t) {
 		if (sesionRubikActual.getTiempos().contains(t)) {
+			this.validoParaAO5 = false;
 			sesionRubikActual.getTiempos().remove(t);
 		}
 		return "";
@@ -579,6 +618,14 @@ public class RubikManagedBean implements Serializable {
 
 	public void setSesionManagedBean(SesionManagedBean sesionManagedBean) {
 		this.sesionManagedBean = sesionManagedBean;
+	}
+
+	public boolean isValidoParaAO5() {
+		return validoParaAO5;
+	}
+
+	public void setValidoParaAO5(boolean validoParaAO5) {
+		this.validoParaAO5 = validoParaAO5;
 	}
 
 }

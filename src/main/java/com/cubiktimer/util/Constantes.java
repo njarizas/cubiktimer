@@ -10,7 +10,7 @@ public class Constantes {
 	public static final String PATH_CUBIKTIMER = "C:\\cubiktimer\\";
 	public static final String CUBIKTIMER_PROPERTIES_FILENAME = "cubiktimer.properties";
 	public static final String LINE_SEPARATOR = "line.separator";
-	public static final String TIPO_CONEXION = "pool";//["pool","singleton"]
+	public static final String TIPO_CONEXION = "pool";// ["pool","singleton"]
 
 	// colores del cubo de rubik
 	public static final String COLOR_BLANCO = "white";
@@ -62,6 +62,7 @@ public class Constantes {
 	// nombres de las tablas
 	public static final String TABLA_AHORCADO = "ahorcado";
 	public static final String TABLA_AMIGOS = "amigos";
+	public static final String TABLA_AVERAGES = "averages";
 	public static final String TABLA_CONFIGURACION = "configuracion";
 	public static final String TABLA_CREDENCIALES = "credenciales";
 	public static final String TABLA_ESTADOS = "estados";
@@ -81,6 +82,7 @@ public class Constantes {
 	// nombres de las llaves primarias
 	public static final String PK_TABLA_AHORCADO = "id_ahorcado";
 	public static final String PK_TABLA_AMIGOS = "id_amistad";
+	public static final String PK_TABLA_AVERAGES = "id_average";
 	public static final String PK_TABLA_CONFIGURACION = "id_configuracion";
 	public static final String PK_TABLA_CREDENCIALES = "id_credencial";
 	public static final String PK_TABLA_ESTADOS = "id_estado";
