@@ -10,25 +10,35 @@
 	<title>CubikTimer - #{texto.CambiarCorreo}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="Description" content="Cronometro Rubik Online" />
-	<meta name="Keywords" content="Cronometro, Rubik, Timer, Online" />
+	<meta name="description"
+		content="Cronómetro online para speedcubing, 16 categorías con imagen de mezcla.
+				Las mezclas son similares a las oficiales de la WCA y puede ingresar mezclas personalizadas.
+				Registre sus tiempos y lleve control total de sus estadísticas.
+				También disponible categoría Fewest Moves." />
+	<meta name="keywords" content="Cronometro, Rubik, Timer, Online" />
 	<meta property="og:url" content="http://www.cubiktimer.com" />
 	<meta property="og:title" content="Cronometro Rubik Online" />
 	<meta property="og:description" content="Cronometro Rubik Online" />
 	<meta property="og:image"
 		content="http://www.cubiktimer.com/resources/images/portada.png" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"
-		type="text/css" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet"
-		type="text/css" />
-	<link href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css" rel="stylesheet"
-		type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
+		rel="stylesheet" type="text/css" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
 		rel="stylesheet" />
-	<script src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js" type="text/javascript"></script>
-	<link href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css" rel="stylesheet"
-		type="text/css" />
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"
+		type="text/javascript"></script>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css"
+		rel="stylesheet" type="text/css" />
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
@@ -124,11 +134,14 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 		</c:if>
-		<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.min.js"
+		<script
+			src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.min.js"
 			type="text/javascript"></script>
-		<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js"
+		<script
+			src="#{sesionManagedBean.contextPath}/resources/js/formValidation.min.js"
 			type="text/javascript"></script>
-		<script src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.js"
+		<script
+			src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.js"
 			type="text/javascript"></script>
 		<script type="text/javascript">
 			$(document)
