@@ -242,25 +242,46 @@
 			style="background-color: rgba(0, 0, 0, 0.5);">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title" style="color: black;"
-							id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
-					</div>
-					<div class="modal-body">
-						<h:inputTextarea id="texto-secuencia-mezcla" pt:maxlength="100"
-							styleClass="form-control"
-							value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
-					</div>
-					<div class="modal-footer">
-						<h:commandButton id="boton-mezcla-personalizada"
-							styleClass="btn btn-success"
-							action="#{rubikManagedBean.mezclaPersonalizada()}"
-							value="#{texto.Mezclar}"></h:commandButton>
-					</div>
+					<h:panelGroup layout="block" id="modalMezclaPersonalizada"
+						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" style="color: black;"
+								id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
+						</div>
+						<div class="modal-body">
+							<h:inputTextarea id="texto-secuencia-mezcla" pt:maxlength="100"
+								styleClass="form-control"
+								value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
+						</div>
+						<div class="modal-footer">
+							<h:commandButton id="boton-mezcla-personalizada"
+								styleClass="btn btn-success"
+								action="#{rubikManagedBean.mezclaPersonalizada()}"
+								value="#{texto.Mezclar}"></h:commandButton>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="modalAviso"
+						rendered="#{empty sesionManagedBean.usuarioLogueado}">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" style="color: black;"
+								id="avisoLabel">#{texto.Atencion}</h4>
+						</div>
+						<div class="modal-body">
+							<p>#{texto.ParaUsarEstaFuncionalidadPorFavor}
+							<a href="registro.jsf">#{texto.Registrese}</a> #{texto.E} <a href="iniciar-sesion.jsf">#{texto.InicieSesion}</a></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-dismiss="modal">#{texto.Cerrar}</button>
+						</div>
+					</h:panelGroup>
 				</div>
 			</div>
 		</div>
