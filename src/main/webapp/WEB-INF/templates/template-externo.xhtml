@@ -21,30 +21,13 @@
 	<meta property="og:image"
 		content="http://www.cubiktimer.com/resources/images/portada.png" />
 	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
-		rel="stylesheet" type="text/css" />
-	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
-		rel="stylesheet" type="text/css"></link>
-	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
 		rel="stylesheet" type="text/css" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap-table.min.css"
 		rel="stylesheet" />
-	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
-		rel="stylesheet" />
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
 	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table-es-ES.js"></script>
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
 		rel="shortcut icon" type="image/x-icon" />
@@ -59,6 +42,23 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 	</c:if>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js"></script>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table-es-ES.js"></script>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
 	<ui:insert name="foot"></ui:insert>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css"></link>
+	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
+		rel="stylesheet" />
 </h:body>
 </html>
