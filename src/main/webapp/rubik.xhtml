@@ -7,6 +7,11 @@
 	template="/WEB-INF/templates/template-externo.xhtml">
 	<ui:define name="title">Cronómetro para speedcubing online</ui:define>
 	<ui:define name="head">
+		<link href="#{sesionManagedBean.contextPath}/resources/css/style.css"
+			rel="stylesheet" type="text/css" />
+		<link
+			href="#{sesionManagedBean.contextPath}/resources/css/modificaciones-bootstrap.css"
+			rel="stylesheet" type="text/css" />
 		<script
 			src="#{sesionManagedBean.contextPath}/resources/js/twistysim_mod.js"></script>
 		<style>
@@ -77,11 +82,6 @@ ul.dropdown-menu strong {
 		</h:panelGroup>
 	</ui:define>
 	<ui:define name="foot">
-		<link href="#{sesionManagedBean.contextPath}/resources/css/style.css"
-			rel="stylesheet" type="text/css" />
-		<link
-			href="#{sesionManagedBean.contextPath}/resources/css/modificaciones-bootstrap.css"
-			rel="stylesheet" type="text/css" />
 		<h:panelGroup layout="block" id="script_cronometro"
 			rendered="#{rubikManagedBean.tipoCubo!=17}">
 			<script
