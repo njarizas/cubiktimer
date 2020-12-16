@@ -269,7 +269,7 @@
 							rendered="#{not empty sesionManagedBean.usuarioLogueado and rubikManagedBean.validoParaAO5 == true and rubikManagedBean.sesionRubikActual.tiempos.size() == 5}"
 							styleClass="btn btn-sm btn-primary col-xs-3 col-sm-12 pull-left"
 							style="margin-left: 4px; margin-top:8px;"
-							value="#{texto.Guardar} AO5" ></h:commandButton>
+							value="#{texto.Guardar} AO5"></h:commandButton>
 						<h:commandButton action="#{rubikManagedBean.guardarNormal()}"
 							rendered="#{not empty sesionManagedBean.usuarioLogueado and (rubikManagedBean.sesionRubikActual.tiempos.size() > 0 or rubikManagedBean.sesionRubikActual.soluciones.size() > 0)}"
 							styleClass="btn btn-sm btn-success col-xs-3 col-sm-12 pull-left"
@@ -297,7 +297,7 @@
 							id="mezclaPersonalizadaLabel">#{texto.IngreseSuMezclaPersonalizada}</h4>
 					</div>
 					<div class="modal-body">
-						<h:inputTextarea id="texto-secuencia-mezcla"
+						<h:inputTextarea id="texto-secuencia-mezcla" pt:maxlength="400"
 							styleClass="form-control"
 							value="#{rubikManagedBean.secuenciaMezcla}"></h:inputTextarea>
 					</div>
