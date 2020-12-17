@@ -85,10 +85,13 @@ ul.dropdown-menu strong {
 		<h:panelGroup layout="block" id="script_cronometro"
 			rendered="#{rubikManagedBean.tipoCubo!=17}">
 			<script
-				src="#{sesionManagedBean.contextPath}/resources/js/html2canvas.min.js"></script>
-			<script
 				src="#{sesionManagedBean.contextPath}/resources/js/cronolite.js"></script>
-			<script src="#{sesionManagedBean.contextPath}/resources/js/grabar.js"></script>
+			<h:panelGroup layout="block" id="script_grabar"
+			rendered="#{not empty sesionManagedBean.usuarioLogueado}">
+				<script
+					src="#{sesionManagedBean.contextPath}/resources/js/html2canvas.min.js"></script>
+				<script src="#{sesionManagedBean.contextPath}/resources/js/grabar.js"></script>
+		</h:panelGroup>
 		</h:panelGroup>
 		<h:panelGroup layout="block" id="script_fewest-moves"
 			rendered="#{rubikManagedBean.tipoCubo==17}">

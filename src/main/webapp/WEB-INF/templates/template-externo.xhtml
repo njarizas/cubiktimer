@@ -20,6 +20,13 @@
 	<meta property="og:description" content="Cronometro Rubik Online" />
 	<meta property="og:image"
 		content="http://www.cubiktimer.com/resources/images/portada.png" />
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-WQQFZSB');</script>
+	<!-- End Google Tag Manager -->
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
 		rel="stylesheet" type="text/css" />
@@ -32,11 +39,18 @@
 	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"></script>
 	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
+		rel="stylesheet" />
+	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
 		rel="shortcut icon" type="image/x-icon" />
 	<ui:insert name="head"></ui:insert>
 </h:head>
 <h:body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQQFZSB"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
 	<ui:insert name="body">Default Body</ui:insert>
 	<c:if test="#{sesionManagedBean.mensaje.mensajePendiente}">
@@ -57,8 +71,5 @@
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
 		rel="stylesheet" type="text/css"></link>
-	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
-		rel="stylesheet" />
 </h:body>
 </html>

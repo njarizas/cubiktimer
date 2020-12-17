@@ -13,12 +13,6 @@ const init = () => {
     const tieneSoporteUserMedia = () =>
         !!(navigator.mediaDevices.getUserMedia)
 
-    // Si no soporta...
-    // Amable aviso para que el mundo comience a usar navegadores decentes ;)
-    if (typeof MediaRecorder === "undefined" || !tieneSoporteUserMedia())
-        return alert("Tu navegador web no cumple los requisitos; por favor, actualiza a un navegador decente como Firefox o Google Chrome");
-
-
     // Declaración de elementos del DOM
     const $dispositivosDeAudio = document.querySelector("#dispositivosDeAudio"),
         $dispositivosDeVideo = document.querySelector("#dispositivosDeVideo"),
@@ -90,6 +84,10 @@ const init = () => {
     // Comienza a grabar el audio con el dispositivo seleccionado
     const comenzarAGrabar = () => {
     	if (grabarVideo=='true') {
+    	    // Si no soporta...
+    	    // Amable aviso para que el mundo comience a usar navegadores decentes ;)
+    	    if (typeof MediaRecorder === "undefined" || !tieneSoporteUserMedia())
+    	        return alert("Tu navegador web no cumple los requisitos para grabar video; por favor, utiliza Google Chrome para utilizar esta función. (puedes deshabilitar la grabación de video en la seccion de configuraciones) ");
 	        if (!$dispositivosDeAudio.options.length) return alert("No hay micrófono");
 	        if (!$dispositivosDeVideo.options.length) return alert("No hay cámara");
 	        // No permitir que se grabe doblemente
@@ -152,7 +150,6 @@ const init = () => {
 	            });
     	}
     };
-
 
     const detenerConteo = () => {
         clearInterval(idIntervalo);

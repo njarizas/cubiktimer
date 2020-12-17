@@ -7,6 +7,11 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<title>CubikTimer - #{texto.RecuperarContraseña}</title>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-WQQFZSB');</script>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<style>
 .text-center {
@@ -29,10 +34,17 @@
 	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"></script>
 	<link
+		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
+		rel="stylesheet" />
+	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
 		rel="shortcut icon" type="image/x-icon" />
 </h:head>
 <h:body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQQFZSB"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
 	<div class="col-xs-12">
 		<h:form id="formulario_recuperar_clave"
@@ -110,9 +122,6 @@
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
 		rel="stylesheet" type="text/css" />
-	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
-		rel="stylesheet" />
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/formValidation.min.css"
 		rel="stylesheet" type="text/css" />
