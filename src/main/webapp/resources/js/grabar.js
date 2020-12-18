@@ -1,9 +1,7 @@
-/**
- * Grabar vídeo y audio obtenido del micrófono y cámara web con JavaScript,
- * seleccionando el dispositivo de grabación de audio y el dispositivo de vídeo
- * (cámara web) de una lista; usando MediaRecorder y getUserMedia
- * 
- * @author parzibyte
+/** CUBIKTIMER - SOFTWARE DE APOYO AL APRENDIZAJE Y LA PRÁCTICA DEL SPEEDCUBING EN COLOMBIA
+ * Copyright (c) 2020-present Nelson Ariza
+ * Licensed under GPLv3 (https://github.com/njarizas/cubiktimer/blob/master/LICENSE.md) 
+ * basado en código encontrado en
  * @see https://parzibyte.me/blog
  */
 const init = () => {

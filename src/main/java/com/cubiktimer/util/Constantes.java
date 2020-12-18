@@ -1,3 +1,6 @@
+/* CUBIKTIMER - SOFTWARE DE APOYO AL APRENDIZAJE Y LA PRÁCTICA DEL SPEEDCUBING EN COLOMBIA
+ * Copyright (c) 2020-present Nelson Ariza
+ * Licensed under GPLv3 (https://github.com/njarizas/cubiktimer/blob/master/LICENSE.md) */
 package com.cubiktimer.util;
 
 public class Constantes {
@@ -26,7 +29,7 @@ public class Constantes {
 	public static final String LLAVE_RUTA_PROGRAMA_TNOODLE = "ruta.programa.tnoodle";
 	public static final String LLAVE_ENDPOINT_TNOODLE_SERVICE = "endpoint.tnoodle.service";
 	public static final String LLAVE_RUTA_PROGRAMA_CUBE_EXPLORER = "ruta.programa.cube-explorer";
-	public static final String LLAVE_ENDPOINT_CUBE_EXPLORER_SERVICE = "endpoint.cube-explorer.ervice";
+	public static final String LLAVE_ENDPOINT_CUBE_EXPLORER_SERVICE = "endpoint.cube-explorer.service";
 
 	// colores del cubo de rubik
 	public static final String COLOR_BLANCO = "white";

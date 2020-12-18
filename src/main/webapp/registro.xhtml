@@ -51,8 +51,10 @@
 </h:head>
 <h:body>
 	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQQFZSB"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<noscript>
+		<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQQFZSB"
+			height="0" width="0" style="display: none; visibility: hidden"></iframe>
+	</noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	<ui:include src="/WEB-INF/banners/menu.xhtml" />
 	<div>
@@ -170,6 +172,15 @@
                 #{sesionManagedBean.mensaje.setMensajePendiente(false)}
             </script>
 	</c:if>
+	<footer class="footer">
+	<div class="container text-center">
+		<div style="font-size: 10px;">
+			Copyright &copy; 2020 <a href="mailto:cubiktimer@gmail.com">Nelson
+				Ariza</a> - Licensed under <a
+				href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPLv3</a>
+		</div>
+	</div>
+	</footer>
 	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/formValidation/bootstrap.min.js"></script>
 	<script

@@ -31,8 +31,8 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
-<!-- 						<li><h:link outcome="/ahorcado" -->
-<!-- 								value="#{texto.JuegoDeAhorcado}"></h:link></li> -->
+						<!-- 						<li><h:link outcome="/ahorcado" -->
+						<!-- 								value="#{texto.JuegoDeAhorcado}"></h:link></li> -->
 						<li><h:link id="link-rubik" outcome="/rubik"
 								value="#{texto.CronometroRubik}"></h:link></li>
 					</h:panelGroup>
@@ -42,22 +42,32 @@
 							var="permiso">
 							<c:if
 								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)==0}">
-								<li><h:link id="link-#{permiso.idPermiso}" outcome="#{permiso.url}?faces-redirect=true"
+								<li><h:link id="link-#{permiso.idPermiso}"
+										outcome="#{permiso.url}?faces-redirect=true"
 										value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}" /></li>
 							</c:if>
 							<c:if
 								test="#{permiso.idPadre==0 and sesionManagedBean.contarPermisosIdPadre(permiso.idPermiso)!=0}">
-								<li class="dropdown"><a id="link-#{permiso.idPermiso}" class="dropdown-toggle"
-									data-toggle="dropdown" href="#">
+								<li class="dropdown"><a id="link-#{permiso.idPermiso}"
+									class="dropdown-toggle" data-toggle="dropdown" href="#">
 										#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?permiso.nombrePermiso:permiso.namePermiso}
-										<span class="caret"></span>
+										<h:panelGroup
+											rendered="#{permiso.nombrePermiso.equals('Amigos') and not empty amigosManagedBean.listaSolicitudesAmistad}">
+											<span class="badge bg-secondary">#{amigosManagedBean.listaSolicitudesAmistad.size()}</span>
+										</h:panelGroup> <span class="caret"></span>
 								</a>
 									<ul class="dropdown-menu">
 										<c:forEach
 											items="#{sesionManagedBean.consultarPermisosPorIdPadre(permiso.idPermiso)}"
 											var="subItem">
-											<li><h:link id="link-#{subItem.idPermiso}" outcome="#{subItem.url}?faces-redirect=true"
-													value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?subItem.nombrePermiso:subItem.namePermiso}" /></li>
+											<li><h:link id="link-#{subItem.idPermiso}"
+													outcome="#{subItem.url}?faces-redirect=true"
+													value="#{sesionManagedBean.idioma.equalsIgnoreCase('ES')?subItem.nombrePermiso:subItem.namePermiso}">
+													<h:panelGroup
+														rendered="#{subItem.nombrePermiso.equals('Gestionar Solicitudes de Amistad') and not empty amigosManagedBean.listaSolicitudesAmistad}">
+														<span class="badge bg-secondary">#{amigosManagedBean.listaSolicitudesAmistad.size()}</span>
+													</h:panelGroup>
+												</h:link></li>
 										</c:forEach>
 									</ul></li>
 							</c:if>
@@ -66,8 +76,8 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
-						<li><h:link id="link-iniciar-sesion" outcome="/iniciar-sesion"
-								value="#{texto.IniciarSesion} ">
+						<li><h:link id="link-iniciar-sesion"
+								outcome="/iniciar-sesion" value="#{texto.IniciarSesion} ">
 								<span class="glyphicon glyphicon-log-in"></span>
 							</h:link></li>
 						<li><h:link id="link-registro" outcome="/registro"
@@ -77,16 +87,16 @@
 					</h:panelGroup>
 					<h:panelGroup
 						rendered="#{not empty sesionManagedBean.usuarioLogueado}">
-						<li class="dropdown"><a id="link-cuenta" href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">#{sesionManagedBean.usuarioLogueado.correo}
+						<li class="dropdown"><a id="link-cuenta" href="#"
+							class="dropdown-toggle" data-toggle="dropdown" role="button"
+							aria-haspopup="true" aria-expanded="false">#{sesionManagedBean.usuarioLogueado.correo}
 								<span class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
 								<li><h:link id="link-cambiar-clave" outcome="cambiar-clave"
 										value="#{texto.CambiarContraseña}"></h:link></li>
-								<li><h:link id="link-cambiar-correo" outcome="cambiar-correo"
-										value="#{texto.CambiarCorreo}"></h:link></li>
+								<li><h:link id="link-cambiar-correo"
+										outcome="cambiar-correo" value="#{texto.CambiarCorreo}"></h:link></li>
 							</ul></li>
 						<li><h:commandLink id="configuracion"
 								styleClass="btn btn-default navbar-brand"
