@@ -7,9 +7,13 @@
 	template="/WEB-INF/templates/template-interno.xhtml">
 	<ui:define name="title">#{texto.Estadisticas}</ui:define>
 	<ui:define name="head">
+		<link
+			href="#{sesionManagedBean.contextPath}/resources/css/bootstrap-table.min.css"
+			rel="stylesheet" />
 		<style type="text/css">
 ${
-demo.css
+demo
+.css
 }
 </style>
 		<h:panelGroup

@@ -34,9 +34,6 @@
 		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
 		rel="stylesheet" type="text/css" />
 	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap-table.min.css"
-		rel="stylesheet" />
-	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/#{configuracionManagedBean.estiloVisual.valorEntero==1?'black_style.css':'white_style.css'}"
 		rel="stylesheet" />
 	<script
@@ -69,7 +66,7 @@
             #{sesionManagedBean.goToIndex()}
 </h:panelGroup>
 	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.min.js"></script>
 	<ui:insert name="foot"></ui:insert>
 </h:body>
 </html>
