@@ -31,9 +31,6 @@
 		href="#{sesionManagedBean.contextPath}/resources/css/bootstrap.min.css"
 		rel="stylesheet" type="text/css" />
 	<link
-		href="#{sesionManagedBean.contextPath}/resources/css/font-awesome.min.css"
-		rel="stylesheet" type="text/css"></link>
-	<link
 		href="#{sesionManagedBean.contextPath}/resources/css/sweetalert.css"
 		rel="stylesheet" type="text/css" />
 	<link
@@ -45,13 +42,7 @@
 	<script
 		src="#{sesionManagedBean.contextPath}/resources/js/sweetalert.min.js"></script>
 	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table-es-ES.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/jquery-1.12.0.min.js"></script>
-	<script
-		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
+		src="#{sesionManagedBean.contextPath}/resources/js/jquery-3.5.1.min.js"></script>
 	<link
 		href="#{sesionManagedBean.contextPath}/resources/images/favicon.ico"
 		rel="shortcut icon" type="image/x-icon" />
@@ -59,8 +50,10 @@
 </h:head>
 <h:body>
 	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQQFZSB"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<noscript>
+		<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQQFZSB"
+			height="0" width="0" style="display: none; visibility: hidden"></iframe>
+	</noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	<h:panelGroup rendered="#{(!empty sesionManagedBean.usuarioLogueado)}">
 		<ui:include src="/WEB-INF/banners/menu.xhtml" />
@@ -75,6 +68,8 @@
 	<h:panelGroup rendered="#{empty sesionManagedBean.usuarioLogueado}">
             #{sesionManagedBean.goToIndex()}
 </h:panelGroup>
+	<script
+		src="#{sesionManagedBean.contextPath}/resources/js/bootstrap.js"></script>
 	<ui:insert name="foot"></ui:insert>
 </h:body>
 </html>

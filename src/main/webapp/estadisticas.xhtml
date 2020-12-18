@@ -9,234 +9,231 @@
 	<ui:define name="head">
 		<style type="text/css">
 ${
-demo
-.css
-
-
+demo.css
 }
 </style>
 		<h:panelGroup
 			rendered="#{estadisticasManagedBean.obtenerListaConteoPuzzles().size()>0 and estadisticasManagedBean.idUsuario ne null}">
 			<script>
-            $(function () {
-                $('#container').highcharts(
-                        {
-                        	chart: {
-                                type: 'line'
-                            },
-                            title: {
-                                text: 'Historial de promedios'
-                            },
-                            subtitle: {
-                                text: 'Historial de promedios'
-                            },
-                            xAxis: {
-                                type: 'datetime',
-                                dateTimeLabelFormats: {
-                                	day: '%d/%b',
-                                    week: '%d/%b',
-                                    month: '%d/%b/%Y',
-                                    year: '%Y'
-                                }
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'promedio'
-                                },
-                                min: 0,
-                                labels: {
-                                    formatter: function () {
-                                 	   var ms = this.value;
-                                        var m=Math.floor(ms/60000);
-                                        ms-=(m*60000);
-                                        var s=Math.floor(ms/1000);
-                                        ms-=(s*1000);
-                                        ms=Math.floor(ms/10);
-                                        return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
-                                    }
-                                }
-                            },
-                            legend: {
-                                enabled: true
-                            },
-                            tooltip: {
-                            	headerFormat: '&lt;b&gt;{series.name}&lt;/b&gt;&lt;br&gt;',
-                            	formatter: function () {
-                              	   var ms = this.y;
-                                     var m=Math.floor(ms/60000);
-                                     ms-=(m*60000);
-                                     var s=Math.floor(ms/1000);
-                                     ms-=(s*1000);
-                                     ms=Math.floor(ms/10);
-                                     return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
-                                     +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
-                                     +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
-                                     +'AVG = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+          $(function () {
+              $('#container').highcharts(
+                      {
+                      	chart: {
+                              type: 'line'
+                          },
+                          title: {
+                              text: 'Historial de promedios'
+                          },
+                          subtitle: {
+                              text: 'Historial de promedios'
+                          },
+                          xAxis: {
+                              type: 'datetime',
+                              dateTimeLabelFormats: {
+                              	day: '%d/%b',
+                                  week: '%d/%b',
+                                  month: '%d/%b/%Y',
+                                  year: '%Y'
+                              }
+                          },
+                          yAxis: {
+                              title: {
+                                  text: 'promedio'
+                              },
+                              min: 0,
+                              labels: {
+                                  formatter: function () {
+                               	   var ms = this.value;
+                                      var m=Math.floor(ms/60000);
+                                      ms-=(m*60000);
+                                      var s=Math.floor(ms/1000);
+                                      ms-=(s*1000);
+                                      ms=Math.floor(ms/10);
+                                      return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                  }
+                              }
+                          },
+                          legend: {
+                              enabled: true
+                          },
+                          tooltip: {
+                          	headerFormat: '&lt;b&gt;{series.name}&lt;/b&gt;&lt;br&gt;',
+                          	formatter: function () {
+                            	   var ms = this.y;
+                                   var m=Math.floor(ms/60000);
+                                   ms-=(m*60000);
+                                   var s=Math.floor(ms/1000);
+                                   ms-=(s*1000);
+                                   ms=Math.floor(ms/10);
+                                   return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
+                                   +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
+                                   +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
+                                   +'AVG = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                               }
+                          },
+                          plotOptions: {
+                              spline: {
+                                  marker: {
+                                      enabled: true
+                                  }
+                              }
+                          },
+                          series: [#{estadisticasManagedBean.listaPromedios.obtenerDatos()}]
+                      });
+          });
+          
+          $(function () {
+              $('#container_Ao5').highcharts(
+                      {
+                      	chart: {
+                              type: 'line'
+                          },
+                          title: {
+                              text: 'Historial de Ao5'
+                          },
+                          subtitle: {
+                              text: 'Historial de Ao5'
+                          },
+                          xAxis: {
+                              type: 'datetime',
+                              dateTimeLabelFormats: {
+                              	day: '%d/%b',
+                                  week: '%d/%b',
+                                  month: '%d/%b/%Y',
+                                  year: '%Y'
+                              }
+                          },
+                          yAxis: {
+                              title: {
+                                  text: 'promedio'
+                              },
+                              min: 0,
+                              labels: {
+                                  formatter: function () {
+                               	   var ms = this.value;
+                                      var m=Math.floor(ms/60000);
+                                      ms-=(m*60000);
+                                      var s=Math.floor(ms/1000);
+                                      ms-=(s*1000);
+                                      ms=Math.floor(ms/10);
+                                      return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                  }
+                              }
+                          },
+                          legend: {
+                              enabled: true
+                          },
+                          tooltip: {
+                          	headerFormat: '&lt;b&gt;{series.name}&lt;/b&gt;&lt;br&gt;',
+                          	formatter: function () {
+                            	   var ms = this.y;
+                                   var m=Math.floor(ms/60000);
+                                   ms-=(m*60000);
+                                   var s=Math.floor(ms/1000);
+                                   ms-=(s*1000);
+                                   ms=Math.floor(ms/10);
+                                   return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
+                                   +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
+                                   +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
+                                   +'AVG = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                               }
+                          },
+                          plotOptions: {
+                              spline: {
+                                  marker: {
+                                      enabled: true
+                                  }
+                              }
+                          },
+                          series: [#{estadisticasManagedBean.listaAverages.obtenerDatos()}]
+                      });
+          });
+          
+             $(function () {
+                 $('#container2').highcharts(
+                         {
+                             chart: {
+                                 type: 'line'
+                             },
+                             title: {
+                                 text: 'Historial de Promedios'
+                             },
+                             subtitle: {
+                                 text: 'Histórico de promedios #{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}'
+                             },
+                             xAxis: {
+                                 categories: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerFechas()}]
+                             },
+                             yAxis: {
+                                 title: {
+                                     text: 'Promedio'
+                                 },
+                                 labels: {
+                                     formatter: function () {
+                                  	   var ms = this.value;
+                                         var m=Math.floor(ms/60000);
+                                         ms-=(m*60000);
+                                         var s=Math.floor(ms/1000);
+                                         ms-=(s*1000);
+                                         ms=Math.floor(ms/10);
+                                         return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                     }
                                  }
-                            },
-                            plotOptions: {
-                                spline: {
-                                    marker: {
-                                        enabled: true
-                                    }
-                                }
-                            },
-                            series: [#{estadisticasManagedBean.listaPromedios.obtenerDatos()}]
-                        });
-            });
-            
-            $(function () {
-                $('#container_Ao5').highcharts(
-                        {
-                        	chart: {
-                                type: 'line'
-                            },
-                            title: {
-                                text: 'Historial de Ao5'
-                            },
-                            subtitle: {
-                                text: 'Historial de Ao5'
-                            },
-                            xAxis: {
-                                type: 'datetime',
-                                dateTimeLabelFormats: {
-                                	day: '%d/%b',
-                                    week: '%d/%b',
-                                    month: '%d/%b/%Y',
-                                    year: '%Y'
-                                }
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'promedio'
-                                },
-                                min: 0,
-                                labels: {
-                                    formatter: function () {
-                                 	   var ms = this.value;
-                                        var m=Math.floor(ms/60000);
-                                        ms-=(m*60000);
-                                        var s=Math.floor(ms/1000);
-                                        ms-=(s*1000);
-                                        ms=Math.floor(ms/10);
-                                        return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
-                                    }
-                                }
-                            },
-                            legend: {
-                                enabled: true
-                            },
-                            tooltip: {
-                            	headerFormat: '&lt;b&gt;{series.name}&lt;/b&gt;&lt;br&gt;',
-                            	formatter: function () {
-                              	   var ms = this.y;
-                                     var m=Math.floor(ms/60000);
-                                     ms-=(m*60000);
-                                     var s=Math.floor(ms/1000);
-                                     ms-=(s*1000);
-                                     ms=Math.floor(ms/10);
-                                     return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
-                                     +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
-                                     +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
-                                     +'AVG = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                             },
+                             plotOptions: {
+                                 line: {
+                                     dataLabels: {
+                                         enabled: true,
+                                         formatter: function () {
+                                             var ms = this.y;
+                                             var m=Math.floor(ms/60000);
+                                             ms-=(m*60000);
+                                             var s=Math.floor(ms/1000);
+                                             ms-=(s*1000);
+                                             ms=Math.floor(ms/10);
+                                             return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                             }
+                                     },
+                                     enableMouseTracking: false
                                  }
-                            },
-                            plotOptions: {
-                                spline: {
-                                    marker: {
-                                        enabled: true
-                                    }
-                                }
-                            },
-                            series: [#{estadisticasManagedBean.listaAverages.obtenerDatos()}]
-                        });
-            });
-            
-               $(function () {
-                   $('#container2').highcharts(
-                           {
-                               chart: {
-                                   type: 'line'
-                               },
-                               title: {
-                                   text: 'Historial de Promedios'
-                               },
-                               subtitle: {
-                                   text: 'Histórico de promedios #{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}'
-                               },
-                               xAxis: {
-                                   categories: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerFechas()}]
-                               },
-                               yAxis: {
-                                   title: {
-                                       text: 'Promedio'
-                                   },
-                                   labels: {
-                                       formatter: function () {
-                                    	   var ms = this.value;
-                                           var m=Math.floor(ms/60000);
-                                           ms-=(m*60000);
-                                           var s=Math.floor(ms/1000);
-                                           ms-=(s*1000);
-                                           ms=Math.floor(ms/10);
-                                           return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
-                                       }
-                                   }
-                               },
-                               plotOptions: {
-                                   line: {
-                                       dataLabels: {
-                                           enabled: true,
-                                           formatter: function () {
-                                               var ms = this.y;
-                                               var m=Math.floor(ms/60000);
-                                               ms-=(m*60000);
-                                               var s=Math.floor(ms/1000);
-                                               ms-=(s*1000);
-                                               ms=Math.floor(ms/10);
-                                               return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
-                                               }
-                                       },
-                                       enableMouseTracking: false
-                                   }
-                               },
-                               series: [{
-                                       name: '#{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}',
-                                       data: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerPromedios()}]
-                                   }]
-                           });
-               });
-               
-               $(function () {
-                   $('#container3').highcharts(
-                           {
-                               chart: {
-                                   type: 'pie',
-                                   options3d: {
-                                       enabled: true,
-                                       alpha: 45
-                                   }
-                               },
-                               title: {
-                                   text: 'Distribucion de puzzles'
-                               },
-                               subtitle: {
-                                   text: 'Distribucion de puzzles'
-                               },
-                               plotOptions: {
-                                   pie: {
-                                       innerSize: 100,
-                                       depth: 45
-                                   }
-                               },
-                               series: [{
-                                       name: 'Cantidad',
-                                       data: [#{estadisticasManagedBean.listaCuentaPuzzle.obtenerDatos()}]
-                                   }]
-                           });
-               });
+                             },
+                             series: [{
+                                     name: '#{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}',
+                                     data: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerPromedios()}]
+                                 }]
+                         });
+             });
+             
+             $(function () {
+                 $('#container3').highcharts(
+                         {
+                             chart: {
+                                 type: 'pie',
+                                 options3d: {
+                                     enabled: true,
+                                     alpha: 45
+                                 }
+                             },
+                             title: {
+                                 text: 'Distribucion de puzzles'
+                             },
+                             subtitle: {
+                                 text: 'Distribucion de puzzles'
+                             },
+                             plotOptions: {
+                                 pie: {
+                                     innerSize: 100,
+                                     depth: 45
+                                 }
+                             },
+                             series: [{
+                                     name: 'Cantidad',
+                                     data: [#{estadisticasManagedBean.listaCuentaPuzzle.obtenerDatos()}]
+                                 }]
+                         });
+             });
 
-            </script>
+          </script>
 		</h:panelGroup>
 	</ui:define>
 	<ui:define name="title">
@@ -286,5 +283,11 @@ demo
 					estadisticas</div>
 			</h:panelGroup>
 		</div>
+	</ui:define>
+	<ui:define name="foot">
+		<script
+			src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table.min.js"></script>
+		<script
+			src="#{sesionManagedBean.contextPath}/resources/js/bootstrap-table-es-ES.js"></script>
 	</ui:define>
 </ui:composition>
