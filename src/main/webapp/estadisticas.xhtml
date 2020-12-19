@@ -26,10 +26,7 @@ demo
                               type: 'line'
                           },
                           title: {
-                              text: 'Historial de promedios'
-                          },
-                          subtitle: {
-                              text: 'Historial de promedios'
+                              text: '#{texto.HistorialDePromedios}'
                           },
                           xAxis: {
                               type: 'datetime',
@@ -42,7 +39,7 @@ demo
                           },
                           yAxis: {
                               title: {
-                                  text: 'promedio'
+                                  text: '#{texto.Promedio}'
                               },
                               min: 0,
                               labels: {
@@ -93,10 +90,7 @@ demo
                               type: 'line'
                           },
                           title: {
-                              text: 'Historial de Ao5'
-                          },
-                          subtitle: {
-                              text: 'Historial de Ao5'
+                              text: '#{texto.HistorialDeAo5}'
                           },
                           xAxis: {
                               type: 'datetime',
@@ -109,7 +103,7 @@ demo
                           },
                           yAxis: {
                               title: {
-                                  text: 'promedio'
+                                  text: '#{texto.Promedio}'
                               },
                               min: 0,
                               labels: {
@@ -160,17 +154,14 @@ demo
                                  type: 'line'
                              },
                              title: {
-                                 text: 'Historial de Promedios'
-                             },
-                             subtitle: {
-                                 text: 'Histórico de promedios #{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}'
+                                 text: '#{texto.HistorialDePromedios}'
                              },
                              xAxis: {
                                  categories: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerFechas()}]
                              },
                              yAxis: {
                                  title: {
-                                     text: 'Promedio'
+                                     text: '#{texto.Promedio}'
                                  },
                                  labels: {
                                      formatter: function () {
@@ -219,10 +210,7 @@ demo
                                  }
                              },
                              title: {
-                                 text: 'Distribucion de puzzles'
-                             },
-                             subtitle: {
-                                 text: 'Distribucion de puzzles'
+                                 text: '${texto.DistribucionDePuzzles}'
                              },
                              plotOptions: {
                                  pie: {
@@ -231,7 +219,7 @@ demo
                                  }
                              },
                              series: [{
-                                     name: 'Cantidad',
+                                     name: '#{texto.Cantidad}',
                                      data: [#{estadisticasManagedBean.listaCuentaPuzzle.obtenerDatos()}]
                                  }]
                          });
@@ -283,8 +271,7 @@ demo
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{estadisticasManagedBean.obtenerListaConteoPuzzles().size()==0}">
-				<div>Aun no tienes tiempos registrados que te permitan ver
-					estadisticas</div>
+				<div>#{texto.AunNoTienesTiemposRegistrados}</div>
 			</h:panelGroup>
 		</div>
 	</ui:define>

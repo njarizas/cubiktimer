@@ -23,10 +23,10 @@ demo
                                 type: 'line'
                             },
                             title: {
-                                text: 'Comparación de promedios'
+                                text: '#{texto.ComparacionDePromedios}'
                             },
                             subtitle: {
-                                text: 'Comparación de promedios por categoría'
+                                text: '#{texto.ComparacionDePromediosPorCategoria}'
                             },
                             xAxis: {
                                 type: 'datetime',
@@ -39,7 +39,7 @@ demo
                             },
                             yAxis: {
                                 title: {
-                                    text: 'promedio'
+                                    text: '#{texto.Promedio}'
                                 },
                                 min: 0,
                                 labels: {
@@ -89,7 +89,7 @@ demo
 		<div class="col-xs-12">
 			<h:form>
 				<h:panelGroup>
-					<h:outputText value="Comparar con: "></h:outputText>
+					<h:outputText value="#{texto.CompararCon}: "></h:outputText>
 					<h:selectOneMenu value="#{compararEstadisticasManagedBean.idAmigo}"
 						styleClass="form-control input-sm" onchange="submit()"
 						valueChangeListener="#{compararEstadisticasManagedBean.cambioAmigo}">
@@ -102,12 +102,11 @@ demo
 			</h:form>
 			<h:panelGroup
 				rendered="#{compararEstadisticasManagedBean.idAmigo eq null and compararEstadisticasManagedBean.idUsuario ne null and compararEstadisticasManagedBean.listaAmigos.isEmpty()}">
-				<div>Aun no tienes amigos con los cuales comparar tus
-					estadisticas</div>
+				<div>#{texto.AunNoTienesAmigos}</div>
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{compararEstadisticasManagedBean.idAmigo eq null and compararEstadisticasManagedBean.idUsuario ne null and !compararEstadisticasManagedBean.listaAmigos.isEmpty()}">
-				<div>Por favor selecciona un amigo para comparar</div>
+				<div>#{texto.PorFavorSeleccionaUnAmigoParaComparar}</div>
 			</h:panelGroup>
 			<h:panelGroup
 				rendered="#{compararEstadisticasManagedBean.idAmigo ne null and compararEstadisticasManagedBean.idUsuario ne null}">
