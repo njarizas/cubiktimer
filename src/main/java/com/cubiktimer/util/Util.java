@@ -98,8 +98,8 @@ public class Util implements Serializable {
 
 	/**
 	 * Metodo que genera una clave aleatoria de longitud 12 caracteres y solo puede
-	 * tener caracteres alfanumericos o los siguientes caracteres especiales: ! # $
-	 * % + - * ~ ^ @
+	 * tener caracteres alfanumericos o los siguientes caracteres especiales: ! # %
+	 * + - * ~ ^ @
 	 * 
 	 * @return <code>String</code> la clave generada aleatoriamente
 	 */
@@ -109,8 +109,8 @@ public class Util implements Serializable {
 
 	/**
 	 * Metodo que genera una cadena aleatoria de longitud 32 caracteres y solo puede
-	 * tener caracteres alfanumericos o los siguientes caracteres especiales: ! # $
-	 * % + - * ~ ^ @
+	 * tener caracteres alfanumericos o los siguientes caracteres especiales: ! # %
+	 * + - * ~ ^ @
 	 * 
 	 * @return <code>String</code> la clave generada aleatoriamente
 	 */
@@ -122,8 +122,8 @@ public class Util implements Serializable {
 		char[] caracteres;
 		caracteres = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
 				'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '#',
-				'$', '%', '+', '-', '*', '~', '^', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-				'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+				'%', '+', '-', '*', '~', '^', '@', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+				'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 		StringBuilder pass = new StringBuilder("");
 		for (int i = 0; i < longitud; i++) {
 			pass.append(caracteres[new Random().nextInt(caracteres.length)]);
