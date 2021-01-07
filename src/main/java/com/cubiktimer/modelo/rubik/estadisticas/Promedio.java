@@ -65,4 +65,23 @@ public class Promedio implements Serializable {
 		return c.get(Calendar.YEAR) + "," + c.get(Calendar.MONTH) + "," + c.get(Calendar.DAY_OF_MONTH);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<Promedio>");
+		if (prom != null) {
+			builder.append("<prom>").append(prom).append("</prom>");
+		}
+		if (tipoCubo != null) {
+			builder.append("<tipoCubo>").append(tipoCubo).append("</tipoCubo>");
+		}
+		if (fecha != null) {
+			builder.append("<fecha>").append(getFechaUTC()).append("</fecha>");
+		}
+		builder.append("</Promedio>");
+		return builder.toString();
+	}
+	
+	
+
 }

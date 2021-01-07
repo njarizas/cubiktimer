@@ -24,6 +24,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 	private String tiempoTexto;
 	private Boolean dnf;
 	private Boolean penalizacion;
+	private Boolean pb;
 	private String comentario;
 	private Date fecha;
 	private Integer estado;
@@ -33,6 +34,7 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 		this.fecha = new Date();
 		this.dnf = false;
 		this.penalizacion = false;
+		this.pb = false;
 		this.estado = 1;
 	}
 
@@ -218,6 +220,14 @@ public class TiempoRubikDTO implements Serializable, Comparable<TiempoRubikDTO> 
 
 	public void setPenalizacion(Boolean penalizacion) {
 		this.penalizacion = penalizacion;
+	}
+
+	public Boolean getPb() {
+		return pb;
+	}
+
+	public void setPb(Boolean pb) {
+		this.pb = pb;
 	}
 
 	public Integer getTiempoInspeccionSegundos() {

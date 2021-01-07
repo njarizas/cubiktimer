@@ -20,6 +20,7 @@ import com.cubiktimer.controlador.managedbeans.session.SesionManagedBean;
 import com.cubiktimer.modelo.dao.EstadisticasDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.modelo.rubik.estadisticas.ListaComparacionPB;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaPromedios;
 
 @ManagedBean
@@ -38,6 +39,8 @@ public class CompararEstadisticasManagedBean implements Serializable {
 	private Integer idUsuario;
 	private Integer idAmigo;
 	private ListaPromedios listaPromediosComparacion;
+	private ListaPromedios listaPBComparacion;
+	private ListaComparacionPB listaComparacionPB;
 	private List<UsuarioDTO> listaAmigos;
 	private EstadisticasDAO estadisticasDAO;
 	private UsuarioDAO usuarioDAO;
@@ -46,6 +49,8 @@ public class CompararEstadisticasManagedBean implements Serializable {
 		estadisticasDAO = new EstadisticasDAO();
 		usuarioDAO = new UsuarioDAO();
 		listaPromediosComparacion = new ListaPromedios();
+		listaPBComparacion = new ListaPromedios();
+		listaComparacionPB = new ListaComparacionPB();
 		listaAmigos = new ArrayList<>();
 		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		if (session.getAttribute("idUsuario") != null) {
@@ -63,6 +68,8 @@ public class CompararEstadisticasManagedBean implements Serializable {
 	public void init() {
 		if (idAmigo != null) {
 			listaPromediosComparacion.setLista(estadisticasDAO.obtenerListaPromediosComparacion(idUsuario, idAmigo));
+			listaPBComparacion.setLista(estadisticasDAO.obtenerListaPBComparacion(idUsuario, idAmigo));
+			listaComparacionPB = estadisticasDAO.obtenerListaComparacionPBSingle(idUsuario, idAmigo);
 		}
 	}
 
@@ -93,6 +100,22 @@ public class CompararEstadisticasManagedBean implements Serializable {
 
 	public void setListaPromediosComparacion(ListaPromedios listaPromediosComparacion) {
 		this.listaPromediosComparacion = listaPromediosComparacion;
+	}
+
+	public ListaComparacionPB getListaComparacionPB() {
+		return listaComparacionPB;
+	}
+
+	public ListaPromedios getListaPBComparacion() {
+		return listaPBComparacion;
+	}
+
+	public void setListaPBComparacion(ListaPromedios listaPBComparacion) {
+		this.listaPBComparacion = listaPBComparacion;
+	}
+
+	public void setListaComparacionPB(ListaComparacionPB listaComparacionPB) {
+		this.listaComparacionPB = listaComparacionPB;
 	}
 
 	public List<UsuarioDTO> getListaAmigos() {

@@ -61,17 +61,20 @@
 						rendered="#{estadisticasManagedBean.obtenerListaConteoPuzzles().size()>0}">
 						<br />
 						<figure class="highcharts-figure">
-							<div id="container" class="col-xs-12"
+							<div id="container" class="col-xs-12 col-md-6 col-lg-7"
 								style="height: 400px; margin-bottom: 10px;"></div>
 						</figure>
-						<!-- 				<div id="container2" class="col-xs-12 col-md-6" -->
-						<!-- 					style="height: 400px; margin-bottom: 10px;"></div> -->
-						<!-- 				<div id="container3" class="col-xs-12 col-md-6" -->
-						<!-- 					style="height: 400px; margin-bottom: 10px;"></div> -->
+						<figure class="highcharts-figure">
+							<div id="container2" class="col-xs-12 col-md-6 col-lg-5"
+								style="height: 400px; margin-bottom: 10px;"></div>
+						</figure>
+						<figure class="highcharts-figure">
+							<div id="container3" class="col-xs-12"
+								style="height: 400px; margin-bottom: 10px;"></div>
+						</figure>
 						<script type="text/javascript">
-            $(function () {
-                $('#container').highcharts(
-                        {
+						Highcharts.chart('container', 
+				                   {
                         	chart: {
                                 type: 'line'
                             },
@@ -131,15 +134,54 @@
                             },
                             series: [#{compararEstadisticasManagedBean.listaPromediosComparacion.obtenerDatos()}]
                         });
-            });
-            </script>
-					</h:panelGroup>
-					<h:panelGroup
-						rendered="#{estadisticasManagedBean.obtenerListaConteoPuzzles().size()==0}">
-						<div>#{texto.AunNoTienesTiemposRegistrados}</div>
-					</h:panelGroup>
-				</div>
-			</h:panelGroup>
-		</div>
-	</ui:define>
-</ui:composition>
+						
+						Highcharts.chart('container2', {
+							  chart: {
+							    polar: true,
+							    type: 'line'
+							  },
+							  title: {
+							    text: '#{compararEstadisticasManagedBean.listaComparacionPB.nombreUsuario} - #{compararEstadisticasManagedBean.listaComparacionPB.nombreAmigo}',
+							    x: -80
+							  },
+							  pane: {
+							    size: '80%'
+							  },
+							  xAxis: {
+							    categories: [#{compararEstadisticasManagedBean.listaComparacionPB.obtenerNombreCategorias()}],
+							    tickmarkPlacement: 'on',
+							    lineWidth: 0
+							  },
+							  yAxis: {
+							    gridLineInterpolation: 'polygon',
+							    lineWidth: 0,
+							    min: 0
+							  },
+							  legend: {
+							    align: 'right',
+							    verticalAlign: 'middle',
+							    layout: 'vertical'
+							  },
+							  series: [{
+							    name: '#{compararEstadisticasManagedBean.listaComparacionPB.nombreUsuario}',
+							    data: [#{compararEstadisticasManagedBean.listaComparacionPB.obtenerDatosPropios()}],
+							    pointPlacement: 'on'
+							  }, 
+							  {
+							    name: '#{compararEstadisticasManagedBean.listaComparac$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ @óàšAûÜZ|ª[¨ï$q}iÒ·µQbtTEC$œ’m…Îmo“LÒDüÜ;˜%gÏ?wêÁÅ·øîùovH0õÉa‡5£Ú*î Ø’ÃÌlÍ››S iyä”rÕO7ª“%L]İ×%±ºÇhk ¶«·÷>v1­HB£®±ßŞÚd\(eoIx¢>3´6BS%ÌØá“(
+œÛf$Ãhıé¿¶åeÔôÚèHœ‚`İ¶f{Fo©Yò¿Ôó@00uMb’z-ëìXI$&ÂgfÖú¶7Ó´Şu|'K.ÌoP
+PİÀùFË.Ğıoûò9B<~. ’ïÅË[’´˜Ë<Ù­„$¯•¢·ä{1¹A•.òbKxºL ¯İ·'¯u8n5 ’ºe ,]ñH©–’ÆV¨ŒWwÃ$ùCƒel¹“|zys«™KŠi-ğqÊİ¬bk,wnGÿâ;¥  ~ÖeÉrÍ’‰ÜÔ~'1`Vâ¦«¹-*[ÉñLÔKÄ'2@ŸÜşĞä»ª ²n‘Íß2¸Nß ˆÆ¶µG•¢ói/U¢µ'Eï@¦`Hæ¹˜;J•¼¼ÜÅ+Jén#»¼‚6Ú´—Ä¹G•ü¡NÒGğ'—Z!öáí¸‰Wi»NJ

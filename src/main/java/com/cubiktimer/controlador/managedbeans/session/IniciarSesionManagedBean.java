@@ -16,7 +16,9 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.controlador.facade.ConfiguracionFacade;
+import com.cubiktimer.controlador.managedbeans.RubikManagedBean;
 import com.cubiktimer.modelo.dao.CredencialDAO;
+import com.cubiktimer.modelo.dao.EstadisticasDAO;
 import com.cubiktimer.modelo.dao.PermisosDAO;
 import com.cubiktimer.modelo.dao.RolDAO;
 import com.cubiktimer.modelo.dao.UsuarioDAO;
@@ -49,12 +51,16 @@ public class IniciarSesionManagedBean implements Serializable {
 	private CredencialDAO credencialDAO;
 	private PermisosDAO permisosDAO;
 	private RolDAO rolDAO;
+	private EstadisticasDAO estadisticasDAO;
 
 	@ManagedProperty(value = "#{sesionManagedBean}")
 	private SesionManagedBean sesionManagedBean;
 
 	@ManagedProperty(value = "#{configuracionManagedBean}")
 	private ConfiguracionManagedBean configuracionManagedBean;
+
+	@ManagedProperty(value = "#{rubikManagedBean}")
+	private RubikManagedBean rubikManagedBean;
 
 	ConfiguracionFacade configuracionFacade;
 
@@ -64,6 +70,7 @@ public class IniciarSesionManagedBean implements Serializable {
 		credencialDAO = new CredencialDAO();
 		permisosDAO = new PermisosDAO();
 		rolDAO = new RolDAO();
+		estadisticasDAO = new EstadisticasDAO();
 		configuracionFacade = new ConfiguracionFacade();
 	}
 
@@ -106,6 +113,7 @@ public class IniciarSesionManagedBean implements Serializable {
 					configuracionManagedBean.setIdUsuario(u.getIdUsuario());
 					log.info("Inicio de sesión de usuario : " + u.getIdUsuario());
 					ConfiguracionDTO cDto = configuracionFacade.obtenerIdiomaPreferidoPorIdUsuario(u.getIdUsuario());
+					rubikManagedBean.getListaRecords().setListaPBSingle(estadisticasDAO.obtenerListaPBSingle(u.getIdUsuario()));
 					if (cDto != null) {
 						String idioma = cDto.getValorTexto();
 						if (idioma != null) {
@@ -226,6 +234,18 @@ public class IniciarSesionManagedBean implements Serializable {
 
 	public void setConfiguracionManagedBean(ConfiguracionManagedBean configuracionManagedBean) {
 		this.configuracionManagedBean = configuracionManagedBean;
+	}
+
+	public RubikManagedBean getRubikManagedBean() {
+		if (this.rubikManagedBean != null) {
+			return this.rubikManagedBean;
+		} else {
+			return new RubikManagedBean();
+		}
+	}
+
+	public void setRubikManagedBean(RubikManagedBean rubikManagedBean) {
+		this.rubikManagedBean = rubikManagedBean;
 	}
 
 }

@@ -257,6 +257,10 @@ public class Util implements Serializable {
 		return servletContext.getContextPath();
 	}
 
+	public static Integer getInteger(String numero) throws Exception {
+		return Integer.parseInt(numero);
+	}
+
 	public SimpleDateFormat getFechaHoraMysql() {
 		return fechaHoraMysql;
 	}
