@@ -79,7 +79,7 @@
                                 type: 'line'
                             },
                             title: {
-                                text: '#{texto.ComparacionDePromedios}'
+                                text: '#{texto.HistorialDePromedios}'
                             },
                             xAxis: {
                                 type: 'datetime',
@@ -240,7 +240,7 @@
                                   return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
                                   +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
                                   +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
-                                  +'AVG = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                                  +'PB = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
                               }
                          },
                          plotOptions: {
