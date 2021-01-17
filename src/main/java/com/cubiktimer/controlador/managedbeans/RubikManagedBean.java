@@ -136,8 +136,6 @@ public class RubikManagedBean implements Serializable {
 		} catch (NoSuchElementException e) {
 			this.pb = Integer.MAX_VALUE;
 		}
-		System.out.println("PB para " + cubo.getNombre() + ": " + pb);
-		System.out.println(listaRecords);
 	}
 
 	public List<TipoDTO> listarCubos() {
@@ -236,30 +234,33 @@ public class RubikManagedBean implements Serializable {
 	}
 
 	public String agregarTiempo() {
-		try {
-			this.pb = listaRecords.getListaPBSingle().stream()
-					.filter(val -> val.getIdTipoCubo().equals(cubo.getIdTipoCubo())).mapToInt(t -> t.getPbNumero())
-					.min().getAsInt();
-		} catch (NoSuchElementException e) {
-			this.pb = Integer.MAX_VALUE;
-		}
-		Integer pbSesion;
-		try {
-			pbSesion = sesionRubikActual.getTiempos().stream()
-					.filter(val -> val.getTiempoRubikDTO().getIdTipoCubo().equals(cubo.getIdTipoCubo()))
-					.mapToInt(t -> t.getTiempoRubikDTO().getTiempoRealMilisegundos()).min().getAsInt();
-		} catch (NoSuchElementException e) {
-			pbSesion = Integer.MAX_VALUE;
-		}
 		TiempoRubikDTO tiempoRubikDTO = new TiempoRubikDTO(cubo.getIdTipoCubo(), secuenciaMezcla,
 				tiempoInspeccionSegundos, tiempoInspeccionUsadoMilisegundos, tiempoInspeccionUsadoTexto,
 				tiempoMilisegundos, duracion, dnf, penalizacion, comentario);
-		if (tiempoRubikDTO.getTiempoRealMilisegundos() < pb && tiempoRubikDTO.getTiempoRealMilisegundos() < pbSesion) {
-			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
-			sesionManagedBean.getMensaje().setText("Nuevo PB en categoría " + cubo.getNombre());
-			sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
-			sesionManagedBean.getMensaje().setMensajePendiente(true);
-			tiempoRubikDTO.setPb(true);
+		if (sesionManagedBean.getUsuarioLogueado() != null
+				&& sesionManagedBean.getUsuarioLogueado().getIdUsuario() != null && configuracionManagedBean.getNotificarPB().getValorBooleano()) {
+			try {
+				this.pb = listaRecords.getListaPBSingle().stream()
+						.filter(val -> val.getIdTipoCubo().equals(cubo.getIdTipoCubo())).mapToInt(t -> t.getPbNumero())
+						.min().getAsInt();
+			} catch (NoSuchElementException e) {
+				this.pb = Integer.MAX_VALUE;
+			}
+			Integer pbSesion;
+			try {
+				pbSesion = sesionRubikActual.getTiempos().stream()
+						.filter(val -> val.getTiempoRubikDTO().getIdTipoCubo().equals(cubo.getIdTipoCubo()))
+						.mapToInt(t -> t.getTiempoRubikDTO().getTiempoRealMilisegundos()).min().getAsInt();
+			} catch (NoSuchElementException e) {
+				pbSesion = Integer.MAX_VALUE;
+			}
+			if (tiempoRubikDTO.getTiempoRealMilisegundos() < pb && tiempoRubikDTO.getTiempoRealMilisegundos() < pbSesion) {
+				sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
+				sesionManagedBean.getMensaje().setText(sesionManagedBean.getRecursos().getString("NuevoPBEnCategoria") + " " + cubo.getNombre());
+				sesionManagedBean.getMensaje().setType(Constantes.SUCCESS);
+				sesionManagedBean.getMensaje().setMensajePendiente(true);
+				tiempoRubikDTO.setPb(true);
+			}
 		}
 		Tiempo t = new Tiempo(cubo, tiempoRubikDTO);
 		sesionRubikActual.getTiempos().add(t);

@@ -76,16 +76,27 @@
 											itemLabel="#{texto.CambiarCorreo}" />
 									</h:selectOneMenu>
 								</div>
-								<span class="help-block"></span>
-								<h:selectBooleanCheckbox id="grabarVideo"
-									value="#{configuracionManagedBean.grabarVideo.valorBooleano}">
-									<strong>#{texto.GrabarVideo} (Beta sólo en Chrome): </strong>
-								</h:selectBooleanCheckbox>
-								<span class="help-block"></span>
-								<h:selectBooleanCheckbox id="capturarPantalla"
-									value="#{configuracionManagedBean.capturarPantalla.valorBooleano}">
-									<strong>#{texto.CapturarPantalla} (Beta): </strong>
-								</h:selectBooleanCheckbox>
+								<table>
+									<tr>
+										<td><strong>#{texto.GrabarVideo} (Beta sólo en
+												Chrome): </strong></td>
+										<td><h:selectBooleanCheckbox id="grabarVideo"
+												value="#{configuracionManagedBean.grabarVideo.valorBooleano}">
+											</h:selectBooleanCheckbox></td>
+									</tr>
+									<tr>
+										<td><strong>#{texto.CapturarPantalla} (Beta): </strong></td>
+										<td><h:selectBooleanCheckbox id="capturarPantalla"
+												value="#{configuracionManagedBean.capturarPantalla.valorBooleano}">
+											</h:selectBooleanCheckbox></td>
+									</tr>
+									<tr>
+										<td><strong>#{texto.NotificarPB}: </strong></td>
+										<td><h:selectBooleanCheckbox id="notificarPB"
+												value="#{configuracionManagedBean.notificarPB.valorBooleano}">
+											</h:selectBooleanCheckbox></td>
+									</tr>
+								</table>
 								<span class="help-block"></span>
 								<div class="form-group text-center">
 									<h:commandButton styleClass="btn btn-success"

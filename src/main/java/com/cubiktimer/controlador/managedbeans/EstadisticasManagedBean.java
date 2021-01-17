@@ -20,7 +20,6 @@ import com.cubiktimer.modelo.rubik.estadisticas.CuentaPuzzle;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaCuentaPuzzle;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaPromedioCategoria;
 import com.cubiktimer.modelo.rubik.estadisticas.ListaPromedios;
-import com.cubiktimer.modelo.rubik.estadisticas.ListaRecords;
 
 @ManagedBean
 @ViewScoped
@@ -38,17 +37,17 @@ public class EstadisticasManagedBean implements Serializable {
 	private Integer idUsuario;
 	private EstadisticasDAO estadisticasDAO;
 	private ListaCuentaPuzzle listaCuentaPuzzle;
-	private ListaRecords listaRecords;
 	private ListaPromedioCategoria listaPromedioCategoria;
 	private ListaPromedios listaPromedios;
+	private ListaPromedios listaPB;
 	private ListaPromedios listaAverages;
 
 	public EstadisticasManagedBean() {
 		estadisticasDAO = new EstadisticasDAO();
 		listaCuentaPuzzle = new ListaCuentaPuzzle();
-		listaRecords = new ListaRecords();
 		listaPromedioCategoria = new ListaPromedioCategoria();
 		listaPromedios = new ListaPromedios();
+		listaPB = new ListaPromedios();
 		listaAverages = new ListaPromedios();
 		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		if (session.getAttribute("idUsuario") != null) {
@@ -60,10 +59,10 @@ public class EstadisticasManagedBean implements Serializable {
 	public void init() {
 		if (idUsuario != null) {
 			listaCuentaPuzzle.setLista(estadisticasDAO.obtenerListaConteoPuzzles(idUsuario));
-			listaRecords.setListaPBSingle(estadisticasDAO.obtenerListaPBSingle(idUsuario));
 			listaPromedioCategoria.setLista(estadisticasDAO.obtenerListaPromediosCategoria(idUsuario,
 					estadisticasDAO.consultarIdPuzzleMasPracticado(idUsuario)));
 			listaPromedios.setLista(estadisticasDAO.obtenerListaPromediosTotales(idUsuario));
+			listaPB.setLista(this.estadisticasDAO.obtenerListaPBTotales(this.idUsuario));
 			listaAverages.setLista(estadisticasDAO.obtenerListaAverages(idUsuario));
 		}
 	}
@@ -94,14 +93,6 @@ public class EstadisticasManagedBean implements Serializable {
 
 	public void setListaCuentaPuzzle(ListaCuentaPuzzle listaCuentaPuzzle) {
 		this.listaCuentaPuzzle = listaCuentaPuzzle;
-	}
-
-	public ListaRecords getListaRecords() {
-		return listaRecords;
-	}
-
-	public void setListaRecords(ListaRecords listaRecords) {
-		this.listaRecords = listaRecords;
 	}
 
 	public ListaPromedioCategoria getListaPromedioCategoria() {
@@ -150,6 +141,14 @@ public class EstadisticasManagedBean implements Serializable {
 
 	public void setSesionManagedBean(SesionManagedBean sesionManagedBean) {
 		this.sesionManagedBean = sesionManagedBean;
+	}
+
+	public ListaPromedios getListaPB() {
+		return listaPB;
+	}
+
+	public void setListaPB(ListaPromedios listaPB) {
+		this.listaPB = listaPB;
 	}
 
 }

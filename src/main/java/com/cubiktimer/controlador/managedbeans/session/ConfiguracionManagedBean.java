@@ -39,6 +39,7 @@ public class ConfiguracionManagedBean implements Serializable {
 	private ConfiguracionDTO estiloVisual;
 	private ConfiguracionDTO grabarVideo;
 	private ConfiguracionDTO capturarPantalla;
+	private ConfiguracionDTO notificarPB;
 
 	private ConfiguracionFacade configuracionFacade;
 
@@ -68,6 +69,9 @@ public class ConfiguracionManagedBean implements Serializable {
 		this.capturarPantalla = new ConfiguracionDTO();
 		this.capturarPantalla.setIdTipo(31);
 		this.capturarPantalla.setValorBooleano(new Boolean("false"));
+		this.notificarPB = new ConfiguracionDTO();
+		this.notificarPB.setIdTipo(32);
+		this.notificarPB.setValorBooleano(new Boolean("false"));
 		FacesContext fc = FacesContext.getCurrentInstance();
 		idUsuario = (Integer) fc.getExternalContext().getSessionMap().get("idUsuario");
 		configuracionFacade = new ConfiguracionFacade();
@@ -116,6 +120,11 @@ public class ConfiguracionManagedBean implements Serializable {
 			if (capturarPantallaParametrizado != null) {
 				this.capturarPantalla = capturarPantallaParametrizado;
 			}
+			ConfiguracionDTO notificarPBParametrizado = configuracionFacade
+					.obtenerParametroNotificarPBPorIdUsuario(idUsuario);
+			if (notificarPBParametrizado != null) {
+				this.notificarPB = notificarPBParametrizado;
+			}
 			this.paginaInicial.setIdUsuario(idUsuario);
 		}
 		log.debug("fin cargarConfiguracion, idUsuario: " + idUsuario + ".");
@@ -136,6 +145,7 @@ public class ConfiguracionManagedBean implements Serializable {
 			this.estiloVisual.setIdUsuario(idUsuario);
 			this.grabarVideo.setIdUsuario(idUsuario);
 			this.capturarPantalla.setIdUsuario(idUsuario);
+			this.notificarPB.setIdUsuario(idUsuario);
 			List<ConfiguracionDTO> listaConfiguraciones = new ArrayList<>();
 			listaConfiguraciones.add(this.tiempoInspeccion);
 			listaConfiguraciones.add(this.tipoCubo);
@@ -144,8 +154,8 @@ public class ConfiguracionManagedBean implements Serializable {
 			listaConfiguraciones.add(this.estiloVisual);
 			listaConfiguraciones.add(this.grabarVideo);
 			listaConfiguraciones.add(this.capturarPantalla);
+			listaConfiguraciones.add(this.notificarPB);
 			configuracionFacade.guardar(listaConfiguraciones);
-			log.debug("grabar video: " + this.grabarVideo.getValorBooleano());
 			log.debug("Se guarda configuración de usuario: " + idUsuario);
 			sesionManagedBean.getMensaje().setTitle(sesionManagedBean.getRecursos().getString(Constantes.ATENCION));
 			sesionManagedBean.getMensaje()
@@ -220,6 +230,14 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	public void setCapturarPantalla(ConfiguracionDTO capturarPantalla) {
 		this.capturarPantalla = capturarPantalla;
+	}
+
+	public ConfiguracionDTO getNotificarPB() {
+		return notificarPB;
+	}
+
+	public void setNotificarPB(ConfiguracionDTO notificarPB) {
+		this.notificarPB = notificarPB;
 	}
 
 	public SesionManagedBean getSesionManagedBean() {

@@ -38,22 +38,26 @@
 					rendered="#{estadisticasManagedBean.obtenerListaConteoPuzzles().size()>0}">
 					<br />
 					<figure class="highcharts-figure">
-						<div id="container" class="col-xs-12"
+						<div id="container" class="col-xs-12 col-md-7"
 							style="height: 400px; margin-bottom: 10px;"></div>
 					</figure>
 					<figure class="highcharts-figure">
-						<div id="container_Ao5" class="col-xs-12"
+						<div id="containerRendimientos" class="col-xs-12 col-md-5"
 							style="height: 400px; margin-bottom: 10px;"></div>
 					</figure>
 					<figure class="highcharts-figure">
-						<div id="container2" class="col-xs-12 col-md-7"
+						<div id="container_Ao5" class="col-xs-12 col-md-7"
 							style="height: 400px; margin-bottom: 10px;"></div>
 					</figure>
 					<figure class="highcharts-figure">
-						<div id="container3" class="col-xs-12 col-md-5"
+						<div id="containerDistribucion" class="col-xs-12 col-md-5"
 							style="height: 400px; margin-bottom: 10px;"></div>
 					</figure>
-					<div id="container4" class="col-xs-12 col-md-5">
+					<figure class="highcharts-figure">
+						<div id="containerPB" class="col-xs-12 col-md-7"
+							style="height: 400px; margin-bottom: 10px;"></div>
+					</figure>
+					<div id="tablaPB" class="col-xs-12 col-md-5">
 						<table id="table" class="table table-condensed table-bordered">
 							<caption>PB Single</caption>
 							<thead>
@@ -63,11 +67,11 @@
 								</tr>
 							</thead>
 							<c:forEach
-								items="#{estadisticasManagedBean.listaRecords.getListaPBSingle()}"
+								items="#{rubikManagedBean.listaRecords.getListaPBSingle()}"
 								var="record" varStatus="i">
 								<tr>
 									<td>#{record.nombrePuzzle}</td>
-									<td>#{record.pbSingle}</td>
+									<td>#{record.pbTexto}</td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -134,6 +138,57 @@ Highcharts.chart('container',
                        },
                        series: [#{estadisticasManagedBean.listaPromedios.obtenerDatos()}]
                    });
+                   
+Highcharts.chart('containerRendimientos', {
+	  chart: {
+	    polar: true,
+	    type: 'line'
+	  },
+	  title: {
+	    text: 'Rendimiento #{compararEstadisticasManagedBean.listaComparacionPB.nombreUsuario}',
+	    x: -80
+	  },
+	  pane: {
+	    size: '80%'
+	  },
+	  xAxis: {
+	    categories: [#{compararEstadisticasManagedBean.listaComparacionPB.obtenerNombreCategorias()}],
+	    tickmarkPlacement: 'on',
+	    lineWidth: 0
+	  },
+	  yAxis: {
+	    gridLineInterpolation: 'polygon',
+	    lineWidth: 0,
+	    min: 0
+	  },
+	  legend: {
+	    align: 'right',
+	    verticalAlign: 'middle',
+	    layout: 'vertical'
+	  },
+	  series: [{
+	    name: '#{compararEstadisticasManagedBean.listaComparacionPB.nombreUsuario}',
+	    data: [#{compararEstadisticasManagedBean.listaComparacionPB.obtenerDatosPropios()}],
+	    pointPlacement: 'on'
+	  }],
+	  responsive: {
+	    rules: [{
+	      condition: {
+	        maxWidth: 500
+	      },
+	      chartOptions: {
+	        legend: {
+	          align: 'center',
+	          verticalAlign: 'bottom',
+	          layout: 'horizontal'
+	        },
+	        pane: {
+	          size: '70%'
+	        }
+	      }
+	    }]
+	  }
+	});
 
 Highcharts.chart('container_Ao5', 
                    {
@@ -196,59 +251,70 @@ Highcharts.chart('container_Ao5',
                        },
                        series: [#{estadisticasManagedBean.listaAverages.obtenerDatos()}]
                    });
-       
-Highcharts.chart('container2', 
-        
-                      {
-                          chart: {
-                              type: 'line'
-                          },
-                          title: {
-                              text: '#{texto.HistorialDePromedios}'
-                          },
-                          xAxis: {
-                              categories: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerFechas()}]
-                          },
-                          yAxis: {
-                              title: {
-                                  text: '#{texto.Promedio}'
-                              },
-                              labels: {
-                                  formatter: function () {
-                               	   var ms = this.value;
-                                      var m=Math.floor(ms/60000);
-                                      ms-=(m*60000);
-                                      var s=Math.floor(ms/1000);
-                                      ms-=(s*1000);
-                                      ms=Math.floor(ms/10);
-                                      return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
-                                  }
-                              }
-                          },
-                          plotOptions: {
-                              line: {
-                                  dataLabels: {
-                                      enabled: true,
-                                      formatter: function () {
-                                          var ms = this.y;
-                                          var m=Math.floor(ms/60000);
-                                          ms-=(m*60000);
-                                          var s=Math.floor(ms/1000);
-                                          ms-=(s*1000);
-                                          ms=Math.floor(ms/10);
-                                          return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
-                                          }
-                                  },
-                                  enableMouseTracking: false
-                              }
-                          },
-                          series: [{
-                                  name: '#{estadisticasManagedBean.listaPromedioCategoria.obtenerTipoCubo()}',
-                                  data: [#{estadisticasManagedBean.listaPromedioCategoria.obtenerPromedios()}]
-                              }]
-                      });
+                   
+Highcharts.chart('containerPB', 
+        {
+        	chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Historial PB Single'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                	day: '%d/%b',
+                    week: '%d/%b',
+                    month: '%d/%b/%Y',
+                    year: '%Y'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Tiempo PB'
+                },
+                min: 0,
+                labels: {
+                    formatter: function () {
+                 	   var ms = this.value;
+                        var m=Math.floor(ms/60000);
+                        ms-=(m*60000);
+                        var s=Math.floor(ms/1000);
+                        ms-=(s*1000);
+                        ms=Math.floor(ms/10);
+                        return ((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                    }
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            tooltip: {
+            	headerFormat: '&lt;b&gt;{series.name}&lt;/b&gt;&lt;br&gt;',
+            	formatter: function () {
+              	   var ms = this.y;
+                     var m=Math.floor(ms/60000);
+                     ms-=(m*60000);
+                     var s=Math.floor(ms/1000);
+                     ms-=(s*1000);
+                     ms=Math.floor(ms/10);
+                     return "&lt;b&gt;"+((new Date(this.x).getUTCDate()>9)?new Date(this.x).getUTCDate():'0'+new Date(this.x).getUTCDate())
+                     +'/'+(((new Date(this.x).getUTCMonth()+1)>9)?(new Date(this.x).getUTCMonth()+1):'0'+(new Date(this.x).getUTCMonth()+1))
+                     +'/'+(new Date(this.x).getUTCFullYear())+ "&lt;/ b&gt;&lt;br /&gt;" 
+                     +'PB = '+((m>9)?m:('0'+m))+':'+((s>9)?s:('0'+s))+'.'+ ((ms>9)?ms:('0'+ms));
+                 }
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [#{estadisticasManagedBean.listaPB.obtenerDatos()}]
+        });
           
-Highcharts.chart('container3', 
+Highcharts.chart('containerDistribucion', 
                       {
                           chart: {
                               type: 'pie',

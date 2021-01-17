@@ -119,6 +119,20 @@ public class ConfiguracionFacade implements Serializable {
 		}
 		return lista.get(0);
 	}
+	
+	public ConfiguracionDTO obtenerParametroNotificarPBPorIdUsuario(Integer idUsuario) {
+		List<ConfiguracionDTO> lista = configuracionDAO.consultarConfiguracionPorIdUsuarioIdTipoYEstado(idUsuario, 32,
+				1);
+		if (lista.isEmpty()) {
+			log.trace(
+					"El usuario con idUsuario " + idUsuario + " no tiene configurada un parametro de notificar PB (idTipo : 32)");
+			return null;
+		} else if (lista.size() > 1) {
+			log.trace("El usuario con idUsuario " + idUsuario
+					+ " tiene configurado mas de un parametro de notificar PB (idTipo : 32)");
+		}
+		return lista.get(0);
+	}
 
 	public void guardar(List<ConfiguracionDTO> listaConfiguraciones) {
 		for (ConfiguracionDTO configuracionDTO : listaConfiguraciones) {
