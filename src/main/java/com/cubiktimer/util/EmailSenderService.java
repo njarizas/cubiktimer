@@ -133,7 +133,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			map.put("~:token~", token);
 			map.put("~:host_cubiktimer~", dao.obtenerValorParametro("host_cubiktimer"));
 			mensaje = aplicarPlantilla(mensaje, map);
-			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en www.cubiktimer.com", mensaje);
+			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en CubikTimer", mensaje);
 		} catch (Exception e) {
 			ExceptionHandler.manejarExcepcionGrave(e);
 			return false;
@@ -160,7 +160,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			mensaje = aplicarPlantilla(mensaje, map);
 
 			return enviarMensajeHTML(this.emailDestinatario,
-					"Tu clave de acceso a www.cubiktimer.com ha sido restablecida", mensaje);
+					"Tu clave de acceso a CubikTimer ha sido restablecida", mensaje);
 		} catch (Exception e) {
 			ExceptionHandler.manejarExcepcionGrave(e);
 			return false;
