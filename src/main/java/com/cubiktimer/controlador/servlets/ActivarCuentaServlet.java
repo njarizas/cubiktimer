@@ -61,7 +61,7 @@ public class ActivarCuentaServlet extends HttpServlet {
         		"         <table align=\"center\" style=\"border: solid #cccccc; border-radius: 8px; width: 70%; min-width: 480px; margin-top: 20px;\">\r\n" + 
         		"            <tr>\r\n" + 
         		"                <td align=\"center\" style=\" font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;\">\r\n" + 
-        		"                    <img  style=\"margin-top: 20px;\" src=\"" + dao.obtenerValorParametro("host_cubiktimer") + "/resources/images/logo_cubiktimer.png\" alt=\"cubo rubik\" width=\"240\" align=\"center\"/>\r\n" + 
+        		"                    <img  style=\"margin-top: 20px;\" src=\"" + dao.obtenerValorParametro("host_cubiktimer") + "/cubiktimer/resources/images/logo_cubiktimer.png\" alt=\"cubo rubik\" width=\"240\" align=\"center\"/>\r\n" + 
         		"                </td>\r\n" + 
         		"            </tr>\r\n" + 
         		"            <tr>\r\n" + 
@@ -69,7 +69,7 @@ public class ActivarCuentaServlet extends HttpServlet {
         		"                    \r\n" + 
         		"                            <div style=\"color: #153643; font-family: Arial, sans-serif; font-size: 24px;\">\r\n");
         print.println("<b>" + activarUsuario(token) + "</b><br>");
-        print.println("<a href=\" "+ dao.obtenerValorParametro("host_cubiktimer") +"\">Haz clic aqui para ir al inicio de sesion de Cubik Timer</a>");
+        print.println("<a href=\" "+ dao.obtenerValorParametro("host_cubiktimer") +"/cubiktimer\">Haz clic aqui para ir al inicio de sesion de Cubik Timer</a>");
         print.println("</div>\r\n" + 
         		"                </td>\r\n" + 
         		"            </tr>\r\n" + 

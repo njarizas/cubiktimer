@@ -20,7 +20,6 @@ import javax.mail.internet.MimeMessage;
 import org.apache.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
-import com.cubiktimer.modelo.dao.ParametroDAO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
 
 /**
@@ -114,7 +113,7 @@ public class EmailSenderService implements EmailSenderInterface {
 	}
 
 	public boolean enviarMensajeActivacionCuenta(UsuarioDTO usuario) {
-		ParametroDAO dao = new ParametroDAO(); //por base de datos
+		//ParametroDAO dao = new ParametroDAO(); //por base de datos
 		Propiedades propiedades = Propiedades.getInstance();//por archivo properties
 		try {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
