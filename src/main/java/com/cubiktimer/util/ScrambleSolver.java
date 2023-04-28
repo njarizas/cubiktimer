@@ -32,7 +32,7 @@ public class ScrambleSolver {
 		boolean esConnectException = false;
 		try {
 			// se intenta obtener la conexion por metodo get
-			url = new URL(prop.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_TNOODLE_SERVICE) + parametro);
+			url = new URL(prop.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_CUBE_EXPLORER_SERVICE) + parametro);
 			URLConnection con = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			while ((linea = in.readLine()) != null) {
@@ -56,7 +56,7 @@ public class ScrambleSolver {
 						+ prop.obtenerPropiedad(Constantes.LLAVE_RUTA_PROGRAMA_CUBE_EXPLORER));
 				Runtime.getRuntime().exec(Constantes.PATH_CUBIKTIMER + prop.obtenerPropiedad(Constantes.LLAVE_RUTA_PROGRAMA_CUBE_EXPLORER));
 				// Creando un objeto URL
-				url = new URL(prop.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_TNOODLE_SERVICE) + parametro);
+				url = new URL(prop.obtenerPropiedad(Constantes.LLAVE_ENDPOINT_CUBE_EXPLORER_SERVICE) + parametro);
 				// Realizando la petición GET
 				URLConnection con = url.openConnection();
 				// Leyendo el resultado
