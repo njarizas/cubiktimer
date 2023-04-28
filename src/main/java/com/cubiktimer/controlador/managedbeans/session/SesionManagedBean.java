@@ -24,7 +24,9 @@ import com.cubiktimer.modelo.dao.PermisosDAO;
 import com.cubiktimer.modelo.dto.PermisoDTO;
 import com.cubiktimer.modelo.dto.RolDTO;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
+import com.cubiktimer.util.Constantes;
 import com.cubiktimer.util.Mensaje;
+import com.cubiktimer.util.Propiedades;
 
 /**
  *
@@ -95,6 +97,11 @@ public class SesionManagedBean implements Serializable {
 
 	public String getContextPath() {
 		return com.cubiktimer.util.Util.getContextPath();
+	}
+	
+	public String getHost() {
+		Propiedades propiedades = Propiedades.getInstance();
+		return propiedades.obtenerPropiedad(Constantes.LLAVE_HOST_CUBIKTIMER);
 	}
 
 	public void localeChange(ValueChangeEvent event) {

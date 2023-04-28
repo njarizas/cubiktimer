@@ -17,6 +17,8 @@ public class Constantes {
 	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
 	
 	//Propiedades de cubiktimer.propiedades
+	public static final String LLAVE_HOST_CUBIKTIMER = "host";
+	
 	public static final String LLAVE_CONEXION_URL	= "conexion.url";
 	public static final String LLAVE_CONEXION_DATABASE = "conexion.database";
 	public static final String LLAVE_CONEXION_USUARIO = "conexion.user";

@@ -49,15 +49,15 @@ public class EmailSenderService implements EmailSenderInterface {
 
 	private void init() {
 		try {
-			Properties propiedades = new Properties();
-			propiedades.setProperty("mail.smtp.host", HOST_EMAIL_GMAIL);
-			propiedades.setProperty("mail.smtp.starttls.enable", "true");
-			propiedades.setProperty("mail.smtp.port", "587");// 587-25-465
-			propiedades.setProperty("mail.smtp.ssl.trust", HOST_EMAIL_GMAIL);
-			propiedades.setProperty("mail.smtp.user", this.emailRemitente);
-			propiedades.setProperty("mail.smtp.auth", "true");
+			Properties properties = new Properties();
+			properties.setProperty("mail.smtp.host", HOST_EMAIL_GMAIL);
+			properties.setProperty("mail.smtp.starttls.enable", "true");
+			properties.setProperty("mail.smtp.port", "587");// 587-25-465
+			properties.setProperty("mail.smtp.ssl.trust", HOST_EMAIL_GMAIL);
+			properties.setProperty("mail.smtp.user", this.emailRemitente);
+			properties.setProperty("mail.smtp.auth", "true");
 
-			session = Session.getDefaultInstance(propiedades);
+			session = Session.getDefaultInstance(properties);
 			mimeMessage = new MimeMessage(session);
 			mimeMessage.setFrom(new InternetAddress(emailRemitente));
 			mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
@@ -114,7 +114,8 @@ public class EmailSenderService implements EmailSenderInterface {
 	}
 
 	public boolean enviarMensajeActivacionCuenta(UsuarioDTO usuario) {
-		ParametroDAO dao = new ParametroDAO();
+		ParametroDAO dao = new ParametroDAO(); //por base de datos
+		Propiedades propiedades = Propiedades.getInstance();//por archivo properties
 		try {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
 			String token = usuario.getToken();
@@ -131,7 +132,8 @@ public class EmailSenderService implements EmailSenderInterface {
 			Map<String, String> map = new HashMap<>();
 			map.put("~:nombreUsuario~", usuario.getNombres());
 			map.put("~:token~", token);
-			map.put("~:host_cubiktimer~", dao.obtenerValorParametro("host_cubiktimer"));
+			map.put("~:host_cubiktimer~", propiedades.obtenerPropiedad(Constantes.LLAVE_HOST_CUBIKTIMER)); //por archivo properties
+			//map.put("~:host_cubiktimer~", dao.obtenerValorParametro("host_cubiktimer")); //por base de datos
 			mensaje = aplicarPlantilla(mensaje, map);
 			return enviarMensajeHTML(this.emailDestinatario, "Activacion de tu cuenta en CubikTimer", mensaje);
 		} catch (Exception e) {
@@ -142,6 +144,7 @@ public class EmailSenderService implements EmailSenderInterface {
 
 	@Override
 	public boolean enviarMensajeDeRecuperacionDeClave(UsuarioDTO usuario, String pass) {
+		Propiedades propiedades = Propiedades.getInstance();//por archivo properties
 		try {
 			this.emailDestinatario = usuario.getCorreo().trim().toLowerCase();
 			StringBuilder msg = new StringBuilder("");
@@ -155,6 +158,7 @@ public class EmailSenderService implements EmailSenderInterface {
 			}
 			String mensaje = msg.toString();
 			Map<String, String> map = new HashMap<>();
+			map.put("~:host_cubiktimer~", propiedades.obtenerPropiedad(Constantes.LLAVE_HOST_CUBIKTIMER));
 			map.put("~:nombreUsuario~", usuario.getNombres());
 			map.put("~:clave~", pass);
 			mensaje = aplicarPlantilla(mensaje, map);
