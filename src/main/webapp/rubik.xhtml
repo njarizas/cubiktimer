@@ -7,6 +7,7 @@
 	template="/WEB-INF/templates/template-externo.xhtml">
 	<ui:define name="title">Cronómetro para speedcubing online</ui:define>
 	<ui:define name="head">
+		<link rel="canonical" href="#{sesionManagedBean.host}" />
 		<link
 			href="#{sesionManagedBean.contextPath}/resources/css/bootstrap-table.min.css"
 			rel="stylesheet" />
@@ -76,11 +77,11 @@ ul.dropdown-menu strong {
 			</h:form>
 		</div>
 		<h:panelGroup layout="block" id="cronometro"
-			rendered="#{rubikManagedBean.tipoCubo!=17}">
+			rendered="#{rubikManagedBean.tipoCubo!=17}" styleClass="text-center  col-xs-12">
 			<ui:include src="cronometro.xhtml" />
 		</h:panelGroup>
 		<h:panelGroup layout="block" id="fewest-moves"
-			rendered="#{rubikManagedBean.tipoCubo==17}">
+			rendered="#{rubikManagedBean.tipoCubo==17}" styleClass="text-center  col-xs-12">
 			<ui:include src="fewest-moves.xhtml" />
 		</h:panelGroup>
 	</ui:define>

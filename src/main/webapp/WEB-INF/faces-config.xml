@@ -8,6 +8,7 @@
  <locale-config>
             <default-locale>es</default-locale>
             <supported-locale>en</supported-locale>
+            <supported-locale>pt</supported-locale>
         </locale-config>
         <resource-bundle>
             <base-name>/texto</base-name>
