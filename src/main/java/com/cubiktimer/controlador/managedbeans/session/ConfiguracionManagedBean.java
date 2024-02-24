@@ -79,8 +79,8 @@ public class ConfiguracionManagedBean implements Serializable {
 
 	@PostConstruct
 	public void cargarConfiguracion() {
-		log.debug("inicio cargarConfiguracion, idUsuario: " + idUsuario + ".");
 		if (idUsuario != null) {
+			log.debug("inicio cargarConfiguracion, idUsuario: " + idUsuario + ".");
 			ConfiguracionDTO tiempoInspeccionParametrizado = configuracionFacade
 					.obtenerTiempoDeInspeccionPreferidoPorIdUsuario(idUsuario);
 			if (tiempoInspeccionParametrizado != null) {
@@ -126,8 +126,8 @@ public class ConfiguracionManagedBean implements Serializable {
 				this.notificarPB = notificarPBParametrizado;
 			}
 			this.paginaInicial.setIdUsuario(idUsuario);
+			log.debug("fin cargarConfiguracion, idUsuario: " + idUsuario + ".");
 		}
-		log.debug("fin cargarConfiguracion, idUsuario: " + idUsuario + ".");
 	}
 
 	public void alternarEstiloVisual() {
