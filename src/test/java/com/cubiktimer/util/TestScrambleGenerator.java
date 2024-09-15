@@ -14,6 +14,8 @@ public class TestScrambleGenerator {
 	public void testGenerarSecuenciaMezcla() {
 		String regex2x2 = "^([F|R|U]{1}['|2]?[ ]{1})+([F|R|U]{1}['|2]?[ ]?){1}$";
 		String regex3x3 = "^([B|D|F|L|R|U]{1}['|2]?[ ]{1})+([B|D|F|L|R|U]{1}['|2]?[ ]?){1}$";
+		String mezcla =ScrambleGenerator.generarSecuenciaMezcla("222");
+		System.out.println(mezcla);
 		assertTrue("prueba scramble 2x2", ScrambleGenerator.generarSecuenciaMezcla("222").matches(regex2x2));
 		assertTrue("prueba scramble 3x3", ScrambleGenerator.generarSecuenciaMezcla("333").matches(regex3x3));
 	}

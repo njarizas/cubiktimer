@@ -18,7 +18,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.managedbeans.session.SesionManagedBean;
 import com.cubiktimer.error.ExceptionHandler;
@@ -36,7 +37,7 @@ import com.cubiktimer.util.Util;
 public class AhorcadoManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(AhorcadoManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(AhorcadoManagedBean.class);
 
 	private Random random = new Random();
 

@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.RolPermisoDTO;
@@ -20,7 +21,7 @@ import com.cubiktimer.util.Constantes;
 
 public class RolPermisoDAO extends DAO<RolPermisoPK, RolPermisoDTO> implements Serializable {
 
-	private static final Logger log = Logger.getLogger(RolPermisoDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(RolPermisoDAO.class);
 	private static final long serialVersionUID = 1L;
 
 	public RolPermisoDAO() {

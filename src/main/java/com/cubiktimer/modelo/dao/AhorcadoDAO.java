@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.AhorcadoDTO;
@@ -24,7 +25,7 @@ import com.cubiktimer.util.Util;
 public class AhorcadoDAO extends DAO<Integer, AhorcadoDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(AhorcadoDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(AhorcadoDAO.class);
 
 	public AhorcadoDAO() {
 		super(Constantes.TABLA_AHORCADO, Constantes.PK_TABLA_AHORCADO);

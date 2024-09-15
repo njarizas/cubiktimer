@@ -12,7 +12,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class IdiomaManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(IdiomaManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(IdiomaManagedBean.class);
 	
 	@ManagedProperty(value = "#{sesionManagedBean}")
     private SesionManagedBean sesionManagedBean;

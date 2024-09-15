@@ -7,7 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.util.Constantes;
@@ -20,7 +21,8 @@ import com.cubiktimer.util.Propiedades;
  */
 public class ConexionDatabase {
 
-	private static final Logger log = Logger.getLogger(ConexionDatabase.class);
+	private static final Logger log = LoggerFactory.getLogger(ConexionDatabase.class);
+	
 	private static Connection conn;
 
 	private static String url;
