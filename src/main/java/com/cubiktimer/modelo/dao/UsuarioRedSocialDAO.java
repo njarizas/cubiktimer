@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.UsuarioRedSocialDTO;
@@ -23,7 +23,7 @@ import com.cubiktimer.util.Constantes;
 public class UsuarioRedSocialDAO extends DAO<Integer, UsuarioRedSocialDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(UsuarioRedSocialDAO.class);
+	private static final Logger log = LogManager.getLogger(UsuarioRedSocialDAO.class);
 
 	public UsuarioRedSocialDAO() {
 		super(Constantes.TABLA_USUARIOS_REDES_SOCIALES, Constantes.PK_TABLA_USUARIOS_REDES_SOCIALES);

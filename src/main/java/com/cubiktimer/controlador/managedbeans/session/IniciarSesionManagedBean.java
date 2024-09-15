@@ -13,8 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.facade.ConfiguracionFacade;
 import com.cubiktimer.controlador.managedbeans.RubikManagedBean;
@@ -43,7 +43,7 @@ import com.cubiktimer.util.Util;
 public class IniciarSesionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(IniciarSesionManagedBean.class);
+	private static final Logger log = LogManager.getLogger(IniciarSesionManagedBean.class);
 
 	private String login;
 	private String pass;
