@@ -11,7 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.managedbeans.session.ConfiguracionManagedBean;
 import com.cubiktimer.controlador.managedbeans.session.SesionManagedBean;
@@ -31,7 +32,7 @@ import com.cubiktimer.util.EncryptService;
 public class EditarInformacionCuentaManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(EditarInformacionCuentaManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(EditarInformacionCuentaManagedBean.class);
 
 	private String claveAnterior;
 	private String claveNueva;

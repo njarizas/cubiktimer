@@ -17,7 +17,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dto.UsuarioDTO;
@@ -30,7 +31,7 @@ public class EmailSenderService implements EmailSenderInterface {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(EmailSenderService.class);
+	private static final Logger log = LoggerFactory.getLogger(EmailSenderService.class);
 	public static final String HOST_EMAIL_GMAIL = "smtp.gmail.com";
 
 	private String emailRemitente;

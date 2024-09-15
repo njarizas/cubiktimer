@@ -13,7 +13,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.ConfiguracionDTO;
@@ -23,7 +24,7 @@ import com.cubiktimer.util.Util;
 public class ConfiguracionDAO extends DAO<Integer, ConfiguracionDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(ConfiguracionDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(ConfiguracionDAO.class);
 
 	public ConfiguracionDAO() {
 		super(Constantes.TABLA_CONFIGURACION, Constantes.PK_TABLA_CONFIGURACION);

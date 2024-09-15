@@ -11,7 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.facade.UsuarioFacade;
 import com.cubiktimer.modelo.dao.CredencialDAO;
@@ -35,7 +36,7 @@ import com.cubiktimer.util.Util;
 public class RecuperarUsuarioManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(RecuperarUsuarioManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(RecuperarUsuarioManagedBean.class);
 
 	private String email;
 

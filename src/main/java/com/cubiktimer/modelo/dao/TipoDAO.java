@@ -12,7 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.TipoDTO;
@@ -21,7 +22,7 @@ import com.cubiktimer.util.Constantes;
 public class TipoDAO extends DAO<Integer, TipoDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(TipoDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(TipoDAO.class);
 
 	public TipoDAO() {
 		super(Constantes.TABLA_TIPOS, Constantes.PK_TABLA_TIPOS);

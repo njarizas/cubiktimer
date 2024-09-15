@@ -7,14 +7,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.modelo.dao.UsuarioRolDAO;
 
 public class ListaComparacionPB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(UsuarioRolDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(UsuarioRolDAO.class);
 
 	private String nombreUsuario;
 	private String nombreAmigo;

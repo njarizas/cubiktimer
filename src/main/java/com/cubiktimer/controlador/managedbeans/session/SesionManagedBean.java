@@ -17,7 +17,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.error.ExceptionHandler;
 import com.cubiktimer.modelo.dao.PermisosDAO;
@@ -37,7 +38,7 @@ import com.cubiktimer.util.Propiedades;
 public class SesionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(SesionManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(SesionManagedBean.class);
 
 	private String idioma;
 	private Locale locale;
