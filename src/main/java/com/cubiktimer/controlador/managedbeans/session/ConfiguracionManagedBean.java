@@ -13,7 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.facade.ConfiguracionFacade;
 import com.cubiktimer.modelo.dto.ConfiguracionDTO;
@@ -29,7 +30,7 @@ import com.cubiktimer.util.Constantes;
 public class ConfiguracionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(ConfiguracionManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(ConfiguracionManagedBean.class);
 
 	private Integer idUsuario;
 	private ConfiguracionDTO tiempoInspeccion;

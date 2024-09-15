@@ -12,7 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.PermisoDTO;
@@ -21,7 +22,7 @@ import com.cubiktimer.util.Constantes;
 public class PermisosDAO extends DAO<Integer, PermisoDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(PermisosDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(PermisosDAO.class);
 
 	public PermisosDAO() {
 		super(Constantes.TABLA_PERMISOS, Constantes.PK_TABLA_PERMISOS);

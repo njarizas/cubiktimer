@@ -5,14 +5,15 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.util.Constantes;
 
 public class Pyraminx extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(Pyraminx.class);
+	private static final Logger log = LoggerFactory.getLogger(Pyraminx.class);
 
 	public Pyraminx(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre, Constantes.PYRAMINX);

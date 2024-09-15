@@ -13,7 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.facade.ConfiguracionFacade;
 import com.cubiktimer.controlador.managedbeans.RubikManagedBean;
@@ -42,7 +43,7 @@ import com.cubiktimer.util.Util;
 public class IniciarSesionManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(IniciarSesionManagedBean.class);
+	private static final Logger log = LoggerFactory.getLogger(IniciarSesionManagedBean.class);
 
 	private String login;
 	private String pass;
@@ -90,7 +91,7 @@ public class IniciarSesionManagedBean implements Serializable {
 																			// correspondan
 				List<RolDTO> listaRoles = rolDAO.consultarRolesPorIdUsuario(u.getIdUsuario());
 				for (RolDTO rolDTO : listaRoles) {
-					log.trace(rolDTO);
+					log.trace(rolDTO.toString());
 				}
 				List<PermisoDTO> listaPermisos = permisosDAO.consultarPermisosPorIdUsuario(u.getIdUsuario());
 				if (listaRoles.isEmpty()) {

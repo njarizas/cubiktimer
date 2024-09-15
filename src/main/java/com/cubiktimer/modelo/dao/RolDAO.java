@@ -12,7 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.RolDTO;
@@ -21,7 +22,7 @@ import com.cubiktimer.util.Constantes;
 public class RolDAO extends DAO<Integer, RolDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(RolDAO.class);
+	private static final Logger log = LoggerFactory.getLogger(RolDAO.class);
 
 	public RolDAO() {
 		super(Constantes.TABLA_ROLES, Constantes.PK_TABLA_ROLES);

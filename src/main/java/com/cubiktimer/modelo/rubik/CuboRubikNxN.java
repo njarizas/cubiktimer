@@ -5,14 +5,15 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.cubiktimer.util.Constantes;
 
 public abstract class CuboRubikNxN extends Puzzle implements Serializable, Comprobable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(CuboRubikNxN.class);
+	private static final Logger log = LoggerFactory.getLogger(CuboRubikNxN.class);
 
 	protected int n;
 	protected CaraRubik top;
