@@ -7,8 +7,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
 
@@ -17,7 +17,7 @@ public class Propiedades {
 	private static Propiedades instance;
 	private static Properties properties = new Properties();
 	private static String rutaPropiedades = Constantes.PATH_CUBIKTIMER + Constantes.CUBIKTIMER_PROPERTIES_FILENAME;
-	private static final Logger log = LoggerFactory.getLogger(Propiedades.class);
+	private static final Logger log = LogManager.getLogger(Propiedades.class);
 
 	/**
 	 * Constuctor de la clase. Carga las propiedades del Sistema

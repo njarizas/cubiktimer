@@ -5,15 +5,15 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
 public class Square1 extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(Square1.class);
+	private static final Logger log = LogManager.getLogger(Square1.class);
 
 	public Square1(Integer idTipoCubo, String nombre) {
 		super(idTipoCubo, nombre, Constantes.SQUARE_1);

@@ -14,14 +14,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
 
 public class ScrambleGenerator {
 
-	private static final Logger log = LoggerFactory.getLogger(ScrambleGenerator.class);
+	private static final Logger log = LogManager.getLogger(ScrambleGenerator.class);
 
 	private ScrambleGenerator() {
 
