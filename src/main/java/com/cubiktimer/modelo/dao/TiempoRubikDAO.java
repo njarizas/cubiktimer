@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.TiempoRubikDTO;
@@ -25,7 +25,7 @@ import com.cubiktimer.util.Util;
 public class TiempoRubikDAO extends DAO<Integer, TiempoRubikDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(TiempoRubikDAO.class);
+	private static final Logger log = LogManager.getLogger(TiempoRubikDAO.class);
 
 	public TiempoRubikDAO() {
 		super(Constantes.TABLA_TIEMPOS_RUBIK, Constantes.PK_TABLA_TIEMPOS_RUBIK);

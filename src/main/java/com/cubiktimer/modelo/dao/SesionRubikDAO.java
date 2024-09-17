@@ -13,8 +13,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.SesionRubikDTO;
@@ -24,7 +24,7 @@ import com.cubiktimer.util.Util;
 public class SesionRubikDAO extends DAO<Integer, SesionRubikDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(SesionRubikDAO.class);
+	private static final Logger log = LogManager.getLogger(SesionRubikDAO.class);
 
 	public SesionRubikDAO() {
 		super(Constantes.TABLA_SESIONES_RUBIK, Constantes.PK_TABLA_SESIONES_RUBIK);

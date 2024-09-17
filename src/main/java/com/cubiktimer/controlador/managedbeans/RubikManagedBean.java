@@ -16,8 +16,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.facade.RubikFacade;
 import com.cubiktimer.controlador.factories.RubikFactory;
@@ -48,7 +48,7 @@ import com.cubiktimer.util.Util;
 public class RubikManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(RubikManagedBean.class);
+	private static final Logger log = LogManager.getLogger(RubikManagedBean.class);
 
 	@ManagedProperty(value = "#{configuracionManagedBean}")
 	private ConfiguracionManagedBean configuracionManagedBean;
@@ -171,7 +171,7 @@ public class RubikManagedBean implements Serializable {
 		} else {
 			log.info("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		}
-		log.trace(cubo.toString());
+		log.trace(cubo);
 		return "";
 	}
 
@@ -192,7 +192,7 @@ public class RubikManagedBean implements Serializable {
 			secuenciaMezcla = cubo.mezclar(mezcla);
 		}
 		log.info("Secuencia aplicada (" + cubo.getNombre() + "):  " + secuenciaMezcla);
-		log.trace(cubo.toString());
+		log.trace(cubo);
 		this.validoParaAO5 = false;
 		return "";
 	}

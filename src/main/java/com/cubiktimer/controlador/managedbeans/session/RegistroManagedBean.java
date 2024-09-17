@@ -11,8 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.facade.UsuarioFacade;
 import com.cubiktimer.error.ExceptionHandler;
@@ -33,7 +33,7 @@ import com.cubiktimer.util.Util;
 public class RegistroManagedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(RegistroManagedBean.class);
+	private static final Logger log = LogManager.getLogger(RegistroManagedBean.class);
 
 	private String clave;
 	private String confirmarClave;

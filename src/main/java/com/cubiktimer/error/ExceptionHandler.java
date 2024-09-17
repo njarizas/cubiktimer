@@ -4,8 +4,8 @@
 package com.cubiktimer.error;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.util.EmailSenderInterface;
 import com.cubiktimer.util.EmailSenderService;
@@ -13,7 +13,7 @@ import com.cubiktimer.util.Propiedades;
 
 public class ExceptionHandler {
 	
-	private static final Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
+	private static final Logger log = LogManager.getLogger(ExceptionHandler.class);
 
 	private ExceptionHandler() {
 
