@@ -11,8 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.ParametroDTO;
@@ -21,7 +21,7 @@ import com.cubiktimer.util.Constantes;
 public class ParametroDAO extends DAO<String, ParametroDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(ParametroDAO.class);
+	private static final Logger log = LogManager.getLogger(ParametroDAO.class);
 
 	public ParametroDAO() {
 		super(Constantes.TABLA_PARAMETROS, Constantes.PK_TABLA_PARAMETROS);

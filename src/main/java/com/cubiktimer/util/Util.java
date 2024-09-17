@@ -15,14 +15,14 @@ import java.util.Random;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
 
 public class Util implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(Util.class);
+	private static final Logger log = LogManager.getLogger(Util.class);
 
 	private SimpleDateFormat fechaHoraMysql = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	private SimpleDateFormat fechaMysql = new SimpleDateFormat("yyyy-MM-dd");

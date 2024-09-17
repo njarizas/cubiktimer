@@ -6,8 +6,8 @@ package com.cubiktimer.controlador.facade;
 import java.io.Serializable;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.config.ConexionDatabase;
 import com.cubiktimer.modelo.dao.ConfiguracionDAO;
@@ -16,7 +16,7 @@ import com.cubiktimer.modelo.dto.ConfiguracionDTO;
 public class ConfiguracionFacade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(ConexionDatabase.class);
+	private static final Logger log = LogManager.getLogger(ConexionDatabase.class);
 	private ConfiguracionDAO configuracionDAO;
 
 	public ConfiguracionFacade() {

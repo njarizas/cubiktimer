@@ -9,15 +9,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.error.ExceptionHandler;
 
 public class Promedio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(Promedio.class);
+	private static final Logger log = LogManager.getLogger(Promedio.class);
 
 	private Integer prom;
 	private String tipoCubo;

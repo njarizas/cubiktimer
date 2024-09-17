@@ -5,15 +5,15 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
 public class Skewb extends Puzzle implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(Skewb.class);
+	private static final Logger log = LogManager.getLogger(Skewb.class);
 
 	private CaraSkewb top;
 	private CaraSkewb left;

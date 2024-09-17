@@ -12,8 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.AmigoDTO;
@@ -22,7 +22,7 @@ import com.cubiktimer.util.Constantes;
 public class AmigoDAO extends DAO<Integer, AmigoDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(AmigoDAO.class);
+	private static final Logger log = LogManager.getLogger(AmigoDAO.class);
 
 	public AmigoDAO() {
 		super(Constantes.TABLA_AMIGOS, Constantes.PK_TABLA_AMIGOS);

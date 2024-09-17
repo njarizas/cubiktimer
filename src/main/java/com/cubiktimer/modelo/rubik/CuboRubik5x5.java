@@ -5,15 +5,15 @@ package com.cubiktimer.modelo.rubik;
 
 import java.io.Serializable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.util.Constantes;
 
 public class CuboRubik5x5 extends CuboRubik4x4 implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(CuboRubik5x5.class);
+	private static final Logger log = LogManager.getLogger(CuboRubik5x5.class);
 
 	public CuboRubik5x5(Integer idTipoCubo, String nombre) {
 		this(idTipoCubo, nombre, Constantes.CUBO_5X5X5, 5);

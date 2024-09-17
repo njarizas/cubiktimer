@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.cubiktimer.controlador.factories.ConnectionFactory;
 import com.cubiktimer.modelo.dto.CredencialDTO;
@@ -25,7 +25,7 @@ import com.cubiktimer.util.Util;
 public class CredencialDAO extends DAO<Integer, CredencialDTO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(CredencialDAO.class);
+	private static final Logger log = LogManager.getLogger(CredencialDAO.class);
 
 	public CredencialDAO() {
 		super(Constantes.TABLA_CREDENCIALES, Constantes.PK_TABLA_CREDENCIALES);
