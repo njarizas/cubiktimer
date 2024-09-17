@@ -91,7 +91,7 @@ public class IniciarSesionManagedBean implements Serializable {
 																			// correspondan
 				List<RolDTO> listaRoles = rolDAO.consultarRolesPorIdUsuario(u.getIdUsuario());
 				for (RolDTO rolDTO : listaRoles) {
-					log.trace(rolDTO.toString());
+					log.trace(rolDTO);
 				}
 				List<PermisoDTO> listaPermisos = permisosDAO.consultarPermisosPorIdUsuario(u.getIdUsuario());
 				if (listaRoles.isEmpty()) {

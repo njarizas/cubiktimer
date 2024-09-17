@@ -126,7 +126,7 @@ public class RedSocialManagedBean implements Serializable {
 			if (u != null) {
 				List<RolDTO> listaRoles = rolDAO.consultarRolesPorIdUsuario(urs.getIdUsuario());
 				for (RolDTO rolDTO : listaRoles) {
-					log.trace(rolDTO.toString());
+					log.trace(rolDTO);
 				}
 				List<PermisoDTO> listaPermisos = permisosDAO.consultarPermisosPorIdUsuario(urs.getIdUsuario());
 				if (listaRoles.isEmpty()) {

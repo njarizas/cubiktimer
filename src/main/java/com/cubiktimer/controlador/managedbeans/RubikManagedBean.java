@@ -171,7 +171,7 @@ public class RubikManagedBean implements Serializable {
 		} else {
 			log.info("secuencia mezcla aleatoria (" + cubo.getNombre() + "): " + secuenciaMezcla);
 		}
-		log.trace(cubo.toString());
+		log.trace(cubo);
 		return "";
 	}
 
@@ -192,7 +192,7 @@ public class RubikManagedBean implements Serializable {
 			secuenciaMezcla = cubo.mezclar(mezcla);
 		}
 		log.info("Secuencia aplicada (" + cubo.getNombre() + "):  " + secuenciaMezcla);
-		log.trace(cubo.toString());
+		log.trace(cubo);
 		this.validoParaAO5 = false;
 		return "";
 	}
